@@ -6,11 +6,13 @@ import { SharedModule } from '../shared/shared.module';
 import { EmailLoginComponent } from './email-login/email-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
     EmailLoginComponent,
     LoginComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,
