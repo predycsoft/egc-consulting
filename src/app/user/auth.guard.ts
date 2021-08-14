@@ -12,20 +12,14 @@ export class AuthGuard implements CanActivate {
   constructor(private afAuth: AngularFireAuth, private snack: SnackService) {}
 
   async canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot):  Promise<boolean> {
-    
-    return this.afAuth.currentUser.then(user => {
-      if(user){
-        return true;
-      } else {
-        this.snack.authError();
-        return false;
-      }  
-    }).catch(error => {
-      console.log(error);
-      return false;
-    });
-      
-  }   
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean> {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const isLoggedIn = !!user;
+    if (!isLoggedIn) {
+      this.snack.authError();
+    }
+    return isLoggedIn;
+  } 
 }
