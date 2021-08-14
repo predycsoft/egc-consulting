@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "egc-consulting": {
+      "hosting": {
+        "egc-consulting": [
+          "egc-consulting"
+        ]
+      }
+    }
+  }
+}
