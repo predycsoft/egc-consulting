@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+
+// Auxiliares
 import { AuthGuard } from './user/auth.guard';
 
 @NgModule({
