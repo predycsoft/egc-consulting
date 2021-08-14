@@ -15,6 +15,12 @@ import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthGuard } from './user/auth.guard';
 
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,9 +31,13 @@ import { AuthGuard } from './user/auth.guard';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+  
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

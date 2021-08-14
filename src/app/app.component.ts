@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'egc-consulting';
+
+  ngOnInit(): void {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+
 }
+
