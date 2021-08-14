@@ -5,7 +5,7 @@ import { AuthGuard } from './user/auth.guard';
 
 const routes: Routes = [
   // canActivate: [AuthGuard]
-  {path: '', component: HomePageComponent },
+  {path: '', component: HomePageComponent, canActivate: [AuthGuard]},
   {path: 'login', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
   {path: 'psico', loadChildren: () => import('./psico/psico.module').then(m => m.PsicoModule)},  
 ];
