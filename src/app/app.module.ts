@@ -17,6 +17,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 // Auxiliares
 import { AuthGuard } from './user/auth.guard';
 
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,9 +33,13 @@ import { AuthGuard } from './user/auth.guard';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+  
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
