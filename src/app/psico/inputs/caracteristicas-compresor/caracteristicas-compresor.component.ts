@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 interface operatingConditions {
@@ -36,6 +37,8 @@ export class CaracteristicasCompresorComponent implements OnInit {
 
   operatingConditions: operatingConditions[] = []
 
+  aux: string;
+
   constructor() { }
   init: operatingConditions = {
     gasHandled: 0,
@@ -64,12 +67,19 @@ export class CaracteristicasCompresorComponent implements OnInit {
     performanceCurve: 0,
   }
 
+  variables: string[] = ["Gas Handled","Molecular Weight (%)", "mmscfd", "massFlow", "weightFlow", "inletVolume ","p1", "t1", "k1", "z1", "p2", "t2", "k2", "z2", "brakeHorsepower", "compressorGasPower", "rpm", "Hpoly", "Hisen", "Npoly", "Nisen", "pRatio", "certifiedPoint", "performanceCurve"]
+
   ngOnInit(): void {
+    this.operatingConditions = this.operatingConditions.concat(this.init)
     console.log("hola")
-    this.operatingConditions = this.operatingConditions.concat(this.init);
-    Object.keys(this.operatingConditions[0]).forEach(key => {
-      console.log(key);
-    })
+  }
+
+  nuevaColumna() {
+    this.operatingConditions = this.operatingConditions.concat(this.init)
+  }
+
+  returnZero() {
+    return 0;
   }
 
 }
