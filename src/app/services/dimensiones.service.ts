@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export interface variables {
+export interface variable {
   valor: number,
   dimension: string,
 }
@@ -21,4 +21,5 @@ export class DimensionesService {
   entropia = ["[BTU/lbm°F]","[BTU/lbmol°R]","[KJ/kg°K]","[Cal/g°C]"];
   pesoMolecular = ["[lbm/lbmol]"];
   flujo =  ["[MMSCFD]","[ACFM]", ["lbm/min"],"[lbmol/dia]","[m3/min]",["m3/sec"]];
+  longitud =  ["[m]","[cm]","[mm]", ["[pulg]"]];
 }

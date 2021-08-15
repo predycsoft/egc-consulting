@@ -16,6 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 // Auxiliares
 import { AuthGuard } from './user/auth.guard';
+import { DimensionesService } from './services/dimensiones.service';
 
 
 
@@ -41,7 +42,7 @@ import { AuthGuard } from './user/auth.guard';
     AngularFireAuthModule,
   
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard,DimensionesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DimensionesService, variable } from 'src/app/services/dimensiones.service';
+
 
 interface parametros{
   p1: number,
@@ -15,7 +17,7 @@ interface parametros{
 })
 export class SimulacionTeoricaComponent implements OnInit {
 
-  constructor() { }
+  constructor( public dims: DimensionesService) { }
 
   ngOnInit(): void {
   }

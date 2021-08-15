@@ -1,3 +1,5 @@
+<h4>Simulacion teorica</h4>
+
 <tr>
     <td>Mezcla de Gas</td>
     <td><input type="number"></td>
@@ -5,18 +7,31 @@
 <tr>
     <td>Temp. en la Succión </td>
     <td><input type="number"></td>
+    <select>
+        <option *ngFor="let item of dims.temperatura" value="item">{{item}}</option>
+    </select>
+
 </tr>
 <tr>
     <td>Temp. en la Descarga</td>
     <td><input type="number"></td>
+    <select>
+        <option *ngFor="let item of dims.temperatura" value="item">{{item}}</option>
+    </select>
 </tr>
 <tr>
     <td>Presión en la Succión</td>
     <td><input type="number"></td>
+    <select>
+        <option *ngFor="let item of dims.presion" value="item">{{item}}</option>
+    </select>
 </tr>
 <tr>
     <td>Presión en la Descarga </td>
     <td><input type="number"></td>
+    <select>
+        <option *ngFor="let item of dims.presion" value="item">{{item}}</option>
+    </select>
 </tr>
 <tr>
     <td>Extrac. gas combustible</td>
@@ -36,6 +51,9 @@
 <tr>
     <td>Diámetro [pulg]</td>
     <td><input type="number"></td>
+    <select>
+        <option *ngFor="let item of dims.longitud" value="item">{{item}}</option>
+    </select>
 </tr>
 <tr>
     <td>Límite Q/N de surge</td>

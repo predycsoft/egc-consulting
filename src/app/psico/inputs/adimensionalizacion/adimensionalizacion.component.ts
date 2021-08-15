@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DimensionesService, variable } from 'src/app/services/dimensiones.service';
 
 
 interface datosDeCampo{
@@ -24,11 +25,6 @@ interface propCompresor {
   relacionCompresion: number,
   relacionVolumen: number,
   volumenACFM: number,
-}
-
-interface variable {
-  valor: number,
-  dimension: string,
 }
 
 interface propTermodinamicas{
@@ -63,7 +59,7 @@ interface propTermodinamicas{
 })
 export class AdimensionalizacionComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dims: DimensionesService) { }
 
   ngOnInit(): void {
   }
