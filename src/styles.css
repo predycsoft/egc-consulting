@@ -1458,7 +1458,7 @@ label {
 }
 
 input, textarea, select{
-    height: 32px;
+    /* height: 32px;
     font-size: 14px !important;
     background: var(--control1) !important;
     border: 1px solid var(--stroke1);
@@ -1466,7 +1466,7 @@ input, textarea, select{
     border-radius: var(--defaultBorderRadius);
     padding-left: 12px;
     padding-right: 12px;
-    color: var(--text2) !important;
+    color: var(--text2) !important; */
 }
 
 textarea{
