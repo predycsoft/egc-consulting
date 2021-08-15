@@ -1,6 +1,7 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
-interface operatingConditions{
+interface operatingConditions {
   gasHandled: number,
   molecularWeight: number,
   mmscfd: number,
@@ -25,7 +26,7 @@ interface operatingConditions{
   pRatio: number,
   certifiedPoint: number,
   performanceCurve: number,
-} 
+}
 
 @Component({
   selector: 'caracteristicas-compresor',
@@ -34,9 +35,51 @@ interface operatingConditions{
 })
 export class CaracteristicasCompresorComponent implements OnInit {
 
+  operatingConditions: operatingConditions[] = []
+
+  aux: string;
+
   constructor() { }
+  init: operatingConditions = {
+    gasHandled: 0,
+    molecularWeight: 0,
+    mmscfd: 0,
+    massFlow: 0,
+    weightFlow: 0,
+    inletVolume: 0,
+    p1: 0,
+    t1: 0,
+    k1: 0,
+    z1: 0,
+    p2: 0,
+    t2: 0,
+    k2: 0,
+    z2: 0,
+    brakeHorsepower: 0,
+    compressorGasPower: 0,
+    rpm: 0,
+    Hpoly: 0,
+    Hisen: 0,
+    Npoly: 0,
+    Nisen: 0,
+    pRatio: 0,
+    certifiedPoint: 0,
+    performanceCurve: 0,
+  }
+
+  variables: string[] = ["Gas Handled","Molecular Weight (%)", "mmscfd", "massFlow", "weightFlow", "inletVolume ","p1", "t1", "k1", "z1", "p2", "t2", "k2", "z2", "brakeHorsepower", "compressorGasPower", "rpm", "Hpoly", "Hisen", "Npoly", "Nisen", "pRatio", "certifiedPoint", "performanceCurve"]
 
   ngOnInit(): void {
+    this.operatingConditions = this.operatingConditions.concat(this.init)
+    console.log("hola")
+  }
+
+  nuevaColumna() {
+    this.operatingConditions = this.operatingConditions.concat(this.init)
+  }
+
+  returnZero() {
+    return 0;
   }
 
 }
