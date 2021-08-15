@@ -20,4 +20,5 @@ export class DimensionesService {
   entalpia = ["[BTU/lbm]","[BTU/lbmol]","[KJ/kg]","[Cal/g]"];
   entropia = ["[BTU/lbm°F]","[BTU/lbmol°R]","[KJ/kg°K]","[Cal/g°C]"];
   pesoMolecular = ["[lbm/lbmol]"];
+  flujo =  ["[MMSCFD]","[ACFM]", ["lbm/min"],"[lbmol/dia]","[m3/min]",["m3/sec"]];
 }
