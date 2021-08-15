@@ -1,0 +1,16 @@
+
+<div class="pd30 neutralFill1">
+    <div class="titleBar">
+        <span>Title goes here</span>
+    </div>
+    <div class="menuToolbar fw">
+        <span class="textButton" (click)="tabSelect('turbina')">Turbina</span>
+        <span class="textButton" (click)="tabSelect('cromatografia')">cromatografia</span>
+        <span class="textButton" (click)="tabSelect('compresor')">Compresor</span>
+    </div>
+    
+    <compresor *ngIf="tabSelected==='compresor'"></compresor>
+    <turbina *ngIf="tabSelected==='turbina'"></turbina>
+    <cromatografia *ngIf="tabSelected==='cromatografia'"></cromatografia>
+
+</div>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'inputs',
-  templateUrl: './inputs.component.html',
-  styleUrls: ['./inputs.component.css']
+  selector: 'app-outputs',
+  templateUrl: './outputs.component.html',
+  styleUrls: ['./outputs.component.css']
 })
-export class InputsComponent implements OnInit {
+export class OutputsComponent implements OnInit {
 
   tabSelected: any;
 
@@ -17,5 +17,4 @@ export class InputsComponent implements OnInit {
   tabSelect(id: string){
     this.tabSelected = id;
   }
-  
 }
