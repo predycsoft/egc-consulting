@@ -644,6 +644,60 @@ body {
 
 .scale07{ transform: scale(.7);}
 
+
+
+.fullScreenCenterCenter{
+    display: flex;
+    height: calc(100vh - var(--menuHeight));
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .centerCenter{
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rowFlexStart{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+  
+  .row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .column{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    /* justify-content: start; */
+  }
+  
+  .rowCenter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .colCenter{
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }

@@ -7,13 +7,31 @@ import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { CromatografiaComponent } from './inputs/cromatografia/cromatografia.component';
+import { CaracteristicasCompresorComponent } from './inputs/caracteristicas-compresor/caracteristicas-compresor.component';
+import { CaracteristicasTurbinaComponent } from './inputs/caracteristicas-turbina/caracteristicas-turbina.component';
+import { SimulacionTeoricaComponent } from './inputs/simulacion-teorica/simulacion-teorica.component';
+import { MapasComponent } from './inputs/mapas/mapas.component';
+import { AdimensionalizacionComponent } from './inputs/adimensionalizacion/adimensionalizacion.component';
+import { CompresorComponent } from './outputs/compresor/compresor.component';
+import { TurbinaComponent } from './outputs/turbina/turbina.component';
+import { OutputsComponent } from './outputs/outputs/outputs.component';
 
 
 
 @NgModule({
   declarations: [
     InputsComponent,
-    ImportCsvComponent
+    ImportCsvComponent,
+    CromatografiaComponent,
+    CaracteristicasCompresorComponent,
+    CaracteristicasTurbinaComponent,
+    SimulacionTeoricaComponent,
+    MapasComponent,
+    AdimensionalizacionComponent,
+    CompresorComponent,
+    TurbinaComponent,
+    OutputsComponent
   ],
   imports: [
     CommonModule,
