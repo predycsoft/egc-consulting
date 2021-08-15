@@ -9,68 +9,22 @@
     <div>
         <table>
             <tr>
-                <th></th>
-                <th>Fracc Molar</th>
+                <th>Componente</th>
+                <th>Formula</th>
+                <th>Peso Molecular</th>
+                <th>Fraccion Molar</th>
+                <th>Normalizado</th>
+                <th>LHV</th>
+                <th>LHV</th>
             </tr>
-            <tr>
-                <td>Metano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Etano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Propano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>I-Butano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>N-Butano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>I-Pentano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>N-Pentano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Hexano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Heptano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Octano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Nonano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Decano</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Nitrógeno</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Diox. Carbono</td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>Sulf. Hidrógeno</td>
-                <td><input type="number"></td>
+            <tr *ngFor="let item of cromatografia">
+                <td>{{item.nombre}}</td>
+                <td>{{item.formula}}</td>
+                <td>{{item.pesoMolecular}}</td>
+                <td> <input type="text" [(ngModel)]="item.fraccionMolar"></td>
+                <td>{{item.normalizado}}</td>
+                <td>{{item.LHV}}</td>
+                <td>{{item.HHV}}</td>
             </tr>
         </table>
 
