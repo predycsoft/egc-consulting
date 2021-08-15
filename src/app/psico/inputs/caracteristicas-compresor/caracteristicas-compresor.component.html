@@ -7,9 +7,12 @@ Cantidad de Condiciones de operacion
         <th> </th>
     </tr>
     <button (click)="nuevaColumna()">Agregar Columna</button>
-    <tr *ngFor="let item of init| keyvalue: returnZero; let val=index">
-        <td>{{item.key}}</td>
+    <tr *ngFor="let item of operatingConditions[0] | keyvalue: returnZero; let val=index; trackBy:customTrackBy">
+        <td>{{this.variables[val]}}</td>
         <td> select </td>
-        <td *ngFor="let valores of operatingConditions ; let i=index"><input type="number" value="{{this.operatingConditions[i][item.key]}}"></td>
+        <td *ngFor="let valores of operatingConditions ; let i=index;">
+            <input type="number" [(ngModel)]="operatingConditions[i][item.key]"
+                [ngModelOptions]="{standalone: true}">
+        </td>
     </tr>
 </table>
