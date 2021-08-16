@@ -9,7 +9,7 @@ interface tren {
 interface equipo {
   tag: string,
   orden: number,
-  tipo: "compresor" | "turbina",
+  tipo: "compresor" | "turbina" | "por definir",
 }
 
 @Component({
@@ -26,7 +26,7 @@ export class ConfiguracionTrenComponent implements OnInit {
 
 
   nuevo = true
-  tren:tren  = {
+  tren: tren  = {
     tag: "",
     cantEquipos: 0,
     equipos: [],
@@ -48,20 +48,16 @@ export class ConfiguracionTrenComponent implements OnInit {
 
   inicializarTren() {
     this.tipoSimulacion = "ambas";
-    for (let index = 0; index < 4; index++) {
-      this.anexarEquipo("compresor")      
-    }
+    this.anexarEquipo("por definir")
   }
 
-  anexarEquipo(tipo: "compresor" | "turbina") {
-    if (this.tren.equipos.length == 0) {
-      tipo = "turbina"
-    }
-    this.tren.equipos.concat({
+  anexarEquipo(tipo: "compresor" | "turbina"| "por definir") {
+    this.tren.equipos = this.tren.equipos.concat({
       tag: "",
       orden: this.tren.equipos.length,
       tipo: tipo,
     })
+    console.log(this.tren.equipos)
   }
 
   modificarEquipo(index: number) {
