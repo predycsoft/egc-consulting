@@ -9,4 +9,5 @@
     outline-style: dashed;
     outline-color: var(--stroke1);
     outline-style: 2px;
+    border-radius: 10px;
 }
