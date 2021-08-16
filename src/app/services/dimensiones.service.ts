@@ -33,8 +33,29 @@ export class DimensionesService {
     return valor
   }
 
-  transformarPresion(valor:number, a: string, b: string): number {
-    return valor
+  presToPsia(valor: number, a: string) {
+    let c = 0;
+    switch (a) {
+      case "[psig]": {
+        c = valor + 14.7
+        return c
+      }
+      case "[psia]": {
+        c = valor;
+        return c
+      }
+      case "[barg]": {
+        c = valor*14.50377
+        return c
+      }
+      case "[KPag]": {
+        c = valor/6.895 +14.7
+        return c
+      }
+      default: {
+        return c
+      }
+    }
   }
 
   transformarDensidad(valor:number, a: string, b: string): number {
