@@ -14,6 +14,11 @@ interface equipo {
   tipo: "compresor" | "turbina" | "por definir",
 }
 
+class prueba {
+  content: string = "";
+  modelo: string = "";
+}
+
 @Component({
   selector: 'configuracion-tren',
   templateUrl: './configuracion-tren.component.html',
@@ -28,7 +33,7 @@ export class ConfiguracionTrenComponent implements OnInit {
   tipoSimulacion: "real" | "teorica" | "ambas";
 
   nuevo = true
-  tren: tren  = {
+  tren: tren = {
     tag: "",
     cantEquipos: 0,
     equipos: [],
@@ -40,7 +45,11 @@ export class ConfiguracionTrenComponent implements OnInit {
     tipo: "compresor",
   }
 
+  
+  prueba = new prueba();
+
   ngOnInit(): void {
+    console.log(this.prueba)
     if (this.nuevo) {
       this.inicializarTren();
     } else {
@@ -50,24 +59,27 @@ export class ConfiguracionTrenComponent implements OnInit {
 
   inicializarTren() {
     this.tipoSimulacion = "ambas";
-    this.anexarEquipo("por definir")
+    this.anexarEquipo()
   }
 
 
   dialogAgregarEquipo() {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
-    dialogRef.afterClosed().subscribe(result => {
+     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });
-}
+  }
 
-  anexarEquipo(tipo: "compresor" | "turbina"| "por definir") {
-    this.tren.equipos = this.tren.equipos.concat({
-      tag: "",
-      orden: this.tren.equipos.length,
-      tipo: tipo,
+  anexarEquipo() {
+    const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      this.tren.equipos = this.tren.equipos.concat({
+        tag: result.tagEquipo,
+        orden: this.tren.equipos.length,
+        tipo: result.tipoEquipo,
+      })
+      console.log(this.tren.equipos)
     })
-    console.log(this.tren.equipos)
   }
 
   modificarEquipo(index: number) {
