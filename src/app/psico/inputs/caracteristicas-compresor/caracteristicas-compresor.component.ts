@@ -1,6 +1,11 @@
 import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
+
+
+
+
+
 interface operatingConditions {
   gasHandled: number,
   molecularWeight: number,

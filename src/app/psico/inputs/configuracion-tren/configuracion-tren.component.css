@@ -1,0 +1,12 @@
+
+
+.boxContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 150px;
+    outline-style: dashed;
+    outline-color: var(--stroke1);
+    outline-style: 2px;
+}
