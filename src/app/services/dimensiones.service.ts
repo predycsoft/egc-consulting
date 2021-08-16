@@ -128,49 +128,273 @@ export class DimensionesService {
 
   transformarDensidad(valor: number, a: string, b: string): number {
     let c = 0;
-
-    return valor
+    const GCM3 = this.densToGCm3(valor, a)
+    switch (b) {
+      case "[lbmol/pie3]": {
+        // no entiendou
+        return c
+      }
+      case "[lbm/pie3]": {
+        c = GCM3 *62.428
+        return c
+      }
+      case "[lbm/pulg3]": {
+        c = GCM3 /27.68;1
+        return c
+      }
+      case "[Kg/m3]": {
+        c = GCM3*1000
+        return c
+      }
+      case "[g/cm3]": {
+        c = GCM3;
+        return c;
+      }
+      case "[°API]": {
+        // no entiendou
+        return c
+      }
+      default: {
+        return c;
+      }
+    }
+    
   }
-  densToGCm3(valor:number, a:string){
+
+  densToGCm3(valor: number, a: string) {
     let c = 0
     switch (a) {
-      case "[lbmol/pie3]":{
+      case "[lbmol/pie3]": {
+        // no entiendou
+        return c
+      }
+      case "[lbm/pie3]": {
+        c = valor / 62.428
+        return c
+      }
+      case "[lbm/pulg3]": {
+        c = valor * 27.68;1
+        return c
+      }
+      case "[Kg/m3]": {
+        c = valor/1000
+        return c
+      }
+      case "[g/cm3]": {
+        c = valor;
+        return c;
 
       }
-      case "[lbm/pie3]":{
-
+      case "[°API]": {
+        // no entiendou
+        return c
       }
-      case "[lbm/pulg3]":{
-
-      }
-      case "[Kg/m3]":{
-
-      }
-      case "[g/cm3]":{
-
-      }
-      case "[°API]":{
-
+      default: {
+        return c;
       }
 
     }
   }
 
+  // No entiendou
   transformarVolumen(valor: number, a: string, b: string): number {
-    return valor
+    let c = 0;
+    const pie3 = this.volToPie3(valor, a)
+    switch(b) {
+      case "[pie3/lbm]": {
+        return c
+      }
+      case  "[pi3/lbmol]": {
+        return c
+      }
+      case "[m3/kg]": {
+        return c
+      }
+      default: {
+        return c
+      }
+    }
+  }
+  
+  volToPie3(valor: number, a: string) {
+    let c = 0;
+    switch (a) {
+      case "[pie3/lbm]": {
+        return c
+      }
+      case  "[pi3/lbmol]": {
+        return c
+      }
+      case "[m3/kg]": {
+        return c
+      }
+      default: {
+        return c
+      }
+    }
   }
 
   transformarEntalpia(valor: number, a: string, b: string): number {
-    return valor
+    let c = 0;
+    const BTUlbm = this.entToBTULbm(valor,a)
+    switch (b) {
+      case "[BTU/lbm]": {
+        c = BTUlbm 
+        return c
+      }
+      case "[BTU/lbmol]": {
+        // no entienodu
+        return c
+      }
+      case "[KJ/kg]": {
+        c = BTUlbm*2.326;
+        return c
+      }
+      case "[Cal/g]": {
+        c = BTUlbm/1.7988
+        return c
+      }
+      default: {
+        return c
+      }
+    }
+
+  }
+
+  entToBTULbm(valor: number, a: string) {
+    let c = 0;
+    switch (a) {
+      case "[BTU/lbm]": {
+        c = valor 
+        return c
+      }
+      case "[BTU/lbmol]": {
+        // no entienodu
+        return c
+      }
+      case "[KJ/kg]": {
+        c = valor/2.326;
+        return c
+      }
+      case "[Cal/g]": {
+        c = valor*1.7988
+        return c
+      }
+      default: {
+        return c
+      }
+    }
   }
 
   transformarEntropia(valor: number, a: string, b: string): number {
-    return valor
+    let c = 0;
+    const BTUlbm = this.entToBTULbmF(valor,a)
+    switch (b) {
+      case "[BTU/lbm°F]": {
+        c = BTUlbm 
+        return c
+      }
+      case "[BTU/lbmol°R]": {
+        // no entienodu
+        return c
+      }
+      case "[KJ/kg°K]": {
+        c = BTUlbm*0.23884589663;
+        return c
+      }
+      case "[Cal/g°C]": {
+        c = BTUlbm
+        return c
+      }
+      default: {
+        return c
+      }
+    }
   }
 
-  transformarFlujo(valor: number, a: string, b: string): number {
-    return valor
+  entToBTULbmF(valor: number, a: string) {
+    let c = 0;
+    switch (a) {
+      case "[BTU/lbm°F]": {
+        c = valor 
+        return c
+      }
+      case "[BTU/lbmol°R]": {
+        // no entienodu
+        return c
+      }
+      case "[KJ/kg°K]": {
+        c = valor*0.23884589663;
+        return c
+      }
+      case "[Cal/g°C]": {
+        c = valor
+        return c
+      }
+      default: {
+        return c
+      }
+    }
   }
 
+  transformarFlujo(valor: number, a: string, b:  string): number {
+    let c = 0;
+    const flujo = this.fluToFlujo(valor, a)
+    switch (b) {
+      case "[MMSCFD]":{
+        return c
+      }
+      case "[ACFM]":{
+        return c
+      }
+      case "[lbm/min]":{
+        return c
+      }
+      case "[lbm/min]":{
+        return c
+      }
+      case "[lbmol/dia]": {
+        return c
+      }
+      case "[m3/min]": {
+        return c
+      }
+      case "[m3/sec]": {
+        return c
+      }
+      default : {
+        return c
+      }
+    }
+  }
 
+  fluToFlujo(valor: number, a: string) {
+    let c = 0;
+    switch (a) {
+      case "[MMSCFD]":{
+        return c
+      }
+      case "[ACFM]":{
+        return c
+      }
+      case "[lbm/min]":{
+        return c
+      }
+      case "[lbm/min]":{
+        return c
+      }
+      case "[lbmol/dia]": {
+        return c
+      }
+      case "[m3/min]": {
+        return c
+      }
+      case "[m3/sec]": {
+        return c
+      }
+      default : {
+        return c
+      }
+    }
+  }
 }
