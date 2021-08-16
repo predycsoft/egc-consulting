@@ -20,6 +20,7 @@ import { ConfiguracionCompresorComponent } from './inputs/configuracion-compreso
 import { ConfiguracionTurbinaComponent } from './inputs/configuracion-turbina/configuracion-turbina.component';
 import { ConfiguracionTrenComponent } from './inputs/configuracion-tren/configuracion-tren.component';
 import { DatosTecnicosCompresorComponent } from './inputs/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
+import { DialogAgregarEquipoComponent } from './inputs/dialog-agregar-equipo/dialog-agregar-equipo.component';
 
 
 
@@ -39,7 +40,8 @@ import { DatosTecnicosCompresorComponent } from './inputs/datos-tecnicos-compres
     ConfiguracionCompresorComponent,
     ConfiguracionTurbinaComponent,
     ConfiguracionTrenComponent,
-    DatosTecnicosCompresorComponent
+    DatosTecnicosCompresorComponent,
+    DialogAgregarEquipoComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAgregarEquipoComponent } from '../dialog-agregar-equipo/dialog-agregar-equipo.component';
 
 interface tren {
   tag: string,
@@ -20,10 +22,10 @@ interface equipo {
 export class ConfiguracionTrenComponent implements OnInit {
 
   constructor(
+    public dialogAgregar: MatDialog,
   ) { }
 
   tipoSimulacion: "real" | "teorica" | "ambas";
-
 
   nuevo = true
   tren:tren  = {
@@ -52,6 +54,14 @@ export class ConfiguracionTrenComponent implements OnInit {
       this.anexarEquipo("compresor")      
     }
   }
+
+
+  dialogAgregarEquipo() {
+    const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+}
 
   anexarEquipo(tipo: "compresor" | "turbina") {
     if (this.tren.equipos.length == 0) {

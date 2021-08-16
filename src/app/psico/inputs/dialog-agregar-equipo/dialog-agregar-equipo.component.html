@@ -1,0 +1,12 @@
+
+<div class="column">
+    <label for="">Tag de equipo</label>
+    <input type="text" [(ngModel)]="data.tagEquipo">
+    <label for="">Tipo de equipo</label>
+    <mat-select [(ngModel)]="data.tipoEquipo" class="fw">
+        <mat-option value="compresor" class="optionItem"> Compresor </mat-option>
+        <mat-option value="turbina" class="optionItem"> Turbina</mat-option>
+    </mat-select>
+    
+    <button class="mgt05 darkButton fw" (click)="confirmar()">Continuar</button>
+</div>
