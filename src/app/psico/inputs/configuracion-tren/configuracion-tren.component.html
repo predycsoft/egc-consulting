@@ -4,6 +4,14 @@
     <div *ngFor="let item of tren.equipos" class="boxContainer">
         <span class="cursorPointer">{{item.tipo}}</span>
     </div>
+    
+    <button (click)="dialogAgregarEquipo()"></button>
+    
+    <div class="boxContainer">
+        <span class="cursorPointer">Compresor</span>sd
+        
+    </div>
+
 </div>
 <button (click)="anexarEquipo('por definir')">Agregar Equipo</button>
 <br>
