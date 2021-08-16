@@ -3,7 +3,6 @@
 <div fxLayout="row" fxLayoutGap="3rem">
 
 
-
     <!-------------------------------------------------------------------- Cromatografía del gas -->
 
     <div>
@@ -14,20 +13,23 @@
                 <th>Peso Molecular</th>
                 <th>Fraccion Molar</th>
                 <th>Normalizado</th>
-                <th>LHV</th>
-                <th>LHV</th>
             </tr>
-            <tr *ngFor="let item of cromatografia">
-                <td>{{item.nombre}}</td>
-                <td>{{item.formula}}</td>
-                <td>{{item.pesoMolecular}}</td>
-                <td> <input type="text" [(ngModel)]="item.fraccionMolar"></td>
-                <td>{{item.normalizado}}</td>
+            <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy">
+                <td>{{this.cromatografia[i].nombre}}</td>
+                <td>{{this.cromatografia[i].formula}}</td>
+                <td>{{this.cromatografia[i].pesoMolecular}}</td>
+                <td> <input type="text" [(ngModel)]="this.cr[item.key]"></td>
+                <td>{{this.cromatografia[i].normalizado}}</td>
             </tr>
         </table>
 
         <p> Nota: debe introducir la fraccion molar de cada componente.</p>
-        <button>Normalizar</button>
+        <button (click)="normalizar()">Normalizar</button>
+        {{fraccMolarTotal}}
+        <br>
+        {{cromatografia | json}}
+        <br>
+        {{cr | json}}
     </div>
 
 
@@ -82,6 +84,26 @@
             </tr>
             <tr>
                 <td>Calidad</td>
+                <td> select </td>
+                <td> <input type="number"> </td>
+            </tr>
+            <tr>
+                <td>LHV</td>
+                <td> select </td>
+                <td> <input type="number"> </td>
+            </tr>
+            <tr>
+                <td>HHV</td>
+                <td> select </td>
+                <td> <input type="number"> </td>
+            </tr>
+            <tr>
+                <td>Gravedad Específica</td>
+                <td> select </td>
+                <td> <input type="number"> </td>
+            </tr>
+            <tr>
+                <td>W.I.</td>
                 <td> select </td>
                 <td> <input type="number"> </td>
             </tr>
