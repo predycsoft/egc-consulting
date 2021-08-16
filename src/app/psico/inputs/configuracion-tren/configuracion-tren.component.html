@@ -1,17 +1,11 @@
 
-
+<span>{{tren.tag}}</span>
 <div fxLayout="row" fxLayoutGap="2rem">
-
-    <div class="boxContainer">
-        <span class="cursorPointer">Turbina</span>
+    <div *ngFor="let item of tren.equipos" class="boxContainer">
+        <span class="cursorPointer">{{item.tipo}}</span>
     </div>
-    
-    
-    <div class="boxContainer">
-        <span class="cursorPointer">Compresor</span>
-    </div>
-
 </div>
+<button (click)="anexarEquipo('por definir')">Agregar Equipo</button>
 <br>
 <br>
 <div>
