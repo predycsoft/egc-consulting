@@ -1,5 +1,18 @@
 <h4>Simulacion teorica</h4>
 
+
+
+<!-- <label for="">Sidestream</label>
+<mat-select ([ngModel])="compresor.sidestream" class="fw">
+    <mat-option class="optionItem"> Sin sidestream </mat-option>
+    <mat-option class="optionItem"> Sidestream entrante </mat-option>
+    <mat-option class="optionItem"> Sidestream saliente</mat-option>
+</mat-select> -->
+
+<mat-icon>arrow_right_alt</mat-icon>
+<mat-icon>arrow_right_alt</mat-icon>
+<mat-icon>arrow_downward</mat-icon>
+
 <tr>
     <td>Mezcla de Gas</td>
     <td><input type="number"></td>
@@ -51,9 +64,7 @@
 <tr>
     <td>Diámetro [pulg]</td>
     <td><input type="number"></td>
-    <select>
-        <option *ngFor="let item of dims.longitud" value="item">{{item}}</option>
-    </select>
+
 </tr>
 <tr>
     <td>Límite Q/N de surge</td>
@@ -105,4 +116,3 @@
 </tr>
 
 <br><br><br><br>
-

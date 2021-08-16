@@ -16,6 +16,10 @@ import { AdimensionalizacionComponent } from './inputs/adimensionalizacion/adime
 import { CompresorComponent } from './outputs/compresor/compresor.component';
 import { TurbinaComponent } from './outputs/turbina/turbina.component';
 import { OutputsComponent } from './outputs/outputs/outputs.component';
+import { ConfiguracionCompresorComponent } from './inputs/configuracion-compresor/configuracion-compresor.component';
+import { ConfiguracionTurbinaComponent } from './inputs/configuracion-turbina/configuracion-turbina.component';
+import { ConfiguracionTrenComponent } from './inputs/configuracion-tren/configuracion-tren.component';
+import { DatosTecnicosCompresorComponent } from './inputs/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
 
 
 
@@ -31,7 +35,11 @@ import { OutputsComponent } from './outputs/outputs/outputs.component';
     AdimensionalizacionComponent,
     CompresorComponent,
     TurbinaComponent,
-    OutputsComponent
+    OutputsComponent,
+    ConfiguracionCompresorComponent,
+    ConfiguracionTurbinaComponent,
+    ConfiguracionTrenComponent,
+    DatosTecnicosCompresorComponent
   ],
   imports: [
     CommonModule,
