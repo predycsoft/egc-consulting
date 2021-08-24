@@ -1,18 +1,31 @@
-<div class="pd30 neutralFill1">
-    <div class="titleBar">
-        <span>Title goes here</span>
-    </div>
+<div>
     <div class="menuToolbar fw border-b">
-        <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}" (click)="tabSelect('datosTecnicos')">Datos Técnicos</span>
-        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'cromatografia'}" (click)="tabSelect('cromatografia')">Cromatografia</span>
-        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'mapas'}" (click)="tabSelect('mapas')">Mapas</span>
-        <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'simulacionTeorica'}" (click)="tabSelect('simulacionTeorica')">Simulación Teórica</span>
-        <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'adimensionalizacion'}" (click)="tabSelect('adimensionalizacion')">Adimensionalización</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'general'}"
+        (click)="tabSelect('general')">General</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}"
+            (click)="tabSelect('datosTecnicos')">Datos Técnicos</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'cromatografia'}"
+            (click)="tabSelect('cromatografia')">Cromatografia</span>
+            <span class="textButton" [ngClass]="{'selected2': tabSelected === 'curvas'}"
+            (click)="tabSelect('curvas')">Curvas</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'mapas'}"
+            (click)="tabSelect('mapas')">Mapas</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'simulacionTeorica'}"
+            (click)="tabSelect('simulacionTeorica')">Simulación Teórica</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'adimensionalizacion'}"
+            (click)="tabSelect('adimensionalizacion')">Adimensionalización</span>
+            <span class="textButton" [ngClass]="{'selected2': tabSelected === 'documentos'}"
+            (click)="tabSelect('documentos')">Documentos</span>
     </div>
-    
-    <caracteristicas-compresor *ngIf="tabSelected==='datosTecnicos'"></caracteristicas-compresor>
-    <cromatografia *ngIf="tabSelected==='cromatografia'"></cromatografia>
-    <mapas *ngIf="tabSelected==='mapas'"></mapas>
-    <simulacion-teorica *ngIf="tabSelected==='simulacionTeorica'"></simulacion-teorica>
-    <adimensionalizacion *ngIf="tabSelected==='adimensionalizacion'"></adimensionalizacion>
+
+    <div class="pd08">
+        <tipo-compresor *ngIf="tabSelected==='general'"></tipo-compresor>
+        <caracteristicas-compresor *ngIf="tabSelected==='datosTecnicos'"></caracteristicas-compresor>
+        <cromatografia *ngIf="tabSelected==='cromatografia'"></cromatografia>
+        <curvas *ngIf="tabSelected==='curvas'"></curvas>
+        <mapas *ngIf="tabSelected==='mapas'"></mapas>
+        <simulacion-teorica *ngIf="tabSelected==='simulacionTeorica'"></simulacion-teorica>
+        <adimensionalizacion *ngIf="tabSelected==='adimensionalizacion'"></adimensionalizacion>
+        <documentos *ngIf="tabSelected==='documentos'"></documentos>
+    </div>
 </div>

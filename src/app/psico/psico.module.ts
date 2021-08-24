@@ -21,6 +21,19 @@ import { ConfiguracionTurbinaComponent } from './inputs/configuracion-turbina/co
 import { ConfiguracionTrenComponent } from './inputs/configuracion-tren/configuracion-tren.component';
 import { DatosTecnicosCompresorComponent } from './inputs/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
 import { DialogAgregarEquipoComponent } from './inputs/dialog-agregar-equipo/dialog-agregar-equipo.component';
+import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.component';
+import { ProyectosComponent } from './proyectos/proyectos.component';
+import { DialogsComponent } from './dialogs/dialogs.component';
+import { DialogConfirmarComponent } from './dialogs/dialog-confirmar/dialog-confirmar.component';
+import { DialogExitoComponent } from './dialogs/dialog-exito/dialog-exito.component';
+import { DialogFracasoComponent } from './dialogs/dialog-fracaso/dialog-fracaso.component';
+import { DialogNuevoProyectoComponent } from './dialogs/dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
+import { MenuVerticalComponent } from './menu-vertical/menu-vertical.component';
+import { ConfigurarEquipoComponent } from './configurar-equipo/configurar-equipo.component';
+import { DocumentosComponent } from './documentos/documentos.component';
+import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-documento.component';
+import { CurvasComponent } from './curvas/curvas.component';
+import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.component';
 
 
 
@@ -41,7 +54,20 @@ import { DialogAgregarEquipoComponent } from './inputs/dialog-agregar-equipo/dia
     ConfiguracionTurbinaComponent,
     ConfiguracionTrenComponent,
     DatosTecnicosCompresorComponent,
-    DialogAgregarEquipoComponent
+    DialogAgregarEquipoComponent,
+    PsicoDashboardComponent,
+    ProyectosComponent,
+    DialogsComponent,
+    DialogConfirmarComponent,
+    DialogExitoComponent,
+    DialogFracasoComponent,
+    DialogNuevoProyectoComponent,
+    MenuVerticalComponent,
+    ConfigurarEquipoComponent,
+    DocumentosComponent,
+    DialogDocumentoComponent,
+    CurvasComponent,
+    TipoCompresorComponent
   ],
   imports: [
     CommonModule,

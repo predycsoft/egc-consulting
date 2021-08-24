@@ -1,0 +1,57 @@
+.menuVerticalContainer{
+    height: 100vh;
+    width: 220px;
+    padding: 8px;
+    background: linear-gradient(13deg, var(--neutral3) 0, var(--neutral1) 50%) ;
+}
+
+.menuTab{
+    height: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    border-radius: 4px;
+}
+
+li{
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.containerUsuario{
+    padding: 8px;
+    background-color: transparent;
+    width: 204px;
+    position: fixed;
+    bottom: -164px;
+    transition: .5s;
+    border-radius: 4px;
+}
+
+.containerUsuario:hover{
+    background: linear-gradient(0deg, var(--neutral1) 0, var(--neutral2) 50%) ;
+    bottom: 8px;
+}
+
+.logoMenu{
+    height: 24px;
+}
+
+.avatarImg{
+    height: 48px;
+}
+
+.userMenuText{
+    margin-top: 8px;
+    color: var(--text2);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.userMenuText:hover{
+    text-decoration: underline;
+    color: var(--text1);
+}

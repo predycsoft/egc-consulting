@@ -1,0 +1,78 @@
+.impulsorSeleccionado{
+    font-weight: 500;
+    cursor: pointer !important;
+}
+
+
+.tableContainer{
+    border-radius: 4px;
+    box-shadow: var(--shadow8);   
+    background: var(--card);
+}
+
+tr{
+    height: 40px;
+    border-top: 1px solid var(--stroke1);
+}
+
+th{
+    color: var(--text2);
+    background: var(--neutral1) !important;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+td{
+    color: var(--text1);
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+tr:last-child{
+    border-bottom: 1px solid var(--stroke1); 
+}
+
+tr:last-child{
+    border-right: .5px solid var(--stroke1);
+}
+
+td:first-child{
+    border-left: 1px solid var(--stroke1);
+}
+
+td:last-child{
+    border-right: .5px solid var(--stroke1);
+}
+
+
+th:first-child{
+    border-left: .5px solid var(--stroke1);
+}
+
+
+
+
+.firstRow{
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    background: var(--neutral1);
+    padding: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: solid 1px var(--stroke1);
+    border-bottom: 0px;
+
+}
+
+.emptyTable{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    height: 80px;
+    border: solid 1px var(--stroke1);
+    border-top: 0px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}

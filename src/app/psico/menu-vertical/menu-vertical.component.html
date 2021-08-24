@@ -1,0 +1,60 @@
+<div class="vh100 menuVerticalContainer" fxLayout="column" fxLayoutAlign="space-between">
+
+    <div>
+        <!-- seccion izquierda LOGO  -->
+        <div routerLink="/" fxLayout="row" fxLayoutAlign="center center" class="cursorPointer pdt05 pdb08 border-b">
+            <img [src]="logo" class="logoMenu">
+            <span class="mgl05 mgr05  ft500 navLink text3 ft18" fxShow="true" fxShow.lt-md="false">PSICompressor</span>
+        </div>
+
+        <li mat-list-item routerLink="/psico/proyecto/tren" routerLinkActive="selected1" class="mgt05 menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">linear_scale</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1">Tren</span>
+        </li>
+
+        <li mat-list-item routerLink="/psico/proyecto/equipo" routerLinkActive="selected1" class="menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">settings</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1">Equipo</span>
+        </li>
+
+        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1" class="menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">search</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1">Evidencia </span>
+        </li>
+
+        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1" class="menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">flag</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1">Tareas </span>
+        </li>
+
+        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1" class="menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">linear_scale</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1">Minutas </span>
+        </li>
+
+        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1"
+            class="menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">miscellaneous_services</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1">Recomendaciones </span>
+        </li>
+
+        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1" class="menuTab">
+            <mat-icon class="ft18 text3" routerLinkActive="oaText1">insert_drive_file</mat-icon>
+            <span class="menuText mgl05" routerLinkActive="oaText1"> Reporte </span>
+        </li>
+    </div>
+
+    <div class="containerUsuario">
+        <div fxLayout="row" fxLayoutAlign=" center" class="pdt05">
+            <img [src]="defaultUserImage" class="mgl05 avatar2 accentControlFill1">
+            <span class="mgl05 mgr10 fw centertext">Nombre Usuario</span>
+        </div>
+        <div fxLayout="column" class="mgt10 border-t pd08">
+            <span class="userMenuText">Mi cuenta</span>
+            <span class="userMenuText">Soporte</span>
+            <span class="userMenuText">Inicio</span>
+            <span class="userMenuText">Cerrar sesión</span>
+            <br>
+        </div>
+    </div>
+</div>

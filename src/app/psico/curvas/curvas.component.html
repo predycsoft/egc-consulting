@@ -1,0 +1,116 @@
+<div class="checkboxContainer">
+    <div *ngFor="let item of [1,2,3,4,5,6,7]; let i = index" fxLayout="row" fxLayoutAlign=" end">
+        <div class="redFill1">
+            <mat-checkbox> </mat-checkbox>
+        </div>
+        <div></div>
+        <span (click)="seleccionarImpulsor(i)" class="cursorPointer redFill1"
+            [ngClass]="{'impulsorSeleccionado': impulsorSeleccionado == i}"> 
+            Impulsor {{i + 1}}
+        </span>
+    </div>
+</div>
+
+
+
+<br><br><br><br>
+
+<tr>
+    <th>Punto</th>
+    <th>Q/N</th>
+    <th>u</th>
+    <th>n</th>
+</tr>
+<tr>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+</tr>
+<tr>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+</tr>
+<tr>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+</tr>
+<tr>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+    <td><input type="number"></td>
+</tr>
+
+<div fxLayout="row" fxLayoutGap="2rem">
+
+    <div class="tableContainer">
+        <div class="firstRow" fxLayoutAlign="space-between center">
+            <span class="ft16 text2">Coeficientes calculados</span>
+        </div>
+        <tr>
+            <td class="nowrap">Diámetro [pulg]</td>
+            <td><input type="number" class="w100px"></td>
+
+        </tr>
+        <tr>
+            <td class="nowrap">Límite Q/N de surge</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Límite Q/N de stw</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="pt10 centertext">Exp.polin.coef.head</td>
+
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(1) coe.head</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(2) coe.head</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(3) coe.head</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(4) coe.head</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="pt10 centertext">Exp.polin.efic.polit.</td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(1) efic.polit.</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(2) efic.polit.</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(3) efic.polit.</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+        <tr>
+            <td class="nowrap">Coef.A(4) efic.polit.</td>
+            <td><input type="number" class="w100px"></td>
+        </tr>
+    </div>
+
+
+    <div class="tableContainer fw">
+        <div class="firstRow" fxLayoutAlign="space-between center">
+            <span class="ft16 text2">Mapas del compresor</span>
+        </div>
+    </div>
+
+</div>

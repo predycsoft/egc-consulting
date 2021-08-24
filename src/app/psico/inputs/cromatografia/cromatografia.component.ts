@@ -5,7 +5,6 @@ interface componente {
   formula: string,
   pesoMolecular: number,
   fraccionMolar: number;
-  normalizado: number;
 }
 
 class cromatografia {
@@ -27,6 +26,23 @@ class cromatografia {
   aire: number = 0;
 }
 
+class propiedadesCromatografia{
+    // Propiedades calculadas del gas
+    presion: number = 0;
+    temperatura: number = 0;
+    densidad: number = 0;
+    volumen: number = 0;
+    entalpia: number = 0;
+    entropia: number = 0;
+    pesoMolecular: number = 0;
+    compresibilidad: number = 0;
+    calidad: number = 0;
+    LHV: number = 0;
+    HHV: number = 0;
+    gravedadEspecifica: number = 0;
+    wi: number = 0;
+}
+
 @Component({
   selector: 'cromatografia',
   templateUrl: './cromatografia.component.html',
@@ -36,36 +52,32 @@ export class CromatografiaComponent implements OnInit {
 
 
   cr: cromatografia = new cromatografia();
-
+  propidadesCromatografia = new propiedadesCromatografia();
   fraccMolarTotal: number = 0;
 
   cromatografia: componente[] = [
-    { nombre: 'metano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.metano, normalizado: .2 },
-    { nombre: 'etano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.etano, normalizado: .2 },
-    { nombre: 'propano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.propano, normalizado: .2 },
-    { nombre: 'i-butano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.iButano, normalizado: .2 },
-    { nombre: 'n-butano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.nButano, normalizado: .2 },
-    { nombre: 'i-pentano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.iPentano, normalizado: .2 },
-    { nombre: 'n-pentano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.nPentano, normalizado: .2 },
-    { nombre: 'hexano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.hexano, normalizado: .2 },
-    { nombre: 'heptano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.heptano, normalizado: .2 },
-    { nombre: 'octano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.octano, normalizado: .2 },
-    { nombre: 'nonano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.nonano, normalizado: .2 },
-    { nombre: 'decano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.decano, normalizado: .2 },
-    { nombre: 'nitrogeno', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.nitrogeno, normalizado: .2 },
-    { nombre: 'dioxCarbono', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.dioxCarbono, normalizado: .2 },
-    { nombre: 'sulfHidrogeno', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.sulfHidrogeno, normalizado: .2 },
-    { nombre: 'aire', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.aire, normalizado: .2 }
+    { nombre: 'Metano', formula: 'C1', pesoMolecular: 16.042, fraccionMolar: this.cr.metano},
+    { nombre: 'Etano', formula: 'C1', pesoMolecular: 30.07, fraccionMolar: this.cr.etano},
+    { nombre: 'Propano', formula: 'C1', pesoMolecular: 44.097, fraccionMolar: this.cr.propano},
+    { nombre: 'I-butano', formula: 'C1', pesoMolecular: 58.124, fraccionMolar: this.cr.iButano},
+    { nombre: 'N-butano', formula: 'C1', pesoMolecular: 58.128, fraccionMolar: this.cr.nButano},
+    { nombre: 'I-pentano', formula: 'C1', pesoMolecular: 72.151, fraccionMolar: this.cr.iPentano},
+    { nombre: 'N-pentano', formula: 'C1', pesoMolecular: 72.151, fraccionMolar: this.cr.nPentano},
+    { nombre: 'Hexano', formula: 'C1', pesoMolecular: 86.178, fraccionMolar: this.cr.hexano},
+    { nombre: 'Heptano', formula: 'C1', pesoMolecular: 100.205, fraccionMolar: this.cr.heptano},
+    { nombre: 'Octano', formula: 'C1', pesoMolecular: 114.232, fraccionMolar: this.cr.octano},
+    { nombre: 'Nonano', formula: 'C1', pesoMolecular: 128.259, fraccionMolar: this.cr.nonano},
+    { nombre: 'Decano', formula: 'C1', pesoMolecular: 142.259, fraccionMolar: this.cr.decano},
+    { nombre: 'Nitrogeno', formula: 'C1', pesoMolecular: 28.013, fraccionMolar: this.cr.nitrogeno},
+    { nombre: 'DioxCarbono', formula: 'C1', pesoMolecular: 44.13, fraccionMolar: this.cr.dioxCarbono},
+    { nombre: 'SulfHidrogeno', formula: 'C1', pesoMolecular: 34.076, fraccionMolar: this.cr.sulfHidrogeno},
+    { nombre: 'Aire', formula: 'C1', pesoMolecular: 28.966, fraccionMolar: this.cr.aire}
   ]
-
-
-
 
   constructor() { }
 
   ngOnInit(): void {
-    const hexano = this.cromatografia.find(x => x.nombre == "hexano")
-    hexano.formula;
+
   }
 
   normalizar() {

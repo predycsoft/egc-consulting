@@ -1,0 +1,38 @@
+<div class="neutralFill1 fh fw " fxLayout="column" fxLayoutAlign=" center" >
+
+    <div class="topContainer" fxLayout="column" fxLayoutAlign=" center">
+        <div class="cw">
+            <h2>Bienvenido {{usuario.nombre}}</h2>
+        </div>
+    </div>
+
+
+    <div class="cw" >
+
+        <!-- Lista de proyectos-->
+        <div class="fw pdt30">
+            <div class="mgt30 mgb10" fxLayout="row" fxLayoutAlign="space-between">
+                <h4> Proyectos</h4>
+                <button class="accent" (click)="openDialogNuevoProyecto()">Nuevo proyecto</button>
+            </div>
+            <div class="card" *ngFor="let proyecto of proyectos; let i = index">
+                <mat-icon>insert_drive_file</mat-icon>
+                <div class="mgl08 fw">
+                    <span>
+                        {{proyecto.titulo}}
+                    </span>
+                    <p class="mgb0">Rev {{proyecto.revision}}  - Fecha de creacion: {{ this.proyectos[i].fechaCreacion.toDate() | date: 'dd/MM/yyyy'}} </p>
+                </div>
+                <div>
+                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.menuData = proyecto">more_vert</mat-icon>
+                </div>
+            </div>
+        </div>
+          
+      <mat-menu #menu="matMenu" class="contextMenu">
+        <li class="menuItem">Ir a proyecto</li>
+        <li class="menuItem" (click)="eliminarProyecto(menuData.id)">Eliminar proyecto</li>
+      </mat-menu>
+
+    </div>
+</div>

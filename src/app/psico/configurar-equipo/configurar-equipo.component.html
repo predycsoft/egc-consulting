@@ -1,0 +1,19 @@
+<!-- <div fxLayout="column" fxLayoutAlign="center center" class="fw fh">
+    <span class="text3 ft16">No hay equipos cargados </span>
+</div> -->
+
+<div class="mgl0 menuToolbar">
+    <span class="textButton" [matMenuTriggerFor]="menu">
+        <span class="ft16">{{tipoEquipo}}</span>
+        <mat-icon class="ft20">arrow_drop_down</mat-icon>
+    </span>
+</div>
+
+<mat-menu #menu="matMenu" class="contextMenu">
+    <li class="menuItem" (click)="tipoEquipo = 'Compresor'">Compresor</li>
+    <li class="menuItem" (click)="tipoEquipo = 'Turbina'">Turbina</li>
+</mat-menu>
+
+
+<configuracion-compresor *ngIf="tipoEquipo==='Compresor'"></configuracion-compresor>
+<configuracion-turbina *ngIf="tipoEquipo==='Turbina'"></configuracion-turbina>

@@ -1,16 +1,70 @@
 
-<span>{{tren.tag}}</span>
-<div fxLayout="row" fxLayoutGap="2rem">
-    <div *ngFor="let item of tren.equipos" class="boxContainer">
-        <span class="cursorPointer">{{item.tipo}}</span>
+
+
+<div class="mgl0 menuToolbar" fxLayoutAlign="space-between" >
+    <div fxLayout="row">
+        <span class="textButton" [matMenuTriggerFor]="menu">
+            <span class="ft22">{{tren.tag}}TREN TAG</span>
+            <mat-icon class="ft26">arrow_drop_down</mat-icon>
+        </span>
     </div>
 
-</div>
-<button (click)="anexarEquipo()">Agregar Equipo</button>
-<br>
-<br>
-<div>
 
-    <configuracion-compresor></configuracion-compresor>
+    <div fxLayoutAlign="space-between">
+    <!-- <span class="textButton" [matMenuTriggerFor]="menu">
+        <span class="ft16">Nuevo tren</span>
+    </span> -->
+    <mat-icon class="iconButton ft26" placeholder="Agregar tren" [matMenuTriggerFor]="menu">add</mat-icon>
+    <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+    <!-- <button (click)="anexarEquipo()" class="standard">Agregar equipo</button> -->
+</div>
+</div>
+
+<mat-menu #menu="matMenu" class="contextMenu">
+    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200A'">Compresor</li>
+    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200B'">Turbina</li>
+</mat-menu>
+
+
+
+
+
+
+
+
+<div fxLayout="column" fxLayoutAlign="center center" class="fw fh">
+
+
+    
+
+
+    <div class="trenContainer">
+        <div fxLayout="row" fxLayoutGap="2rem">
+
+            <div *ngFor="let item of tren.equipos" class="boxContainer">
+                <span class="cursorPointer">{{item.tipo}}</span>
+                <span class="cursorPointer">{{item.tag}}</span>
+                <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    
+
+            <div fxLayout="row" fxLayoutGap="2rem">
+            <div class="boxContainer cursorPointer">
+                <mat-icon (click)="anexarEquipo()" class="text3 ftxxl">add</mat-icon>
+            </div>
+        </div>
+
+
+    <mat-menu #menu="matMenu" class="contextMenu">
+        <li class="menuItem">Configurar</li>
+        <li class="menuItem">Cambiar nombre</li>
+        <li class="menuItem">Mover a la izquierda</li>
+        <li class="menuItem">Mover a la derecha</li>
+        <li class="menuItem">Eliminar</li>
+    </mat-menu>
+
 
 </div>

@@ -1,3 +1,4 @@
+/* You can add global styles to this file, and also import other style files */
 /* @import 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
@@ -225,6 +226,7 @@ body {
 
 
 [data-theme="light"] {
+    
 
   /* System colors */
   --neutral1: rgb(249, 249, 249); /* System default background */
@@ -253,7 +255,7 @@ body {
   --accent2: #60ccfe;
   --accent3: #0093f9;
   --accent4: rgb(0, 120, 212);
-  --accent5: rgba(0, 95, 184, 1);  /* Rest */
+  --accent5: #005fb8;  /* Rest */
   --accent6: #003D92;
   --accent7: #001968;
 
@@ -312,7 +314,6 @@ body {
   --oaText2: rgba(255, 255, 255, 1); /* Hover */
   --oaText3: rgba(255, 255, 255, 1); /* Pressed */
   --oaTextD: rgba(255, 255, 255, 1); /* Disabled */
-
 }
 
 
@@ -320,7 +321,7 @@ body {
 
 /* System colors */
 .minContrast{ background: var(--minContrast);}
-.neutralFill1{ background: var(--neutral1);}
+.neutralFill1{ background: var(--neutral1) !important;}
 .neutralFill2{ background: var(--neutral2);}
 .neutralFill3{ background: var(--neutral3);}
 .neutralFill4{ background: var(--neutral4);}
@@ -418,7 +419,7 @@ body {
 .noBullet{  list-style: NA!important; }
 .overl{  text-decoration: overline!important; }
 .line-th{  text-decoration: line-through!important; }
-.undrl{  font-style: underline!important; }
+.underline{  font-style: underline!important; }
 .ital{  font-style: italic!important; }
 .obliq{  font-style: oblique!important; }
 .linkIcon{ font-size: 1em; padding: 0px; margin: 0; height: auto !important; width: auto !important; }
@@ -642,6 +643,7 @@ body {
 .vw100{width: 100vw;}
 
 .scale07{ transform: scale(.7);}
+.displayNone{ display: none !important;}
 
 
 
@@ -780,14 +782,14 @@ caption{
     font-size: .75rem !important;
     line-height: 1rem !important;
     color: var(--text1) !important;
-    white-space: nowrap;
-    width: fit-content;
+    white-space: nowrap !important;
+    width: fit-content !important;
 }
 
 label {
-    font-size: .75rem;
-    line-height: 1rem;
-    color: var(--text1);
+    font-size: .75rem!important;
+    line-height: 1rem!important;
+    color: var(--text1)!important;
 }
 
 /* body text */
@@ -799,49 +801,49 @@ p,span{
 
 /* body strong text */
 h6{
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: var(--text1);
+    font-size: 0.875rem!important;
+    line-height: 1.25rem!important;
+    color: var(--text1)!important;
     /* semibold */
     
 }
 
 /* body large text */
 h5{
-    font-size: 1.125rem;
-    line-height: 1.5rem;
-    color: var(--text1);
+    font-size: 1.125rem!important;
+    line-height: 1.5rem!important;
+    color: var(--text1)!important;
 }
 
 /* subtitle text */
 h4{
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    color: var(--text1);
+    font-size: 1.25rem!important;
+    line-height: 1.75rem!important;
+    color: var(--text1)!important; 
     /* semibold */
 }
 
 /* title text */
 h3{
-    font-size: 1.75rem;
-    line-height: 2.25rem;  
-    color: var(--text1);
+    font-size: 1.75rem !important;
+    line-height: 2.25rem !important;
+    color: var(--text1) !important;
         /* semibold */
 }
 
 /* title large text */
 h2{
-    font-size: 2.5rem;
-    line-height: 3.25rem;
-    color: var(--text1);
+    font-size: 2.5rem !important;
+    line-height: 3.25rem !important;
+    color: var(--text1) !important;
         /* semibold */
 }
 
 /* display text */
 h1{
-    font-size: 4.25rem;
-    line-height: 5.75rem;
-    color: var(--text1);
+    font-size: 4.25rem !important;
+    line-height: 5.75rem !important;
+    color: var(--text1) !important;
         /* semibold */
 }
 
@@ -891,21 +893,40 @@ h1{
     cursor: pointer;
 }
 
+/* ICONS */
+
+.mat-icon{
+    padding: 0px;
+    margin: 0px;
+    height: fit-content !important; 
+    width: fit-content !important;
+    color: var(--text2);
+}
+
+.iconBorder{
+    border: 2px solid var(--text2);
+}
+
+.edIcon{
+    padding: 3px !important;
+    color: var(--oaText1) !important;
+}
+
+
 .iconButton{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 6px !important;
+    padding: 6px;
     min-width: auto;
-    height: 32px;
-    background: transparent;
-    border-radius: var(--defaultBorderRadius);
-    color: var(--text1);
-    transition: .1s;
+    min-height: 32px !important;
+    background: transparent !important;
+    border-radius: var(--defaultBorderRadius) !important;
+    color: var(--text1) !important;
+    transition: .1s !important;
     font-size: 20px;
-    cursor: pointer;
-    
+    cursor: pointer !important;
 }
 
 .textButton:hover, .iconButton:hover{
@@ -919,7 +940,7 @@ h1{
 
 .selected1, .selected1:hover, .selected1:active{
     background: var(--accent5) !important;
-    color: var(--oaText1);
+    color: var(--oaText1) !important;
     cursor: default !important;
 }
 
@@ -978,7 +999,7 @@ h1{
 
 /* mat menu */
 
-::ng-deep .contextMenu{
+.contextMenu{
     position: relative;
     background: var(--neutral1) !important;
     box-shadow: var(--shadow32) !important;
@@ -992,28 +1013,28 @@ h1{
     margin-left: 4px !important;
 }
 
-::ng-deep .menuItem{
+.menuItem{
     width: fit-content !important;
     min-width: 160px;
     height: 40px !important;
 }
 
-::ng-deep .menuItem:first-child, .mat-menu-item:first-child{
+.menuItem:first-child, .mat-menu-item:first-child{
     margin-top: -4px !important;
 }
 
-::ng-deep .menuItem:last-child, .mat-menu-item:last-child{
+.menuItem:last-child, .mat-menu-item:last-child{
     margin-bottom: -4px !important;
 }
 
-::ng-deep .mat-menu-item{
+.mat-menu-item{
     height: 40px !important;
     width: fit-content !important;
     padding-right: 96px !important;
     margin-right: 0px !important;
 }
 
-::ng-deep .mat-menu-item:hover{
+.mat-menu-item:hover{
     background: var(--neutral3) !important;
 }
 
@@ -1036,7 +1057,7 @@ h1{
 
 /* slide toggle */
 
-::ng-deep .mat-slide-toggle-bar{
+.mat-slide-toggle-bar{
     width: 40px !important;
     height: 20px !important;
     border-radius: 10px !important;
@@ -1044,7 +1065,7 @@ h1{
     background: var(--stroke1);
 }
 
-::ng-deep .mat-slide-toggle-thumb {
+.mat-slide-toggle-thumb {
     background-color: var(--strokeStrong);
     position: relative !important;
     top: 6px !important;
@@ -1054,13 +1075,13 @@ h1{
     box-shadow: none;
 }
 
-::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: var(--neutral1); 
     position: relative !important;
     left: 8px;
 }
 
-::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
     background-color: var(--accentControl3); 
 }
 
@@ -1174,19 +1195,19 @@ Yb    dP    db    88""Yb 88  dP"Yb  .dP"Y8
 
 /* link */
 
-a {
-    color: var(--accent5);
+a, .accentLink {
+    color: var(--accent5) !important;
     text-decoration: underline !important;
     transition: .1s;
 }
 
-a:hover{
-    color: var(--aText2);
+a:hover, .accentLink:hover{
+    color: var(--aText2) !important;
     text-decoration: none !important;
 }
 
-a:active{
-    color: var(--aText3);
+a:active, .accentLink:active{
+    color: var(--aText3) !important;
 }
 
 .aDisabled{
@@ -1275,6 +1296,12 @@ a:active{
     background: var(--accent5);
 }
 
+.mat-badge-content {
+    background: var(--red5) !important;
+    color: var(--oaText1) !important;
+    font-size: 10px !important;
+}
+
 .circle{
     background: var(--accent5);
     height: 12px !important;
@@ -1282,25 +1309,16 @@ a:active{
     border-radius: 100%;
 }
 
-/* ICONS */
 
-::ng-deep .mat-icon{
-    padding: 0px !important;
-    margin: 0px !important;
-    height: fit-content !important; 
-    width: fit-content !important;
-    border-radius: 100%;
-    color: var(--text2);
-}
+.cursorPointer{
+    cursor: pointer;
+  }
+  
+  .cursorDefault{
+    cursor: default !important;
+  }
+  
 
-.iconBorder{
-    border: 2px solid var(--text2);
-}
-
-.edIcon{
-    padding: 3px !important;
-    color: var(--oaText1) !important;
-}
 
 
 /* snackbar */
@@ -1494,19 +1512,20 @@ label {
 }
 
 input, textarea, select{
-    /* height: 32px;
+    height: 32px;
     font-size: 14px !important;
     background: var(--control1) !important;
     border: 1px solid var(--stroke1);
-    border-bottom: 2px solid var(--strokeStrong);
+    border-bottom: 1px solid var(--strokeStrong);
     border-radius: var(--defaultBorderRadius);
+    /* box-shadow: var(--shadow8); */
     padding-left: 12px;
     padding-right: 12px;
-    color: var(--text2) !important; */
+    color: var(--text2) !important;
 }
 
 textarea{
-    min-height: 100px;
+    min-height: 80px;
     padding-top: 8px !important;
 }
 
@@ -1552,14 +1571,14 @@ input:disabled, textarea:disabled {
     user-select: none;
 }
 
-::ng-deep .mat-select-panel {
+.mat-select-panel {
     margin-top: 50px; 
     border: 1px solid var(--stroke1);
     box-shadow: var(--shadow32) !important;
     background: var(--neutral2);
 } 
 
-::ng-deep .mat-option{
+.mat-option{
     height: 40px !important;
     margin: 4px !important;
     border-radius: var(--defaultBorderRadius);
@@ -1568,7 +1587,7 @@ input:disabled, textarea:disabled {
     background: var(--neutral2);
 }
 
-::ng-deep .mat-option.mat-active {
+.mat-option.mat-active {
     margin: 4px !important;
     border-radius: var(--defaultBorderRadius);
     padding-left: 12px !important;
@@ -1576,11 +1595,11 @@ input:disabled, textarea:disabled {
     background: var(--neutral3) !important;
   }
 
-:ng-deep .optionItem{
+.optionItem{
     color: var(--text1) !important;
 }
 
-::ng-deep .mat-option:hover{
+.mat-option:hover{
     margin: 4px !important;
     border-radius: var(--defaultBorderRadius);
     padding-left: 12px !important;
@@ -1629,6 +1648,7 @@ textarea:focus::-webkit-scrollbar-thumb {
 /* CHECKBOX */
 .mat-checkbox .mat-checkbox-frame {
     border-color: var(--strokeStrong) !important;
+    margin: 0px !important;
   }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
@@ -1640,15 +1660,16 @@ textarea:focus::-webkit-scrollbar-thumb {
 }
 
 .mat-checkbox{
-    padding-top: 20px !important;
-    padding: 0px !important;
-    margin: 0px !important;
-    padding-top: 4px !important;
-    padding-bottom: 5px !important;
+    padding-top: 2px !important;
+    background-color: violet;
+
+    /* padding-bottom: 32px !important; */
     height: 32px !important;
 }
 
 .checkboxContainer{
+    margin-top: 0px !important;
+    padding-top: 0px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: start !important;
@@ -1684,7 +1705,7 @@ textarea:focus::-webkit-scrollbar-thumb {
 
 
 
-::ng-deep .mat-radio-group{
+ .mat-radio-group{
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -1692,19 +1713,19 @@ textarea:focus::-webkit-scrollbar-thumb {
     padding-right: 12px;
 }
 
-::ng-deep .mat-radio-outer-circle{
+.mat-radio-outer-circle{
     border-color:var(--strokeStrong) !important; 
   }
   
-::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
     border: solid 6px var(--accent5) !important;
   }
   
-::ng-deep   .mat-radio-button.mat-accent .mat-radio-inner-circle{
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
     background-color: var(--minContrast);
 }
 
-::ng-deep .mat-radio-label-content{
+ .mat-radio-label-content{
     color: var(--text1) !important;
 }
 
@@ -1762,6 +1783,23 @@ textarea:focus::-webkit-scrollbar-thumb {
     box-shadow: var(--shadow128);
 }
 
+.mat-dialog-container {
+    padding: 0px !important;
+    border-radius: var(--appSurfaceBorderRadius) !important;
+    border: solid 1px var(--surfaceStroke) !important;
+    box-shadow: none;
+    box-shadow: var(--shadow128);
+}
+
+
+::ng-deep .cdk-overlay-container {
+    /* Do you changes here */
+    /* position: fixed;  */
+    /* z-index: 1000; */
+    /* backdrop-filter: blur(5px); */
+    /* background-color: rgb(0, 0, 0,.44); */
+}
+
 .dialogBar{
     height: 80px;
     width: 100%;
@@ -1769,6 +1807,7 @@ textarea:focus::-webkit-scrollbar-thumb {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
+
 
 .toolbar{
     display: flex;
@@ -1818,7 +1857,7 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
     border-top: 1px solid var(--stroke1);
     border-left: 1px solid var(--stroke1);
     border-radius: 7px;
-    padding: 12px;
+    padding: 32px;
 }
 
 .card{
@@ -1955,13 +1994,21 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
     border-radius: var(--defaultBorderRadius);
     min-width: 192px;
     color: var(--text1);
+    background: var(--card);
+    border: solid 1px var(--stroke1);
+    box-shadow: var(--shadow8);
+    margin-bottom: 8px;
+    padding: 10px;
+    padding-left: 0px;
+    cursor: pointer;
+    user-select: none;
 }
 
 .node:hover{
-    background: var(--neutral3)
+    background: var(--neutral2)
 }
 
-.edSpace, .emptySpace{
+.filledSpace, .emptySpace{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -1969,7 +2016,7 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
     padding: 0px !important;
     width: 12px !important;
     height: 12px !important;
-    margin-left: 24px !important;
+    margin-left: 12px !important;
     margin-right: 14px !important;
     font-size: 14px !important;
     color: var(--text1);
@@ -1978,19 +2025,18 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
 
 /* mat expansion panel */
 
-::ng-deep .mat-expansion-panel{
+.mat-expansion-panel{
     box-shadow: none !important;
     border-radius: 0px !important;
     margin-bottom: 0px !important;
     margin-top: 0px !important;
     border: 1px solid var(--stroke1) !important;
     border-bottom: 0px !important;
-    width: 600px; 
     background: var(--control1) !important;
     color: var(--text1) !important;
 }
 
-::ng-deep .mat-expansion-panel-header{
+.mat-expansion-panel-header{
     padding-left: 16px !important;
     padding-right: 16px !important;
     background: transparent !important;
@@ -1998,20 +2044,20 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
 }
 
 
-::ng-deep  .mat-expansion-panel:first-child{
+ .mat-expansion-panel:first-child{
     border-radius: 0px;
     border-top-left-radius: 4px !important;
     border-top-right-radius: 4px !important;
 }
 
-::ng-deep  .mat-expansion-panel:last-child{
+ .mat-expansion-panel:last-child{
     border-radius: 0px;
     border-bottom-left-radius: 4px !important;
     border-bottom-right-radius: 4px !important;
     border-bottom: 1px solid var(--stroke1) !important;
 }
 
-::ng-deep .mat-expansion-panel-body{
+.mat-expansion-panel-body{
     padding-left: 16px !important;
     padding-right: 16px !important;
     padding-top: 12px !important;
@@ -2059,3 +2105,5 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
      html{font-size: 16px !important; }
   }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

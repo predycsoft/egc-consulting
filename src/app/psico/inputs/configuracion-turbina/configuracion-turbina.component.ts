@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-configuracion-turbina',
+  selector: 'configuracion-turbina',
   templateUrl: './configuracion-turbina.component.html',
   styleUrls: ['./configuracion-turbina.component.css']
 })

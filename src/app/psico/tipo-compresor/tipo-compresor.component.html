@@ -1,0 +1,31 @@
+
+
+<div fxLayout="column" class="w200px">
+    <div>
+        <label for="">Tag</label>
+        <input type="text" class="fw">
+    </div>
+    <div>
+        <label for="">Select</label>
+        <mat-select ([ngModel])="modelo">
+          <mat-option class="optionItem"> TITAN 250 </mat-option>
+          <mat-option class="optionItem"> Option item 2</mat-option>
+          <mat-option class="optionItem"> Option item 3 </mat-option>
+        </mat-select>
+    </div>
+    <div>
+        <label for="">Fabricante</label>
+        <input type="text" class="fw">
+    </div>
+    <div>
+        <label for="">Select</label>
+        <mat-select [(ngModel)]="tipologia">
+          <mat-option [value]="'In-line'" class="optionItem"> In-line </mat-option>
+          <mat-option [value]="'Back to Back'" class="optionItem"> Back to Back</mat-option>
+          <mat-option [value]="'Double suction'" class="optionItem"> Double suction</mat-option>
+          <mat-option [value]="'Sidestream (3 secciones)'" class="optionItem"> Sidestream (3 secciones) </mat-option>
+          <mat-option [value]="'Sidestream (4 secciones)'"  class="optionItem"> Sidestream (4 secciones) </mat-option>
+        </mat-select>
+    </div>
+
+</div>

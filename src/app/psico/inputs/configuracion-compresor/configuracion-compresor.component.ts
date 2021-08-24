@@ -85,7 +85,7 @@ interface cromatografia{
 })
 export class ConfiguracionCompresorComponent implements OnInit {
 
-  tabSelected: any;
+  tabSelected: string = 'general';
 
   constructor() { }
 

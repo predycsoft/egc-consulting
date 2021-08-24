@@ -1,18 +1,21 @@
-Cantidad de Condiciones de operacion
-
-<table>
-
-    <tr>
-        <th></th>
-        <th> </th>
-    </tr>
-    <button (click)="nuevaColumna()">Agregar Columna</button>
-    <tr *ngFor="let item of operatingConditions[0] | keyvalue: returnZero; let val=index; trackBy:customTrackBy">
-        <td>{{this.variables[val]}}</td>
-        <td> select </td>
-        <td *ngFor="let valores of operatingConditions ; let i=index;">
-            <input type="number" [(ngModel)]="operatingConditions[i][item.key]"
-                [ngModelOptions]="{standalone: true}">
-        </td>
-    </tr>
-</table>
+<div class="tableContainer">
+    <div class="firstRow" fxLayoutAlign="space-between center">
+        <span class="ft16 text2">Caracteristicas del compresor</span>
+        <span class="textButton" (click)="nuevaColumna()">Agregar columna</span>
+    </div>
+    <table>
+        <tr>
+            <th>Propiedad</th>
+            <th>Unidades</th>
+            <th>Valor</th>
+        </tr>
+        <tr *ngFor="let item of operatingConditions[0] | keyvalue: returnZero; let val=index; trackBy:customTrackBy">
+            <td>{{this.variables[val]}}</td>
+            <td> select </td>
+            <td *ngFor="let valores of operatingConditions ; let i=index;">
+                <input type="number" [(ngModel)]="operatingConditions[i][item.key]"
+                    [ngModelOptions]="{standalone: true}">
+            </td>
+        </tr>
+    </table>
+</div>

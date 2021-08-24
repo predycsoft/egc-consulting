@@ -1,35 +1,42 @@
 <!-------------------------------------------------------------------- Cromatografía del gas -->
 
-<div fxLayout="row" fxLayoutGap="3rem">
+<div fxLayout="row" fxLayoutGap="2rem">
 
 
     <!-------------------------------------------------------------------- Cromatografía del gas -->
 
-    <div>
-        <table>
-            <tr>
-                <th>Componente</th>
-                <th>Formula</th>
-                <th>Peso Molecular</th>
-                <th>Fraccion Molar</th>
-                <th>Normalizado</th>
-            </tr>
-            <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy">
-                <td>{{this.cromatografia[i].nombre}}</td>
-                <td>{{this.cromatografia[i].formula}}</td>
-                <td>{{this.cromatografia[i].pesoMolecular}}</td>
-                <td> <input type="text" [(ngModel)]="this.cr[item.key]"></td>
-                <td>{{this.cromatografia[i].normalizado}}</td>
-            </tr>
-        </table>
+    <div fxFlex=70%>
 
+        <div class="tableContainer">
+            <div class="firstRow" fxLayoutAlign="space-between center">
+                <span class="ft16 text2">Mezcla de Gas</span>
+                <span class="textButton" (click)="normalizar()">Normalizar</span>
+            </div>
+            <table class="fw">
+                <tr>
+                    <th>Componente</th>
+                    <th>Formula</th>
+                    <th>Peso Molecular</th>
+                    <th>Fracción Molar</th>
+                </tr>
+                <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy">
+                    <td>{{this.cromatografia[i].nombre}}</td>
+                    <td>{{this.cromatografia[i].formula}}</td>
+                    <td>{{this.cromatografia[i].pesoMolecular}}</td>
+                    <td> <input type="number" [(ngModel)]="this.cr[item.key]" class="w100px"></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{fraccMolarTotal}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <br>
         <p> Nota: debe introducir la fraccion molar de cada componente.</p>
-        <button (click)="normalizar()">Normalizar</button>
-        {{fraccMolarTotal}}
-        <br>
-        {{cromatografia | json}}
-        <br>
-        {{cr | json}}
+
     </div>
 
 
@@ -37,79 +44,81 @@
     <!-------------------------------------------------------------------- Propiedades del gas -->
 
     <div>
-        <table>
-            <tr>
-                <td>Presión</td>
-                <td> select </td>
-                <td><input type="number"></td>
+        <div class="firstRow" fxLayoutAlign="space-between center">
+            <span class="ft16 text2">Propiedades del gas</span>
+            <span class="textButton" (click)="normalizar()">Calcular</span>
+        </div>
+        <div class="tableContainer">
+            <table>
+                <tr>
+                    <td>Presión</td>
+                    <td> select </td>
+                    <td><input type="number" class="w100px"></td>
 
-            </tr>
-            <tr>
-                <td>Temperatura</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-
-            </tr>
-
-            <p>Propiedades calculadas del gas</p>
-            <tr>
-                <td>Densidad</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Volumen</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Entalpia</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Entropia</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Peso molecular</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Compresibilidad</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Calidad</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>LHV</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>HHV</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>Gravedad Específica</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-            <tr>
-                <td>W.I.</td>
-                <td> select </td>
-                <td> <input type="number"> </td>
-            </tr>
-        </table>
+                </tr>
+                <tr>
+                    <td>Temperatura</td>
+                    <td> select </td>
+                    <td> <input type="number" class="w100px"> </td>
+                </tr>
+                <tr>
+                    <td>Densidad</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.densidad}} </td>
+                </tr>
+                <tr>
+                    <td>Volumen</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.volumen}} </td>
+                </tr>
+                <tr>
+                    <td>Entalpia</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.entalpia}} </td>
+                </tr>
+                <tr>
+                    <td>Entropia</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.entropia}} </td>
+                </tr>
+                <tr>
+                    <td>Peso molecular</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.pesoMolecular}} </td>
+                </tr>
+                <tr>
+                    <td>Compresibilidad</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.compresibilidad}} </td>
+                </tr>
+                <tr>
+                    <td>Calidad</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.calidad}} </td>
+                </tr>
+                <tr>
+                    <td>LHV</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.LHV}} </td>
+                </tr>
+                <tr>
+                    <td>HHV</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.HHV}} </td>
+                </tr>
+                <tr>
+                    <td>Gravedad Específica</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.gravedadEspecifica}} </td>
+                </tr>
+                <tr>
+                    <td>W.I.</td>
+                    <td> select </td>
+                    <td> {{propidadesCromatografia.wi}} </td>
+                </tr>
+            </table>
+        </div>
     </div>
 
 
 </div>
-

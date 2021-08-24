@@ -31,6 +31,7 @@ export class ConfiguracionTrenComponent implements OnInit {
   ) { }
 
   tipoSimulacion: "real" | "teorica" | "ambas";
+  trenSeleccionado: string = 'TC-5200A';
 
   nuevo = true
   tren: tren = {
