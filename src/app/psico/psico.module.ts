@@ -34,6 +34,8 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-documento.component';
 import { CurvasComponent } from './curvas/curvas.component';
 import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.component';
+import { EnvioDataComponent } from './envio-data/envio-data.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -67,7 +69,8 @@ import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.componen
     DocumentosComponent,
     DialogDocumentoComponent,
     CurvasComponent,
-    TipoCompresorComponent
+    TipoCompresorComponent,
+    EnvioDataComponent
   ],
   imports: [
     CommonModule,
@@ -76,6 +79,7 @@ import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.componen
     FormsModule,
     NgxChartsModule,
     SharedModule,
+    HttpClientModule,
   ]
 })
 export class PsicoModule { }
