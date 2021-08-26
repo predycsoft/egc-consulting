@@ -35,6 +35,8 @@ import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-docu
 import { CurvasComponent } from './curvas/curvas.component';
 import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.component';
 import { DialogPolinomiosCurvasComponent } from './dialog-polinomios-curvas/dialog-polinomios-curvas.component';
+import { EnvioDataComponent } from './envio-data/envio-data.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -69,7 +71,8 @@ import { DialogPolinomiosCurvasComponent } from './dialog-polinomios-curvas/dial
     DialogDocumentoComponent,
     CurvasComponent,
     TipoCompresorComponent,
-    DialogPolinomiosCurvasComponent
+    DialogPolinomiosCurvasComponent,
+    EnvioDataComponent
   ],
   imports: [
     CommonModule,
@@ -78,6 +81,7 @@ import { DialogPolinomiosCurvasComponent } from './dialog-polinomios-curvas/dial
     FormsModule,
     NgxChartsModule,
     SharedModule,
+    HttpClientModule,
   ]
 })
 export class PsicoModule { }
