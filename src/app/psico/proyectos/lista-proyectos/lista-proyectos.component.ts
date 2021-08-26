@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { DataServiceService, Proyecto } from '../../services/data-service.service';
-import { DialogNuevoProyectoComponent } from '../dialogs/dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
-import { DialogService } from '../../services/dialog.service';
+import { DataServiceService, Proyecto } from '../../../services/data-service.service';
+import { DialogNuevoProyectoComponent } from '../dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
-  selector: 'app-proyectos',
-  templateUrl: './proyectos.component.html',
-  styleUrls: ['./proyectos.component.css']
+  selector: 'lista-proyectos',
+  templateUrl: './lista-proyectos.component.html',
+  styleUrls: ['./lista-proyectos.component.css']
 })
-export class ProyectosComponent implements OnInit {
+export class ListaProyectosComponent implements OnInit {
 
   proyectos: Proyecto[];
   sub: Subscription;
