@@ -1,25 +1,24 @@
-  
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { switchMap, map } from 'rxjs/operators';
 
-export class ENT {
-  rol: string = "";
-  nombre: string= "";
-  cargo: string= "";
-  empresa: string= "";
-  correo: string= "";
+export class tren {
+  tag: string = "";
+  equipos: equipo_tren[] = [];
 }
 
-export class evento {
-fecha: Date = new Date();
-descripcion: string = "";
+export class equipo_tren {
+  tag: string = "";
+  orden: number = 0;
+  familia: string = "";
+  tipologia: string = "";
 }
 
 export class Proyecto {
   id: string = "";
+  userId: string = "";
   titulo: string  = "";
   fechaCreacion: any = new Date;
   revision: string = "A";
@@ -29,12 +28,7 @@ export class Proyecto {
   objetivo: string  = "";
   alcance: string  = "";
   premisas: string  = "";
-  vista: string  = "";
-  colorMode: string  = "";
-  userId: string  = "";
-  ent: ENT[] = [];
-  eventos: evento[] = []
-
+  trenes: tren[] = [];
 }
 
 export class Usuario {
@@ -46,6 +40,27 @@ export class Usuario {
   id: string = "";
   nombre: string = "";
   telefono: string = "";
+}
+
+export class equipo {
+  fabricante: string = "";
+  modelo: string = "";
+  curvas: string = "";
+  mapas: string = "";
+  datosTecnicos: string = "";
+  documentos: file[] = [];
+}
+
+export class file {
+  nombre: string = "";
+  size: number = 0;
+  type: string = "";
+  url: string = "";
+  descripcion: string = "";
+}
+
+export class curvas {
+
 }
 
 
@@ -110,7 +125,7 @@ export class DataServiceService {
    */
    obtenerProyecto(proyectoId: string) {
      return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).valueChanges()
-   } 
+   }
 
    updateProyecto(proyectoId: string, proyecto: Proyecto) {
      return this.afs.collection("proyectos").doc(proyectoId).update({
@@ -135,71 +150,71 @@ export class DataServiceService {
   /**
    * Actualizar
    */
-  updateENT(proyectoId: string, ent: ENT[]) {
-    return this.afs
-      .collection('proyectos')
-      .doc(proyectoId)
-      .set({ent: ent}, {merge:true});
-  }
+  // updateENT(proyectoId: string, ent: ENT[]) {
+  //   return this.afs
+  //     .collection('proyectos')
+  //     .doc(proyectoId)
+  //     .set({ent: ent}, {merge:true});
+  // }
 
-  /// 
-  anadirENT(proyectoId: string, ent: ENT) {
-    return this.afs
-      .collection('proyectos')
-      .doc(proyectoId)
-      .update({
-        ent: firebase.firestore.FieldValue.arrayUnion(Object.assign({},ent))
-      });
-  }
+  // /// 
+  // anadirENT(proyectoId: string, ent: ENT) {
+  //   return this.afs
+  //     .collection('proyectos')
+  //     .doc(proyectoId)
+  //     .update({
+  //       ent: firebase.firestore.FieldValue.arrayUnion(Object.assign({},ent))
+  //     });
+  // }
 
   /**
    * Remover 
    */
-  eliminarENT(proyectoId: string, ent: ENT) {
-    return this.afs
-      .collection('proyectos')
-      .doc(proyectoId)
-      .update({
-        ent: firebase.firestore.FieldValue.arrayRemove(ent)
-      });
-  }
+  // eliminarENT(proyectoId: string, ent: ENT) {
+  //   return this.afs
+  //     .collection('proyectos')
+  //     .doc(proyectoId)
+  //     .update({
+  //       ent: firebase.firestore.FieldValue.arrayRemove(ent)
+  //     });
+  // }
 
   
    /////////////////////////////////////////////////////////////////////////////
    /////////////////////////////////////////////////////////////////////////////
    /////////////////EVENTOS////////////////////////////////////////////////////////
 
-  /**
-   * Actualizar
-   */
-   updateEventos(proyectoId: string, eventos: evento[]) {
-    return this.afs
-      .collection('proyectos')
-      .doc(proyectoId)
-      .update({eventos});
-  }
+  // /**
+  //  * Actualizar
+  //  */
+  //  updateEventos(proyectoId: string, eventos: evento[]) {
+  //   return this.afs
+  //     .collection('proyectos')
+  //     .doc(proyectoId)
+  //     .update({eventos});
+  // }
 
-  /// 
-  anadirEvento(proyectoId: string, evento: evento) {
-    return this.afs
-      .collection('proyectos')
-      .doc(proyectoId)
-      .update({
-        eventos: firebase.firestore.FieldValue.arrayUnion(Object.assign({},evento))
-      });
-  }
+  // /// 
+  // anadirEvento(proyectoId: string, evento: evento) {
+  //   return this.afs
+  //     .collection('proyectos')
+  //     .doc(proyectoId)
+  //     .update({
+  //       eventos: firebase.firestore.FieldValue.arrayUnion(Object.assign({},evento))
+  //     });
+  // }
 
-  /**
-   * Remover 
-   */
-  eliminarEvento(proyectoId: string, evento: evento) {
-    return this.afs
-      .collection('proyectos')
-      .doc(proyectoId)
-      .update({
-        eventos: firebase.firestore.FieldValue.arrayRemove(evento)
-      });
-  }
+  // /**
+  //  * Remover 
+  //  */
+  // eliminarEvento(proyectoId: string, evento: evento) {
+  //   return this.afs
+  //     .collection('proyectos')
+  //     .doc(proyectoId)
+  //     .update({
+  //       eventos: firebase.firestore.FieldValue.arrayRemove(evento)
+  //     });
+  // }
 
 
   // ##     ##  ######  ##     ##    ###    ########  ####  #######   ######  
