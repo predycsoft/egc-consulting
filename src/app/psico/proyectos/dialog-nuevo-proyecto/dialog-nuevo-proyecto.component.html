@@ -1,5 +1,6 @@
-<div>
-    <input type="text" placeholder="Título" [(ngModel)]="proyecto.titulo">
-    <input type="text" placeholder="cliente" [(ngModel)]="proyecto.cliente">
-    <button (click)="guardar()">Guardar</button>
+<div fxLayout="column" class="pdt20 pd10 pdb20 w300px">
+    <h4 class="centertext">Nuevo proyecto</h4>
+    <input type="text" placeholder="Título" [(ngModel)]="proyecto.titulo" class="fw">
+    <button *ngIf="!proyecto.titulo"class="mgt10 standard" disabled>Crear</button>   
+    <button *ngIf="proyecto.titulo" (click)="guardar()" class="mgt10 accent">Crear</button>
 </div>

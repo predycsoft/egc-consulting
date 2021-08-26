@@ -1,4 +1,4 @@
-<div class="neutralFill1 fh fw " fxLayout="column" fxLayoutAlign=" center" >
+<div class="neutralFill1 fh fw " fxLayout="column" fxLayoutAlign=" center">
 
     <div class="topContainer" fxLayout="column" fxLayoutAlign=" center">
         <div class="cw">
@@ -7,7 +7,7 @@
     </div>
 
 
-    <div class="cw" >
+    <div class="cw">
 
         <!-- Lista de proyectos-->
         <div class="fw pdt30">
@@ -16,23 +16,28 @@
                 <button class="accent" (click)="openDialogNuevoProyecto()">Nuevo proyecto</button>
             </div>
             <div class="card" *ngFor="let proyecto of proyectos; let i = index">
-                <mat-icon>insert_drive_file</mat-icon>
-                <div class="mgl08 fw">
-                    <span>
+                <div fxLayout="column " fxLayoutAlign="center">
+                    <mat-icon class="text3">insert_drive_file</mat-icon>
+                </div>
+
+                <div class="mgl08 fw" fxLayout="column">
+                    <span class="ft14">
                         {{proyecto.titulo}}
                     </span>
-                    <p class="mgb0">Rev {{proyecto.revision}}  - Fecha de creacion: {{ this.proyectos[i].fechaCreacion.toDate() | date: 'dd/MM/yyyy'}} </p>
+                    <span class="mgb0">Rev {{proyecto.revision}} - Fecha de creacion: {{
+                        this.proyectos[i].fechaCreacion.toDate() | date: 'dd/MM/yyyy'}} </span>
                 </div>
                 <div>
-                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.menuData = proyecto">more_vert</mat-icon>
+                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.menuData = proyecto">more_vert
+                    </mat-icon>
                 </div>
             </div>
         </div>
-          
-      <mat-menu #menu="matMenu" class="contextMenu">
-        <li class="menuItem">Ir a proyecto</li>
-        <li class="menuItem" (click)="eliminarProyecto(menuData.id)">Eliminar proyecto</li>
-      </mat-menu>
+
+        <mat-menu #menu="matMenu" class="contextMenu">
+            <li class="menuItem">Ir a proyecto</li>
+            <li class="menuItem" (click)="eliminarProyecto(menuData.id)">Eliminar proyecto</li>
+        </mat-menu>
 
     </div>
 </div>
