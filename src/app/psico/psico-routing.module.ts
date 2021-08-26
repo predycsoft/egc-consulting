@@ -7,7 +7,7 @@ import { ConfiguracionTrenComponent } from './proyectos/configuracion-tren/confi
 import { InputsComponent } from './inputs/inputs.component';
 import { ListaProyectosComponent } from './proyectos/lista-proyectos/lista-proyectos.component';
 import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.component';
-import { TrenesComponent } from './proyectos/trenes/trenes.component';
+import { ListaTrenesComponent } from '../psico/proyectos/lista-trenes/lista-trenes.component';
 
 
 const routes: Routes = [
@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'import-csv', component: ImportCsvComponent},
   {path: 'proyectos', component: ListaProyectosComponent},
   {path: "proyecto/:id", component:PsicoDashboardComponent, children: [
-    {path: 'trenes', component:TrenesComponent},
+    {path: 'trenes', component:ListaTrenesComponent},
     {path: 'tren', component: ConfiguracionTrenComponent},
     {path: 'equipo', component: ConfigurarEquipoComponent},
 

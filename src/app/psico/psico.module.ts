@@ -34,7 +34,7 @@ import { InfoGeneralCompresor } from './compresor/info-general-compresor/info-ge
 import { DialogPolinomiosCurvasCompresorComponent } from '../psico/compresor/dialog-polinomios-curvas-compresor/dialog-polinomios-curvas-compresor.component';
 import { EnvioDataComponent } from './envio-data/envio-data.component';
 import { HttpClientModule } from '@angular/common/http';
-import { TrenesComponent } from './proyectos/trenes/trenes.component';
+import { ListaTrenesComponent } from './proyectos/lista-trenes/lista-trenes.component';
 import { DialogNuevoTrenComponent } from './proyectos/dialog-nuevo-tren/dialog-nuevo-tren.component';
 
 
@@ -69,7 +69,7 @@ import { DialogNuevoTrenComponent } from './proyectos/dialog-nuevo-tren/dialog-n
     InfoGeneralCompresor,
     DialogPolinomiosCurvasCompresorComponent,
     EnvioDataComponent,
-    TrenesComponent,
+    ListaTrenesComponent,
     DialogNuevoTrenComponent
   ],
   imports: [

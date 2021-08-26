@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataServiceService, tren } from 'src/app/services/data-service.service';
-import { DialogService } from 'src/app/services/dialog.service';
+import { DataServiceService, tren } from '../../../services/data-service.service';
+import { DialogService } from '../../../services/dialog.service';
 import { DialogNuevoTrenComponent } from '../dialog-nuevo-tren/dialog-nuevo-tren.component';
 
 @Component({
-  selector: 'trenes',
-  templateUrl: './trenes.component.html',
-  styleUrls: ['./trenes.component.css']
+  selector: 'lista-trenes',
+  templateUrl: './lista-trenes.component.html',
+  styleUrls: ['./lista-trenes.component.css']
 })
-export class TrenesComponent implements OnInit {
+export class ListaTrenesComponent implements OnInit {
 
   constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog) { }
 
