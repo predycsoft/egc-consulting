@@ -6,6 +6,7 @@ import { switchMap, map } from 'rxjs/operators';
 
 export class tren {
   tag: string = "";
+  fechaCreacion: any = new Date();
   equipos: equipo_tren[] = [];
 }
 
@@ -50,7 +51,7 @@ export class equipo {
   curvas: curvas = new curvas();
   mapas: mapas = new mapas();
   documentos: file[] = [];
-} 
+}
 
 export class file {
   nombre: string = "";
@@ -74,7 +75,7 @@ export class general {
   numero: number = 0;
 }
 
-export class puntosDatasheet{
+export class puntosDatasheet {
   nombre: string = "";
   numero: number = 0;
 }
@@ -158,9 +159,25 @@ export class DataServiceService {
       .delete();
   }
 
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////ENT////////////////////////////////////////////////////////
+  // Trenes ////////////////////////////////////////////////////////////////////
+
+  anexarTren(proyectoId: string, tren: tren) {
+    return this.afs.collection("proyectos").doc(proyectoId)
+      .update({
+        trenes: firebase.firestore.FieldValue.arrayUnion(Object.assign({}, tren))
+      })
+  }
+
+  eliminarTren(proyectoId: string, tren: tren) {
+    return this.afs
+      .collection('proyectos')
+      .doc(proyectoId)
+      .update({
+        trenes: firebase.firestore.FieldValue.arrayRemove(tren)
+      });
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
 
   /**
    * Actualizar
