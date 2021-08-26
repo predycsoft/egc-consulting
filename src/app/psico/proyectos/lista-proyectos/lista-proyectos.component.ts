@@ -14,17 +14,17 @@ export class ListaProyectosComponent implements OnInit {
 
   proyectos: Proyecto[];
   sub: Subscription;
-  menuData:any;
+  menuData: any;
 
   constructor(public dialog: MatDialog, private data: DataServiceService, public dialogService: DialogService) { }
-  
+
   usuario = JSON.parse(localStorage.getItem("user"));
-  
+
   ngOnInit(): void {
     this.sub = this.data.obtenerProyectosUsuario()
-    .subscribe(proyectos => {
-      this.proyectos = proyectos;
-    })
+      .subscribe(proyectos => {
+        this.proyectos = proyectos;
+      })
   }
 
   openDialogNuevoProyecto() {
