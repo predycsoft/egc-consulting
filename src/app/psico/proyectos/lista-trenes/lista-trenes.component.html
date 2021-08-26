@@ -21,7 +21,7 @@
         </div>
 
       <mat-menu #menu="matMenu" class="contextMenu">
-        <li class="menuItem" >Ir a tren</li>
+        <li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
         <li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
       </mat-menu>
 

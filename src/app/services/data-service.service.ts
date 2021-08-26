@@ -161,6 +161,13 @@ export class DataServiceService {
 
   // Trenes ////////////////////////////////////////////////////////////////////
 
+  updateTren(proyectoId: string, trenes: tren[]) {
+    return this.afs
+      .collection('proyectos')
+      .doc(proyectoId)
+      .set({trenes: trenes}, {merge:true});
+  }
+
   anexarTren(proyectoId: string, tren: tren) {
     return this.afs.collection("proyectos").doc(proyectoId)
       .update({
@@ -176,6 +183,17 @@ export class DataServiceService {
         trenes: firebase.firestore.FieldValue.arrayRemove(tren)
       });
   }
+
+  async anexarEquipo(proyectoId: string, trenTag: string, equipo: equipo_tren) {
+    const proyecto: Proyecto = (await this.afs.collection<Proyecto>("proyectos").doc(proyectoId).ref.get()).data();
+    const trenes: tren[] = proyecto.trenes;
+    const tren: tren = proyecto.trenes[trenTag];
+    const nuevoTren = tren.equipos.concat(equipo);
+    trenes[trenTag] = nuevoTren;
+    return this.updateTren(proyectoId, trenes);
+  }
+
+  
 
   //////////////////////////////////////////////////////////////////////////////////
 

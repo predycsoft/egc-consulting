@@ -1,30 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { equipo_tren, tren } from 'src/app/services/data-service.service';
 import { DialogAgregarEquipoComponent } from '../dialog-agregar-equipo/dialog-agregar-equipo.component';
 
-interface proyecto {
-  empresa: string,
-  instalacion: string,
-  nombre: string,
-  trenes: tren[],
-}
-
-interface tren {
-  tag: string,
-  equipos: equipo[],
-}
-
-interface equipo {
-  tag: string,
-  orden: number,
-  familia: "compresor" | "turbina" | "por definir",
-  tipologia: string,
-}
-
-class prueba {
-  content: string = "";
-  modelo: string = "";
-}
 
 @Component({
   selector: 'configuracion-tren',
@@ -35,39 +14,30 @@ export class ConfiguracionTrenComponent implements OnInit {
 
   constructor(
     public dialogAgregar: MatDialog,
+    private route: ActivatedRoute,
   ) { }
 
   tipoSimulacion: "real" | "teorica" | "ambas";
   trenSeleccionado: string = 'TC-5200A';
-
-  nuevo = true
   proyecto
   tren: tren = {
     tag: "",
+    fechaCreacion: new Date(),
     equipos: [],
   }
-
-  equipo = {
-    tag: "",
-    orden: 0,
-    familia: "compresor",
-    tipologia: "inline"
-  }
-
-  prueba = new prueba();
+  equipo = new equipo_tren()
+  proyectoId: string = "";
+  trenTag: string = ""
 
   ngOnInit(): void {
-    console.log(this.prueba)
-    if (this.nuevo) {
-      this.inicializarTren();
-    } else {
-      this.cargarTren();
-    }
-  }
-
-  inicializarTren() {
-    this.tipoSimulacion = "ambas";
-    this.anexarEquipo()
+    this.route.parent.params.subscribe(params => {
+      this.proyectoId = params.id
+      this.route.params.subscribe(params => {
+        this.trenTag = params.trenTag;
+        console.log(this.proyectoId);
+        console.log(this.trenTag);
+      })
+    })
   }
 
 
@@ -95,14 +65,5 @@ export class ConfiguracionTrenComponent implements OnInit {
     this.equipo = this.tren.equipos[index]
     // abrir ventana
     // al cerrar ventana guardar this.tren.equipos[index] = this.equipo y volver a reininciar
-  }
-
-  cargarTren() {
-    const tren = "tren";
-    return tren;
-  }
-
-  cargarEquipo(index: number) {
-    return true
   }
 }
