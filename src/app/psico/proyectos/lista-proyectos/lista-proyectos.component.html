@@ -24,14 +24,14 @@
                     <p class="mgb0">Rev {{proyecto.revision}}  - Fecha de creacion: {{ this.proyectos[i].fechaCreacion.toDate() | date: 'dd/MM/yyyy'}} </p>
                 </div>
                 <div>
-                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.menuData = proyecto">more_vert</mat-icon>
+                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.idSelected = proyecto.id">more_vert</mat-icon>
                 </div>
             </div>
         </div>
 
       <mat-menu #menu="matMenu" class="contextMenu">
-        <li class="menuItem" routerLink="/psico/proyectos" >Ir a proyecto</li>
-        <li class="menuItem" (click)="eliminarProyecto(menuData.id)">Eliminar proyecto</li>
+        <li class="menuItem" [routerLink]="['/psico/proyecto/',idSelected,'trenes']" >Ir a proyecto</li>
+        <li class="menuItem" (click)="eliminarProyecto(idSelected)">Eliminar proyecto</li>
       </mat-menu>
 
     </div>

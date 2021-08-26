@@ -1,0 +1,29 @@
+<div class="neutralFill1 fh fw " fxLayout="column" fxLayoutAlign=" center" >
+    <div class="cw" >
+        <!-- Lista de proyectos-->
+        <div class="fw pdt30">
+            <div class="mgt30 mgb10" fxLayout="row" fxLayoutAlign="space-between">
+                <h4> Trenes</h4>
+                <button class="accent" (click)="openDialogNuevoTren()">Nuevo tren</button>
+            </div>
+            <div class="card" *ngFor="let tren of trenes; let i = index">
+                <mat-icon>insert_drive_file</mat-icon>
+                <div class="mgl08 fw">
+                    <span>
+                        {{tren.tag}}
+                    </span>
+                    <p class="mgb0">Fecha de creacion: {{ this.trenes[i].fechaCreacion.toDate() | date: 'dd/MM/yyyy'}} </p>
+                </div>
+                <div>
+                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">more_vert</mat-icon>
+                </div>
+            </div>
+        </div>
+
+      <mat-menu #menu="matMenu" class="contextMenu">
+        <li class="menuItem" >Ir a tren</li>
+        <li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
+      </mat-menu>
+
+    </div>
+</div>

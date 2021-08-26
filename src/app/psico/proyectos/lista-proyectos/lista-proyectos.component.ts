@@ -14,7 +14,7 @@ export class ListaProyectosComponent implements OnInit {
 
   proyectos: Proyecto[];
   sub: Subscription;
-  menuData: any;
+  idSelected: string = "";
 
   constructor(public dialog: MatDialog, private data: DataServiceService, public dialogService: DialogService) { }
 
