@@ -42,7 +42,7 @@
         <div fxLayout="row" fxLayoutGap="2rem">
 
             <div *ngFor="let item of tren.equipos" class="boxContainer">
-                <span class="cursorPointer">{{item.tipo}}</span>
+                <span class="cursorPointer">{{item.familia}}</span>
                 <span class="cursorPointer">{{item.tag}}</span>
                 <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu">more_vert</mat-icon>
             </div>

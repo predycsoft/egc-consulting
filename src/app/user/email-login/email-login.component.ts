@@ -5,6 +5,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-login',
@@ -13,7 +15,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class EmailLoginComponent implements OnInit {
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) {
+  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder, private afs: AngularFirestore, private router: Router) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -22,8 +24,8 @@ export class EmailLoginComponent implements OnInit {
       ],
       passwordConfirm: ['', []]
     });
-   }
-  
+  }
+
   form: FormGroup;
   type: 'login' | 'signup' | 'reset' = 'signup';
   loading = false;
@@ -31,7 +33,7 @@ export class EmailLoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
   }
 
   changeType(val: any) {
@@ -77,12 +79,28 @@ export class EmailLoginComponent implements OnInit {
 
     try {
       if (this.isLogin) {
-        await this.afAuth.signInWithEmailAndPassword(email, password);
-        localStorage.setItem('user', JSON.stringify(this.afAuth.currentUser));
+        const credential = await this.afAuth.signInWithEmailAndPassword(email, password);
+        const userDoc = await this.afs.collection("usuarios").doc(credential.user.uid).ref.get();
+        const user = userDoc.data();
+        localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigate(["/psico/proyectos"])
       }
       if (this.isSignup) {
-        await this.afAuth.createUserWithEmailAndPassword(email, password);
-        localStorage.setItem('user', JSON.stringify(this.afAuth.currentUser));
+        const credential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+        const docRef = this.afs.collection("usuarios").doc(credential.user.uid);
+        await docRef.set({
+          id: docRef.ref.id,
+          correo: email,
+          empresa: "",
+          especialidad: "",
+          fechaCreacion: new Date,
+          foto: "",
+          nombre: "",
+          telefono: "",
+        })
+        const user = await docRef.ref.get();
+        localStorage.setItem('user', JSON.stringify(user.data()));
+        this.router.navigate(["/psico/proyectos"])
       }
       if (this.isPasswordReset) {
         await this.afAuth.sendPasswordResetEmail(email);
@@ -90,9 +108,8 @@ export class EmailLoginComponent implements OnInit {
       }
     } catch (err) {
       this.serverMessage = err;
+      console.log(err)
     }
-
     this.loading = false;
   }
-
 }

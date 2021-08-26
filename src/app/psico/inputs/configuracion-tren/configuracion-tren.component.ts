@@ -2,16 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAgregarEquipoComponent } from '../dialog-agregar-equipo/dialog-agregar-equipo.component';
 
+interface proyecto {
+  empresa: string,
+  instalacion: string,
+  nombre: string,
+  trenes: tren[],
+}
+
 interface tren {
   tag: string,
-  cantEquipos: number,
   equipos: equipo[],
 }
 
 interface equipo {
   tag: string,
   orden: number,
-  tipo: "compresor" | "turbina" | "por definir",
+  familia: "compresor" | "turbina" | "por definir",
+  tipologia: string,
 }
 
 class prueba {
@@ -34,19 +41,19 @@ export class ConfiguracionTrenComponent implements OnInit {
   trenSeleccionado: string = 'TC-5200A';
 
   nuevo = true
+  proyecto
   tren: tren = {
     tag: "",
-    cantEquipos: 0,
     equipos: [],
   }
 
   equipo = {
     tag: "",
     orden: 0,
-    tipo: "compresor",
+    familia: "compresor",
+    tipologia: "inline"
   }
 
-  
   prueba = new prueba();
 
   ngOnInit(): void {
@@ -77,7 +84,8 @@ export class ConfiguracionTrenComponent implements OnInit {
       this.tren.equipos = this.tren.equipos.concat({
         tag: result.tagEquipo,
         orden: this.tren.equipos.length,
-        tipo: result.tipoEquipo,
+        familia: result.tipoEquipo,
+        tipologia: result.tipologia
       })
       console.log(this.tren.equipos)
     })
