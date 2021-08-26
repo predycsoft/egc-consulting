@@ -15,16 +15,16 @@ import { MapasCompresorComponent } from './compresor/mapas-compresor/mapas-compr
 import { AdimensionalizacionComponent } from './compresor/adimensionalizacion/adimensionalizacion.component';
 import { ConfiguracionCompresorComponent } from './compresor/configuracion-compresor/configuracion-compresor.component';
 import { ConfiguracionTurbinaComponent } from './turbina/configuracion-turbina/configuracion-turbina.component';
-import { ConfiguracionTrenComponent } from './inputs/configuracion-tren/configuracion-tren.component';
+import { ConfiguracionTrenComponent } from './proyectos/configuracion-tren/configuracion-tren.component';
 import { DatosTecnicosCompresorComponent } from './compresor/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
-import { DialogAgregarEquipoComponent } from './inputs/dialog-agregar-equipo/dialog-agregar-equipo.component';
+import { DialogAgregarEquipoComponent } from './proyectos/dialog-agregar-equipo/dialog-agregar-equipo.component';
 import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.component';
-import { ProyectosComponent } from './proyectos/proyectos.component';
+import { ListaProyectosComponent } from './proyectos/lista-proyectos/lista-proyectos.component';
 import { DialogsComponent } from './dialogs/dialogs.component';
 import { DialogConfirmarComponent } from './dialogs/dialog-confirmar/dialog-confirmar.component';
 import { DialogExitoComponent } from './dialogs/dialog-exito/dialog-exito.component';
 import { DialogFracasoComponent } from './dialogs/dialog-fracaso/dialog-fracaso.component';
-import { DialogNuevoProyectoComponent } from './dialogs/dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
+import { DialogNuevoProyectoComponent } from './proyectos/dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
 import { MenuVerticalComponent } from './menu-vertical/menu-vertical.component';
 import { ConfigurarEquipoComponent } from './configurar-equipo/configurar-equipo.component';
 import { DocumentosComponent } from './documentos/documentos.component';
@@ -53,7 +53,7 @@ import { HttpClientModule } from '@angular/common/http';
     DatosTecnicosCompresorComponent,
     DialogAgregarEquipoComponent,
     PsicoDashboardComponent,
-    ProyectosComponent,
+    ListaProyectosComponent,
     DialogsComponent,
     DialogConfirmarComponent,
     DialogExitoComponent,
