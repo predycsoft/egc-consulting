@@ -19,15 +19,15 @@ export class equipo_tren {
 export class Proyecto {
   id: string = "";
   userId: string = "";
-  titulo: string  = "";
+  titulo: string = "";
   fechaCreacion: any = new Date;
   revision: string = "A";
-  cliente: string  = "";
-  instalacion: string  = "";
-  antecedentes: string  = "";
-  objetivo: string  = "";
-  alcance: string  = "";
-  premisas: string  = "";
+  cliente: string = "";
+  instalacion: string = "";
+  antecedentes: string = "";
+  objetivo: string = "";
+  alcance: string = "";
+  premisas: string = "";
   trenes: tren[] = [];
 }
 
@@ -43,13 +43,14 @@ export class Usuario {
 }
 
 export class equipo {
+  general: general = new general();
+  puntosDatasheet: puntosDatasheet[] = [];
   fabricante: string = "";
   modelo: string = "";
-  curvas: string = "";
-  mapas: string = "";
-  datosTecnicos: string = "";
+  curvas: curvas = new curvas();
+  mapas: mapas = new mapas();
   documentos: file[] = [];
-}
+} 
 
 export class file {
   nombre: string = "";
@@ -60,9 +61,23 @@ export class file {
 }
 
 export class curvas {
-
+  nombre: string = "";
+  numero: number = 0;
 }
 
+export class mapas {
+  nombre: string = "";
+  numero: number = 0;
+}
+export class general {
+  nombre: string = "";
+  numero: number = 0;
+}
+
+export class puntosDatasheet{
+  nombre: string = "";
+  numero: number = 0;
+}
 
 
 @Injectable({
@@ -81,7 +96,7 @@ export class DataServiceService {
   /**
    * Crear nuevo proyecto
    */
-   async createProyecto(data: Proyecto) {
+  async createProyecto(data: Proyecto) {
     const docRef = this.afs.collection("proyectos").doc()
     data.id = docRef.ref.id
     return docRef.set({
@@ -123,15 +138,15 @@ export class DataServiceService {
   /**
    * Obtener Proyecto
    */
-   obtenerProyecto(proyectoId: string) {
-     return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).valueChanges()
-   }
+  obtenerProyecto(proyectoId: string) {
+    return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).valueChanges()
+  }
 
-   updateProyecto(proyectoId: string, proyecto: Proyecto) {
-     return this.afs.collection("proyectos").doc(proyectoId).update({
-       ...proyecto
-     })
-   }
+  updateProyecto(proyectoId: string, proyecto: Proyecto) {
+    return this.afs.collection("proyectos").doc(proyectoId).update({
+      ...proyecto
+    })
+  }
 
   /**
    * Borrar Proyecto
@@ -143,9 +158,9 @@ export class DataServiceService {
       .delete();
   }
 
-   /////////////////////////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////////////////////////
-   /////////////////ENT////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////ENT////////////////////////////////////////////////////////
 
   /**
    * Actualizar
@@ -179,10 +194,10 @@ export class DataServiceService {
   //     });
   // }
 
-  
-   /////////////////////////////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////////////////////////
-   /////////////////EVENTOS////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////EVENTOS////////////////////////////////////////////////////////
 
   // /**
   //  * Actualizar
@@ -246,5 +261,5 @@ export class DataServiceService {
     })
   }
 
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth){ }
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) { }
 }
