@@ -1,7 +1,4 @@
-
-
-
-<div class="mgl0 menuToolbar" fxLayoutAlign="space-between" >
+<div class="mgl0 menuToolbar" fxLayoutAlign="space-between">
     <div fxLayout="row">
         <span class="textButton" [matMenuTriggerFor]="menu">
             <span class="ft22">{{tren.tag}}TREN TAG</span>
@@ -11,13 +8,18 @@
 
 
     <div fxLayoutAlign="space-between">
-    <!-- <span class="textButton" [matMenuTriggerFor]="menu">
+        <!-- <span class="textButton" [matMenuTriggerFor]="menu">
         <span class="ft16">Nuevo tren</span>
     </span> -->
-    <mat-icon class="iconButton ft26" placeholder="Agregar tren" [matMenuTriggerFor]="menu">add</mat-icon>
-    <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-    <!-- <button (click)="anexarEquipo()" class="standard">Agregar equipo</button> -->
-</div>
+        <mat-icon class="iconButton ft26" placeholder="Agregar tren" [matMenuTriggerFor]="menu">add</mat-icon>
+        <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+        <div>
+            <span>Equipos:</span>
+            <div *ngFor="let equipo of tren.equipos">{{equipo.tag}}</div>
+            <button (click)="anexarEquipo()" class="standard">Agregar equipo</button>
+        </div>
+        
+    </div>
 </div>
 
 <mat-menu #menu="matMenu" class="contextMenu">
@@ -35,7 +37,7 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="fw fh">
 
 
-    
+
 
 
     <div class="trenContainer">
@@ -49,13 +51,13 @@
         </div>
     </div>
 
-    
 
-            <div fxLayout="row" fxLayoutGap="2rem">
-            <div class="boxContainer cursorPointer">
-                <mat-icon (click)="anexarEquipo()" class="text3 ftxxl">add</mat-icon>
-            </div>
+
+    <div fxLayout="row" fxLayoutGap="2rem">
+        <div class="boxContainer cursorPointer">
+            <mat-icon (click)="anexarEquipo()" class="text3 ftxxl">add</mat-icon>
         </div>
+    </div>
 
 
     <mat-menu #menu="matMenu" class="contextMenu">

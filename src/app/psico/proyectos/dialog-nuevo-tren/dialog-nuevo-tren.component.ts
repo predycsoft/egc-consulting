@@ -14,7 +14,6 @@ export class DialogNuevoTrenComponent implements OnInit {
   tren: tren = new tren();
 
   ngOnInit(): void {
-    this.tren.fechaCreacion = new Date();
   }
 
   guardar() {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { equipo_tren, tren } from 'src/app/services/data-service.service';
+import { DataServiceService, equipo_tren, Proyecto, tren } from 'src/app/services/data-service.service';
 import { DialogAgregarEquipoComponent } from '../dialog-agregar-equipo/dialog-agregar-equipo.component';
 
 
@@ -15,16 +15,12 @@ export class ConfiguracionTrenComponent implements OnInit {
   constructor(
     public dialogAgregar: MatDialog,
     private route: ActivatedRoute,
+    private data: DataServiceService,
   ) { }
-
+  proyecto: Proyecto;
   tipoSimulacion: "real" | "teorica" | "ambas";
   trenSeleccionado: string = 'TC-5200A';
-  proyecto
-  tren: tren = {
-    tag: "",
-    fechaCreacion: new Date(),
-    equipos: [],
-  }
+  tren: tren = new tren()
   equipo = new equipo_tren()
   proyectoId: string = "";
   trenTag: string = ""
@@ -36,30 +32,32 @@ export class ConfiguracionTrenComponent implements OnInit {
         this.trenTag = params.trenTag;
         console.log(this.proyectoId);
         console.log(this.trenTag);
+        this.data.obtenerProyecto(this.proyectoId).subscribe((proyecto) => {
+          this.proyecto = proyecto
+          this.tren = proyecto.trenes.find(x => x.tag == this.trenTag)
+        })
       })
     })
-  }
-
-
-  dialogAgregarEquipo() {
-    const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
-     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
   }
 
   anexarEquipo() {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
     dialogRef.afterClosed().subscribe(result => {
-      this.tren.equipos = this.tren.equipos.concat({
-        tag: result.tagEquipo,
-        orden: this.tren.equipos.length,
-        familia: result.tipoEquipo,
-        tipologia: result.tipologia
-      })
-      console.log(this.tren.equipos)
+      this.tren.equipos = this.tren.equipos.concat(result)
+      const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
+      this.proyecto.trenes[index] = this.tren
+      this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes)))
     })
   }
+
+  eliminarEquipo(tag) {
+    const idxEquipo = this.tren.equipos.findIndex(x => x.tag == tag)
+    this.tren.equipos.splice(idxEquipo,1)
+    const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
+    this.proyecto.trenes[index] = this.tren
+    this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes)))
+  }
+
 
   modificarEquipo(index: number) {
     this.equipo = this.tren.equipos[index]

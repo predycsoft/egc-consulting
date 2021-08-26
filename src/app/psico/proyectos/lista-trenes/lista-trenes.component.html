@@ -12,7 +12,6 @@
                     <span>
                         {{tren.tag}}
                     </span>
-                    <p class="mgb0">Fecha de creacion: {{ this.trenes[i].fechaCreacion.toDate() | date: 'dd/MM/yyyy'}} </p>
                 </div>
                 <div>
                     <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">more_vert</mat-icon>

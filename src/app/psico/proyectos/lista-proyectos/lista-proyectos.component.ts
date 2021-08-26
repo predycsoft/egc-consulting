@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { DataServiceService, Proyecto } from '../../../services/data-service.service';
+import { DataServiceService, Proyecto, tren } from '../../../services/data-service.service';
 import { DialogNuevoProyectoComponent } from '../dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
 import { DialogService } from '../../../services/dialog.service';
 

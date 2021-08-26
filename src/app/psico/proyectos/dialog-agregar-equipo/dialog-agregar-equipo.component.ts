@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { equipo_tren } from 'src/app/services/data-service.service';
 
-
-interface data {
-  tagEquipo: string,
-  tipoEquipo: string,
-}
 
 @Component({
   selector: 'app-dialog-agregar-equipo',
@@ -14,21 +10,18 @@ interface data {
 })
 export class DialogAgregarEquipoComponent implements OnInit {
 
-  data: data = {
-    tagEquipo: '',
-    tipoEquipo: '',
-  }
-  
+  equipo: equipo_tren = new equipo_tren()
+
   constructor(
     public dialogRef: MatDialogRef<DialogAgregarEquipoComponent>,
   ) { }
 
-  
+
   ngOnInit(): void {
   }
 
-  confirmar() {
-    this.dialogRef.close(this.data);
+  guardar() {
+    this.dialogRef.close(this.equipo);
   }
 
 }

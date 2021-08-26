@@ -6,7 +6,6 @@ import { switchMap, map } from 'rxjs/operators';
 
 export class tren {
   tag: string = "";
-  fechaCreacion: any = new Date();
   equipos: equipo_tren[] = [];
 }
 
@@ -21,7 +20,6 @@ export class Proyecto {
   id: string = "";
   userId: string = "";
   titulo: string = "";
-  fechaCreacion: any = new Date;
   revision: string = "A";
   cliente: string = "";
   instalacion: string = "";
@@ -184,16 +182,6 @@ export class DataServiceService {
       });
   }
 
-  async anexarEquipo(proyectoId: string, trenTag: string, equipo: equipo_tren) {
-    const proyecto: Proyecto = (await this.afs.collection<Proyecto>("proyectos").doc(proyectoId).ref.get()).data();
-    const trenes: tren[] = proyecto.trenes;
-    const tren: tren = proyecto.trenes[trenTag];
-    const nuevoTren = tren.equipos.concat(equipo);
-    trenes[trenTag] = nuevoTren;
-    return this.updateTren(proyectoId, trenes);
-  }
-
-  
 
   //////////////////////////////////////////////////////////////////////////////////
 

@@ -1,12 +1,15 @@
-
 <div class="column">
     <label for="">Tag de equipo</label>
-    <input type="text" [(ngModel)]="data.tagEquipo">
+    <input type="text" [(ngModel)]="equipo.tag">
+    <label for="">Orden</label>
+    <input type="number" [(ngModel)]="equipo.orden">
     <label for="">Tipo de equipo</label>
-    <mat-select [(ngModel)]="data.tipoEquipo" class="fw">
+    <mat-select [(ngModel)]="equipo.familia" class="fw">
         <mat-option value="compresor" class="optionItem"> Compresor </mat-option>
         <mat-option value="turbina" class="optionItem"> Turbina</mat-option>
     </mat-select>
-    
-    <button class="mgt05 darkButton fw" (click)="confirmar()">Continuar</button>
+    <label for="">Tipologia</label>
+    <input type="text" [(ngModel)]="equipo.tipologia">
+
+    <button class="mgt05 darkButton fw" (click)="guardar()">Continuar</button>
 </div>
