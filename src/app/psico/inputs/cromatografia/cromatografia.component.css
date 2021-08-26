@@ -1,16 +1,23 @@
-.tableContainer{
-    border-radius: 4px;
-    box-shadow: var(--shadow8);   
-    background: var(--card);
+.firstRow{
+    background: var(--neutral1);
+    padding: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-bottom: solid 1px var(--stroke1);
+}
+
+
+
+.titleContainer{
+    margin-top: 16px;
+    margin-bottom: 4px;
+    height: 32px;
+    
+    font-weight: 500;
 }
 
 tr{
-    height: 40px;
-    border-top: 1px solid var(--stroke1);
-}
-
-tr:hover{
-    background: var(--neutral2);
+    height: 32px;
 }
 
 th{
@@ -18,59 +25,42 @@ th{
     background: var(--neutral1) !important;
     padding-left: 12px;
     padding-right: 12px;
+    height: 41px;
+    text-align: center;
+    font-size: 14;
+    font-weight: 500px !important;
+    border: 1px solid var(--stroke1);
+    border-top: none;
+    border-right: none;
 }
 
 td{
-    color: var(--text1);
     padding-left: 12px;
     padding-right: 12px;
 }
 
-tr:last-child{
-    border-bottom: 1px solid var(--stroke1); 
-}
-
-tr:last-child{
-    border-right: .5px solid var(--stroke1);
-}
 
 td:first-child{
-    border-left: 1px solid var(--stroke1);
+    color: var(--text1);
+    font-size: 16px;
+    padding-left: 14px;
 }
 
-td:last-child{
-    border-right: .5px solid var(--stroke1);
+.border-l{
+    border-left: 3px solid var(--stroke1) !important;
+}
+
+input{
+    border: 1px solid transparent;
+    border-radius: 0px;
+    height: 28px;
+    text-align: center;
+}
+
+input:focus{
+    border: 1px solid var(--stroke1);
+    background: var(--control1) !important;
+    border-radius: 4px;
 }
 
 
-th:first-child{
-    border-left: .5px solid var(--stroke1);
-}
-
-
-
-
-.firstRow{
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    background: var(--neutral1);
-    padding: 8px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border: solid 1px var(--stroke1);
-    border-bottom: 0px;
-
-}
-
-.emptyTable{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    height: 80px;
-    border: solid 1px var(--stroke1);
-    border-top: 0px;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
-}

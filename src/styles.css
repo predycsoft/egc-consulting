@@ -923,10 +923,14 @@ h1{
     min-height: 32px !important;
     background: transparent !important;
     border-radius: var(--defaultBorderRadius) !important;
-    color: var(--text1) !important;
+    color: var(--text1);
     transition: .1s !important;
     font-size: 20px;
     cursor: pointer !important;
+}
+
+.iconButton:hover{
+    color: var(--text1);
 }
 
 .textButton:hover, .iconButton:hover{
@@ -1557,6 +1561,13 @@ input:disabled, textarea:disabled {
     pointer-events: none !important;
                                 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+                                
+
 /* ------------------------------------------ SELECT */
 
 .mat-select{
@@ -1648,7 +1659,6 @@ textarea:focus::-webkit-scrollbar-thumb {
 /* CHECKBOX */
 .mat-checkbox .mat-checkbox-frame {
     border-color: var(--strokeStrong) !important;
-    margin: 0px !important;
   }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
@@ -1661,15 +1671,14 @@ textarea:focus::-webkit-scrollbar-thumb {
 
 .mat-checkbox{
     padding-top: 2px !important;
-    background-color: violet;
-
-    /* padding-bottom: 32px !important; */
+    padding: 0px !important;
+    margin: 0px !important;
+    /* padding-top: 4px !important;
+    padding-bottom: 8px !important; */
     height: 32px !important;
 }
 
 .checkboxContainer{
-    margin-top: 0px !important;
-    padding-top: 0px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: start !important;
@@ -1786,7 +1795,7 @@ textarea:focus::-webkit-scrollbar-thumb {
 .mat-dialog-container {
     padding: 0px !important;
     border-radius: var(--appSurfaceBorderRadius) !important;
-    border: solid 1px var(--surfaceStroke) !important;
+    border: solid 2px var(--surfaceStroke) !important;
     box-shadow: none;
     box-shadow: var(--shadow128);
 }

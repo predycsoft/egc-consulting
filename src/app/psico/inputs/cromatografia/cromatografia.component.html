@@ -1,124 +1,146 @@
 <!-------------------------------------------------------------------- Cromatografía del gas -->
 
-<div fxLayout="row" fxLayoutGap="2rem">
+<div>
+    <div class="firstRow" fxLayoutAlign="space-between center">
+        <span class="ft16 text2">Mezcla de Gas</span>
+        <!-- <span class="textButton" (click)="normalizar()">Normalizar</span> -->
+        <div>
+            <mat-icon class="iconButton text2">save</mat-icon>
+            <mat-icon class="iconButton text2">cloud_download</mat-icon>
+
+            <mat-icon class="iconButton text2">file_copy</mat-icon>
+            <mat-icon class="iconButton text2">arrow_downward</mat-icon>
+            <mat-icon class="iconButton text2">arrow_upward</mat-icon>
+            <mat-icon class="iconButton text2">more_vert</mat-icon>
+            <mat-icon class="iconButton text2">folder_open</mat-icon>
+            <mat-icon class="iconButton text2">delete_outline</mat-icon>
+            <mat-icon class="iconButton text2">exposure_plus_1</mat-icon>
+            <mat-icon class="iconButton text2">close</mat-icon>
+        </div>
+    </div>
+
+    <div fxLayout="row">
 
 
-    <!-------------------------------------------------------------------- Cromatografía del gas -->
+        <!-------------------------------------------------------------------- Cromatografía del gas -->
 
-    <div fxFlex=70%>
-
-        <div class="tableContainer">
-            <div class="firstRow" fxLayoutAlign="space-between center">
-                <span class="ft16 text2">Mezcla de Gas</span>
-                <span class="textButton" (click)="normalizar()">Normalizar</span>
-            </div>
+        <div fxFlex=100%>
             <table class="fw">
                 <tr>
                     <th>Componente</th>
-                    <th>Formula</th>
-                    <th>Peso Molecular</th>
-                    <th>Fracción Molar</th>
+                    <th >Formula</th>
+                    <th >P.M.</th>
+                    <th >F.M.</th>
                 </tr>
                 <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy">
                     <td>{{this.cromatografia[i].nombre}}</td>
-                    <td>{{this.cromatografia[i].formula}}</td>
-                    <td>{{this.cromatografia[i].pesoMolecular}}</td>
+                    <td class="centertext">{{this.cromatografia[i].formula}}</td>
+                    <td class="centertext">{{this.cromatografia[i].pesoMolecular}}</td>
                     <td> <input type="number" [(ngModel)]="this.cr[item.key]" class="w100px"></td>
                 </tr>
-                <tr>
-                    <td>Total</td>
+                <tr class="border-t">
+                    <td >Total</td>
                     <td></td>
                     <td></td>
-                    <td>{{fraccMolarTotal}}</td>
+                    <td class="centertext">{{fraccMolarTotal}}</td>
                 </tr>
             </table>
         </div>
 
-        <br>
-        <p> Nota: debe introducir la fraccion molar de cada componente.</p>
+        <!-------------------------------------------------------------------- Propiedades del gas -->
 
-    </div>
-
-
-
-    <!-------------------------------------------------------------------- Propiedades del gas -->
-
-    <div>
-        <div class="firstRow" fxLayoutAlign="space-between center">
-            <span class="ft16 text2">Propiedades del gas</span>
-            <span class="textButton" (click)="normalizar()">Calcular</span>
-        </div>
-        <div class="tableContainer">
+        <div class="border-l">
+            <div class="firstRow" fxLayoutAlign="space-between center">
+                <span class="ft16 text2">Propiedades del gas</span>
+                <span class="textButton" (click)="normalizar()">Calcular</span>
+            </div>
             <table>
+                <!-- <tr>
+                    <th>Propiedades del gas</th>
+                </tr> -->
+                <tr>
+                    <td colspan="3" >
+                        <div class="titleContainer">Parametros de entrada</div>
+                    </td>
+                </tr>
                 <tr>
                     <td>Presión</td>
                     <td> select </td>
-                    <td><input type="number" class="w100px"></td>
+                    <td class="centertext"><input type="number" class="w100px" placeholder="0"></td>
 
                 </tr>
                 <tr>
                     <td>Temperatura</td>
                     <td> select </td>
-                    <td> <input type="number" class="w100px"> </td>
+                    <td class="centertext"> <input type="number" class="w100px" placeholder="0"> </td>
+                </tr>
+                <tr>
+                    <td colspan="3" >
+                        <div class="titleContainer">Propiedades calculadas</div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Densidad</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.densidad}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.densidad}} </td>
                 </tr>
                 <tr>
                     <td>Volumen</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.volumen}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.volumen}} </td>
                 </tr>
                 <tr>
                     <td>Entalpia</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.entalpia}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.entalpia}} </td>
                 </tr>
                 <tr>
                     <td>Entropia</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.entropia}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.entropia}} </td>
                 </tr>
                 <tr>
                     <td>Peso molecular</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.pesoMolecular}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.pesoMolecular}} </td>
                 </tr>
                 <tr>
                     <td>Compresibilidad</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.compresibilidad}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.compresibilidad}} </td>
                 </tr>
                 <tr>
                     <td>Calidad</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.calidad}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.calidad}} </td>
                 </tr>
                 <tr>
                     <td>LHV</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.LHV}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.LHV}} </td>
                 </tr>
                 <tr>
                     <td>HHV</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.HHV}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.HHV}} </td>
                 </tr>
                 <tr>
-                    <td>Gravedad Específica</td>
+                    <td>Grav. Esp.</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.gravedadEspecifica}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.gravedadEspecifica}} </td>
                 </tr>
                 <tr>
                     <td>W.I.</td>
                     <td> select </td>
-                    <td> {{propidadesCromatografia.wi}} </td>
+                    <td class="centertext"> {{propidadesCromatografia.wi}} </td>
                 </tr>
             </table>
         </div>
     </div>
 
+    <!-------------------------------------------------- Nota de pie al final de la ventana -->
+    <div class="neutralFill1 pdl10 pd05 border-t">
+        <span class="text2"> Nota: debe introducir la fraccion molar de cada componente.</span>
+    </div>
 
 </div>

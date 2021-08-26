@@ -34,6 +34,7 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-documento.component';
 import { CurvasComponent } from './curvas/curvas.component';
 import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.component';
+import { DialogPolinomiosCurvasComponent } from './dialog-polinomios-curvas/dialog-polinomios-curvas.component';
 
 
 
@@ -67,7 +68,8 @@ import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.componen
     DocumentosComponent,
     DialogDocumentoComponent,
     CurvasComponent,
-    TipoCompresorComponent
+    TipoCompresorComponent,
+    DialogPolinomiosCurvasComponent
   ],
   imports: [
     CommonModule,
