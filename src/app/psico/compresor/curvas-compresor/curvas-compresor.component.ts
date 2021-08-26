@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogPolinomiosCurvasComponent } from '../dialog-polinomios-curvas/dialog-polinomios-curvas.component';
+import { DialogPolinomiosCurvasCompresorComponent } from '../dialog-polinomios-curvas-compresor/dialog-polinomios-curvas-compresor.component';
 
 @Component({
-  selector: 'curvas',
-  templateUrl: './curvas.component.html',
-  styleUrls: ['./curvas.component.css']
+  selector: 'curvas-compresor',
+  templateUrl: './curvas-compresor.component.html',
+  styleUrls: ['./curvas-compresor.component.css']
 })
-export class CurvasComponent implements OnInit {
+export class CurvasCompresorComponent implements OnInit {
 
   impulsorSeleccionado: number;
   numSecciones: number;
@@ -22,7 +22,7 @@ export class CurvasComponent implements OnInit {
   }
 
   openDialogPolinomios() {
-    const dialogRef = this.dialog.open(DialogPolinomiosCurvasComponent);
+    const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

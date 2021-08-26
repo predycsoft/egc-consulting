@@ -8,18 +8,15 @@ import { NgxChartsModule }from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { CromatografiaComponent } from './inputs/cromatografia/cromatografia.component';
-import { CaracteristicasCompresorComponent } from './inputs/caracteristicas-compresor/caracteristicas-compresor.component';
-import { CaracteristicasTurbinaComponent } from './inputs/caracteristicas-turbina/caracteristicas-turbina.component';
-import { SimulacionTeoricaComponent } from './inputs/simulacion-teorica/simulacion-teorica.component';
-import { MapasComponent } from './inputs/mapas/mapas.component';
-import { AdimensionalizacionComponent } from './inputs/adimensionalizacion/adimensionalizacion.component';
-import { CompresorComponent } from './outputs/compresor/compresor.component';
-import { TurbinaComponent } from './outputs/turbina/turbina.component';
-import { OutputsComponent } from './outputs/outputs/outputs.component';
-import { ConfiguracionCompresorComponent } from './inputs/configuracion-compresor/configuracion-compresor.component';
-import { ConfiguracionTurbinaComponent } from './inputs/configuracion-turbina/configuracion-turbina.component';
+import { DatasheetPuntosCompresorComponent } from './compresor/datasheet-puntos-compresor/datasheet-puntos-compresor.component';
+import { CaracteristicasTurbinaComponent } from './turbina/caracteristicas-turbina/caracteristicas-turbina.component';
+import { SimulacionTeoricaComponent } from './compresor/simulacion-teorica/simulacion-teorica.component';
+import { MapasCompresorComponent } from './compresor/mapas-compresor/mapas-compresor.component';
+import { AdimensionalizacionComponent } from './compresor/adimensionalizacion/adimensionalizacion.component';
+import { ConfiguracionCompresorComponent } from './compresor/configuracion-compresor/configuracion-compresor.component';
+import { ConfiguracionTurbinaComponent } from './turbina/configuracion-turbina/configuracion-turbina.component';
 import { ConfiguracionTrenComponent } from './inputs/configuracion-tren/configuracion-tren.component';
-import { DatosTecnicosCompresorComponent } from './inputs/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
+import { DatosTecnicosCompresorComponent } from './compresor/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
 import { DialogAgregarEquipoComponent } from './inputs/dialog-agregar-equipo/dialog-agregar-equipo.component';
 import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
@@ -32,9 +29,9 @@ import { MenuVerticalComponent } from './menu-vertical/menu-vertical.component';
 import { ConfigurarEquipoComponent } from './configurar-equipo/configurar-equipo.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-documento.component';
-import { CurvasComponent } from './curvas/curvas.component';
-import { TipoCompresorComponent } from './tipo-compresor/tipo-compresor.component';
-import { DialogPolinomiosCurvasComponent } from './dialog-polinomios-curvas/dialog-polinomios-curvas.component';
+import { CurvasCompresorComponent } from './compresor/curvas-compresor/curvas-compresor.component';
+import { InfoGeneralCompresor } from './compresor/info-general-compresor/info-general-compresor.component';
+import { DialogPolinomiosCurvasCompresorComponent } from '../psico/compresor/dialog-polinomios-curvas-compresor/dialog-polinomios-curvas-compresor.component';
 import { EnvioDataComponent } from './envio-data/envio-data.component';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -45,14 +42,11 @@ import { HttpClientModule } from '@angular/common/http';
     InputsComponent,
     ImportCsvComponent,
     CromatografiaComponent,
-    CaracteristicasCompresorComponent,
+    DatasheetPuntosCompresorComponent,
     CaracteristicasTurbinaComponent,
     SimulacionTeoricaComponent,
-    MapasComponent,
+    MapasCompresorComponent,
     AdimensionalizacionComponent,
-    CompresorComponent,
-    TurbinaComponent,
-    OutputsComponent,
     ConfiguracionCompresorComponent,
     ConfiguracionTurbinaComponent,
     ConfiguracionTrenComponent,
@@ -69,9 +63,9 @@ import { HttpClientModule } from '@angular/common/http';
     ConfigurarEquipoComponent,
     DocumentosComponent,
     DialogDocumentoComponent,
-    CurvasComponent,
-    TipoCompresorComponent,
-    DialogPolinomiosCurvasComponent,
+    CurvasCompresorComponent,
+    InfoGeneralCompresor,
+    DialogPolinomiosCurvasCompresorComponent,
     EnvioDataComponent
   ],
   imports: [

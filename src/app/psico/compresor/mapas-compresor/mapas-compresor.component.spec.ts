@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompresorComponent } from './compresor.component';
+import { MapasCompresorComponent } from './mapas-compresor.component';
 
-describe('CompresorComponent', () => {
-  let component: CompresorComponent;
-  let fixture: ComponentFixture<CompresorComponent>;
+describe('MapasCompresorComponent', () => {
+  let component: MapasCompresorComponent;
+  let fixture: ComponentFixture<MapasCompresorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CompresorComponent ]
+      declarations: [ MapasCompresorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CompresorComponent);
+    fixture = TestBed.createComponent(MapasCompresorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

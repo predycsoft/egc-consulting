@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogPolinomiosCurvasComponent } from './dialog-polinomios-curvas.component';
+import { DialogPolinomiosCurvasCompresorComponent } from './dialog-polinomios-curvas-compresor.component';
 
 describe('DialogPolinomiosCurvasComponent', () => {
-  let component: DialogPolinomiosCurvasComponent;
-  let fixture: ComponentFixture<DialogPolinomiosCurvasComponent>;
+  let component: DialogPolinomiosCurvasCompresorComponent;
+  let fixture: ComponentFixture<DialogPolinomiosCurvasCompresorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogPolinomiosCurvasComponent ]
+      declarations: [ DialogPolinomiosCurvasCompresorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogPolinomiosCurvasComponent);
+    fixture = TestBed.createComponent(DialogPolinomiosCurvasCompresorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

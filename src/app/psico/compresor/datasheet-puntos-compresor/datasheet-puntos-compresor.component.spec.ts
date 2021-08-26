@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CaracteristicasCompresorComponent } from './caracteristicas-compresor.component';
+import { DatasheetPuntosCompresorComponent } from './datasheet-puntos-compresor.component';
 
 describe('CaracteristicasCompresorComponent', () => {
-  let component: CaracteristicasCompresorComponent;
-  let fixture: ComponentFixture<CaracteristicasCompresorComponent>;
+  let component: DatasheetPuntosCompresorComponent;
+  let fixture: ComponentFixture<DatasheetPuntosCompresorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CaracteristicasCompresorComponent ]
+      declarations: [ DatasheetPuntosCompresorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CaracteristicasCompresorComponent);
+    fixture = TestBed.createComponent(DatasheetPuntosCompresorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

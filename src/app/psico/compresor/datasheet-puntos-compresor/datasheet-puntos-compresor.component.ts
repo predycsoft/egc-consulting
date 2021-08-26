@@ -34,11 +34,11 @@ interface operatingConditions {
 }
 
 @Component({
-  selector: 'caracteristicas-compresor',
-  templateUrl: './caracteristicas-compresor.component.html',
-  styleUrls: ['./caracteristicas-compresor.component.css']
+  selector: 'datasheet-puntos-compresor',
+  templateUrl: './datasheet-puntos-compresor.component.html',
+  styleUrls: ['./datasheet-puntos-compresor.component.css']
 })
-export class CaracteristicasCompresorComponent implements OnInit {
+export class DatasheetPuntosCompresorComponent implements OnInit {
 
   operatingConditions: operatingConditions[] = []
 

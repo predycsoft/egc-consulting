@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DimensionesService, variable } from 'src/app/services/dimensiones.service';
-import { DialogPolinomiosCurvasComponent } from '../../dialog-polinomios-curvas/dialog-polinomios-curvas.component';
-import { CromatografiaComponent } from '../cromatografia/cromatografia.component';
+import { CromatografiaComponent } from '../../inputs/cromatografia/cromatografia.component';
 
 @Component({
   selector: 'simulacion-teorica',

@@ -9,10 +9,8 @@
         <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'simulacionTeorica'}" (click)="tabSelect('simulacionTeorica')">Simulación Teórica</span>
         <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'adimensionalizacion'}" (click)="tabSelect('adimensionalizacion')">Adimensionalización</span>
     </div>
-    
-    <caracteristicas-compresor *ngIf="tabSelected==='datosTecnicos'"></caracteristicas-compresor>
+
     <cromatografia *ngIf="tabSelected==='cromatografia'"></cromatografia>
-    <mapas *ngIf="tabSelected==='mapas'"></mapas>
     <simulacion-teorica *ngIf="tabSelected==='simulacionTeorica'"></simulacion-teorica>
     <adimensionalizacion *ngIf="tabSelected==='adimensionalizacion'"></adimensionalizacion>
 </div>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OutputsComponent } from './outputs.component';
+import { InfoGeneralCompresor } from './info-general-compresor.component';
 
-describe('OutputsComponent', () => {
-  let component: OutputsComponent;
-  let fixture: ComponentFixture<OutputsComponent>;
+describe('InfoGeneralCompresorComponent', () => {
+  let component: InfoGeneralCompresor;
+  let fixture: ComponentFixture<InfoGeneralCompresor>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OutputsComponent ]
+      declarations: [ InfoGeneralCompresor ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OutputsComponent);
+    fixture = TestBed.createComponent(InfoGeneralCompresor);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
