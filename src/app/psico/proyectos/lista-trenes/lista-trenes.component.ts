@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataServiceService, tren } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { DialogNuevoTrenComponent } from '../dialog-nuevo-tren/dialog-nuevo-tren.component';
+import { IconServiceService } from 'src/app/services/icon-service.service';
 
 @Component({
   selector: 'lista-trenes',
@@ -12,7 +13,7 @@ import { DialogNuevoTrenComponent } from '../dialog-nuevo-tren/dialog-nuevo-tren
 })
 export class ListaTrenesComponent implements OnInit {
 
-  constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog) { }
+  constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog, public icon: IconServiceService) { }
 
   id: string = "";
   trenes: tren[] = [];

@@ -57,18 +57,18 @@
     </div> -->
     <div class="mgl05">
         <div class="pd03" [ngClass]="{'selectedTag': proyecto.titulo == selectedTag}" fxLayout="row" fxLayoutAlign=" center">
-            <img  [src]="instalacionMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': proyecto.titulo == selectedTag}">
+            <img  [src]="icon.instalacionMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': proyecto.titulo == selectedTag}">
             <span [routerLink]="['/psico/proyecto',proyecto.id,'trenes']" class="mgl05"  (click)="tagSeleccionado(proyecto.titulo)">{{proyecto.titulo}}</span>
         </div>
         <div fxLayout="column" *ngFor="let tren of proyecto.trenes">
             <div [ngClass]="{'selectedTag': tren.tag == selectedTag}" class="mgl10 pd03" fxLayout="row" fxLayoutAlign=" center">
-                <img  [src]="trenMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': tren.tag == selectedTag}">
+                <img  [src]="icon.trenMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': tren.tag == selectedTag}">
                 <span [routerLink]="['/psico/proyecto',proyecto.id,'tren',tren.tag]" class="mgl05"  (click)="tagSeleccionado(tren.tag)" >{{tren.tag}}</span>
             </div>
             <div fxLayout="column" *ngFor="let equipo of tren.equipos">
                 <div class="mgl20 pd03" [ngClass]="{'selectedTag': equipo.tag == selectedTag}" fxLayout="row" fxLayoutAlign=" center">
-                    <img   *ngIf="equipo.familia == 'Compresor'"  [src]="compresorMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': equipo.tag == selectedTag}">
-                    <img  *ngIf="equipo.familia == 'Turbina'"  [src]="turbinaMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': equipo.tag == selectedTag}">
+                    <img   *ngIf="equipo.familia == 'Compresor'"  [src]="icon.compresorMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': equipo.tag == selectedTag}">
+                    <img  *ngIf="equipo.familia == 'Turbina'"  [src]="icon.turbinaMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': equipo.tag == selectedTag}">
                     <span [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipo.tag]" class="mgl05"  (click)="tagSeleccionado(equipo.tag)">{{equipo.tag}}</span>
                 </div>
             </div>

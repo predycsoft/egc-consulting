@@ -1,34 +1,54 @@
-<div class="neutralFill1 fh fw " fxLayout="column" fxLayoutAlign=" center" >
-    <div class="cw" >
-        <!-- Lista de proyectos-->
-        <div class="fw pdt30">
-            <div class="mgt30 mgb10" fxLayout="row" fxLayoutAlign="space-between">
-                <h4> Trenes</h4>
-                <button class="accent" (click)="openDialogNuevoTren()">Nuevo tren</button>
-            </div>
-            <div class="card" *ngFor="let tren of trenes; let i = index" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
-                <mat-icon>insert_drive_file</mat-icon>
-                <div class="mgl08 fw">
-                    <span>
-                        {{tren.tag}}
-                    </span>
-                    <div *ngFor="let equipo of tren.equipos">
-                        <span>
-                            {{equipo.tag}} - {{equipo.familia}}
-                        </span>
+<div class="fh fw pd20" fxLayout="column" fxLayoutAlign="space-between center">
+
+    <div class="menuToolbar fw" fxLayoutAlign="space-between center">
+        <span class="mgl10 ft22">Instalación</span>
+        <div fxLayoutAlign="space-between" fxLayoutGap=".3rem">
+            <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="openDialogNuevoTren()">add</mat-icon>
+            <mat-icon class="iconButton ft26" >more_vert</mat-icon>
+        </div>
+    </div>
+
+    <div class="fh">
+        <!-- Lista de trenes -->
+        <div fxLayout="column" fxLayoutGap="3rem" fxLayoutAlign="center center" class="fh">
+        <div *ngFor="let tren of trenes; let i = index"  class="w600px">
+
+            <div fxLayout="row" fxLayout="start center" fxFlex=100%>
+
+                <div fxLayout="row" fxLayoutAlign=" center">
+                    <span class="mgr10 ft18"> {{tren.tag}} </span>
+                </div>
+
+                <div class="trenContainer" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
+                    <div fxLayout="row" fxLayoutGap="1rem">
+                        <div *ngFor="let equipo of tren.equipos; let i = index">
+                            <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer">
+                                <img [src]="icon.compresorIcon" class="equipoIcon">
+                                <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
+                                    <span class="tagText"> {{equipo.tag}} </span>
+                                </div>
+                                <div *ngIf="i>0" class="shaftContainer"></div>
+                            </div>
+                            <div *ngIf="equipo.familia==='Turbina'" class="equipoContainer">
+                                <img [src]="icon.turbinaIcon" class="equipoIcon">
+                                <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
+                                    <span class="tagText"> {{equipo.tag}} </span>
+                                </div>
+                                <div *ngIf="i>0" class="shaftContainer"></div>
+                            </div>
+                        </div>
                     </div>
-                    
                 </div>
-                <div>
-                    <mat-icon class="iconButton zIndex10" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">more_vert</mat-icon>
-                </div>
+                <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">
+                    more_vert </mat-icon>
             </div>
         </div>
+    </div>
 
-      <mat-menu #menu="matMenu" class="contextMenu">
-        <li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
-        <li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
-      </mat-menu>
+        <mat-menu #menu="matMenu" class="contextMenu">
+            <li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
+            <li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
+        </mat-menu>
 
     </div>
 </div>
