@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { equipo_tren } from 'src/app/services/data-service.service';
 
 
@@ -11,16 +12,36 @@ import { equipo_tren } from 'src/app/services/data-service.service';
 export class DialogAgregarEquipoComponent implements OnInit {
 
   equipo: equipo_tren = new equipo_tren()
+  form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogAgregarEquipoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: equipo_tren = new equipo_tren(),
+    public fb: FormBuilder
   ) { }
 
 
   ngOnInit(): void {
+    console.log(this.data)
+    this.form = this.fb.group({
+      tag: ['', Validators.required],
+      orden: [0, Validators.required],
+      familia: ['', Validators.required],
+      tipologia: ['', Validators.required],
+    })
+
+    if(this.data) {
+      this.form.patchValue({
+        tag: this.data.tag,
+        orden: this.data.orden,
+        familia: this.data.familia,
+        tipologia: this.data.tipologia,
+      })
+    }
   }
 
   guardar() {
+    this.equipo = this.form.value
     this.dialogRef.close(this.equipo);
   }
 

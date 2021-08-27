@@ -29,17 +29,18 @@
             <div *ngFor="let item of tren.equipos" class="boxContainer">
                 <span class="cursorPointer">{{item.familia}}</span>
                 <span class="cursorPointer">{{item.tag}}</span>
-                <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu2">more_vert</mat-icon>
+                <span class="cursorPointer">{{item.orden}}</span>
+                <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu2" (click)="equipoSelected=item">more_vert</mat-icon>
             </div>
         </div>
     </div>
 
     <mat-menu #menu2="matMenu" class="contextMenu">
-        <li class="menuItem">Configurar</li>
-        <li class="menuItem">Cambiar nombre</li>
+        <li class="menuItem" [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipoSelected.tag]">Configurar</li>
+        <li class="menuItem" (click)="modificarEquipo(equipoSelected) ">Cambiar nombre</li>
         <li class="menuItem">Mover a la izquierda</li>
-        <li class="menuItem">Mover a la derecha</li>
-        <li class="menuItem">Eliminar</li>
+        <li class="menuItem" (click)="moverDerecha(equipoSelected.tag)">Mover a la derecha</li>
+        <li class="menuItem" (click)="eliminarEquipo(equipoSelected.tag)">Eliminar</li>
     </mat-menu>
 
 
