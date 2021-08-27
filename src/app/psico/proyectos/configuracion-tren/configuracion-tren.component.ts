@@ -95,4 +95,20 @@ export class ConfiguracionTrenComponent implements OnInit {
       alert("es el último equipo en el tren")
     }
   }
+
+  moverIzquierda(tag) {
+    const index = this.tren.equipos.findIndex(x => x.tag == tag);
+    if (index > 0) {
+      const tren1: equipo_tren = this.tren.equipos[index]
+      this.tren.equipos[index] = this.tren.equipos[index - 1]
+      this.tren.equipos[index].orden = index;
+      this.tren.equipos[index - 1] = tren1
+      this.tren.equipos[index - 1].orden = index - 1
+      const indexTren = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
+      this.proyecto.trenes[indexTren] = this.tren
+      this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch((error) => console.log(error))
+    } else {
+      alert("es el primero en el tren")
+    }
+  }
 }

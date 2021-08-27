@@ -38,8 +38,8 @@
     <mat-menu #menu2="matMenu" class="contextMenu">
         <li class="menuItem" [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipoSelected.tag]">Configurar</li>
         <li class="menuItem" (click)="modificarEquipo(equipoSelected) ">Cambiar nombre</li>
-        <li class="menuItem">Mover a la izquierda</li>
-        <li class="menuItem" (click)="moverDerecha(equipoSelected.tag)">Mover a la derecha</li>
+        <li class="menuItem" *ngIf="equipoSelected.orden !=0" (click)="moverIzquierda(equipoSelected.tag)">Mover a la izquierda</li>
+        <li class="menuItem" *ngIf="equipoSelected.orden != tren.equipos.length-1" (click)="moverDerecha(equipoSelected.tag)">Mover a la derecha</li>
         <li class="menuItem" (click)="eliminarEquipo(equipoSelected.tag)">Eliminar</li>
     </mat-menu>
 
