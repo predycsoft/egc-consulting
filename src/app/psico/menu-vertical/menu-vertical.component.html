@@ -71,6 +71,7 @@
                 <div class="mgl20 pd03" [ngClass]="{'selectedTag': equipo.tag == selectedTag}" fxLayout="row" fxLayoutAlign=" center">
                     <mat-icon *ngIf="equipo.familia == 'Compresor'" class="ft16"> add</mat-icon>
                     <mat-icon *ngIf="equipo.familia == 'Turbina'" class="ft16"> add</mat-icon>
+                    <img [src]= alt="">
                     <span [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipo.tag]" class="mgl05"  (click)="tagSeleccionado(equipo.tag)">{{equipo.tag}}</span>
                 </div>
             </div>
