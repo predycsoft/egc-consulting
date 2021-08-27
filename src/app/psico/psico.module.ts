@@ -10,9 +10,9 @@ import { SharedModule } from '../shared/shared.module';
 import { CromatografiaComponent } from './inputs/cromatografia/cromatografia.component';
 import { DatasheetPuntosCompresorComponent } from './compresor/datasheet-puntos-compresor/datasheet-puntos-compresor.component';
 import { CaracteristicasTurbinaComponent } from './turbina/caracteristicas-turbina/caracteristicas-turbina.component';
-import { SimulacionTeoricaComponent } from './compresor/simulacion-teorica/simulacion-teorica.component';
+import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica/simulacion-teorica.component';
 import { MapasCompresorComponent } from './compresor/mapas-compresor/mapas-compresor.component';
-import { AdimensionalizacionComponent } from './compresor/adimensionalizacion/adimensionalizacion.component';
+import { AdimensionalizacionComponent } from './simulacion-campo/adimensionalizacion/adimensionalizacion.component';
 import { ConfiguracionCompresorComponent } from './compresor/configuracion-compresor/configuracion-compresor.component';
 import { ConfiguracionTurbinaComponent } from './turbina/configuracion-turbina/configuracion-turbina.component';
 import { ConfiguracionTrenComponent } from './proyectos/configuracion-tren/configuracion-tren.component';
@@ -26,7 +26,7 @@ import { DialogExitoComponent } from './dialogs/dialog-exito/dialog-exito.compon
 import { DialogFracasoComponent } from './dialogs/dialog-fracaso/dialog-fracaso.component';
 import { DialogNuevoProyectoComponent } from './proyectos/dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
 import { MenuVerticalComponent } from './menu-vertical/menu-vertical.component';
-import { ConfigurarEquipoComponent } from './configurar-equipo/configurar-equipo.component';
+import { ConfigurarEquipoComponent } from './proyectos/configurar-equipo/configurar-equipo.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-documento.component';
 import { CurvasCompresorComponent } from './compresor/curvas-compresor/curvas-compresor.component';
@@ -36,8 +36,8 @@ import { EnvioDataComponent } from './envio-data/envio-data.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListaTrenesComponent } from './proyectos/lista-trenes/lista-trenes.component';
 import { DialogNuevoTrenComponent } from './proyectos/dialog-nuevo-tren/dialog-nuevo-tren.component';
-
-
+import { ListaSimulacionesTeoricasComponent } from './simulacion-teorica/lista-simulaciones-teoricas/lista-simulaciones-teoricas.component';
+import { TablaSimulacionesTeoricasComponent } from './simulacion-teorica/tabla-simulaciones-teoricas/tabla-simulaciones-teoricas.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +70,9 @@ import { DialogNuevoTrenComponent } from './proyectos/dialog-nuevo-tren/dialog-n
     DialogPolinomiosCurvasCompresorComponent,
     EnvioDataComponent,
     ListaTrenesComponent,
-    DialogNuevoTrenComponent
+    DialogNuevoTrenComponent,
+    ListaSimulacionesTeoricasComponent,
+    TablaSimulacionesTeoricasComponent
   ],
   imports: [
     CommonModule,
