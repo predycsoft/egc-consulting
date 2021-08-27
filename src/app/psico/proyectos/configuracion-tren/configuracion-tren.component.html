@@ -1,27 +1,15 @@
 <div class="mgl0 menuToolbar" fxLayoutAlign="space-between">
-    <div fxLayout="row">
-        <span class="textButton" [matMenuTriggerFor]="menu">
-            <span class="ft22">tag: {{tren.tag}}</span>
-            <mat-icon class="ft26">arrow_drop_down</mat-icon>
-        </span>
-    </div>
-
-
+    <span class="ft22">Tren: {{tren.tag}}</span>
     <div fxLayoutAlign="space-between">
-        <!-- <span class="textButton" [matMenuTriggerFor]="menu">
-        <span class="ft16">Nuevo tren</span>
-    </span> -->
         <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="anexarEquipo()">add</mat-icon>
         <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-
     </div>
 </div>
 
 <mat-menu #menu="matMenu" class="contextMenu">
-    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200A'">Compresor</li>
-    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200B'">Turbina</li>
+    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200B'">Info del tren</li>
+    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200A'">Eliminar tren</li>
 </mat-menu>
-
 
 
 
@@ -41,12 +29,12 @@
             <div *ngFor="let item of tren.equipos" class="boxContainer">
                 <span class="cursorPointer">{{item.familia}}</span>
                 <span class="cursorPointer">{{item.tag}}</span>
-                <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu2">more_vert</mat-icon>
             </div>
         </div>
-    </div>sdf
+    </div>
 
-    <mat-menu #menu="matMenu" class="contextMenu">
+    <mat-menu #menu2="matMenu" class="contextMenu">
         <li class="menuItem">Configurar</li>
         <li class="menuItem">Cambiar nombre</li>
         <li class="menuItem">Mover a la izquierda</li>

@@ -12,6 +12,7 @@ export class MenuVerticalComponent implements OnInit {
 
   logo: string = "assets/images/design/logo.svg"
   defaultUserImage: string = "assets/images/design/default-user-image.svg";
+  selectedTag: string;
 
   constructor(private data: DataServiceService, private route: ActivatedRoute) { }
 
@@ -25,6 +26,10 @@ export class MenuVerticalComponent implements OnInit {
         this.proyecto = data;
       })
     })
+  }
+
+  tagSeleccionado(tag){
+    this.selectedTag = tag;
   }
 
 }

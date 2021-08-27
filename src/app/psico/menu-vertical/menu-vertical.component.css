@@ -55,3 +55,9 @@ li{
     text-decoration: underline;
     color: var(--text1);
 }
+
+.selectedTag{
+    font-weight: 600;
+    user-select: none;
+    cursor: pointer;
+}

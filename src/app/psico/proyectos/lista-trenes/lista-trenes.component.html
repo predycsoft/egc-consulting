@@ -6,15 +6,21 @@
                 <h4> Trenes</h4>
                 <button class="accent" (click)="openDialogNuevoTren()">Nuevo tren</button>
             </div>
-            <div class="card" *ngFor="let tren of trenes; let i = index">
+            <div class="card" *ngFor="let tren of trenes; let i = index" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
                 <mat-icon>insert_drive_file</mat-icon>
                 <div class="mgl08 fw">
                     <span>
                         {{tren.tag}}
                     </span>
+                    <div *ngFor="let equipo of tren.equipos">
+                        <span>
+                            {{equipo.tag}} - {{equipo.familia}}
+                        </span>
+                    </div>
+                    
                 </div>
                 <div>
-                    <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">more_vert</mat-icon>
+                    <mat-icon class="iconButton zIndex10" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">more_vert</mat-icon>
                 </div>
             </div>
         </div>
