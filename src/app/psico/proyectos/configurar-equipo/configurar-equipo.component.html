@@ -3,17 +3,12 @@
 </div> -->
 
 <div class="mgl0 menuToolbar">
-    <span class="textButton" [matMenuTriggerFor]="menu">
-        <span class="ft16">{{tipoEquipo}}</span>
+    <span class="textButton">
+        <span class="ft16">{{equipo.familia}}</span>
         <mat-icon class="ft20">arrow_drop_down</mat-icon>
     </span>
 </div>
 
-<mat-menu #menu="matMenu" class="contextMenu">
-    <li class="menuItem" (click)="tipoEquipo = 'Compresor'">Compresor</li>
-    <li class="menuItem" (click)="tipoEquipo = 'Turbina'">Turbina</li>
-</mat-menu>
 
-
-<configuracion-compresor *ngIf="tipoEquipo==='Compresor'"></configuracion-compresor>
-<configuracion-turbina *ngIf="tipoEquipo==='Turbina'"></configuracion-turbina>
+<configuracion-compresor *ngIf="equipo.familia==='Compresor'"></configuracion-compresor>
+<configuracion-turbina *ngIf="equipo.familia==='Turbina'"></configuracion-turbina>

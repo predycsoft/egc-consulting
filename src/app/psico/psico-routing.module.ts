@@ -18,7 +18,8 @@ const routes: Routes = [
   {path: "proyecto/:id", component:PsicoDashboardComponent, children: [
     {path: 'trenes', component:ListaTrenesComponent},
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
-    {path: 'equipo', component: ConfigurarEquipoComponent},
+    {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
+
  ]}
 
 
