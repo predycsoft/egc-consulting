@@ -21,7 +21,7 @@ export class ListaProyectosComponent implements OnInit {
   usuario = JSON.parse(localStorage.getItem("user"));
 
   ngOnInit(): void {
-    
+
     this.sub = this.data.obtenerProyectosUsuario()
       .subscribe(proyectos => {
         this.proyectos = proyectos;
