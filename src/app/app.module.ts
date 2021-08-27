@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule} from '@angular/fire/storage';
 
 // Auxiliares
 import { AuthGuard } from './user/auth.guard';
@@ -34,13 +35,11 @@ import { DimensionesService } from './services/dimensiones.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireAuthModule,
-  
+    AngularFireStorageModule,
   ],
   providers: [AuthGuard,DimensionesService],
   bootstrap: [AppComponent]

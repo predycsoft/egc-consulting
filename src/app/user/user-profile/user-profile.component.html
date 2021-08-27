@@ -1,1 +1,49 @@
-<p>user-profile works!</p>
+<div class="topContainer" fxLayout="column" fxLayoutAlign="start center">
+    <div class="w-50 fw pdt30">
+        <div class="mgb20" fxLayout="row" >
+            <div>
+                <img *ngIf="usuario.foto" [src]="usuario.foto" class="avatar7 neutralFill3 shadow8 border">
+                <img *ngIf="!usuario.foto" [src]="imgUsuario" class="avatar7 neutralFill3 shadow8 border">
+            </div>
+            <!-- Modificar foto de perfil -->
+            <div class="mgt20 mgl30" fxLayout="column" fxShow="lt-md">
+                <span class="ft24">Mi cuenta</span>
+                <label>
+                    <span class="accentLink">Modificar foto de perfil</span>
+                    <input class="ft11 displayNone" type="file" id="file" (change)="cambiarFoto($event, 'foto')"
+                        name="image" autocomplete="off" />
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contentContainer" fxLayout="column" fxLayoutAlign="start center">
+    <div class="w-30 pdt30">
+
+        <div fxLayout="column" class="mgb10">
+            <label>Correo Electrónico:</label>
+            <input type="text" [(ngModel)]="usuario.correo" class="fw" readonly>
+        </div>
+        <div fxLayout="column" class="mgb10">
+            <label>Nombre:</label>
+            <input type="text" [(ngModel)]="usuario.nombre">
+        </div>
+        <div fxLayout="column" class="mgb10">
+            <label>Empresa:</label>
+            <input type="text" [(ngModel)]="usuario.empresa">
+        </div>
+        <div fxLayout="column" class="mgb10">
+            <label>Especialidad:</label>
+            <input type="text" [(ngModel)]="usuario.especialidad">
+        </div>
+        <div fxLayout="column" class="mgb10">
+            <label>Telefono:</label>
+            <input type="text" [(ngModel)]="usuario.telefono">
+        </div>
+        <div class="mgt20" fxLayout="row" fxLayoutAlign="start">
+            <button (click)="updateUsuario()" class="mgt10 accent">Guardar</button>
+        </div>
+
+    </div>
+</div>

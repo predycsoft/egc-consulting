@@ -1,22 +1,17 @@
 <mat-card>
     <div *ngIf="isSignup">
-      <h3>Create Account</h3>
+      <h4>Crea una cuenta</h4>
   
       <button mat-stroked-button (click)="changeType('login')">
-        Returning user?
+        usuario existente?
       </button>
     </div>
   
     <div *ngIf="isLogin">
-      <h3>Sign In</h3>
+      <h4>Registrate</h4>
       <button size="small" mat-stroked-button (click)="changeType('signup')">
-        New user?
+        nuevo usuario?
       </button>
-    </div>
-  
-    <div *ngIf="isPasswordReset">
-      <h3>Reset Password</h3>
-      <button size="small" mat-button (click)="changeType('login')">Back</button>
     </div>
   
     <form [formGroup]="form" (ngSubmit)="onSubmit()">

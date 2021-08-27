@@ -268,7 +268,7 @@ export class DataServiceService {
       switchMap(user => {
         if (user) {
           return this.afs
-            .collection<Usuario>('proyectos')
+            .collection<Usuario>('usuarios')
             .doc(user.uid)
             .valueChanges({ idField: 'id' });
         } else {
