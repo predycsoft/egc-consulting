@@ -1,7 +1,7 @@
 <div class="mgl0 menuToolbar" fxLayoutAlign="space-between">
     <div fxLayout="row">
         <span class="textButton" [matMenuTriggerFor]="menu">
-            <span class="ft22">{{tren.tag}}TREN TAG</span>
+            <span class="ft22">tag: {{tren.tag}}</span>
             <mat-icon class="ft26">arrow_drop_down</mat-icon>
         </span>
     </div>
@@ -11,14 +11,9 @@
         <!-- <span class="textButton" [matMenuTriggerFor]="menu">
         <span class="ft16">Nuevo tren</span>
     </span> -->
-        <mat-icon class="iconButton ft26" placeholder="Agregar tren" [matMenuTriggerFor]="menu">add</mat-icon>
+        <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="anexarEquipo()">add</mat-icon>
         <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-        <div>
-            <span>Equipos:</span>
-            <div *ngFor="let equipo of tren.equipos">{{equipo.tag}}</div>
-            <button (click)="anexarEquipo()" class="standard">Agregar equipo</button>
-        </div>
-        
+
     </div>
 </div>
 

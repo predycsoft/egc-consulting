@@ -21,6 +21,7 @@ export class ListaProyectosComponent implements OnInit {
   usuario = JSON.parse(localStorage.getItem("user"));
 
   ngOnInit(): void {
+
     this.sub = this.data.obtenerProyectosUsuario()
       .subscribe(proyectos => {
         this.proyectos = proyectos;
@@ -32,7 +33,7 @@ export class ListaProyectosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       if (result) {
         console.log(result)
-        await this.data.createProyecto(result);
+        await this.data.createProyecto(result).catch((error) => console.log(error));
         this.dialogService.dialogExito()
       }
     });
