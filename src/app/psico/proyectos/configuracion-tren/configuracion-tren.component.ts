@@ -43,7 +43,7 @@ export class ConfiguracionTrenComponent implements OnInit {
   anexarEquipo() {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
     dialogRef.afterClosed().subscribe(result => {
-      if (result == true) {
+      if (result) {
         this.tren.equipos = this.tren.equipos.concat(result)
         const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
         this.proyecto.trenes[index] = this.tren
