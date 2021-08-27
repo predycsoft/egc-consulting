@@ -56,8 +56,19 @@ li{
     color: var(--text1);
 }
 
+
+/* arbol de tren y equipos */
+
 .selectedTag{
     font-weight: 600;
     user-select: none;
     cursor: pointer;
+}
+
+.miniIcon{
+    opacity: .4;
+}
+
+.miniIconSelected{
+    opacity: 1 !important;
 }

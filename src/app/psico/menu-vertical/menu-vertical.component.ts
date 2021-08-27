@@ -12,13 +12,18 @@ export class MenuVerticalComponent implements OnInit {
 
   logo: string = "assets/images/design/logo.svg"
   defaultUserImage: string = "assets/images/design/default-user-image.svg";
+  compresorMiniIcon: string = "assets/images/icons/compresorMini.svg"
+  turbinaMiniIcon: string = "assets/images/icons/turbinaMini.svg"
+  trenMiniIcon: string = "assets/images/icons/trenMini.svg"
+  instalacionMiniIcon: string = "assets/images/icons/instalacionMini.svg"
   selectedTag: string;
-  
+
 
   constructor(private data: DataServiceService, private route: ActivatedRoute) { }
 
   usuario = JSON.parse(localStorage.getItem("user"))
   proyecto: Proyecto;
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
