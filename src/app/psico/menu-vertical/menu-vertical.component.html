@@ -32,8 +32,7 @@
             <span class="menuText mgl05" routerLinkActive="oaText1">Minutas </span>
         </li>
 
-        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1"
-            class="menuTab">
+        <li mat-list-item routerLink="/psico/proyecto/tren/d" routerLinkActive="selected1" class="menuTab">
             <mat-icon class="ft18 text3" routerLinkActive="oaText1">miscellaneous_services</mat-icon>
             <span class="menuText mgl05" routerLinkActive="oaText1">Recomendaciones </span>
         </li>
@@ -58,20 +57,29 @@
         </div>
     </div>
 
+
     <div>
-        <div fxLayout="row" fxLayoutAlign="center center">
+        <div class="pd03" fxLayout="row" fxLayoutAlign=" center">
             <mat-icon class="ft16"> business</mat-icon>
-            <span>Instalacion</span>
+            <span class="mgl05">Instalacion</span>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon class="ft16"> linear_scale</mat-icon>
-            <span>Instalacion</span>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <mat-icon class="ft16"> add</mat-icon>
-            <span>Instalacion</span>
+        <div fxLayout="column" *ngFor="let item of [1,2,3]">
+            <div class="mgl10 pd03" fxLayout="row" fxLayoutAlign=" center">
+                <mat-icon class="ft16"> linear_scale</mat-icon>
+                <span class="mgl05">Tren</span>
+            </div>
+            <div fxLayout="column" *ngFor="let item of [1,2,3,4]">
+                <div class="mgl20 pd03" fxLayout="row" fxLayoutAlign=" center">
+                    <mat-icon class="ft16"> add</mat-icon>
+                    <span class="mgl05">Equipo</span>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
 
     <br>
 
