@@ -195,6 +195,15 @@ export class DataServiceService {
     })
   }
 
+  eliminarEquipo(proyectoId: string, equipoTag: string) {
+    return this.afs
+      .collection('proyectos')
+      .doc(proyectoId)
+      .collection("equipos")
+      .doc(equipoTag)
+      .delete()
+  }
+
   /**
    * Actualizar
    */

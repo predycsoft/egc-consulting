@@ -73,7 +73,7 @@ export class ConfiguracionTrenComponent implements OnInit {
     })
   }
 
-  eliminarEquipo(tag) {
+  async eliminarEquipo(tag) {
     const idxEquipo = this.tren.equipos.findIndex(x => x.tag == tag)
     this.tren.equipos.splice(idxEquipo, 1)
     this.tren.equipos.forEach((equipo, index) => {
@@ -83,7 +83,8 @@ export class ConfiguracionTrenComponent implements OnInit {
     })
     const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
     this.proyecto.trenes[index] = this.tren
-    this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch((error) => console.log(error))
+    await this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch((error) => console.log(error))
+    await this.data.eliminarEquipo(this.proyectoId, tag);
   }
 
   moverDerecha(tag) {
