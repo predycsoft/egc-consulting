@@ -41,6 +41,7 @@ export class DialogAgregarEquipoComponent implements OnInit {
   }
 
   guardar() {
+    this.equipo = this.form.value
     this.dialogRef.close(this.equipo);
   }
 
