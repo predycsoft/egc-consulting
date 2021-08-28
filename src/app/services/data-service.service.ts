@@ -42,6 +42,10 @@ export class Usuario {
 }
 
 export class equipo {
+  tag: string = "";
+  tipologia: string = "";
+  familia: string = "";
+  orden: number = 0;
   general: general = new general();
   puntosDatasheet: puntosDatasheet[] = [];
   fabricante: string = "";
@@ -184,6 +188,12 @@ export class DataServiceService {
 
 
   //////////////////////////////////////////////////////////////////////////////////
+
+  async createEquipo(proyectoId:string, equipo: equipo) {
+    return this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
+      ...equipo
+    })
+  }
 
   /**
    * Actualizar
