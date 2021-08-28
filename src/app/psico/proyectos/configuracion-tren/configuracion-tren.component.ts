@@ -63,12 +63,18 @@ export class ConfiguracionTrenComponent implements OnInit {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent, {
       data: equipo
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
         const equipoIndex = this.proyecto.trenes[index].equipos.findIndex(x => x.tag == equipo.tag)
         this.proyecto.trenes[index].equipos[equipoIndex] = result
         this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes)))
+        this.data.obtenerEquipo(this.proyectoId, equipo.tag).subscribe(equipo => {
+          const equipoNuevo: equipo = equipo;
+          equipoNuevo.tag = result.tag
+          this.data.eliminarEquipo(this.proyectoId, equipo.tag)
+          this.data.createEquipo(this.proyectoId, equipoNuevo)
+        })
       }
     })
   }

@@ -188,14 +188,16 @@ export class DataServiceService {
 
 
   //////////////////////////////////////////////////////////////////////////////////
-
+  obtenerEquipo(proyectoId:string, tag: string){
+    return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).collection<equipo>("equipos").doc(tag).valueChanges()
+  }
   async createEquipo(proyectoId:string, equipo: equipo) {
     return this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
       ...equipo
     })
   }
 
-  eliminarEquipo(proyectoId: string, equipoTag: string) {
+  async eliminarEquipo(proyectoId: string, equipoTag: string) {
     return this.afs
       .collection('proyectos')
       .doc(proyectoId)
