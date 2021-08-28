@@ -8,7 +8,18 @@
             <mat-option value="Turbina" class="optionItem"> Turbina</mat-option>
         </mat-select>
         <label *ngIf="!data" for="">Tipologia</label>
-        <input *ngIf="!data" type="text" formControlName="tipologia">
+        <div *ngIf="!data">
+            <mat-select *ngIf="this.form.controls['familia'].value =='Compresor'"  formControlName="tipologia" class="fw">
+                <mat-option value="Inline" class="optionItem"> Inline </mat-option>
+                <mat-option value="Double Suction" class="optionItem"> Double Suction</mat-option>
+                <mat-option value="Double Discharge" class="optionItem"> Double Discharge</mat-option>
+                <mat-option value="Back to Back" class="optionItem"> Back to Back</mat-option>
+                <mat-option value="Streamline" class="optionItem"> Streamline</mat-option>
+            </mat-select>
+            <mat-select *ngIf="this.form.controls['familia'].value =='Turbina'"  formControlName="tipologia" class="fw">
+                <mat-option value="Turbina" class="optionItem"> Turbina </mat-option>
+            </mat-select>
+        </div>
     </form>
     <button class="mgt05 darkButton fw" (click)="guardar()">Continuar</button>
 </div>
