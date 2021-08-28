@@ -46,7 +46,7 @@ export class equipo {
   tipologia: string = "";
   familia: string = "";
   orden: number = 0;
-  general: general = new general();
+  general: general = new general;
   puntosDatasheet: puntosDatasheet[] = [];
   fabricante: string = "";
   modelo: string = "";
@@ -194,7 +194,7 @@ export class DataServiceService {
   async createEquipo(proyectoId:string, equipo: equipo) {
     return this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
       ...equipo
-    })
+    }).catch(error => console.log(error))
   }
 
   async eliminarEquipo(proyectoId: string, equipoTag: string) {
@@ -203,7 +203,7 @@ export class DataServiceService {
       .doc(proyectoId)
       .collection("equipos")
       .doc(equipoTag)
-      .delete()
+      .delete().catch(error => console.log(error))
   }
 
   /**

@@ -49,12 +49,13 @@ export class ConfiguracionTrenComponent implements OnInit {
         const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
         this.proyecto.trenes[index] = this.tren
         await this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch(error => console.log(error))
-        const newEquipo = new equipo()
+        const newEquipo: equipo = new equipo()
         newEquipo.tag = result.tag
         newEquipo.orden = result.orden
         newEquipo.familia = result.familia
         newEquipo.tipologia = result.tipologia
-        await this.data.createEquipo(this.proyectoId, newEquipo).catch(error => console.log(error))
+        console.log(newEquipo)
+        await this.data.createEquipo(this.proyectoId, JSON.parse(JSON.stringify(newEquipo))).catch(error => console.log(error))
       }
     })
   }
@@ -63,18 +64,21 @@ export class ConfiguracionTrenComponent implements OnInit {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent, {
       data: equipo
     });
+    const tagViejo = equipo.tag
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
         const equipoIndex = this.proyecto.trenes[index].equipos.findIndex(x => x.tag == equipo.tag)
         this.proyecto.trenes[index].equipos[equipoIndex] = result
         this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes)))
-        this.data.obtenerEquipo(this.proyectoId, equipo.tag).subscribe(equipo => {
+        this.data.obtenerEquipo(this.proyectoId, tagViejo).subscribe(async equipo => {
           const equipoNuevo: equipo = equipo;
           equipoNuevo.tag = result.tag
-          this.data.eliminarEquipo(this.proyectoId, equipo.tag)
-          this.data.createEquipo(this.proyectoId, equipoNuevo)
-        })
+          console.log("equipo viejo tag" + tagViejo)
+          console.log("equipo nuevo tag" + equipoNuevo.tag)
+          await this.data.eliminarEquipo(this.proyectoId, tagViejo)
+          await this.data.createEquipo(this.proyectoId, JSON.parse(JSON.stringify(equipoNuevo)))
+        }).unsubscribe()
       }
     })
   }
