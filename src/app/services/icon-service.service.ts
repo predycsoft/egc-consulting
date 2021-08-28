@@ -15,6 +15,21 @@ export class IconServiceService {
   // 
   compresorIcon: string = "assets/images/icons/compresor.svg"
   turbinaIcon: string = "assets/images/icons/turbina.svg"
+
+  // 
+  inlineExample: string = "assets/images/icons/inlineExample.svg"
+  doubleSuctionExample: string = "assets/images/icons/doubleSuctionExample.svg"
+  doubleDischargeExample: string = "assets/images/icons/doubleDischargeExample.svg"
+  b2bExample: string = "assets/images/icons/b2bExample.svg"
+  streamlineExample: string = "assets/images/icons/streamlineExample.svg"
+
+  // 
+  inline: string = "assets/images/icons/inline.svg"
+  doubleSuction: string = "assets/images/icons/doubleSuction.svg"
+  doubleDischarge: string = "assets/images/icons/doubleDischarge.svg"
+  b2b: string = "assets/images/icons/b2b.svg"
+  streamline: string = "assets/images/icons/streamline.svg"
+
   
   constructor() { }
 }

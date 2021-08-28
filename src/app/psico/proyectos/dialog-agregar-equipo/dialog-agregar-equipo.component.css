@@ -1,0 +1,39 @@
+
+tr{
+    height: 40px;
+}
+
+th{
+    color: var(--text2);
+    background: var(--neutral1) !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    height: 41px;
+    text-align: center;
+    font-size: 14;
+    font-weight: 500px !important;
+    border: 1px solid var(--stroke1);
+    border-top: none;
+    border-right: none;
+}
+
+input, select{
+    border: 1px solid transparent;
+    border-radius: 0px;
+    height: 28px;
+    text-align: left;
+    width: 150px;
+}
+
+input:focus, select:focus{
+    border: 1px solid var(--stroke1);
+    background: var(--control1) !important;
+    border-radius: 4px;
+}
+
+.equipoIcon{
+    height: 300px;
+}
+
+
+

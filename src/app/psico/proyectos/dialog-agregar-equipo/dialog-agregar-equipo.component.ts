@@ -1,7 +1,9 @@
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { equipo_tren } from 'src/app/services/data-service.service';
+import { IconServiceService } from 'src/app/services/icon-service.service';
 
 
 @Component({
@@ -17,7 +19,8 @@ export class DialogAgregarEquipoComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DialogAgregarEquipoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: equipo_tren = new equipo_tren(),
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public icon: IconServiceService
   ) { }
 
 
