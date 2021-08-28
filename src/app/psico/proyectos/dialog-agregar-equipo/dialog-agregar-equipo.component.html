@@ -3,11 +3,11 @@
         <label for="">Tag de equipo</label>
         <input type="text" formControlName="tag">
         <label for="">Tipo de Equipo</label>
-        <mat-select formControlName="familia" class="fw">
+        <mat-select *ngIf="!data" formControlName="familia" class="fw">
             <mat-option value="Compresor" class="optionItem"> Compresor </mat-option>
             <mat-option value="Turbina" class="optionItem"> Turbina</mat-option>
         </mat-select>
-        <label for="">Tipologia</label>
+        <label *ngIf="!data" for="">Tipologia</label>
         <input type="text" formControlName="tipologia">
     </form>
     <button class="mgt05 darkButton fw" (click)="guardar()">Continuar</button>
