@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { DataServiceService, equipo_tren, Proyecto, tren } from 'src/app/services/data-service.service';
+import { DataServiceService, equipo, equipo_tren, Proyecto, tren } from 'src/app/services/data-service.service';
 import { DialogAgregarEquipoComponent } from '../dialog-agregar-equipo/dialog-agregar-equipo.component';
 
 
@@ -42,13 +42,19 @@ export class ConfiguracionTrenComponent implements OnInit {
 
   anexarEquipo() {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
-    dialogRef.afterClosed().subscribe((result: equipo_tren) => {
+    dialogRef.afterClosed().subscribe( async(result: equipo_tren) => {
       if (result) {
         result.orden = this.tren.equipos.length;
         this.tren.equipos = this.tren.equipos.concat(result)
         const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
         this.proyecto.trenes[index] = this.tren
-        this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes)))
+        await this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch(error => console.log(error))
+        const newEquipo = new equipo()
+        newEquipo.tag = result.tag
+        newEquipo.orden = result.orden
+        newEquipo.familia = result.familia
+        newEquipo.tipologia = result.tipologia
+        await this.data.createEquipo(this.proyectoId, newEquipo).catch(error => console.log(error))
       }
     })
   }
@@ -67,7 +73,7 @@ export class ConfiguracionTrenComponent implements OnInit {
     })
   }
 
-  eliminarEquipo(tag) {
+  async eliminarEquipo(tag) {
     const idxEquipo = this.tren.equipos.findIndex(x => x.tag == tag)
     this.tren.equipos.splice(idxEquipo, 1)
     this.tren.equipos.forEach((equipo, index) => {
@@ -77,7 +83,8 @@ export class ConfiguracionTrenComponent implements OnInit {
     })
     const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
     this.proyecto.trenes[index] = this.tren
-    this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch((error) => console.log(error))
+    await this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch((error) => console.log(error))
+    await this.data.eliminarEquipo(this.proyectoId, tag);
   }
 
   moverDerecha(tag) {
