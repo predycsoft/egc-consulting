@@ -1,5 +1,9 @@
-<label for="">Tag</label>
-<input type="text" [(ngModel)]="tren.tag">
-<button (click)="guardar()">Guardar</button>
+<div class="pd10">
+    <h4 class="centertext">Agregar nuevo tren</h4>
+    <input type="text" class="fw centertext" [(ngModel)]="tren.tag" placeholder="TAG">
+    <div class="mgt10">
+        <button *ngIf="!tren.tag" (click)="guardar()" class="fw standard" disabled>Guardar</button>
+        <button *ngIf="tren.tag" (click)="guardar()" class="fw accent">Guardar</button>
+    </div>
 
-
+</div>

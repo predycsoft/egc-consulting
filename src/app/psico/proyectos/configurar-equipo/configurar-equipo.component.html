@@ -1,14 +1,12 @@
-<!-- <div fxLayout="column" fxLayoutAlign="center center" class="fw fh">
-    <span class="text3 ft16">No hay equipos cargados </span>
-</div> -->
-
-<div class="mgl0 menuToolbar">
-    <span class="textButton">
-        <span class="ft16">{{equipo.familia}}</span>
-        <mat-icon class="ft20">arrow_drop_down</mat-icon>
-    </span>
+<div class="pd20  menuToolbar" fxLayoutAlign="space-between">
+    <span class="ft22">{{equipo.familia}} {{equipo.tag}}</span>
+    <div fxLayoutAlign="space-between">
+        <mat-icon class="iconButton ft26" placeholder="Agregar tren">add</mat-icon>
+        <mat-icon class="iconButton ft26" >more_vert</mat-icon>
+    </div>
 </div>
 
-
-<configuracion-compresor *ngIf="equipo.familia==='Compresor'"></configuracion-compresor>
+<div class="pdl10 pdr20">
+    <configuracion-compresor *ngIf="equipo.familia==='Compresor'"></configuracion-compresor>
 <configuracion-turbina *ngIf="equipo.familia==='Turbina'"></configuracion-turbina>
+</div>

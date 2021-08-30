@@ -3,6 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DataServiceService, equipo, equipo_tren, Proyecto, tren } from 'src/app/services/data-service.service';
 import { DialogAgregarEquipoComponent } from '../dialog-agregar-equipo/dialog-agregar-equipo.component';
+import { IconServiceService } from 'src/app/services/icon-service.service';
+import { ViewChild } from '@angular/core'
+import { MatMenuTrigger } from '@angular/material/menu';
+import { DialogService } from 'src/app/services/dialog.service';
 
 
 @Component({
@@ -16,6 +20,8 @@ export class ConfiguracionTrenComponent implements OnInit {
     public dialogAgregar: MatDialog,
     private route: ActivatedRoute,
     private data: DataServiceService,
+    public icon: IconServiceService,
+    public dialogService: DialogService,
   ) { }
   proyecto: Proyecto;
   tipoSimulacion: "real" | "teorica" | "ambas";
@@ -40,9 +46,25 @@ export class ConfiguracionTrenComponent implements OnInit {
     })
   }
 
+
+  // context menu function
+
+  @ViewChild('trigger')
+  contextMenu: MatMenuTrigger;
+  contextMenuPosition = { x: '0px', y: '0px' };
+
+  onContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+  }
+
+  // 
   anexarEquipo() {
     const dialogRef = this.dialogAgregar.open(DialogAgregarEquipoComponent);
-    dialogRef.afterClosed().subscribe( async(result: equipo_tren) => {
+    dialogRef.afterClosed().subscribe(async (result: equipo_tren) => {
       if (result) {
         result.orden = this.tren.equipos.length;
         this.tren.equipos = this.tren.equipos.concat(result)
@@ -74,6 +96,15 @@ export class ConfiguracionTrenComponent implements OnInit {
   }
 
   async eliminarEquipo(tag) {
+    this.dialogService.dialogConfirmar().afterClosed().subscribe(res => {
+      if (res == true) {
+        this.confirmarEliminarEquipo(tag)
+      }
+    });
+
+  }
+
+  async confirmarEliminarEquipo(tag) {
     const idxEquipo = this.tren.equipos.findIndex(x => x.tag == tag)
     this.tren.equipos.splice(idxEquipo, 1)
     this.tren.equipos.forEach((equipo, index) => {

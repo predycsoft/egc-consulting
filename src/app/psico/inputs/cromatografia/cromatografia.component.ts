@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogLibreriaCromatografiasComponent } from '../dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
 
 interface componente {
   nombre: string,
@@ -28,19 +30,19 @@ class cromatografia {
 
 class propiedadesCromatografia{
     // Propiedades calculadas del gas
-    presion: number = 0;
-    temperatura: number = 0;
-    densidad: number = 0;
-    volumen: number = 0;
-    entalpia: number = 0;
-    entropia: number = 0;
-    pesoMolecular: number = 0;
-    compresibilidad: number = 0;
-    calidad: number = 0;
-    LHV: number = 0;
-    HHV: number = 0;
-    gravedadEspecifica: number = 0;
-    wi: number = 0;
+    presion: number = 0; //input
+    temperatura: number = 0; //input
+    densidad: number;
+    volumen: number;
+    entalpia: number;
+    entropia: number;
+    pesoMolecular: number;
+    compresibilidad: number;
+    calidad: number;
+    LHV: number;
+    HHV: number;
+    gravedadEspecifica: number;
+    wi: number
 }
 
 @Component({
@@ -50,7 +52,7 @@ class propiedadesCromatografia{
 })
 export class CromatografiaComponent implements OnInit {
 
-
+  nombreCromatografia: string = ''
   cr: cromatografia = new cromatografia();
   propidadesCromatografia = new propiedadesCromatografia();
   fraccMolarTotal: number = 0;
@@ -74,7 +76,7 @@ export class CromatografiaComponent implements OnInit {
     { nombre: 'Aire', formula: 'C1', pesoMolecular: 28.966, fraccionMolar: this.cr.aire}
   ]
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -98,6 +100,11 @@ export class CromatografiaComponent implements OnInit {
 
   customTrackBy(index: number, obj: any): any {
     return index;
+  }
+
+  openLibreriaCromatografias(){
+    const dialogRef = this.dialog.open(DialogLibreriaCromatografiasComponent, {
+    });
   }
 
 

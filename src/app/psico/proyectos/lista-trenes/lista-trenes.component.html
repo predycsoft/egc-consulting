@@ -1,54 +1,63 @@
-<div class="fh fw pd20" fxLayout="column" fxLayoutAlign="space-between center">
-
-    <div class="menuToolbar fw" fxLayoutAlign="space-between center">
-        <span class="mgl10 ft22">Instalación</span>
-        <div fxLayoutAlign="space-between" fxLayoutGap=".3rem">
-            <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="openDialogNuevoTren()">add</mat-icon>
-            <mat-icon class="iconButton ft26" >more_vert</mat-icon>
-        </div>
+<div class="pdt20 pdl20 pdr20 menuToolbar" fxLayoutAlign="space-between">
+    <span class="ft22">Trenes</span>
+    <div fxLayoutAlign="space-between">
+        <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="openDialogNuevoTren()">add</mat-icon>
+        <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
     </div>
+</div>
+
+<mat-menu #menu="matMenu" class="contextMenu">
+    <li class="menuItem" >Opc 1</li>
+    <li class="menuItem" >Opc 2</li>
+</mat-menu>
+
+
+<div class="fh fw pd20" fxLayout="column" fxLayoutAlign="space-between center">
 
     <div class="fh">
         <!-- Lista de trenes -->
         <div fxLayout="column" fxLayoutGap="3rem" fxLayoutAlign="center center" class="fh">
-        <div *ngFor="let tren of trenes; let i = index"  class="w600px">
+            <div *ngFor="let tren of trenes; let i = index" class="w600px">
 
-            <div fxLayout="row" fxLayout="start center" fxFlex=100%>
+                <div fxLayout="row" fxLayout="start center" fxFlex=100%>
 
-                <div fxLayout="row" fxLayoutAlign=" center">
-                    <span class="mgr10 ft18"> {{tren.tag}} </span>
-                </div>
+                    <div fxLayout="row" fxLayoutAlign=" center">
+                        <span class="mgr10 ft18"> {{tren.tag}} </span>
+                    </div>
 
-                <div class="trenContainer" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
-                    <div fxLayout="row" fxLayoutGap="1rem">
-                        <div *ngFor="let equipo of tren.equipos; let i = index">
-                            <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer">
-                                <img [src]="icon.compresorIcon" class="equipoIcon">
-                                <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
-                                    <span class="tagText"> {{equipo.tag}} </span>
+                    <div class="trenContainer" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]"
+                        (contextmenu)="onContextMenu($event)">
+                        <div fxLayout="row" fxLayoutGap="1rem">
+                            <div *ngFor="let equipo of tren.equipos; let i = index">
+                                <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer">
+                                    <img [src]="icon.compresorIcon" class="equipoIcon">
+                                    <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
+                                        <span class="tagText"> {{equipo.tag}} </span>
+                                    </div>
+                                    <div *ngIf="i>0" class="shaftContainer"></div>
                                 </div>
-                                <div *ngIf="i>0" class="shaftContainer"></div>
-                            </div>
-                            <div *ngIf="equipo.familia==='Turbina'" class="equipoContainer">
-                                <img [src]="icon.turbinaIcon" class="equipoIcon">
-                                <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
-                                    <span class="tagText"> {{equipo.tag}} </span>
+                                <div *ngIf="equipo.familia==='Turbina'" class="equipoContainer">
+                                    <img [src]="icon.turbinaIcon" class="equipoIcon">
+                                    <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
+                                        <span class="tagText"> {{equipo.tag}} </span>
+                                    </div>
+                                    <div *ngIf="i>0" class="shaftContainer"></div>
                                 </div>
-                                <div *ngIf="i>0" class="shaftContainer"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <mat-icon class="iconButton" [matMenuTriggerFor]="menu" (click)="this.selectedTren = tren">
-                    more_vert </mat-icon>
             </div>
         </div>
     </div>
-
-        <mat-menu #menu="matMenu" class="contextMenu">
-            <li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
-            <li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
-        </mat-menu>
-
-    </div>
 </div>
+
+
+<div #trigger="matMenuTrigger" style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu2">
+</div>
+
+<mat-menu #contextMenu2="matMenu" class="contextMenu">
+<li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
+<li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
+</mat-menu>

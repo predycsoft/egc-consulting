@@ -48,17 +48,17 @@
     </div> -->
 
     <div fxLayout="column" fxLayoutAlign="center" class="mgl10 fh w200px mgr20 ">
-        <img *ngIf="this.form.controls['tipologia'].value ==='Inline'" [src]="icon.inlineExample" class="equipoIcon">
-        <img *ngIf="this.form.controls['tipologia'].value ==='Double Suction'" [src]="icon.doubleSuctionExample"
+        <img *ngIf="this.form.controls['tipologia'].value ==='Inline'" [src]="icon.inline" class="equipoIcon">
+        <img *ngIf="this.form.controls['tipologia'].value ==='Double Suction'" [src]="icon.doubleSuction"
             class="equipoIcon">
-        <img *ngIf="this.form.controls['tipologia'].value ==='Double Discharge'" [src]="icon.doubleDischargeExample"
+        <img *ngIf="this.form.controls['tipologia'].value ==='Double Discharge'" [src]="icon.doubleDischarge"
             class="equipoIcon">
-        <img *ngIf="this.form.controls['tipologia'].value ==='Back to Back'" [src]="icon.b2bExample" class="equipoIcon">
-        <img *ngIf="this.form.controls['tipologia'].value ==='Streamline'" [src]="icon.streamlineExample"
+        <img *ngIf="this.form.controls['tipologia'].value ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
+        <img *ngIf="this.form.controls['tipologia'].value ==='Streamline'" [src]="icon.streamline"
             class="equipoIcon">
     </div>
 </div>
-<div class="neutralFill1 pd05">
+<div class="neutralFill1 pd05" fxLayoutAlign="end">
     <button class="accent" (click)="guardar()">Crear equipo</button>
 </div>
 

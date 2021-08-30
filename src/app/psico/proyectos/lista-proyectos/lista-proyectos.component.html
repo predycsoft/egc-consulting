@@ -10,7 +10,7 @@
     <div class="cw">
 
         <!-- Lista de proyectos-->
-        <div class="fw pdt30">
+        <div class="fw pdt30 ">
             <div class="mgt30 mgb10" fxLayout="row" fxLayoutAlign="space-between">
                 <h4> Proyectos</h4>
                 <button class="accent" (click)="openDialogNuevoProyecto()">Nuevo proyecto</button>
@@ -20,8 +20,8 @@
                     <mat-icon class="text3">insert_drive_file</mat-icon>
                 </div>
 
-                <div class="mgl08 fw" fxLayout="column">
-                    <span class="ft14">
+                <div class="mgl08 fw" fxLayout="column" (click)="this.idSelected = proyecto.id">
+                    <span class="ft14" >
                         {{proyecto.titulo}}
                     </span>
                     <span class="mgb0">Rev {{proyecto.revision}} </span>

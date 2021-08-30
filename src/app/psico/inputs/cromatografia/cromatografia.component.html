@@ -3,18 +3,14 @@
 <div>
     <div class="firstRow" fxLayoutAlign="space-between center">
         <span class="ft16 text2">Mezcla de Gas</span>
+        <div class="neutralFill1 pd05 pdl08"> 
+            <span class="ft16 text2 mgr10">Nombre</span>
+            <input type="text" [(ngModel)]="nombreCromatografia" class="stroke2">
+        </div>
         <!-- <span class="textButton" (click)="normalizar()">Normalizar</span> -->
         <div>
-            <mat-icon class="iconButton text2">save</mat-icon>
-            <mat-icon class="iconButton text2">cloud_download</mat-icon>
-
-            <mat-icon class="iconButton text2">file_copy</mat-icon>
-            <mat-icon class="iconButton text2">arrow_downward</mat-icon>
-            <mat-icon class="iconButton text2">arrow_upward</mat-icon>
-            <mat-icon class="iconButton text2">more_vert</mat-icon>
-            <mat-icon class="iconButton text2">folder_open</mat-icon>
-            <mat-icon class="iconButton text2">delete_outline</mat-icon>
-            <mat-icon class="iconButton text2">exposure_plus_1</mat-icon>
+            <mat-icon class="iconButton text2" matTooltip="Guardar en libreria">save</mat-icon>
+            <mat-icon class="iconButton text2" matTooltip="Cargar de libreria" (click)="openLibreriaCromatografias()">folder_open</mat-icon>
             <mat-icon class="iconButton text2">close</mat-icon>
         </div>
     </div>
@@ -30,9 +26,12 @@
                     <th>Componente</th>
                     <th >Formula</th>
                     <th >P.M.</th>
-                    <th >F.M.</th>
+                    <th fxLayoutAlign="center center"> 
+                        F.M. &nbsp;
+                        <mat-icon class="iconButton text2" matTooltip="Normalizar">exposure_plus_1</mat-icon>
+                    </th>
                 </tr>
-                <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy">
+                <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy;" >
                     <td>{{this.cromatografia[i].nombre}}</td>
                     <td class="centertext">{{this.cromatografia[i].formula}}</td>
                     <td class="centertext">{{this.cromatografia[i].pesoMolecular}}</td>
@@ -139,8 +138,10 @@
     </div>
 
     <!-------------------------------------------------- Nota de pie al final de la ventana -->
-    <div class="neutralFill1 pdl10 pd05 border-t">
+    <div class="neutralFill1 pdl10 pd05 border-t" fxLayoutAlign="space-between">
         <span class="text2"> Nota: debe introducir la fraccion molar de cada componente.</span>
+        <button class="standard" *ngIf="!nombreCromatografia" disabled>Guardar</button>
+        <button class="accent" *ngIf="nombreCromatografia">Guardar</button>
     </div>
 
 </div>

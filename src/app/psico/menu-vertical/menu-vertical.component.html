@@ -40,11 +40,11 @@
             <mat-icon class="ft18 text3" routerLinkActive="oaText1">insert_drive_file</mat-icon>
             <span class="menuText mgl05" routerLinkActive="oaText1"> Reporte </span>
         </li>
-    </div>
+    </div> -->
 
     <div class="containerUsuario">
         <div fxLayout="row" fxLayoutAlign=" center" class="pdt05">
-            <img [src]="defaultUserImage" class="mgl05 avatar2 accentControlFill1">
+            <img  class="mgl05 avatar2 accentControlFill1">
             <span class="mgl05 mgr10 fw centertext">Nombre Usuario</span>
         </div>
         <div fxLayout="column" class="mgt10 border-t pd08">
@@ -54,7 +54,8 @@
             <span class="userMenuText">Cerrar sesión</span>
             <br>
         </div>
-    </div> -->
+    </div>
+
     <div class="mgl05">
         <div class="pd03" [ngClass]="{'selectedTag': proyecto.titulo == selectedTag}" fxLayout="row" fxLayoutAlign=" center">
             <img  [src]="icon.instalacionMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': proyecto.titulo == selectedTag}">

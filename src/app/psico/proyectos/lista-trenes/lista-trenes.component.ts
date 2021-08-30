@@ -5,6 +5,8 @@ import { DataServiceService, tren } from 'src/app/services/data-service.service'
 import { DialogService } from 'src/app/services/dialog.service';
 import { DialogNuevoTrenComponent } from '../dialog-nuevo-tren/dialog-nuevo-tren.component';
 import { IconServiceService } from 'src/app/services/icon-service.service';
+import { ViewChild } from '@angular/core'
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'lista-trenes',
@@ -13,7 +15,7 @@ import { IconServiceService } from 'src/app/services/icon-service.service';
 })
 export class ListaTrenesComponent implements OnInit {
 
-  constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog, public icon: IconServiceService) { }
+  constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog, public icon: IconServiceService,) { }
 
   id: string = "";
   trenes: tren[] = [];
@@ -30,9 +32,33 @@ export class ListaTrenesComponent implements OnInit {
     })
   }
 
-  eliminarTren(tren: tren) {
-    this.data.eliminarTren(this.id, tren)
+  // context menu function
+
+  @ViewChild('trigger')
+  contextMenu: MatMenuTrigger;
+  contextMenuPosition = { x: '0px', y: '0px' };
+
+  onContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
   }
+
+  // 
+  
+
+
+  eliminarTren(tren: tren) {
+    this.dialogService.dialogConfirmar().afterClosed().subscribe(res => {
+      if (res == true) {
+        this.data.eliminarTren(this.id, tren)
+      }
+    });
+  }
+
+  
 
   openDialogNuevoTren() {
     const dialogRef = this.dialog.open(DialogNuevoTrenComponent);

@@ -38,6 +38,7 @@ import { ListaTrenesComponent } from './proyectos/lista-trenes/lista-trenes.comp
 import { DialogNuevoTrenComponent } from './proyectos/dialog-nuevo-tren/dialog-nuevo-tren.component';
 import { ListaSimulacionesTeoricasComponent } from './simulacion-teorica/lista-simulaciones-teoricas/lista-simulaciones-teoricas.component';
 import { TablaSimulacionesTeoricasComponent } from './simulacion-teorica/tabla-simulaciones-teoricas/tabla-simulaciones-teoricas.component';
+import { DialogLibreriaCromatografiasComponent } from './inputs/dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { TablaSimulacionesTeoricasComponent } from './simulacion-teorica/tabla-s
     ListaTrenesComponent,
     DialogNuevoTrenComponent,
     ListaSimulacionesTeoricasComponent,
-    TablaSimulacionesTeoricasComponent
+    TablaSimulacionesTeoricasComponent,
+    DialogLibreriaCromatografiasComponent
   ],
   imports: [
     CommonModule,

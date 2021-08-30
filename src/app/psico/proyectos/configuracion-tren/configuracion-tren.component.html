@@ -1,5 +1,5 @@
-<div class="mgl0 menuToolbar" fxLayoutAlign="space-between">
-    <span class="ft22">Tren: {{tren.tag}}</span>
+<div class="pdt20 pdl20 pdr20 menuToolbar" fxLayoutAlign="space-between">
+    <span class="ft22">Tren {{tren.tag}}</span>
     <div fxLayoutAlign="space-between">
         <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="anexarEquipo()">add</mat-icon>
         <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
@@ -11,37 +11,50 @@
     <li class="menuItem" (click)="trenSeleccionado = 'TC-5200A'">Eliminar tren</li>
 </mat-menu>
 
-
-
-
-
-
-
 <div fxLayout="column" fxLayoutAlign="center center" class="fw fh">
 
-
-
-
-
     <div class="trenContainer">
-        <div fxLayout="row" fxLayoutGap="2rem">
-
-            <div *ngFor="let item of tren.equipos" class="boxContainer">
-                <span class="cursorPointer">{{item.familia}}</span>
-                <span class="cursorPointer">{{item.tag}}</span>
-                <span class="cursorPointer">{{item.orden}}</span>
-                <mat-icon class="optionsIcon" [matMenuTriggerFor]="menu2" (click)="equipoSelected=item">more_vert</mat-icon>
+        <div fxLayout="row" fxLayoutGap="1rem">
+            <div *ngFor="let equipo of tren.equipos; let i = index" (contextmenu)="onContextMenu($event)">
+                <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer">
+                    <img *ngIf="equipo.tipologia ==='Inline'" [src]="icon.inline" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Double Suction'" [src]="icon.doubleSuction" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Double Discharge'" [src]="icon.doubleDischarge" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Streamline'" [src]="icon.streamline" class="equipoIcon">
+                    <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
+                        <span class="tagText"> {{equipo.tag}} </span>
+                    </div>
+                    <div *ngIf="i>0" class="shaftContainer"></div>
+                </div>
+                <div *ngIf="equipo.familia==='Turbina'" class="equipoContainer">
+                    <img *ngIf="equipo.tipologia ==='Inline'" [src]="icon.inline" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Double Suction'" [src]="icon.doubleSuction" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Double Discharge'" [src]="icon.doubleDischarge" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
+                    <img *ngIf="equipo.tipologia ==='Streamline'" [src]="icon.streamline" class="equipoIcon">
+                    <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
+                        <span class="tagText"> {{equipo.tag}} </span>
+                    </div>
+                    <div *ngIf="i>0" class="shaftContainer"></div>
+                </div>
             </div>
         </div>
     </div>
-
-    <mat-menu #menu2="matMenu" class="contextMenu">
-        <li class="menuItem" [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipoSelected.tag]">Configurar</li>
-        <li class="menuItem" (click)="modificarEquipo(equipoSelected) ">Cambiar nombre</li>
-        <li class="menuItem" *ngIf="equipoSelected.orden !=0" (click)="moverIzquierda(equipoSelected.tag)">Mover a la izquierda</li>
-        <li class="menuItem" *ngIf="equipoSelected.orden != tren.equipos.length-1" (click)="moverDerecha(equipoSelected.tag)">Mover a la derecha</li>
-        <li class="menuItem" (click)="eliminarEquipo(equipoSelected.tag)">Eliminar</li>
-    </mat-menu>
-
-
 </div>
+
+<!-- Context menu -->
+<div #trigger="matMenuTrigger" style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu2">
+</div>
+
+<mat-menu #contextMenu2="matMenu" class="contextMenu">
+    <li class="menuItem" [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipoSelected.tag]">Configurar
+    </li>
+    <li class="menuItem" (click)="modificarEquipo(equipoSelected) ">Cambiar nombre</li>
+    <li class="menuItem" *ngIf="equipoSelected.orden !=0" (click)="moverIzquierda(equipoSelected.tag)">Mover a la
+        izquierda</li>
+    <li class="menuItem" *ngIf="equipoSelected.orden != tren.equipos.length-1"
+        (click)="moverDerecha(equipoSelected.tag)">Mover a la derecha</li>
+    <li class="menuItem" (click)="eliminarEquipo(equipoSelected.tag)">Eliminar</li>
+</mat-menu>

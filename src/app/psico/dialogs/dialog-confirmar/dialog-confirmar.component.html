@@ -1,16 +1,17 @@
 <!-- Componente se utiliza para obtener confirumacion del usuario para realizar una acción -->
 
-<div class="pd">
+<div class="pd10">
     <div fxLayoutAlign="end">
         <mat-icon (click)="closeDialog()" class="mgl20 cursorPointer gray-3">close</mat-icon>
     </div>
     <div fxLayout="column" fxLayoutAlign=" center">
         <mat-icon class="linkIcon ftxxxl gray-3">error_outline</mat-icon>
-        <p class="mgt05 gray-10">Escriba la palabra <strong>CONFIRMAR</strong> para continuar</p>
+        <br>
+        <p class="gray-10">Escriba la palabra <strong>CONFIRMAR</strong> para continuar</p>
     </div>
     <div class="mgt10">
         <input type="text" [(ngModel)]=textoConfirmacion class="mgr10 fw centertext">
-        <button *ngIf="textoConfirmacion==='CONFIRMAR'" class="mgt05 darkButton fw" [mat-dialog-close]="true">Continuar</button>
-        <button *ngIf="textoConfirmacion!=='CONFIRMAR'" class="mgt05 cursorDefault fw">Continuar</button>
+        <button *ngIf="textoConfirmacion==='CONFIRMAR'" class="mgt05 accent fw" [mat-dialog-close]="true">Continuar</button>
+        <button *ngIf="textoConfirmacion!=='CONFIRMAR'" class="mgt05 standard fw" disabled>Continuar</button>
     </div>
 </div>

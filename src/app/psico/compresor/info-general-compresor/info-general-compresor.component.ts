@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IconServiceService } from 'src/app/services/icon-service.service';
 
 @Component({
   selector: 'info-general-compresor',
@@ -25,7 +26,7 @@ export class InfoGeneralCompresor implements OnInit {
   //Se debe completar esta info con enrique
 
 
-  constructor() { }
+  constructor(public icon: IconServiceService) { }
 
   ngOnInit(): void {
   }
