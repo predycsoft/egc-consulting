@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Component({
   selector: 'dialog-polinomios-curvas-compresor',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
 
-  constructor() { }
+
+  tipoAjuste: string = 'Automatico';
+  grado: number;
+  unidadFlujo: string = 'Q/N';
+
+  constructor(public dialogService: DialogService) { }
 
   ngOnInit(): void {
+  }
+
+  eliminarCurva() {
+    this.dialogService.dialogConfirmar().afterClosed().subscribe(res => {
+      if (res == true) {
+      }
+    });
   }
 
 }

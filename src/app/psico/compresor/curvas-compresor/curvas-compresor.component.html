@@ -1,47 +1,25 @@
-<!-- 
-<br><br><br><br>
-
-<tr>
-    <th>Punto</th>
-    <th>Q/N</th>
-    <th>u</th>
-    <th>n</th>
-</tr>
-<tr>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-</tr>
-<tr>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-</tr>
-<tr>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-</tr>
-<tr>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-    <td><input type="number"></td>
-</tr> -->
-
 <div fxLayout="row" fxLayoutGap="2rem">
 
     <div class="w200px">
+
+        <span>Sección</span>
+        <mat-select [(ngModel)]="seccionActual">
+            <mat-option [value]="'1'" class="optionItem"> Sección 1 </mat-option>
+            <mat-option [value]="'2'" class="optionItem"> Sección 2</mat-option>
+        </mat-select>
+        <hr>
+
         <mat-checkbox> </mat-checkbox>
         <span class="ft16 cursorPointer nowrap">
-            Diametro equivalente
-        </span> 
-        <div *ngFor="let item of [1,2,3,4,5,6,7]; let i = index">
+            Impulsor equivalente
+        </span>
+
+        <hr>
+
+        <div *ngFor="let item of [1,2,3,4]; let i = index">
             <mat-checkbox> </mat-checkbox>
-            <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios()" class="mgl05 ft16 cursorPointer impulsor"
+            <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios()"
+                class="mgl05 ft16 cursorPointer impulsor"
                 [ngClass]="{'impulsorSeleccionado': impulsorSeleccionado == i}">
                 Impulsor {{i + 1}}
                 <div class="impulsorInfoTooltip">
@@ -100,31 +78,13 @@
                     </div>
                 </div>
             </span>
-
-            
         </div>
         <br>
-        <button class="standard" >agregar</button>
+        <button class="standard">agregar</button>
 
     </div>
-
-    Existe una seccion 2.
-    
-
-
-
-    
-
- 
-
-
-    
-    
-
-    <!-- <div class="tableContainer fw">
-        <div class="firstRow" fxLayoutAlign="space-between center">
-            <span class="ft16 text2">Mapas del compresor</span>
-        </div>
-    </div> -->
+    <div class="neutralFill1 fh fw">
+        Grafico container
+    </div>
 
 </div>

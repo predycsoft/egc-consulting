@@ -1,8 +1,8 @@
 <div class="menuToolbar fw border-b">
     <span class="textButton" [ngClass]="{'selected2': tabSelected === 'general'}"
         (click)="tabSelect('general')">General</span>
-    <span class="textButton" [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}"
-        (click)="tabSelect('datosTecnicos')">Puntos Datasheet</span>
+    <!-- <span class="textButton" [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}"
+        (click)="tabSelect('datosTecnicos')">Puntos Datasheet</span> -->
     <span class="textButton" [ngClass]="{'selected2': tabSelected === 'curvas'}"
         (click)="tabSelect('curvas')">Curvas</span>
     <span class="textButton" [ngClass]="{'selected2': tabSelected === 'mapas'}"
@@ -13,7 +13,7 @@
 
 <div class="pd08">
     <info-general-compresor *ngIf="tabSelected==='general'"></info-general-compresor>
-    <datasheet-puntos-compresor *ngIf="tabSelected==='datosTecnicos'"></datasheet-puntos-compresor>
+    <!-- <datasheet-puntos-compresor *ngIf="tabSelected==='datosTecnicos'"></datasheet-puntos-compresor> -->
     <curvas-compresor *ngIf="tabSelected==='curvas'"></curvas-compresor>
     <mapas-compresor *ngIf="tabSelected==='mapas'"></mapas-compresor>
     <documentos *ngIf="tabSelected==='documentos'"></documentos>

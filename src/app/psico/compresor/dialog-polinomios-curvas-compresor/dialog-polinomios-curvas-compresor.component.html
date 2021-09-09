@@ -1,66 +1,154 @@
 <div class="dataImpulsorContainer">
     <div class="firstRow" fxLayoutAlign="space-between center">
         <span class="ft16 text2">Coeficientes calculados</span>
+        <td>
+            cargar imagen
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload"/>
+        </td>
         <mat-icon class="iconButton"> close</mat-icon>
     </div>
-    <div class="containerData">
-        <table>
-        <div>
-            <td class="nowrap w150px">Diámetro [pulg]</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Límite Q/N de surge</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Límite Q/N de stw</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div class="titleContainer">
-            <td colspan="2" class="title">Exp.polin.coef.head</td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(1) coe.head</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(2) coe.head</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(3) coe.head</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(4) coe.head</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div class="titleContainer">
-            <td colspan="2" class="title">Exp.polin.efic.polit.</td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(1) efic.polit.</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(2) efic.polit.</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(3) efic.polit.</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-        <div>
-            <td class="nowrap w150px">Coef.A(4) efic.polit.</td>
-            <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
-        </div>
-    </table>
-    <div fxLayoutAlign="space-between" fxLayoutGap=".5rem">
-        <button class="standard mgt10">Eliminar</button>
-        <button class="accent mgt10">Guardar</button>
-    </div>
 
+    <div class="pdt10 pdl10 pdr10">
+        <td>cargar csv
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv" />
+        </td>
+        <td>
+            <mat-select [(ngModel)]="tipoAjuste">
+                <mat-option [value]="'Automatico'" class="optionItem"> Manual </mat-option>
+                <mat-option [value]="'Manual'" class="optionItem"> Automatico</mat-option>
+            </mat-select>
+        </td>
+        <td>
+            <mat-select [(ngModel)]="unidadFlujo">
+                <mat-option [value]="'Q/N'" class="optionItem"> Q/N </mat-option>
+                <mat-option [value]="'&Phi;'" class="optionItem"> &Phi;</mat-option>
+            </mat-select>
+        </td>
+        <td class="nowrap w150px">Grado</td>
+        <td>
+            <input type="number" *ngIf="tipoAjuste==='Manual'" [(ngModel)]="grado" placeholder="vacio"
+                class="w100px centertext">
+            <input type="number" disabled *ngIf="tipoAjuste==='Automatico'" [(ngModel)]="grado" placeholder="vacio"
+                class="w100px centertext">
+        </td>
+        <td>
+            <button>Ajustar</button>
+        </td>
 
     </div>
+
+    <!-------------------------------------------------------------------------------------------- Resultados de ajuste -->
+    <div fxLayout="row" class="pd10" fxLayoutGap="3rem">
+        <div fxFlex="20%">
+            <table>
+                <tr>
+                    <th colspan="2" >Carácteristicas</th>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Diámetro [pulg]</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Límite Q/N de surge</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Límite Q/N de stw</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="2" >Exp.polin.coef.head</th>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(1) coe.head</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(2) coe.head</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(3) coe.head</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(4) coe.head</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Exponente</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Error</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th colspan="2" >Exp.polin.efic.polit.</th>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(1) efic.polit.</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(2) efic.polit.</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(3) efic.polit.</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Coef.A(4) efic.polit.</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Exponente</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Error</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!------------------------------------------------------------------------ entrada de datos para ajuste de polinomios -->
+        <div fxFlex="30%" >
+            <table>
+                <tr>
+                    <th>Punto</th>
+                    <th>{{unidadFlujo}}</th>
+                    <th>&mu;</th>
+                    <th>{{unidadFlujo}}</th>
+                    <th>&eta;</th>
+                </tr>
+
+                <tr *ngFor="let item of [1,2,3,4,5,6]; let i = index">
+                    <td class="nowrap w150px text3 ft13">{{i + 1}}</td>
+                    <td class="nowrap w150px text3 ft13">Value</td>
+                    <td class="nowrap w150px text3 ft13">Value</td>
+                    <td class="nowrap w150px text3 ft13">Value</td>
+                    <td class="nowrap w150px text3 ft13">Value</td>
+                </tr>
+            </table>
+        </div>
+
+
+        <!---------------------------------------------------------------------------------------- Gráfico -->
+        <div fxFlex="50%">
+            Gráfico
+        </div>
+
+    </div>
+
+    <div fxLayoutAlign="end" fxLayoutGap=".5rem" class="neutralFill1 pd05">
+        <button class="standard " (click)="eliminarCurva()">Eliminar</button>
+        <button class="accent ">Guardar</button>
+    </div>
+
 </div>

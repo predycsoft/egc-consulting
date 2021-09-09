@@ -1,0 +1,24 @@
+<table class="w600px">
+    <div class="firstRow" fxLayoutAlign="space-between center">
+        <span class="ft16 text2">Coeficientes calculados</span>
+        <mat-icon class="iconButton"> close</mat-icon>
+    </div>
+    <table>
+        <tr>
+            <th class="w-50">Familia</th>
+            <th class="w-50">Fabricante</th>
+            <th class="w-50">Modelo</th>
+        </tr>
+        <tr *ngFor="let item of [1,2,3,4,5,6]; let i = index" (click)="equipoSeleccionado(i)" [ngClass]="{'filaSeleccionada': selected == i}">
+            <td >Familia*</td>
+            <td>Fabricante* </td>
+            <td>Modelo* </td>
+        </tr>
+    </table>
+    <div fxLayoutAlign="end" fxLayoutGap=".5rem" class="pd05 neutralFill1">
+        <button *ngIf="selected==-1" class="standard" disabled>Eliminar</button>
+        <button *ngIf="selected>=0" class="standard" (click)="eliminarEquipo()">Eliminar</button>
+        <button *ngIf="selected==-1" class="mgl05 standard" disabled>Cargar</button>
+        <button *ngIf="selected>=0" class="mgl05 accent">Cargar</button>
+    </div>
+</table>

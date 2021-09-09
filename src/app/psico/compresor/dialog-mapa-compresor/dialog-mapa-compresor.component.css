@@ -1,0 +1,153 @@
+.mapaContainer{
+    height: 80vh;
+}
+
+
+.windowHeader{
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    background: var(--neutral1);
+    padding: 4px;
+    height: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: solid 1px var(--stroke1);
+    border-bottom: 0px;
+}
+
+
+.rpmSeleccionado{
+    font-weight: 600;
+    color: var(--text1) !important;
+}
+
+
+
+.containerData{
+    padding: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.titleContainer{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.title{
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+::ng-deep input{
+    border: 1px solid transparent;
+    border-radius: 0px;
+    height: 28px;
+}
+
+::ng-deep input:focus{
+    border: 1px solid var(--stroke1);
+    background: var(--control1) !important;
+    border-radius: 4px;
+}
+
+::ng-deep tr{
+    height: 32px;
+}
+
+th{
+    font-size: 14px;
+    color: var(--text2);
+    padding-left: .5rem;
+    padding-right: .5rem;
+    color: var(--text3) !important;
+}
+
+td{
+    color: var(--text1);
+    font-size: 12px;
+    padding-left: 1rem;
+    padding-right: .5rem;
+}
+
+::ng-deep .mat-select{
+    background: transparent;
+    border: 0px !important;
+    height: 20px !important;
+    min-width: 80px !important;
+    padding: 0px !important;
+    color: var(--text3) !important;
+    font-size: 11px;
+    text-align: center;
+}
+
+::ng-deep .mat-select-panel{
+    color: var(--text3) !important;
+}
+
+select{
+    border: 0px !important;
+}
+
+select:hover{
+    background: var(--neutral1);
+}
+
+select:focus{
+    border: none;
+}
+
+
+
+.infoGeneralContainer{
+    border-right: 1px solid var(--stroke1);
+}
+
+/* dataSet */
+
+.coeficientesContainer{
+    height: 200px;
+}
+
+.dataSetTableContainer{
+    border-top: 1px solid var(--stroke1);
+    height: calc(80vh - 40px - 200px);
+    overflow-y: auto;
+}
+
+.stickyRowHeader{
+    background: white;
+    position: sticky;
+    top: 0;  
+}
+
+.dataSetTableContainer::-webkit-scrollbar { /* width */
+    width: 6px;
+    border-radius: 50%;
+    transition: .1 ease;
+}
+
+.dataSetTableContainer::-webkit-scrollbar-track {   /* Track */
+    background: transparent;
+}
+
+.dataSetTableContainer::-webkit-scrollbar-thumb {   /* Handle */
+    background: var(--stroke2);
+    transition: .1 ease;
+}
+
+/* Grafico */
+
+.graficoContainer{
+    width: calc(100vw - 600px);
+    height: calc(80vh - 40px);
+    background: white;
+    /* background: var(--neutral1); */
+}
+
+.fotoGraficoContainer{
+    width: calc(100vw - 800px);
+    height: calc(80vh - 40px);
+    background: white;
+
+}

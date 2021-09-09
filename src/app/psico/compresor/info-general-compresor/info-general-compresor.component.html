@@ -1,41 +1,114 @@
+<div fxLayout="row">
 
+    <div fxLayout="column" class="w300px">
 
-<div fxLayout="column" class="w200px">
-    <div>
-        <label for="">Tag</label>
-        <input type="text" class="fw">
+        <div>
+            <td class="nowrap w150px">Familia</td>
+            <td><input type="text" [(ngModel)]="compresor.familia" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Secciones</td>
+            <td><input type="number" [(ngModel)]="compresor.secciones" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Fabricante</td>
+            <td><input type="text" [(ngModel)]="compresor.fabricante" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Modelo</td>
+            <td><input type="text" [(ngModel)]="compresor.modelo" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Serial</td>
+            <td><input type="text" [(ngModel)]="compresor.modelo" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+
+        <hr>
+
+        <div>
+            <td class="nowrap w150px">Tag</td>
+            <td><input type="text" [(ngModel)]="compresor.tag" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Nombre</td>
+            <td><input type="text" [(ngModel)]="compresor.nombre" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+
+        <div>
+            <td class="nowrap w150px">Cliente</td>
+            <td><input type="text" [(ngModel)]="compresor.cliente" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Servicio</td>
+            <td><input type="text" [(ngModel)]="compresor.servicio" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Sitio</td>
+            <td><input type="text" [(ngModel)]="compresor.sitio" placeholder="vacio" class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Instalacion</td>
+            <td><input type="text" [(ngModel)]="compresor.instalacion" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+
+        <hr>
+
+        <div>
+            <td class="nowrap w150px">Num Impulsores</td>
+            <td><input type="number" [(ngModel)]="compresor.numImpulsores" placeholder="vacio"
+                    class="w100px centertext"></td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Diametro Eq.</td>
+            <td><input type="number" [(ngModel)]="compresor.diametroEq" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+        <div>
+            <td class="nowrap w150px">RPM Diseño</td>
+            <td><input type="number" [(ngModel)]="compresor.rpmDiseno" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+        <div>
+            <td class="nowrap w150px">RPM Rated</td>
+            <td><input type="number" [(ngModel)]="compresor.rpmRated" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+        <div>
+            <td class="nowrap w150px">Tipo driver</td>
+            <td><input type="text" [(ngModel)]="compresor.tipoDriver" placeholder="vacio" class="w100px centertext">
+            </td>
+        </div>
+
+            
+        <div class="mgt20">
+            <button class="accent">Guardar</button>
+        </div>
     </div>
     <div>
-        <label for="">Select</label>
-        <mat-select ([ngModel])="modelo">
-          <mat-option class="optionItem"> TITAN 250 </mat-option>
-          <mat-option class="optionItem"> Option item 2</mat-option>
-          <mat-option class="optionItem"> Option item 3 </mat-option>
+
+        <label for="">Tipologia</label>
+        <mat-select [(ngModel)]="compresor.tipologia">
+            <mat-option [value]="'Inline'" class="optionItem"> Inline </mat-option>
+            <mat-option [value]="'Back to Back'" class="optionItem"> Back to Back</mat-option>
+            <mat-option [value]="'Double Suction'" class="optionItem"> Double suction</mat-option>
+            <mat-option [value]="'Double Discharge'" class="optionItem"> Double suction</mat-option>
+            <mat-option [value]="'Sidestream'" class="optionItem"> Sidestream (3 secciones)
+            </mat-option>
         </mat-select>
-    </div>
-    <div>
-        <label for="">Fabricante</label>
-        <input type="text" class="fw">
-    </div>
-    <div>
-        <label for="">Select</label>
-        <mat-select [(ngModel)]="tipologia">
-          <mat-option [value]="'In-line'" class="optionItem"> In-line </mat-option>
-          <mat-option [value]="'Back to Back'" class="optionItem"> Back to Back</mat-option>
-          <mat-option [value]="'Double suction'" class="optionItem"> Double suction</mat-option>
-          <mat-option [value]="'Sidestream (3 secciones)'" class="optionItem"> Sidestream (3 secciones) </mat-option>
-          <mat-option [value]="'Sidestream (4 secciones)'"  class="optionItem"> Sidestream (4 secciones) </mat-option>
-        </mat-select>
-    </div>
-    <!-- <div fxLayout="column" fxLayoutAlign="center" class="mgl10 fh w200px mgr20 ">
-        <img *ngIf="equipo.familia ==='Inline'" [src]="icon.inline" class="equipoIcon">
-        <img *ngIf="equipo.familia ==='Double Suction'" [src]="icon.doubleSuction"
-            class="equipoIcon">
-        <img *ngIf="equipo.familia ==='Double Discharge'" [src]="icon.doubleDischarge"
-            class="equipoIcon">
-        <img *ngIf="equipo.familia ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
-        <img *ngIf="equipo.familia ==='Streamline'" [src]="icon.streamline"
-            class="equipoIcon">
-    </div> -->
 
+        <div fxLayout="column" fxLayoutAlign="center" class="mgl10 h400px w200px mgr20 ">
+            <img *ngIf="compresor.tipologia ==='Inline'" [src]="icon.inline" class="equipoIcon">
+            <img *ngIf="compresor.tipologia ==='Double Suction'" [src]="icon.doubleSuction" class="equipoIcon">
+            <img *ngIf="compresor.tipologia ==='Double Discharge'" [src]="icon.doubleDischarge" class="equipoIcon">
+            <img *ngIf="compresor.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
+            <img *ngIf="compresor.tipologia ==='Streamline'" [src]="icon.streamline" class="equipoIcon">
+        </div>
+        <div>
+            <label for="">Comentarios</label>
+            <textarea type="text" class="fw"></textarea>
+        </div>
+    </div>
 </div>

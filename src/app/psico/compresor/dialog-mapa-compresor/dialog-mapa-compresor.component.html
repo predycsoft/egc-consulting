@@ -1,0 +1,183 @@
+<div class="mapaContainer">
+    <div class="windowHeader" fxLayoutAlign="space-between center">
+        <span class="ft16 text2">Mapa del compresor</span>
+        <td>
+            cargar imagen
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" />
+        </td>
+        <div fxLayout="row">
+            <mat-icon class="iconButton text2" matTooltip="Guardar mapa">save</mat-icon>
+            <mat-icon class="iconButton text2" matTooltip="Eliminar mapa">delete</mat-icon>
+            <mat-icon class="iconButton text2">close</mat-icon>
+        </div>
+    </div>
+
+    <!-- <div class="pdt10 pdl10 pdr10">
+        <td>cargar csv
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv" />
+        </td>
+        <select name="" id="">
+            <option value="">1</option>
+            <option value="">2</option>
+        </select>
+        <td>
+            <mat-select [(ngModel)]="tipoAjuste">
+                <mat-option [value]="'Automatico'" class="optionItem"> Manual </mat-option>
+                <mat-option [value]="'Manual'" class="optionItem"> Automatico</mat-option>
+            </mat-select>
+        </td>
+        <td class="nowrap w150px">Grado</td>
+        <td>
+            <input type="number" *ngIf="tipoAjuste==='Manual'" [(ngModel)]="grado" placeholder="vacio"
+                class="w100px centertext">
+            <input type="number" disabled *ngIf="tipoAjuste==='Automatico'" [(ngModel)]="grado" placeholder="vacio"
+                class="w100px centertext">
+        </td>
+        <td>
+            <button>Ajustar</button>
+        </td>
+
+    </div> -->
+
+
+    <div fxLayout="row">
+
+
+        <!-- Barra lateral izquierda -->
+        <div class="w250px neutralFill1" fxLayout="column">
+
+            <!-- Lista de RPMS -->
+            <span *ngFor="let item of [1,2,3,4]; let i = index" class="nowrap mgl10 mgt05 mgb05 mgr20 text3"
+                (click)="seleccionarRPM(i)" [ngClass]="{'rpmSeleccionado': rpmSeleccionado == i}"> RPM {{5500 +
+                (500*i)}}
+            </span>
+
+
+            <div fxLayout="column" class="border-t pdt10 mg10">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span class="text3" (click)="configurarMapa()"
+                        [ngClass]="{'rpmSeleccionado': rpmSeleccionado == -1}">General</span>
+                    <mat-icon class="ft16 text3">edit</mat-icon>
+                </div>
+                <span class="mgt10 text3 ft12">Nombre</span>
+                <span class="text2 ft12">FAT</span>
+                <span class="mgt05 text3 ft12">Generado:</span>
+                <span class="text2 ft12">Digitalización</span>
+                <span class="mgt05 text3 ft12">Vigencia:</span>
+                <span class="text2 ft12">Vigente</span>
+                <span class="mgt05 text3 ft12">Fin vigor</span>
+                <span class="text2 ft12">22/06/2021</span>
+                <span class="mgt05 text3 ft12">Fout vigor</span>
+                <span class="text2 ft12">22/06/2021</span>
+                <span class="mgt05 text3 ft12">Comentario:</span>
+                <span class="text2 ft12">Comentario aqui</span>
+            </div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxLayout="column" class="infoGeneralContainer">
+                <tr>
+                    <td class="text3 w80px">Nombre:</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="text3 w80px">Generado:</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="text3 w80px">Vigencia:</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="text3 w80px">Vigencia:</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <tr>
+                    <td class="text3 w80px">Fin vigor:</td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                </tr>
+                <span>Comentario</span>
+                <textarea type="number" placeholder="vacio" class="w100px centertext"></textarea>
+            </div>
+
+            <div class="fotoGraficoContainer">
+
+                <div class="cargarFotoContainer">
+                    <mat-icon class="iconButton text2">add</mat-icon>
+                </div>
+                
+            </div>
+
+        </div>
+
+
+        <!-- 
+
+        <div class="w250px border-r">
+
+
+            <div class="coeficientesContainer">
+                <table>
+                    <tr class="mgb20">
+                        <th colspan="2">Coef. de ajuste de Polinomio</th>
+                    </tr>
+                    <tr>
+                        <td class="text3">Coef.A(1):</td>
+                        <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                    </tr>
+                    <tr>
+                        <td class="text3">Coef.A(2):</td>
+                        <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                    </tr>
+                    <tr>
+                        <td class="text3">Coef.A(3):</td>
+                        <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                    </tr>
+                    <tr>
+                        <td class="text3">Coef.A(4):</td>
+                        <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                    </tr>
+                    <tr>
+                        <td class="text3">Exponente:</td>
+                        <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                    </tr>
+                    <tr>
+                        <td class="text3">Error:</td>
+                        <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="dataSetTableContainer">
+                <table>
+                    <tr class="stickyRowHeader">
+                        <th>No.</th>
+                        <th>
+                            <mat-select [(ngModel)]="unidadesX">
+                                <mat-option [value]="'psig'" class="optionItem"> psig </mat-option>
+                            </mat-select>
+                        </th>
+                        <th>
+                            <mat-select [(ngModel)]="unidadesY">
+                                <mat-option [value]="'MMscfd'" class="optionItem"> MMscfd </mat-option>
+                            </mat-select>
+                        </th>
+                    </tr>
+                    <tr *ngFor="let item of [1,2,3,4,5,6,1,2,3,4,5,4,3,4,5,6]; let i = index">
+                        <td class="centertext nowrap text3 ft13">{{i + 1}}</td>
+                        <td class="centertext nowrap  text3 ft13">Value</td>
+                        <td class="centertext nowrap  text3 ft13">Value</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="graficoContainer pd05" fxLayout="center center">
+            <span>Gráfico del mapa de compresor</span>
+        </div> -->
+
+    </div>
+
+</div>

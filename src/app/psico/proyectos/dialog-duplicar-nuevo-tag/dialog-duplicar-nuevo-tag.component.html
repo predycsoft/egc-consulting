@@ -1,0 +1,8 @@
+<div class="pd10">
+    <h4 class="centertext">Duplicar</h4>
+    <input type="text" class="fw centertext" [(ngModel)]="tag" placeholder="TAG">
+    <div class="mgt10">
+        <button *ngIf="!tag" (click)="guardar()" class="fw standard" disabled>Guardar</button>
+        <button *ngIf="tag" (click)="guardar()" class="fw accent">Guardar</button>
+    </div>
+</div>

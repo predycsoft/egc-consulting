@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DataServiceService, equipo_tren, Proyecto } from 'src/app/services/data-service.service';
+import { DialogLibreriaEquiposComponent } from '../../dialog-libreria-equipos/dialog-libreria-equipos.component';
+import { DialogDuplicarNuevoTagComponent } from '../dialog-duplicar-nuevo-tag/dialog-duplicar-nuevo-tag.component';
 
 @Component({
   selector: 'app-configurar-equipo',
@@ -13,7 +16,7 @@ export class ConfigurarEquipoComponent implements OnInit {
   tagEquipo: string;
   tipoEquipo: string = 'Compresor'
 
-  constructor(private route: ActivatedRoute, private afs: AngularFirestore, private data: DataServiceService) { }
+  constructor(private route: ActivatedRoute, private afs: AngularFirestore, private data: DataServiceService, public dialogAgregar: MatDialog) { }
 
   proyecto: Proyecto
   equipo: equipo_tren
@@ -33,5 +36,51 @@ export class ConfigurarEquipoComponent implements OnInit {
       })
     })
   }
+
+  dialogDuplicarCompresor(){
+    const dialogRef =  this.dialogAgregar.open(DialogDuplicarNuevoTagComponent);
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        alert(result)
+       
+      }
+    })
+  }
+
+  dialogDuplicarTurbina(){
+    const dialogRef =  this.dialogAgregar.open(DialogDuplicarNuevoTagComponent);
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        alert(result)
+      }
+    })
+  }
+
+  dialogCargarCompresor(){
+    const dialogRef =  this.dialogAgregar.open(DialogLibreriaEquiposComponent);
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        alert(result)
+      }
+    })
+  }
+
+  dialogCargarTurbina(){
+    const dialogRef =  this.dialogAgregar.open(DialogLibreriaEquiposComponent);
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        alert(result)
+      }
+    })
+  }
+
+  dialogGuardarCompresor(){
+
+  }
+
+  dialogGuardarTurbina(){
+    
+  }
+
 
 }

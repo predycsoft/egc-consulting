@@ -1,0 +1,54 @@
+.firstRow{
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    background: var(--neutral1);
+    padding: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: solid 1px var(--stroke1);
+    border-bottom: 0px;
+}
+
+
+.containerData{
+    padding: 1rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.titleContainer{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.title{
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+::ng-deep input{
+    border: 1px solid transparent;
+    border-radius: 0px;
+    height: 28px;
+}
+
+::ng-deep input:focus{
+    border: 1px solid var(--stroke1);
+    background: var(--control1) !important;
+    border-radius: 4px;
+}
+
+::ng-deep tr{
+    height: 32px;
+}
+
+th{
+    color: var(--text2);
+    background: var(--neutral1) !important;
+}
+
+td{
+    color: var(--text1);
+    font-size: 14px;
+}
+

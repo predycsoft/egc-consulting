@@ -43,17 +43,23 @@
 }
 
 th{
-    font-size: 14px;
     color: var(--text2);
+    background: var(--neutral1) !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 td{
     color: var(--text1);
     font-size: 14px;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
-::ng-deep .mat-select{
-    /* border: 0px !important; */
-    /* height: 20px !important; */
-    /* width: 50px !important; */
+tr:hover{
+    background: var(--neutral1);
+}
+
+.filaSeleccionada{
+    background: var(--neutral3) !important;
 }
