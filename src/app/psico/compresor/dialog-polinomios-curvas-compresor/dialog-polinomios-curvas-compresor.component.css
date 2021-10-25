@@ -1,62 +1,79 @@
-.firstRow{
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    background: var(--neutral1);
-    padding: 4px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border: solid 1px var(--stroke1);
-    border-bottom: 0px;
+.dataImpulsorContainer{
+   overflow-x: auto;
+   overflow-y: auto;
 }
 
-
-.containerData{
-    padding: 1rem !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-}
-
-.titleContainer{
-    margin-top: 12px;
-    margin-bottom: 12px;
-}
-
-.title{
-    margin-top: 2px;
-    font-weight: 500;
-}
-
-::ng-deep input{
+input{
     border: 1px solid transparent;
     border-radius: 0px;
-    height: 28px;
+    font-size: 12px !important;
+    height: 20px;
+    background-color: var(--neutral1) !important;
+    min-width: 70px !important;
+    width: 70px !important;
 }
 
-::ng-deep input:focus{
+input:focus{
     border: 1px solid var(--stroke1);
     background: var(--control1) !important;
     border-radius: 4px;
 }
 
-::ng-deep tr{
-    height: 32px;
+label{
+  margin-top: 0px !important;
+}
+
+.simpleSelect{
+    text-align: end !important;
+    border: none !important;
+    height: 30px !important;
+    position: relative;
+    right: -5px !important;
+    background-color: transparent !important;
+
+}
+
+
+/* Data set Table */
+
+.dataSetTable{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 88vh;
 }
 
 th{
-    font-size: 14px;
-    color: var(--text2);
+    min-width: 50px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-align: center;
 }
+
 
 td{
-    color: var(--text1);
-    font-size: 14px;
+    min-width: 50px;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    text-align: center;
 }
 
-label{
-  margin-top: 0px !important;
-  color: var(--accent5) !important;
-  text-decoration: underline;
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    border-radius: 50%;
+    transition: .1 ease;
+    width: 8px;
 }
 
-
-
+::-webkit-scrollbar-track  {
+    background: transparent;
+}
+  
+::-webkit-scrollbar-track  {
+    background: transparent;
+}
+  
+::-webkit-scrollbar-thumb  {
+    background: var(--stroke2);
+    border-radius: 4px;
+}

@@ -386,6 +386,10 @@ body {
 .shadow32{ box-shadow: var(--shadow32);}
 .shadow128{ box-shadow: var(--shadow128);}
 
+.ft300{ font-weight: 300 !important;}
+.ft400{ font-weight: 400 !important;}
+.ft500{ font-weight: 500 !important;}
+.ft600{ font-weight: 600 !important;}
 .ftxxl{  font-size: 2.2rem!important; }
 .ftxxxl{  font-size: 3.2rem!important; }
 .ft8{  font-size: 0.5rem!important; }
@@ -922,7 +926,7 @@ h1{
     align-items: center;
     padding: 6px;
     min-width: auto;
-    min-height: 32px !important;
+    /* min-height: 32px !important; */
     background: transparent !important;
     border-radius: var(--defaultBorderRadius) !important;
     color: var(--text1);
