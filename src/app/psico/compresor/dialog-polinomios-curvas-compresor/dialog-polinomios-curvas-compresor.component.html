@@ -2,7 +2,14 @@
     <div class="firstRow" fxLayoutAlign="space-between center">
         <span class="ft16 text2">Coeficientes calculados</span>
         <mat-icon class="iconButton" (click)="descargarCSV()"> download</mat-icon>
+        
         <mat-icon class="iconButton"> close</mat-icon>
+
+        <span class="textButton" (click)="reset()">
+            <mat-icon class="ft20">delete</mat-icon>
+            Limpiar data
+          </span>
+
         <span class="textButton">
             <mat-icon class="ft20">download</mat-icon>
             Descargar data
@@ -11,7 +18,6 @@
     </div>
 
     <div class="pdt10 pdl10 pdr10">
-        <button (click)="reset()">Limpiar Data</button>
 
         <td>cargar csv
             <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
