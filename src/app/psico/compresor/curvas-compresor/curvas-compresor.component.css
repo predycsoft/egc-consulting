@@ -1,3 +1,17 @@
+/* Clase que se aplica al seleccionar un impulsor */
+
+.impSel{
+    font-weight: 500;
+}
+
+.impText{
+    margin-left: 8px;
+    font-size: 16px !important;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+
 /* info Impulsor Tooltip */
 
 .impulsor {
@@ -33,10 +47,7 @@
     animation-duration: .5s;
 }
 
-.impulsorSeleccionado{
-    font-weight: 500;
-    cursor: pointer !important;
-}
+
 
 .dataImpulsorContainer{
     background: white;

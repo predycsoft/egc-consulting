@@ -1,105 +1,125 @@
 <div fxLayout="row" fxLayoutGap="2rem">
 
-    <div class="w200px">
+    <div>
 
-        <span>Sección</span>
-        <mat-select [(ngModel)]="seccionActual">
-            <mat-option [value]="'1'" class="optionItem"> Sección 1 </mat-option>
-            <mat-option [value]="'2'" class="optionItem"> Sección 2</mat-option>
-        </mat-select>
-        <hr>
 
-        <div>
-            <mat-checkbox> </mat-checkbox>
-            <span class="ft16 cursorPointer nowrap text3">
+
+
+        <div class="border radius4 pd10">
+
+            <div fxLayout="column" >
+                <span class="text3 ft14">Sección</span>
+                <mat-select [(ngModel)]="seccionActual" class="mgt05">
+                    <mat-option [value]="'1'" class="optionItem"> Sección 1 </mat-option>
+                    <mat-option [value]="'2'" class="optionItem"> Sección 2</mat-option>
+                </mat-select>
+            </div>
+
+            <div class="mgt20">
+                <p class="ft14 text3 ft500 pdb05 border-b mgb10">Impulsor equivalente</p>
+            </div>
+
+            <!-- Impulsor equivalente de fabricante -->
+            <div fxLayout="row" fxLayoutAlign=" center">
+                <mat-checkbox> </mat-checkbox>
+
+                <!-- <span class="impText text3" (dblclick)="openDialogPolinomios()">
                 Cargar impulsor equivalente (Fabricante)
-            </span>
-            <span class="ft16 cursorPointer nowrap">
-                Impulsor equivalente (Fabricante)
-            </span>
-        </div>
+            </span> -->
 
-        <div></div>
+                <span (click)="seleccionarImpulsorEquivalente('fabricante')" (dblclick)="openDialogPolinomios()"
+                    class="impText" [ngClass]="{'impSel': impEqSel === 'fabricante'}">
+                    Impulsor equivalente (Fabricante)
+                </span>
+            </div>
 
-        <div>
-            <mat-checkbox> </mat-checkbox>
-            <span class="ft16 cursorPointer nowrap textD text3">
-                Generar impulsor equivalente (PSICO)
-            </span>
-            <span class="ft16 cursorPointer nowrap textD">
+            <!-- Impulsor equivalente generado en psico -->
+            <div fxLayout="row" fxLayoutAlign=" center" class="w300px">
+                <mat-checkbox> </mat-checkbox>
+
+                <span class="impText text3" (dblclick)="openDialogPolinomios()">
+                    Generar impulsor equivalente (PSICO)
+                </span>
+
+                <!-- <span (click)="seleccionarImpulsorEquivalente('psico')" (dblclick)="openDialogPolinomios()"
+                class="impText" [ngClass]="{'impSel': impEqSel === 'psico'}">
                 Impulsor equivalente (PSICO)
-            </span>
+            </span> -->
+            </div>
+
+
+
+            <div class="mgt20">
+                <p class="ft14 text3 ft500 pdb05 border-b mgb10">Impulsores del compresor</p>
+            </div>
+
+            <div *ngFor="let item of [1,2,3,4]; let i = index" fxLayout="row" fxLayoutAlign=" center">
+                <mat-checkbox> </mat-checkbox>
+                <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios()"
+                    class="impText impulsor" [ngClass]="{'impSel': impSel == i}">
+                    Impulsor {{i + 1}}
+                    <!-- <div class="impulsorInfoTooltip">
+                        <div class="mainTitleContainer">
+                            <td colspan="2" class="title ft14">Coeficientes calculados</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Diámetro [pulg]</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Límite Q/N de surge</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Límite Q/N de stw</td>
+                            <td>value</td>
+                        </div>
+                        <div class="titleContainer">
+                            <td colspan="2" class="title">Exp.polin.coef.head</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(1) coe.head</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(2) coe.head</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(3) coe.head</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(4) coe.head</td>
+                            <td>value</td>
+                        </div>
+                        <div class="titleContainer">
+                            <td colspan="2" class="title">Exp.polin.efic.polit.</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(1) efic.polit.</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(2) efic.polit.</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(3) efic.polit.</td>
+                            <td>value</td>
+                        </div>
+                        <div>
+                            <td class="nowrap w150px">Coef.A(4) efic.polit.</td>
+                            <td>value</td>
+                        </div>
+                    </div> -->
+                </span>
+            </div>
+            <br>
+            <button class="standard fw">agregar</button>
+
+
         </div>
-
-
-        <hr>
-
-        <div *ngFor="let item of [1,2,3,4]; let i = index">
-            <mat-checkbox> </mat-checkbox>
-            <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios()"
-                class="mgl05 ft16 cursorPointer impulsor"
-                [ngClass]="{'impulsorSeleccionado': impulsorSeleccionado == i}">
-                Impulsor {{i + 1}}
-                <div class="impulsorInfoTooltip">
-                    <div class="mainTitleContainer">
-                        <td colspan="2" class="title ft14">Coeficientes calculados</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Diámetro [pulg]</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Límite Q/N de surge</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Límite Q/N de stw</td>
-                        <td>value</td>
-                    </div>
-                    <div class="titleContainer">
-                        <td colspan="2" class="title">Exp.polin.coef.head</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(1) coe.head</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(2) coe.head</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(3) coe.head</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(4) coe.head</td>
-                        <td>value</td>
-                    </div>
-                    <div class="titleContainer">
-                        <td colspan="2" class="title">Exp.polin.efic.polit.</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(1) efic.polit.</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(2) efic.polit.</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(3) efic.polit.</td>
-                        <td>value</td>
-                    </div>
-                    <div>
-                        <td class="nowrap w150px">Coef.A(4) efic.polit.</td>
-                        <td>value</td>
-                    </div>
-                </div>
-            </span>
-        </div>
-        <br>
-        <button class="standard">agregar</button>
-
     </div>
     <div class="neutralFill1 fh fw">
         Grafico container

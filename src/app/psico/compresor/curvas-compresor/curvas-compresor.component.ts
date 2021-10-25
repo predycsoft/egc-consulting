@@ -15,7 +15,9 @@ import { DialogPolinomiosCurvasCompresorComponent } from '../dialog-polinomios-c
 })
 export class CurvasCompresorComponent implements OnInit {
 
-  impulsorSeleccionado: number;
+  impEqSel: string = '';
+  impSel: number;
+
   numSecciones: number;
   seccionActual: number;
 
@@ -26,8 +28,14 @@ export class CurvasCompresorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  seleccionarImpulsorEquivalente(data) {
+    this.impEqSel = data;
+    this.impSel = -1;
+  }
+
+
   seleccionarImpulsor(i) {
-    this.impulsorSeleccionado = i;
+    this.impSel = i;
   }
 
   openDialogPolinomios() {
