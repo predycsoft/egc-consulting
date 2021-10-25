@@ -63,11 +63,6 @@ export class file {
   descripcion: string = "";
 }
 
-export class curvas {
-  nombre: string = "";
-  numero: number = 0;
-}
-
 export class mapas {
   nombre: string = "";
   numero: number = 0;
@@ -81,6 +76,56 @@ export class puntosDatasheet {
   nombre: string = "";
   numero: number = 0;
 }
+
+
+// ------------------------------------------------------------------------------------------------------------------------ CURVAS
+
+class curva {
+  // Metadata
+  generado: boolean = false; //Es un flag que determina si efectivamente la data del mapa esta rellena. 
+  fechaGeneracion: Date = new Date; // Fecha de creación o edición del mapa.
+  ultimaEdicion: Date = new Date; // Fecha de creación o edición del mapa.
+  ultimoEditor: string = '';
+  dimQ: string = 'Q/N';
+
+  // General
+  numCompresor: number = 0;
+  numSeccion: number = 0;
+  numImpulsor: number = 0; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
+  diametro: number = 0; // diametro de cada impulsor
+  limSurge: number = 0; //Límite Q/N de surge
+  limStw: number = 0; //Límite Q/N de stw
+
+  // Coeficiente de Head 
+  headAjuste: string = 'Automatico';
+  coefHeadDataSet: dataSet; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
+  coefHeadA1: number = 0; //termino independiente a0*x^0
+  coefHeadA2: number = 0; //a1*X^1
+  coefHeadA3: number = 0; //a2*X^2
+  coefHeadA4: number = 0; //a3*X^3
+  coefHeadExp: number = 0;
+  coefHeadError: number = 0;
+  headImg:  string = ''; //Es una imagen que se carga de referencia
+
+  // Eficiencia politropica 
+  eficAjuste: string = 'Automatico';
+  eficPoliDataSet: dataSet;  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
+  eficPoliA1: number = 0; //termino independiente a0*x^0
+  eficPoliA2: number = 0; //a1*X^1
+  eficPoliA3: number = 0; //a2*X^2
+  eficPoliA4: number = 0; //a3*X^3
+  eficPoliExp: number = 0;
+  eficPoliError: number = 0;
+  eficImg: string = ''; //Es una imagen que se carga de referencia
+}
+
+class dataSet{
+  x: number = 0;
+  y: number = 0;
+}
+
+
+// ------------------------------------------------------------------------------------------------------------------------ XXXXXXXXXXXX
 
 
 @Injectable({
