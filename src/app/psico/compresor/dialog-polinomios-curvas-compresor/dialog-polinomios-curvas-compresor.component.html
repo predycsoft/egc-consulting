@@ -3,12 +3,15 @@
         <span class="ft16 text2">Coeficientes calculados</span>
         <td>
             cargar imagen
-            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload"/>
+            <input type="file" name="File Upload" id="csvFileUpload"/>
         </td>
         <mat-icon class="iconButton"> close</mat-icon>
     </div>
 
     <div class="pdt10 pdl10 pdr10">
+        <button (click)="reset()">Limpiar Data</button>
+        <button (click)="descargarCSV()">Descargar Data</button>
+
         <td>cargar csv
             <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"(change)="fileChangeListener($event)" />
         </td>
@@ -124,14 +127,25 @@
                     <th>Punto</th>
                     <th>{{unidadFlujo}}</th>
                     <th>&mu;</th>
+                </tr>
+
+                <tr *ngFor="let item of dataSetCP; let i = index">
+                    <td class="nowrap w150px text3 ft13">{{i + 1}}</td>
+                    <td class="nowrap w150px text3 ft13">{{item.x}}</td>
+                    <td class="nowrap w150px text3 ft13">{{item.y}}</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th>Punto</th>
+                    <th>{{unidadFlujo}}</th>
                     <th>&eta;</th>
                 </tr>
 
-                <tr *ngFor="let item of csvRecords; let i = index">
+                <tr *ngFor="let item of dataSetEfi; let i = index">
                     <td class="nowrap w150px text3 ft13">{{i + 1}}</td>
-                    <td class="nowrap w150px text3 ft13">{{this.csvRecords[i]["Q/N"]}}</td>
-                    <td class="nowrap w150px text3 ft13">{{this.csvRecords[i]["CP"]}}</td>
-                    <td class="nowrap w150px text3 ft13">{{this.csvRecords[i]["EFI"]}}</td>
+                    <td class="nowrap w150px text3 ft13">{{item.x}}</td>
+                    <td class="nowrap w150px text3 ft13">{{item.y}}</td>
                 </tr>
             </table>
         </div>
