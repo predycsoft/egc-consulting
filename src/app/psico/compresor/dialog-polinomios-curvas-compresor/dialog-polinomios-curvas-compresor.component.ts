@@ -117,4 +117,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     }
     this.data.downloadFile(this.csvRecords,"data-curvas",['x1','CP', 'x2', 'EFI'])
   }
+
+  ajustarPoliniomios(){
+    
+  }
 }
