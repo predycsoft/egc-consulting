@@ -10,7 +10,7 @@
 
     <div class="pdt10 pdl10 pdr10">
         <td>cargar csv
-            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv" />
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"(change)="fileChangeListener($event)" />
         </td>
         <td>
             <mat-select [(ngModel)]="tipoAjuste">
@@ -124,16 +124,14 @@
                     <th>Punto</th>
                     <th>{{unidadFlujo}}</th>
                     <th>&mu;</th>
-                    <th>{{unidadFlujo}}</th>
                     <th>&eta;</th>
                 </tr>
 
-                <tr *ngFor="let item of [1,2,3,4,5,6]; let i = index">
+                <tr *ngFor="let item of csvRecords; let i = index">
                     <td class="nowrap w150px text3 ft13">{{i + 1}}</td>
-                    <td class="nowrap w150px text3 ft13">Value</td>
-                    <td class="nowrap w150px text3 ft13">Value</td>
-                    <td class="nowrap w150px text3 ft13">Value</td>
-                    <td class="nowrap w150px text3 ft13">Value</td>
+                    <td class="nowrap w150px text3 ft13">{{this.csvRecords[i]["Q/N"]}}</td>
+                    <td class="nowrap w150px text3 ft13">{{this.csvRecords[i]["CP"]}}</td>
+                    <td class="nowrap w150px text3 ft13">{{this.csvRecords[i]["EFI"]}}</td>
                 </tr>
             </table>
         </div>
