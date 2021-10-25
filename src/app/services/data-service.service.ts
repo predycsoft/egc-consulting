@@ -50,7 +50,6 @@ export class equipo {
   puntosDatasheet: puntosDatasheet[] = [];
   fabricante: string = "";
   modelo: string = "";
-  curvas: curvas = new curvas();
   mapas: mapas = new mapas();
   documentos: file[] = [];
 }
