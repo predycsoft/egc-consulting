@@ -790,6 +790,8 @@ label {
     font-size: .75rem!important;
     line-height: 1rem!important;
     color: var(--text1)!important;
+    padding: 0px;
+    margin: 0px;
 }
 
 /* body text */

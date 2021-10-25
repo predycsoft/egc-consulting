@@ -52,8 +52,11 @@ td{
     font-size: 14px;
 }
 
-::ng-deep .mat-select{
-    /* border: 0px !important; */
-    /* height: 20px !important; */
-    /* width: 50px !important; */
+label{
+  margin-top: 0px !important;
+  color: var(--accent5) !important;
+  text-decoration: underline;
 }
+
+
+

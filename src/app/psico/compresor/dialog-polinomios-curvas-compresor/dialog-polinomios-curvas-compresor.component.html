@@ -1,19 +1,21 @@
 <div class="dataImpulsorContainer">
     <div class="firstRow" fxLayoutAlign="space-between center">
         <span class="ft16 text2">Coeficientes calculados</span>
-        <td>
-            cargar imagen
-            <input type="file" name="File Upload" id="csvFileUpload"/>
-        </td>
+        <mat-icon class="iconButton" (click)="descargarCSV()"> download</mat-icon>
         <mat-icon class="iconButton"> close</mat-icon>
+        <span class="textButton">
+            <mat-icon class="ft20">download</mat-icon>
+            Descargar data
+          </span>
+        <!-- <span class="textButton">Descargar data</span> -->
     </div>
 
     <div class="pdt10 pdl10 pdr10">
         <button (click)="reset()">Limpiar Data</button>
-        <button (click)="descargarCSV()">Descargar Data</button>
 
         <td>cargar csv
-            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"(change)="fileChangeListener($event)" />
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
+                (change)="fileChangeListener($event)" />
         </td>
         <td>
             <mat-select [(ngModel)]="tipoAjuste">
@@ -40,14 +42,17 @@
 
     </div>
 
+
+
     <!-------------------------------------------------------------------------------------------- Resultados de ajuste -->
     <div fxLayout="row" class="pd10" fxLayoutGap="3rem">
         <div fxFlex="20%">
             <table>
                 <tr>
-                    <th colspan="2" >Carácteristicas</th>
+                    <th colspan="2">Carácteristicas</th>
                 </tr>
                 <tr>
+                    
                     <td class="nowrap w150px">Diámetro [pulg]</td>
                     <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
                 </tr>
@@ -62,7 +67,11 @@
             </table>
             <table>
                 <tr>
-                    <th colspan="2" >Exp.polin.coef.head</th>
+                    <th colspan="2">Coef.</th>
+                </tr>
+                <tr>
+                    <td class="nowrap w150px">Ajuste<td>
+                    <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
                 </tr>
                 <tr>
                     <td class="nowrap w150px">Coef.A(1) coe.head</td>
@@ -88,10 +97,17 @@
                     <td class="nowrap w150px">Error</td>
                     <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="" class="" fxLayoutAlign=" center"> Cargar imagen de referencia
+                            <input type="file" name="File Upload" id="csvFileUpload" class="displayNone" />
+                        </label>                    
+                    </td>
+                </tr>
             </table>
             <table>
                 <tr>
-                    <th colspan="2" >Exp.polin.efic.polit.</th>
+                    <th colspan="2">Exp.polin.efic.polit.</th>
                 </tr>
                 <tr>
                     <td class="nowrap w150px">Coef.A(1) efic.polit.</td>
@@ -117,11 +133,18 @@
                     <td class="nowrap w150px">Error</td>
                     <td><input type="number" placeholder="vacio" class="w100px centertext"></td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <label for="" class="" fxLayoutAlign=" center"> Cargar imagen de referencia
+                            <input type="file" name="File Upload" id="csvFileUpload" class="displayNone" />
+                        </label>                    
+                    </td>
+                </tr>
             </table>
         </div>
 
         <!------------------------------------------------------------------------ entrada de datos para ajuste de polinomios -->
-        <div fxFlex="30%" >
+        <div fxFlex="30%">
             <table>
                 <tr>
                     <th>Punto</th>
