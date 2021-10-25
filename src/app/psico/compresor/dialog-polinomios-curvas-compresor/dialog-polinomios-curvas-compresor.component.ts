@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'dialog-polinomios-curvas-compresor',
@@ -15,13 +16,30 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   grado: number;
   unidadFlujo: string = 'Q/N';
 
-  constructor(public dialogService: DialogService, private ngxCsvParser: NgxCsvParser, private data: DataServiceService) { }
+  constructor(public dialogService: DialogService, private ngxCsvParser: NgxCsvParser, private data: DataServiceService, private http: HttpClient) { }
 
   csvRecords: any[] = [];
   dataSetCP: any[] = [];
   dataSetEfi: any[] = []
   header = true;
   file;
+
+  // envio de data
+  url = "http://127.0.0.1:5000/ajustecurva/"
+  envio;
+  // recibir data
+  cp1 = 0
+  cp2 = 0
+  cp3 = 0
+  cp4 = 0
+  expocp = 0
+  errcp = 0
+  ce1 = 0
+  ce2 = 0
+  ce3 = 0
+  ce4 = 0
+  expoce = 0
+  errce = 0
 
   ngOnInit(): void {
   }
@@ -119,6 +137,59 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   }
 
   ajustarPolinomios(){
-    
+    this.envio = []
+    let len = 0
+    const cpLen = this.dataSetCP.length
+    const efiLen = this.dataSetEfi.length
+    this.envio.push(["X Coef Head","Y Coef Head","X Coef Efic","Y Coef Efic"])
+    // Seleccion puede ser 1: Manual, 2: Automatico y Orden debe ser mayor a 3
+    this.envio.push(["Seleccion",1,"Orden",3])
+    if (this.dataSetCP.length > this.dataSetEfi.length){
+      len = this.dataSetCP.length
+    } else {
+      len = this.dataSetEfi.length
+    }
+    for (let index = 0; index < len; index++) {
+      let x1 = 0
+      let CP = 0
+      let x2 = 0
+      let EFI = 0
+      if  (index < cpLen) {
+        x1 = this.dataSetCP[index]["x"]
+        CP = this.dataSetCP[index]["y"]
+      } else {
+        x1 = 0
+        CP = 0
+      }
+      if  (index < efiLen) {
+        x2 = this.dataSetEfi[index]["x"]
+        EFI = this.dataSetEfi[index]["y"]
+      } else {
+        x2 = 0
+        EFI = 0
+      }
+      const row = [x1, CP, x2, EFI]
+      this.envio.push(row)
+    }
+    console.log(this.envio)
+    this.http.post(this.url,JSON.stringify(this.envio)).subscribe(res => {
+      let data = res as Array<Array<any>>
+      if (res) {
+        this.cp1 = data[0][0]
+        this.cp2 = data[1][0]
+        this.cp3 = data[2][0]
+        this.cp4 = data[3][0]
+        this.expocp = data[4][0]
+        this.errcp = data[5][0]
+        this.ce1 = data[0][1]
+        this.ce2 = data[1][1]
+        this.ce3 = data[2][1]
+        this.ce4 = data[3][1]
+        this.expoce = data[4][1]
+        this.errce = data[5][1]
+      } else {
+        alert("Hubo un error, revisar la data")
+      }
+    })
   }
 }
