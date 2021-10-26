@@ -1,58 +1,12 @@
 <div class="dataImpulsorContainer">
-    <!-- <div class="firstRow" fxLayoutAlign="space-between center">
-        <span class="ft16 text2">Coeficientes calculados</span>
-        <mat-icon class="iconButton" (click)="descargarCSV()"> download</mat-icon>
-
-        <mat-icon class="iconButton"> close</mat-icon>
-
-        <span class="textButton" (click)="reset()">
-            <mat-icon class="ft20">delete</mat-icon>
-            Limpiar data
-        </span>
-
-        <span class="textButton">
-            <mat-icon class="ft20">download</mat-icon>
-            Descargar data
-        </span>
-    </div> -->
-
-    <!-- <div class="pdt10 pdl10 pdr10">
-
-        <td>cargar csv
-            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
-                (change)="fileChangeListener($event)" />
-        </td>
-        <td>
-            <mat-select [(ngModel)]="unidadFlujo">
-                <mat-option [value]="'Q/N'" class="optionItem"> Q/N </mat-option>
-                <mat-option [value]="'&Phi;'" class="optionItem"> &Phi;</mat-option>
-            </mat-select>
-        </td>
-        <td class="nowrap w150px">Grado</td>
-        <td>
-            <input type="number" *ngIf="tipoAjuste==='Manual'" [(ngModel)]="grado" placeholder="vacio"
-                class="w100px centertext">
-            <input type="number" disabled *ngIf="tipoAjuste==='Automatico'" [(ngModel)]="grado" placeholder="vacio"
-                class="w100px centertext">
-        </td>
-        <td>
-            <button (click)="ajustarPolinomios()">Ajustar</button>
-        </td>
-
-    </div> -->
-
-
-
-    <!-------------------------------------------------------------------------------------------- Resultados de ajuste -->
+    <!-- Son 3 paneles en row Left, Middle, Right -->
     <div fxLayout="row">
 
-        <!-- Datos calculados para los coegificentes de las curvas del impulsor -->
-        <div class="pd10 border-r">
+        <!---------------------------------------------------------------------------------- leftContainer -->
+        <div class="leftContainer" fxLayout="column" fxLayoutAlign="space-between">
 
-            <!-- Caracteristicas generales del impulsor -->
-            <div class="border-b pdb03" fxLayoutAlign="space-between center">
-                <span class="ft500 text1">Parámetros de ajuste</span>
-                <span class="textButton"> Borrar data </span>
+            <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                <span class="ft500">Parámetros de ajuste</span>
             </div>
 
             <div fxLayoutAlign="space-between center" class="mgt08">
@@ -66,14 +20,13 @@
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Exp</div>
-                <div><input type="number" [(ngModel)]="curva.orden" placeholder="vacio" class="w100px centertext"></div>
+                <div><input type="number" [(ngModel)]="curva.orden" placeholder="vacio" class="w100px centertext">
+                </div>
             </div>
-
 
             <!-- Caracteristicas generales del impulsor -->
             <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
                 <span class="ft500">Diámetro y limites</span>
-                <span class="textButton"> Borrar data </span>
             </div>
 
             <div fxLayoutAlign="space-between center" class="mgt08">
@@ -89,12 +42,12 @@
                 <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
             </div>
 
-            <!-- Coeficientes calculados de Head. Politropico -->
+            <!-- Coeficientes calculados de Efic. Politropica -->
             <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
-                <span class="ft500">Head Politrópico</span>
+                <span class="ft500">Efic. Politrópica</span>
                 <div fxLayoutAlign=" center">
                     <span class="ft12 mgr05">Ref. </span>
-                    <mat-icon class="iconButton ft14 text3">image</mat-icon>
+                    <mat-icon class="iconButton ft14 aText5">image</mat-icon>
                 </div>
             </div>
 
@@ -116,20 +69,20 @@
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Exponente</div>
-                <div><input type="number" placeholder="-" [(ngModel)]="curva.expocp" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.expocp" class="w100px centertext">
+                </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Error</div>
                 <div><input type="number" placeholder="-" [(ngModel)]="curva.errcp" class="w100px centertext"></div>
             </div>
 
-
             <!-- Coeficientes calculados de Efic. Politropica -->
             <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
                 <span class="ft500">Efic. Politrópica</span>
                 <div fxLayoutAlign=" center">
                     <span class="ft12 mgr05">Ref. </span>
-                    <mat-icon class="iconButton ft14 aText1">image</mat-icon>
+                    <mat-icon class="iconButton ft14 aText5">image</mat-icon>
                 </div>
             </div>
 
@@ -151,46 +104,40 @@
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Exponente</div>
-                <div><input type="number" placeholder="-" [(ngModel)]="curva.expoce" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.expoce" class="w100px centertext">
+                </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Error</div>
                 <div><input type="number" placeholder="-" [(ngModel)]="curva.errce" class="w100px centertext"></div>
             </div>
-            <div class="fw mgt10" fxLayout="row" fxLayoutGap=".5rem">
-                <!-- <button class="standard fw">Descargar</button> -->
-                <!-- <button class="standard fw">Cargar data</button> -->
-                <!-- <button class="standard fw">Cargar</button> -->
-                <label class="textButton border">
-                    <span class="nowrap">Cargar data</span>
-                    <mat-icon class="ft16">upload</mat-icon>
+
+
+            <!-- Botones del leftContainer -->
+            <div class="fw mgt10 border-t pdt10" fxLayout="row" fxLayoutGap=".5rem">
+
+                <mat-icon class="iconButton text3 border ft19 shadow8" matTooltip="Descargar formato de carga">
+                    table_chart</mat-icon>
+                <mat-icon class="iconButton text3 border ft19 shadow8 redFill1 redText"
+                    matTooltip="Descargar formato de carga"> delete</mat-icon>
+                <label class="textButton border shadow8">
+                    <mat-icon class="ft18"
+                        matTooltip="Cargar data escaneada (x,y) &#13; &#13; Puedes descargar el modelo de formato de carga haciendo click derecho sobre este boton."
+                        matTooltipClass="multiline-tooltip">upload</mat-icon>
                     <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
-                    (change)="fileChangeListener($event)" class="displayNone" />
+                        (change)="fileChangeListener($event)" class="displayNone" />
                 </label>
-
-                <!-- <label class="textButton border">
-                    <span class="nowrap">Descargar data</span>
-                    <mat-icon class="ft16">download</mat-icon>
-                    <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
-                    (change)="fileChangeListener($event)" class="displayNone" />
-                </label> -->
-
-                <!-- <label> 
-                    <a >Agregar imagen (w: 600px x h: 300px)</a> 
-                    <input type="file"  id="file" (change)="anadirImagen($event,pregIndex)" name="file"
-                    autocomplete="off" class="fw displayNone blueLink" />
-                </label> -->
 
                 <button class="accent fw" (click)="ajustarPolinomios()">Ajustar</button>
 
             </div>
-
         </div>
 
-        <!------------------------------------------------------------------------ entrada de datos para ajuste de polinomios -->
-        <div class="pd10">
+        <!---------------------------------------------------------------------------------- mid Container -->
 
-            <div fxLayout="row" fxLayoutAlign=" start" class="dataSetTable">
+        <div class="pdl10 pdr10">
+
+            <div fxLayout="row" fxLayoutAlign=" start" class="midContainer">
                 <table>
                     <tr class="border-b">
                         <th>Punto</th>
@@ -216,13 +163,10 @@
                     </tr>
                 </table>
             </div>
+            <div></div>
         </div>
 
+        <!----------------------------------------------------------------------------------- Gráficos -->
+
+
     </div>
-
-    <!-- <div fxLayoutAlign="end" fxLayoutGap=".5rem" class="neutralFill1 pd05">
-        <button class="standard " (click)="eliminarCurva()">Eliminar</button>
-        <button class="accent ">Guardar</button>
-    </div> -->
-
-</div>
