@@ -1,32 +1,7 @@
-/* Paneles */
 .dataImpulsorContainer{
-    overflow-x: auto;
-    overflow-y: auto;
- }
-
-.leftContainer{
-    width: 350px;
-    padding-top: 0px;
-    padding-left: 1rem;
-    padding-right: 1rem;
+   overflow-x: auto;
+   overflow-y: auto;
 }
-
-.midContainer{
-
-    width: 250px;
-    padding-top: 0px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-.rightContainer{
-
-    width: 250px;
-    padding-top: 0px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-
 
 input{
     border: 1px solid transparent;
@@ -46,6 +21,7 @@ input:focus{
 
 label{
   margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .simpleSelect{
@@ -61,10 +37,15 @@ label{
 
 /* Data set Table */
 
-.dataSetTable{
+.dataSetContainer{
     overflow-y: auto;
     overflow-x: hidden;
-    height: 88vh;
+    height: 607px;
+}
+
+tr{
+    padding: 8px !important;
+    height: 30px;
 }
 
 th{
@@ -75,7 +56,9 @@ th{
 }
 
 
-td{
+
+
+td{ 
     min-width: 50px;
     font-size: 11px !important;
     font-weight: 400 !important;
@@ -87,7 +70,7 @@ td{
 ::-webkit-scrollbar {
     border-radius: 50%;
     transition: .1 ease;
-    width: 8px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track  {
@@ -99,6 +82,12 @@ td{
 }
   
 ::-webkit-scrollbar-thumb  {
+    background: transparent;
+    border-radius: 3px;
+    transition: .3s !important;
+}
+
+.dataSetContainer:hover::-webkit-scrollbar-thumb  {
     background: var(--stroke2);
-    border-radius: 4px;
+    transition: .3s !important;
 }
