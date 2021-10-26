@@ -3,7 +3,7 @@ import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { HttpClient } from '@angular/common/http';
-import { curva } from 'src/app/services/data-service.service'; 
+import { curva } from 'src/app/services/data-service.service';
 
 @Component({
   selector: 'dialog-polinomios-curvas-compresor',
