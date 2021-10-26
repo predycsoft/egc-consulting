@@ -42,6 +42,7 @@ import { DialogLibreriaCromatografiasComponent } from './inputs/dialog-libreria-
 import { DialogDuplicarNuevoTagComponent } from './proyectos/dialog-duplicar-nuevo-tag/dialog-duplicar-nuevo-tag.component';
 import { DialogLibreriaEquiposComponent } from './dialog-libreria-equipos/dialog-libreria-equipos.component';
 import { DialogMapaCompresorComponent } from './compresor/dialog-mapa-compresor/dialog-mapa-compresor.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { DialogMapaCompresorComponent } from './compresor/dialog-mapa-compresor/
     NgxChartsModule,
     SharedModule,
     HttpClientModule,
+    ChartsModule,
   ]
 })
 export class PsicoModule { }
