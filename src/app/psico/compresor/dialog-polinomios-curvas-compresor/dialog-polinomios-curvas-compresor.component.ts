@@ -3,6 +3,7 @@ import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { HttpClient } from '@angular/common/http';
+import { curva } from 'src/app/services/data-service.service'; 
 
 @Component({
   selector: 'dialog-polinomios-curvas-compresor',
@@ -40,6 +41,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   ce4 = 0
   expoce = 0
   errce = 0
+
+  curva = new curva
 
   ngOnInit(): void {
   }
@@ -143,7 +146,13 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     const efiLen = this.dataSetEfi.length
     this.envio.push(["X Coef Head","Y Coef Head","X Coef Efic","Y Coef Efic"])
     // Seleccion puede ser 1: Manual, 2: Automatico y Orden debe ser mayor a 3
-    this.envio.push(["Seleccion",1,"Orden",3])
+    let seleccion = 1
+    if(this.curva.tipoAjuste == "Manual") {
+      seleccion = 1
+    } else {
+      seleccion = 2
+    }
+    this.envio.push(["Seleccion",seleccion,"Orden",this.curva.orden])
     if (this.dataSetCP.length > this.dataSetEfi.length){
       len = this.dataSetCP.length
     } else {
@@ -173,20 +182,22 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     }
     console.log(this.envio)
     this.http.post(this.url,JSON.stringify(this.envio)).subscribe(res => {
-      let data = res as Array<Array<any>>
+      let data = []
+      data = res as Array<Array<any>>
+      console.log(this.data)
       if (res) {
-        this.cp1 = data[0][0]
-        this.cp2 = data[1][0]
-        this.cp3 = data[2][0]
-        this.cp4 = data[3][0]
-        this.expocp = data[4][0]
-        this.errcp = data[5][0]
-        this.ce1 = data[0][1]
-        this.ce2 = data[1][1]
-        this.ce3 = data[2][1]
-        this.ce4 = data[3][1]
-        this.expoce = data[4][1]
-        this.errce = data[5][1]
+        this.curva.cp1 = data[0][0]
+        this.curva.cp2 = data[1][0]
+        this.curva.cp3 = data[2][0]
+        this.curva.cp4 = data[3][0]
+        this.curva.expocp = data[4][0]
+        this.curva.errcp = data[5][0]
+        this.curva.ce1 = data[0][1]
+        this.curva.ce2 = data[1][1]
+        this.curva.ce3 = data[2][1]
+        this.curva.ce4 = data[3][1]
+        this.curva.expoce = data[4][1]
+        this.curva.errce = data[5][1]
       } else {
         alert("Hubo un error, revisar la data")
       }

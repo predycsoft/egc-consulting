@@ -58,15 +58,15 @@
             <div fxLayoutAlign="space-between center" class="mgt08">
                 <div class="w150px ft12">Ajuste</div>
                 <div>
-                    <mat-select [(ngModel)]="tipoAjuste" class="simpleSelect">
-                        <mat-option [value]="'Automatico'" class="optionItem"> Manual </mat-option>
-                        <mat-option [value]="'Manual'" class="optionItem"> Automatico</mat-option>
+                    <mat-select [(ngModel)]="curva.tipoAjuste" class="simpleSelect">
+                        <mat-option value="Automatico" class="optionItem"> Automatico </mat-option>
+                        <mat-option value="Manual" class="optionItem"> Manual</mat-option>
                     </mat-select>
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Exp</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                <div><input type="number" [(ngModel)]="curva.orden" placeholder="vacio" class="w100px centertext"></div>
             </div>
 
 
@@ -100,27 +100,27 @@
 
             <div fxLayoutAlign="space-between center" class="mgt05">
                 <div class="w150px ft12">Coef.A(1) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.cp1" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Coef.A(2) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.cp2" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Coef.A(3) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.cp3" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Coef.A(4) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.cp4" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Exponente</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.expocp" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Error</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.errcp" class="w100px centertext"></div>
             </div>
 
 
@@ -135,27 +135,27 @@
 
             <div fxLayoutAlign="space-between center" class="mgt08">
                 <div class="w150px ft12">Coef.A(1) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.ce1" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Coef.A(2) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.ce2" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Coef.A(3) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.ce3" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Coef.A(4) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.ce4" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Exponente</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.expoce" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="w150px ft12">Error</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                <div><input type="number" placeholder="-" [(ngModel)]="curva.errce" class="w100px centertext"></div>
             </div>
             <div class="fw mgt10" fxLayout="row" fxLayoutGap=".5rem">
                 <!-- <button class="standard fw">Descargar</button> -->
@@ -181,7 +181,7 @@
                     autocomplete="off" class="fw displayNone blueLink" />
                 </label> -->
 
-                <button class="accent fw">Ajustar</button>
+                <button class="accent fw" (click)="ajustarPolinomios()">Ajustar</button>
 
             </div>
 
