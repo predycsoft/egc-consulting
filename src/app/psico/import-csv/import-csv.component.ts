@@ -91,7 +91,7 @@ export class ImportCsvComponent {
             "value": +this.csvRecords[j][i+1]
           }
           dataset.series = dataset.series.concat(point);
-        }       
+        }
       }
       this.multi = this.multi.concat(dataset);
     }
