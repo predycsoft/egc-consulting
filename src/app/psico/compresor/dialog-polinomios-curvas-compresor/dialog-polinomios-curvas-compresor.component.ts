@@ -31,59 +31,28 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
 
   csvRecords: any[] = [];
   dataSetCP: any[] = [];
-  dataSetEfi: any[] = []
+  dataSetCE: any[] = []
   header = true;
   file;
-  mostrarGraficaCP = false
-  mostrarGraficaCE = false
 
   // envio de data
   url = "http://127.0.0.1:5000/ajustecurva/"
   envio;
-  // recibir data
-  cp1 = 0
-  cp2 = 0
-  cp3 = 0
-  cp4 = 0
-  expocp = 0
-  errcp = 0
-  ce1 = 0
-  ce2 = 0
-  ce3 = 0
-  ce4 = 0
-  expoce = 0
-  errce = 0
-  // Grafica
+  ///////////////// Grafica //////////////////////
   // Data para el plot
-  xDataCp: Array<Array<number>> = [];
   yDataCp: Array<Array<number>> = [];
-  xDataCe: Array<Array<number>> = [];
   yDataCe: Array<Array<number>> = [];
-
-
   // options
-  title = 'Average Temperatures of Cities';
   type = ChartType.LineChart
-  dataPlot = [
-      ["Jan",  7.0, -0.2, -0.9, 3.9],
-      ["Feb",  6.9, 0.8, 0.6, 4.2],
-      ["Mar",  9.5,  5.7, 3.5, 5.7],
-      ["Apr",  14.5, 11.3, 8.4, 8.5],
-      ["May",  18.2, 17.0, 13.5, 11.9],
-      ["Jun",  21.5, 22.0, 17.0, 15.2],
-      ["Jul",  25.2, 24.8, 18.6, 17.0],
-      ["Aug",  26.5, 24.1, 17.9, 16.6],
-      ["Sep",  23.3, 20.1, 14.3, 14.2],
-      ["Oct",  18.3, 14.1, 9.0, 10.3],
-      ["Nov",  13.9,  8.6, 3.9, 6.6],
-      ["Dec",  9.6,  2.5,  1.0, 4.8]
-  ];
-  columnNames = ["Month", "Tokyo", "New York","Berlin", "Paris"];
-  columnsCP = ["Q/N", "Coef Head"]
-  columnsCE = ["Q/N", "Coef Efi"]
+  mostrarGraficaCP = false
+  mostrarGraficaCE = false
+  titleCP = 'Head Politrópico (μ)'
+  titleCE = 'Eficiencia Politrópica (η)';
+  columnsCP = ["Q/N", "Escaneada", "Generada"]
+  columnsCE = ["Q/N", "Escaneada", "Generada"]
   optionsCp;
   optionsCe;
-  width = 550;
+  width = 400;
   height = 400;
 
   curva = new curva
@@ -111,7 +80,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
 
   armarData(){
     this.dataSetCP = []
-    this.dataSetEfi = []
+    this.dataSetCE = []
     for (let index = 0; index < this.csvRecords.length; index++) {
       const cpData = {
         x: this.csvRecords[index]["x1"],
@@ -122,17 +91,17 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
         y: this.csvRecords[index]["EFI"]
       }
       this.dataSetCP.push(cpData)
-      this.dataSetEfi.push(efiData)
+      this.dataSetCE.push(efiData)
     }
     this.dataSetCP = this.dataSetCP.filter(x => x.x != "")
-    this.dataSetEfi = this.dataSetEfi.filter(x => x.x != "")
+    this.dataSetCE = this.dataSetCE.filter(x => x.x != "")
   }
 
   @ViewChild('fileImportInput', {static: false}) myInputVariable: ElementRef;
   reset() {
     this.myInputVariable.nativeElement.value = '';
     this.csvRecords = []
-    this.dataSetEfi = []
+    this.dataSetCE = []
     this.dataSetCP = []
   }
 
@@ -147,11 +116,11 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     this.csvRecords = []
     let len = 0
     const cpLen = this.dataSetCP.length
-    const efiLen = this.dataSetEfi.length
-    if (this.dataSetCP.length > this.dataSetEfi.length){
+    const efiLen = this.dataSetCE.length
+    if (this.dataSetCP.length > this.dataSetCE.length){
       len = this.dataSetCP.length
     } else {
-      len = this.dataSetEfi.length
+      len = this.dataSetCE.length
     }
     for (let index = 0; index < len; index++) {
       let x1 = ""
@@ -166,8 +135,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
         CP = ""
       }
       if  (index < efiLen) {
-        x2 = this.dataSetEfi[index]["x"]
-        EFI = this.dataSetEfi[index]["y"]
+        x2 = this.dataSetCE[index]["x"]
+        EFI = this.dataSetCE[index]["y"]
       } else {
         x2 = ""
         EFI = ""
@@ -186,38 +155,122 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   verGraficaCP(){
     this.yDataCp = []
     this.dataSetCP.sort((a,b) => a.x - b.x)
-    const minx = this.dataSetCP[0].x -0.05
-    const maxx = this.dataSetCP[this.dataSetCP.length-1].x + 0.05
+    let minx:number = +this.dataSetCP[0].x
+    minx = +minx.toFixed(1) - 0.05
+    let maxx: number = +this.dataSetCP[this.dataSetCP.length-1].x
+    maxx = +maxx.toFixed(1) + 0.05
+    const nPuntos = (this.dataSetCP[this.dataSetCP.length-1].x - this.dataSetCP[0].x) / 100
+    for (let index = +this.dataSetCP[0].x; index <= this.dataSetCP[this.dataSetCP.length-1].x; index= index + nPuntos) {
+      const punto = this.curva.cp4 + this.curva.cp3*index + this.curva.cp2*(index**2) + this.curva.cp1*(index**this.curva.expocp)
+      let row: Array<number> = [+index,,punto]
+      if (this.dataSetCP.find(x => x.x == index)) {
+        const value = +this.dataSetCP.find(x => x.x == index).y
+        row = [+index,+value,punto]
+      }
+      this.yDataCp = [...this.yDataCp,row]
+    }
     for (let index = 0; index < this.dataSetCP.length; index++) {
       const element = this.dataSetCP[index];
-      const row: Array<number> = [+element.x, +element.y]
+      const row: Array<number> = [+element.x, +element.y, ,]
       this.yDataCp = [...this.yDataCp , row]
     }
+    const ultimoPunto = this.dataSetCP[this.dataSetCP.length-1]
+    const ultimoPuntoValue = this.curva.cp4 + this.curva.cp3*ultimoPunto.x + this.curva.cp2*(ultimoPunto.x**2) + this.curva.cp1*(ultimoPunto.x**this.curva.expocp)
+    this.yDataCp = [...this.yDataCp,[+ultimoPunto.x,+ultimoPunto.y,+ultimoPuntoValue]]
+    this.yDataCp.sort((a,b) => a[0] -b[0])
     this.optionsCp = {
+      legend: {
+        textStyle: {
+          italic: true
+        }
+      },
+      interpolateNulls: true,
+      series: {
+        0: {
+          lineWidth: 0,
+          pointsVisible: true,
+          pointSize:4
+        }
+      },
       hAxis: {
          title: 'Q/N',
          viewWindowMode:'explicit',
          viewWindow: {
            max:maxx,
            min:minx
+         },
+         minorGridlines: {
+           interval: 0.005
          }
       },
       vAxis:{
-         title: 'Coeficiente'
+         title: 'Coeficiente μ',
+         titleTextStyle: {
+           italic:false,
+         },
+         minorGridlines: {
+          interval: 0.005
+        }
       },
    };
-    console.log(this.dataPlot)
-    console.log(this.yDataCp)
     this.mostrarGraficaCP = true
   }
 
   verGraficaEfi(){
     this.yDataCe = []
-    for (let index = 0; index < this.dataSetEfi.length; index++) {
-      const element = this.dataSetEfi[index];
-      const row = [element.x, element.y]
-      this.yDataCe = this.yDataCe.concat(row)
+    this.dataSetCE.sort((a,b) => a.x - b.x)
+    let minx:number = +this.dataSetCE[0].x
+    minx = +minx.toFixed(1) - 0.05
+    let maxx: number = +this.dataSetCE[this.dataSetCE.length-1].x
+    maxx = +maxx.toFixed(1) + 0.05
+    const step = (this.dataSetCE[this.dataSetCE.length-1].x - this.dataSetCE[0].x) / 100
+    for (let index = +this.dataSetCE[0].x; index <= this.dataSetCE[this.dataSetCE.length-1].x; index= index + step) {
+      const punto = this.curva.ce4 + this.curva.ce3*index + this.curva.ce2*(index**2) + this.curva.ce1*(index**this.curva.expoce)
+      let row: Array<number> = [+index,,punto]
+      if (this.dataSetCE.find(x => x.x == index)) {
+        const value = +this.dataSetCE.find(x => x.x == index).y
+        row = [+index,+value,punto]
+      }
+      this.yDataCe = [...this.yDataCe,row]
     }
+
+    for (let index = 0; index < this.dataSetCE.length; index++) {
+      const element = this.dataSetCE[index];
+      const row: Array<number> = [+element.x, +element.y, ,]
+      this.yDataCe = [...this.yDataCe , row]
+    }
+    const ultimoPunto = this.dataSetCE[this.dataSetCE.length-1]
+    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3*ultimoPunto.x + this.curva.ce2*(ultimoPunto.x**2) + this.curva.ce1*(ultimoPunto.x**this.curva.expoce)
+    this.yDataCe = [...this.yDataCe,[ultimoPunto.x,ultimoPunto.y,ultimoPuntoValue]]
+    this.yDataCe.sort((a,b) => a[0] -b[0])
+    console.log(this.yDataCe)
+    this.optionsCe = {
+      interpolateNulls: true,
+      series: {
+        0: {
+          lineWidth: 0,
+          pointsVisible: true,
+          pointSize:4
+        }
+      },
+      hAxis: {
+         title: 'Q/N',
+         viewWindowMode:'explicit',
+         viewWindow: {
+           max:maxx,
+           min:minx
+         },
+         minorGridlines: {
+           interval: 0.005
+         }
+      },
+      vAxis:{
+         title: 'Coeficiente (η)',
+         minorGridlines: {
+          interval: 0.005
+        }
+      },
+   };
     this.mostrarGraficaCE = true
   }
 
@@ -225,7 +278,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     this.envio = []
     let len = 0
     const cpLen = this.dataSetCP.length
-    const efiLen = this.dataSetEfi.length
+    const efiLen = this.dataSetCE.length
     this.envio.push(["X Coef Head","Y Coef Head","X Coef Efic","Y Coef Efic"])
     // Seleccion puede ser 1: Manual, 2: Automatico y Orden debe ser mayor a 3
     let seleccion = 1
@@ -235,10 +288,10 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       seleccion = 2
     }
     this.envio.push(["Seleccion",seleccion,"Orden",this.curva.orden])
-    if (this.dataSetCP.length > this.dataSetEfi.length){
+    if (this.dataSetCP.length > this.dataSetCE.length){
       len = this.dataSetCP.length
     } else {
-      len = this.dataSetEfi.length
+      len = this.dataSetCE.length
     }
     for (let index = 0; index < len; index++) {
       let x1 = 0
@@ -253,8 +306,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
         CP = 0
       }
       if  (index < efiLen) {
-        x2 = this.dataSetEfi[index]["x"]
-        EFI = this.dataSetEfi[index]["y"]
+        x2 = this.dataSetCE[index]["x"]
+        EFI = this.dataSetCE[index]["y"]
       } else {
         x2 = 0
         EFI = 0

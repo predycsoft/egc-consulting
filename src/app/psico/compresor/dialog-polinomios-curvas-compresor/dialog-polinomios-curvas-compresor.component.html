@@ -140,7 +140,7 @@
                     </tr>
                 </table>
                 <table class="mgt05">
-                    <tr *ngFor="let item of dataSetEfi; let i = index">
+                    <tr *ngFor="let item of dataSetCE; let i = index">
                         <td class="nowrap text3 ft13">{{i + 1}}</td>
                         <td class="nowrap text3 ft13">{{item.x}}</td>
                         <td class="nowrap text3 ft13">{{item.y}}</td>
@@ -162,9 +162,10 @@
         </div>
 
         <!----------------------------------------------------------------------------------- Gráficos -->
-        <div *ngIf="mostrarGraficaCP">
+        <div fxLayout="column">
+        <div *ngIf="mostrarGraficaCP" class="redFill5 pd10">
             <google-chart #chart
-            [title]="title"
+            [title]="titleCP"
             [type]="type"
             [data]="yDataCp"
             [options]="optionsCp"
@@ -173,14 +174,16 @@
             [height]="height">
             </google-chart>
         </div>
-        <!-- <div *ngIf="mostrarGraficaCE">
+        <div *ngIf="mostrarGraficaCE">
             <google-chart #chart
-            [title]="title"
+            [title]="titleCE"
             [type]="type"
             [data]="yDataCe"
-            [options]="options"
+            [options]="optionsCe"
+            [columns]="columnsCE"
             [width]="width"
             [height]="height">
             </google-chart>
-        </div> -->
+        </div>
+    </div>
     </div>
