@@ -4,8 +4,16 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { HttpClient } from '@angular/common/http';
 import { curva } from 'src/app/services/data-service.service';
-import { ChartDataset, ChartOptions } from 'chart.js';
-import { Colors, Label } from 'ng2-charts';
+import { ChartType } from 'angular-google-charts';
+
+interface point {
+  "x": number,
+  "y": number
+}
+interface dataset {
+  "name": string,
+  "series": point[],
+}
 
 @Component({
   selector: 'dialog-polinomios-curvas-compresor',
@@ -26,6 +34,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   dataSetEfi: any[] = []
   header = true;
   file;
+  mostrarGraficaCP = false
+  mostrarGraficaCE = false
 
   // envio de data
   url = "http://127.0.0.1:5000/ajustecurva/"
@@ -44,22 +54,37 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   expoce = 0
   errce = 0
   // Grafica
-  lineChartData: ChartDataset[];
-  lineChartLabels: Label[];
-  lineChartOptions = {
-    responsive: true,
-  };
-  lineChartColors: Colors[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,255,1)',
-    },
+  // Data para el plot
+  xDataCp: Array<Array<number>> = [];
+  yDataCp: Array<Array<number>> = [];
+  xDataCe: Array<Array<number>> = [];
+  yDataCe: Array<Array<number>> = [];
+
+
+  // options
+  title = 'Average Temperatures of Cities';
+  type = ChartType.LineChart
+  dataPlot = [
+      ["Jan",  7.0, -0.2, -0.9, 3.9],
+      ["Feb",  6.9, 0.8, 0.6, 4.2],
+      ["Mar",  9.5,  5.7, 3.5, 5.7],
+      ["Apr",  14.5, 11.3, 8.4, 8.5],
+      ["May",  18.2, 17.0, 13.5, 11.9],
+      ["Jun",  21.5, 22.0, 17.0, 15.2],
+      ["Jul",  25.2, 24.8, 18.6, 17.0],
+      ["Aug",  26.5, 24.1, 17.9, 16.6],
+      ["Sep",  23.3, 20.1, 14.3, 14.2],
+      ["Oct",  18.3, 14.1, 9.0, 10.3],
+      ["Nov",  13.9,  8.6, 3.9, 6.6],
+      ["Dec",  9.6,  2.5,  1.0, 4.8]
   ];
-  lineChartLegend = true;
-  lineChartPlugins = [];
-  lineChartType = 'line';
-
-
+  columnNames = ["Month", "Tokyo", "New York","Berlin", "Paris"];
+  columnsCP = ["Q/N", "Coef Head"]
+  columnsCE = ["Q/N", "Coef Efi"]
+  optionsCp;
+  optionsCe;
+  width = 550;
+  height = 400;
 
   curva = new curva
 
@@ -159,33 +184,41 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   }
 
   verGraficaCP(){
-    let xdata = []
-    let ydata = []
+    this.yDataCp = []
+    this.dataSetCP.sort((a,b) => a.x - b.x)
+    const minx = this.dataSetCP[0].x -0.05
+    const maxx = this.dataSetCP[this.dataSetCP.length-1].x + 0.05
     for (let index = 0; index < this.dataSetCP.length; index++) {
       const element = this.dataSetCP[index];
-      xdata.push(element.x)
-      ydata.push(element.y)
-
+      const row: Array<number> = [+element.x, +element.y]
+      this.yDataCp = [...this.yDataCp , row]
     }
-    this.lineChartData = [
-      { data: ydata, label: 'Coef Cabezal Politrópico' },
-    ];
-    this.lineChartLabels = xdata;
+    this.optionsCp = {
+      hAxis: {
+         title: 'Q/N',
+         viewWindowMode:'explicit',
+         viewWindow: {
+           max:maxx,
+           min:minx
+         }
+      },
+      vAxis:{
+         title: 'Coeficiente'
+      },
+   };
+    console.log(this.dataPlot)
+    console.log(this.yDataCp)
+    this.mostrarGraficaCP = true
   }
 
   verGraficaEfi(){
-    let xdata = []
-    let ydata = []
+    this.yDataCe = []
     for (let index = 0; index < this.dataSetEfi.length; index++) {
       const element = this.dataSetEfi[index];
-      xdata.push(element.x)
-      ydata.push(element.y)
-
+      const row = [element.x, element.y]
+      this.yDataCe = this.yDataCe.concat(row)
     }
-    this.lineChartData = [
-      { data: ydata, label: 'Coef Eficiencia Politrópica' },
-    ];
-    this.lineChartLabels = xdata;
+    this.mostrarGraficaCE = true
   }
 
   ajustarPolinomios(){
@@ -247,6 +280,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
         this.curva.ce4 = data[3][1]
         this.curva.expoce = data[4][1]
         this.curva.errce = data[5][1]
+        this.verGraficaEfi()
+        this.verGraficaCP()
       } else {
         alert("Hubo un error, revisar la data")
       }

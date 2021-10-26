@@ -159,10 +159,28 @@
                         (change)="fileChangeListener($event)" class="displayNone" />
                 </label>
             </div>
-
         </div>
 
         <!----------------------------------------------------------------------------------- Gráficos -->
-
-
+        <div *ngIf="mostrarGraficaCP">
+            <google-chart #chart
+            [title]="title"
+            [type]="type"
+            [data]="yDataCp"
+            [options]="optionsCp"
+            [columns]= "columnsCP"
+            [width]="width"
+            [height]="height">
+            </google-chart>
+        </div>
+        <!-- <div *ngIf="mostrarGraficaCE">
+            <google-chart #chart
+            [title]="title"
+            [type]="type"
+            [data]="yDataCe"
+            [options]="options"
+            [width]="width"
+            [height]="height">
+            </google-chart>
+        </div> -->
     </div>

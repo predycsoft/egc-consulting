@@ -43,6 +43,7 @@ import { DialogDuplicarNuevoTagComponent } from './proyectos/dialog-duplicar-nue
 import { DialogLibreriaEquiposComponent } from './dialog-libreria-equipos/dialog-libreria-equipos.component';
 import { DialogMapaCompresorComponent } from './compresor/dialog-mapa-compresor/dialog-mapa-compresor.component';
 import { ChartsModule } from 'ng2-charts';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,7 @@ import { ChartsModule } from 'ng2-charts';
     NgxChartsModule,
     SharedModule,
     HttpClientModule,
-    ChartsModule,
+    GoogleChartsModule.forRoot(),
   ]
 })
 export class PsicoModule { }
