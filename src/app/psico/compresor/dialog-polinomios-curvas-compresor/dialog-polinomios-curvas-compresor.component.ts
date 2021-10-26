@@ -4,6 +4,8 @@ import { DataServiceService } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { HttpClient } from '@angular/common/http';
 import { curva } from 'src/app/services/data-service.service';
+import { ChartDataset, ChartOptions } from 'chart.js';
+import { Colors, Label } from 'ng2-charts';
 
 @Component({
   selector: 'dialog-polinomios-curvas-compresor',
@@ -41,6 +43,23 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   ce4 = 0
   expoce = 0
   errce = 0
+  // Grafica
+  lineChartData: ChartDataset[];
+  lineChartLabels: Label[];
+  lineChartOptions = {
+    responsive: true,
+  };
+  lineChartColors: Colors[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,255,255,1)',
+    },
+  ];
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
+
+
 
   curva = new curva
 
@@ -137,6 +156,36 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       this.csvRecords.push(obj)
     }
     this.data.downloadFile(this.csvRecords,"data-curvas",['x1','CP', 'x2', 'EFI'])
+  }
+
+  verGraficaCP(){
+    let xdata = []
+    let ydata = []
+    for (let index = 0; index < this.dataSetCP.length; index++) {
+      const element = this.dataSetCP[index];
+      xdata.push(element.x)
+      ydata.push(element.y)
+
+    }
+    this.lineChartData = [
+      { data: ydata, label: 'Coef Cabezal Politrópico' },
+    ];
+    this.lineChartLabels = xdata;
+  }
+
+  verGraficaEfi(){
+    let xdata = []
+    let ydata = []
+    for (let index = 0; index < this.dataSetEfi.length; index++) {
+      const element = this.dataSetEfi[index];
+      xdata.push(element.x)
+      ydata.push(element.y)
+
+    }
+    this.lineChartData = [
+      { data: ydata, label: 'Coef Eficiencia Politrópica' },
+    ];
+    this.lineChartLabels = xdata;
   }
 
   ajustarPolinomios(){
