@@ -374,6 +374,8 @@ body {
 .aText1{ color: var(--aText1) !important;}
 .aText2{ color: var(--aText2) !important;}
 .aText3{ color: var(--aText3) !important;}
+.aText4{ color: var(--accent4) !important;}
+.aText5{ color: var(--accent3) !important;}
 .oaText1{ color: var(--oaText1) !important;}
 .oaText2{ color: var(--oaText2) !important;}
 .oaText3{ color: var(--oaText3) !important;}
@@ -927,7 +929,7 @@ h1{
     padding: 6px;
     min-width: auto;
     /* min-height: 32px !important; */
-    background: transparent !important;
+    background: transparent;
     border-radius: var(--defaultBorderRadius) !important;
     color: var(--text1);
     transition: .1s !important;
@@ -1187,7 +1189,7 @@ Yb    dP    db    88""Yb 88  dP"Yb  .dP"Y8
    
 */
 
-::ng-deep .mat-tooltip {
+.mat-tooltip {
     display: flex;
     background: var(--minContrast) !important;
     flex-direction: column;
@@ -1198,7 +1200,7 @@ Yb    dP    db    88""Yb 88  dP"Yb  .dP"Y8
     color: var(--text1) !important;
 }
 
-::ng-deep .multiline-tooltip{
+.multiline-tooltip{
     white-space: pre-line;
     font-size: 12px;
 }

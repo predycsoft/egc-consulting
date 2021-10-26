@@ -47,125 +47,132 @@
     <div fxLayout="row">
 
         <!-- Datos calculados para los coegificentes de las curvas del impulsor -->
-        <div class="pd10 border-r">
+        <div class="pdl10 pdr10 pdb05 border-r w250px h700px" fxLayout="column" fxLayoutAlign="space-between">
 
-            <!-- Caracteristicas generales del impulsor -->
-            <div class="border-b pdb03" fxLayoutAlign="space-between center">
-                <span class="ft500 text1">Parámetros de ajuste</span>
-                <span class="textButton"> Borrar data </span>
-            </div>
+            <div>
 
-            <div fxLayoutAlign="space-between center" class="mgt08">
-                <div class="w150px ft12">Ajuste</div>
-                <div>
-                    <mat-select [(ngModel)]="tipoAjuste" class="simpleSelect">
-                        <mat-option [value]="'Automatico'" class="optionItem"> Manual </mat-option>
-                        <mat-option [value]="'Manual'" class="optionItem"> Automatico</mat-option>
-                    </mat-select>
+                <!-- Caracteristicas generales del impulsor -->
+                <div class="border-b pdb03" fxLayoutAlign="space-between center">
+                    <span class="ft500 text1">Parámetros de ajuste</span>
+                    <span class="textButton mgb05 redText"> Borrar data </span>
                 </div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Exp</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
-            </div>
 
-
-            <!-- Caracteristicas generales del impulsor -->
-            <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
-                <span class="ft500">Diámetro y limites</span>
-                <span class="textButton"> Borrar data </span>
-            </div>
-
-            <div fxLayoutAlign="space-between center" class="mgt08">
-                <div class="w150px ft12">Diámedivo [pulg]</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Límite Q/N de surge</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Límite Q/N de stw</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
-            </div>
-
-            <!-- Coeficientes calculados de Head. Politropico -->
-            <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
-                <span class="ft500">Head Politrópico</span>
-                <div fxLayoutAlign=" center">
-                    <span class="ft12 mgr05">Ref. </span>
-                    <mat-icon class="iconButton ft14 text3">image</mat-icon>
+                <div fxLayoutAlign="space-between center" class="mgt08">
+                    <div class="w150px ft12">Ajuste</div>
+                    <div>
+                        <mat-select [(ngModel)]="tipoAjuste" class="simpleSelect">
+                            <mat-option [value]="'Automatico'" class="optionItem"> Manual </mat-option>
+                            <mat-option [value]="'Manual'" class="optionItem"> Automatico</mat-option>
+                        </mat-select>
+                    </div>
                 </div>
-            </div>
-
-            <div fxLayoutAlign="space-between center" class="mgt05">
-                <div class="w150px ft12">Coef.A(1) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Coef.A(2) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Coef.A(3) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Coef.A(4) coe.head</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Exponente</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Error</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-
-
-            <!-- Coeficientes calculados de Efic. Politropica -->
-            <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
-                <span class="ft500">Efic. Politrópica</span>
-                <div fxLayoutAlign=" center">
-                    <span class="ft12 mgr05">Ref. </span>
-                    <mat-icon class="iconButton ft14 aText1">image</mat-icon>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Exp</div>
+                    <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
                 </div>
+
+
+                <!-- Caracteristicas generales del impulsor -->
+                <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                    <span class="ft500">Diámetro y limites</span>
+                </div>
+
+                <div fxLayoutAlign="space-between center" class="mgt08">
+                    <div class="w150px ft12">Diámedivo [pulg]</div>
+                    <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Límite Q/N de surge</div>
+                    <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Límite Q/N de stw</div>
+                    <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                </div>
+
+                <!-- Coeficientes calculados de Head. Politropico -->
+                <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                    <span class="ft500">Head Politrópico</span>
+                    <div fxLayoutAlign=" center">
+                        <span class="ft12 mgr05">Ref. </span>
+                        <mat-icon class="iconButton ft14 text3">image</mat-icon>
+                    </div>
+                </div>
+
+                <div fxLayoutAlign="space-between center" class="mgt05">
+                    <div class="w150px ft12">Coef.A(1) coe.head</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Coef.A(2) coe.head</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Coef.A(3) coe.head</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Coef.A(4) coe.head</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Exponente</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Error</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+
+
+                <!-- Coeficientes calculados de Efic. Politropica -->
+                <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                    <span class="ft500">Efic. Politrópica</span>
+                    <div fxLayoutAlign=" center">
+                        <span class="ft12 mgr05">Ref. </span>
+                        <mat-icon class="iconButton ft14 aText5">image</mat-icon>
+                    </div>
+                </div>
+
+                <div fxLayoutAlign="space-between center" class="mgt08">
+                    <div class="w150px ft12">Coef.A(1) efic.polit.</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Coef.A(2) efic.polit.</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Coef.A(3) efic.polit.</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Coef.A(4) efic.polit.</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Exponente</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+                <div fxLayoutAlign="space-between center" class="mgt03">
+                    <div class="w150px ft12">Error</div>
+                    <div><input type="number" placeholder="-" class="w100px centertext"></div>
+                </div>
+
             </div>
 
-            <div fxLayoutAlign="space-between center" class="mgt08">
-                <div class="w150px ft12">Coef.A(1) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Coef.A(2) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Coef.A(3) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Coef.A(4) efic.polit.</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Exponente</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="w150px ft12">Error</div>
-                <div><input type="number" placeholder="-" class="w100px centertext"></div>
-            </div>
-            <div class="fw mgt10" fxLayout="row" fxLayoutGap=".5rem">
-                <!-- <button class="standard fw">Descargar</button> -->
-                <!-- <button class="standard fw">Cargar data</button> -->
-                <!-- <button class="standard fw">Cargar</button> -->
-                <label class="textButton border">
-                    <span class="nowrap">Cargar data</span>
-                    <mat-icon class="ft16">upload</mat-icon>
+            <div class="fw mgt10 border-t pdt10" fxLayout="row" fxLayoutGap=".5rem">
+
+                <mat-icon class="iconButton text3 border ft19 shadow8" matTooltip="Descargar formato de carga">
+                    table_chart</mat-icon>
+                <mat-icon class="iconButton text3 border ft19 shadow8 redFill1 redText"
+                    matTooltip="Descargar formato de carga"> delete</mat-icon>
+                <label class="textButton border shadow8">
+                    <mat-icon class="ft18"
+                        matTooltip="Cargar data escaneada (x,y) &#13; &#13; Puedes descargar el modelo de formato de carga haciendo click derecho sobre este boton."
+                        matTooltipClass="multiline-tooltip">upload</mat-icon>
                     <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
-                    (change)="fileChangeListener($event)" class="displayNone" />
+                        (change)="fileChangeListener($event)" class="displayNone" />
                 </label>
 
                 <!-- <label class="textButton border">
@@ -181,7 +188,7 @@
                     autocomplete="off" class="fw displayNone blueLink" />
                 </label> -->
 
-                <button class="accent fw">Ajustar</button>
+                <button class="accent fw shadow8 w100px">Ajustar</button>
 
             </div>
 
