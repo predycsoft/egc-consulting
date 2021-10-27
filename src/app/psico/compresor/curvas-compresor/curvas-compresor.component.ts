@@ -20,7 +20,7 @@ export class CurvasCompresorComponent implements OnInit {
 
   impEqSel: string = '';
   impSel: number;
-  impulsores: curva[] = []
+  impulsores: curva[] | string[] = []
   curvas: curva[] = []
 
   numSecciones: number;
