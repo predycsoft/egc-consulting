@@ -77,7 +77,7 @@ export class ConfiguracionTrenComponent implements OnInit {
         newEquipo.familia = result.familia
         newEquipo.tipologia = result.tipologia
         console.log(newEquipo)
-        await this.data.createEquipo(this.proyectoId, JSON.parse(JSON.stringify(newEquipo))).catch(error => console.log(error))
+        await this.data.createEquipo(this.proyectoId, newEquipo)
       }
     })
   }

@@ -13,12 +13,12 @@ export class equipo_tren {
   tag: string = "";
   orden: number = 0;
   familia: string = "";
-  tipologia: string = "";
+  tipologia: "Inline" | "Back to Back" = "Inline";
 }
 
 export class Proyecto {
   id: string = "";
-  userId: string = "";
+  userId: string = ""; 
   titulo: string = "";
   revision: string = "A";
   cliente: string = "";
@@ -43,15 +43,16 @@ export class Usuario {
 
 export class equipo {
   tag: string = "";
-  tipologia: string = "";
+  tipologia: "Inline" | "Back to Back" = "Inline";
   familia: string = "";
   orden: number = 0;
   general: general = new general;
   puntosDatasheet: puntosDatasheet[] = [];
   fabricante: string = "";
   modelo: string = "";
-  mapas: mapas = new mapas();
   documentos: file[] = [];
+  nImpulsores: number[] = []
+  nSecciones: number = 1
 }
 
 export class file {
@@ -210,29 +211,43 @@ export class DataServiceService {
   }
 
   // Trenes ////////////////////////////////////////////////////////////////////
+  getTren(proyectoId: string, tagTren: string) {
+    return this.afs.collection("proyectos")
+    .doc(proyectoId)
+    .collection("trenes")
+    .doc(tagTren)
+    .ref.get()
+  }
 
-  updateTren(proyectoId: string, trenTag: string, tren: tren) {
+  getTrenes(proyectoId: string){
+    return this.afs.collection("proyectos")
+      .doc(proyectoId)
+      .collection("trenes")
+      .valueChanges()
+  }
+
+  updateTren(proyectoId: string, tren: tren) {
     return this.afs
       .collection('proyectos')
       .doc(proyectoId)
-      .collection("trenes").doc(trenTag)
+      .collection("trenes").doc(tren.tag)
       .set({...tren}, {merge:true});
   }
 
   anexarTren(proyectoId: string, tren: tren) {
     return this.afs.collection("proyectos").doc(proyectoId)
-      .update({
-        trenes: firebase.firestore.FieldValue.arrayUnion(Object.assign({}, tren))
-      })
+      .collection("trenes")
+      .doc(tren.tag)
+      .set({...tren})
   }
 
   eliminarTren(proyectoId: string, tren: tren) {
     return this.afs
       .collection('proyectos')
       .doc(proyectoId)
-      .update({
-        trenes: firebase.firestore.FieldValue.arrayRemove(tren)
-      });
+      .collection("trenes")
+      .doc(tren.tag)
+      .delete()
   }
 
 
@@ -240,10 +255,22 @@ export class DataServiceService {
   obtenerEquipo(proyectoId:string, tag: string){
     return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).collection<equipo>("equipos").doc(tag).valueChanges()
   }
+
   async createEquipo(proyectoId:string, equipo: equipo) {
-    return this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
-      ...equipo
-    }).catch(error => console.log(error))
+    if(equipo.tipologia == "Inline"){
+      equipo.nSecciones = 1
+      equipo.nImpulsores = [0,0]
+      await this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
+        ...equipo
+      })
+    }
+    if(equipo.tipologia == "Back to Back"){
+      equipo.nSecciones = 2
+      equipo.nImpulsores = [0,0]
+      await this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
+        ...equipo
+      })
+    }
   }
 
   async eliminarEquipo(proyectoId: string, equipoTag: string) {
