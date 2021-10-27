@@ -163,23 +163,19 @@
 
         <!----------------------------------------------------------------------------------- Gráficos -->
         <div fxLayout="column">
-        <div class="pdt10 ft500 ft13 centertext fw ">Cabezal Politrópico</div>
-        <div *ngIf="mostrarGraficaCP" class="pd10">
-            <google-chart #chart
-            [type]="type"
-            [data]="yDataCp"
-            [options]="optionsCp"
-            [columns]= "columnsCP">
-            </google-chart>
+            <div class="pdt10 ft500 ft13 centertext fw ">Cabezal Politrópico</div>
+            <div *ngIf="mostrarGraficaCP" class="pd10">
+                <google-chart #chart [type]="type" [data]="yDataCp" [options]="optionsCp" [columns]="columnsCP">
+                </google-chart>
+            </div>
+            <div class="pdt08 ft500 ft13 centertext fw border-t">Cabezal Politrópico</div>
+            <div *ngIf="mostrarGraficaCE" class="pd10">
+                <google-chart #chart [type]="type" [data]="yDataCe" [options]="optionsCe" [columns]="columnsCE">
+                </google-chart>
+            </div>
+            <div class="fw mgt10 border-t pdt10" fxLayoutAlign=".5rem">
+                <button class="standard fw" >Eliminar</button>
+                <button class="accent fw" >Guardar</button>
+            </div>
         </div>
-        <div class="pdt08 ft500 ft13 centertext fw border-t">Cabezal Politrópico</div>
-        <div *ngIf="mostrarGraficaCE" class="pd10">
-            <google-chart #chart
-            [type]="type"
-            [data]="yDataCe"
-            [options]="optionsCe"
-            [columns]="columnsCE">
-            </google-chart>
-        </div>
-    </div>
     </div>
