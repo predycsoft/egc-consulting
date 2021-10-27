@@ -86,11 +86,12 @@ export class curva {
   ultimaEdicion: Date = new Date; // Fecha de creación o edición del mapa.
   ultimoEditor: string = '';
   dimQ: string = 'Q/N';
+  equivalente: boolean = true // Flag que determina si el impulsor es equivalente
 
   // General
   numCompresor: number = 0;
-  numSeccion: number = 0;
-  numImpulsor: number = 0; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
+  numSeccion: number = 1;
+  numImpulsor: number = 1; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
   fab: boolean= true; // Flag para identificar si la data viene del fabricante
   diametro: number = 0; // diametro de cada impulsor
   limSurge: number = 0; //Límite Q/N de surge
@@ -100,7 +101,7 @@ export class curva {
   tipoAjuste: string = 'Manual';
   orden: number = 3
 
-  // Coeficiente de Head 
+  // Coeficiente de Head
   coefHeadDataSet: dataSet; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
   cp1: number = 0; //termino independiente a0*x^0
   cp2: number = 0; //a1*X^1
@@ -110,7 +111,7 @@ export class curva {
   errcp: number = 0;
   headImg:  string = ''; //Es una imagen que se carga de referencia
 
-  // Eficiencia politropica 
+  // Eficiencia politropica
   eficPoliDataSet: dataSet;  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
   ce1: number = 0; //termino independiente a0*x^0
   ce2: number = 0; //a1*X^1
@@ -210,11 +211,12 @@ export class DataServiceService {
 
   // Trenes ////////////////////////////////////////////////////////////////////
 
-  updateTren(proyectoId: string, trenes: tren[]) {
+  updateTren(proyectoId: string, trenTag: string, tren: tren) {
     return this.afs
       .collection('proyectos')
       .doc(proyectoId)
-      .set({trenes: trenes}, {merge:true});
+      .collection("trenes").doc(trenTag)
+      .set({...tren}, {merge:true});
   }
 
   anexarTren(proyectoId: string, tren: tren) {
