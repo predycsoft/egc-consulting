@@ -91,6 +91,7 @@ export class curva {
   numCompresor: number = 0;
   numSeccion: number = 0;
   numImpulsor: number = 0; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
+  fab: boolean= true; // Flag para identificar si la data viene del fabricante
   diametro: number = 0; // diametro de cada impulsor
   limSurge: number = 0; //Límite Q/N de surge
   limStw: number = 0; //Límite Q/N de stw

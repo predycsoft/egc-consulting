@@ -328,4 +328,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       }
     })
   }
+
+  guardarCurva(){
+
+  }
 }
