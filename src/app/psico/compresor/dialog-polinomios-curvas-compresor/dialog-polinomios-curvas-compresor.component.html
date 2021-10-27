@@ -163,26 +163,22 @@
 
         <!----------------------------------------------------------------------------------- Gráficos -->
         <div fxLayout="column">
-        <div *ngIf="mostrarGraficaCP" class="redFill5 pd10">
+        <div class="pdt10 ft500 ft13 centertext fw ">Cabezal Politrópico</div>
+        <div *ngIf="mostrarGraficaCP" class="pd10">
             <google-chart #chart
-            [title]="titleCP"
             [type]="type"
             [data]="yDataCp"
             [options]="optionsCp"
-            [columns]= "columnsCP"
-            [width]="width"
-            [height]="height">
+            [columns]= "columnsCP">
             </google-chart>
         </div>
-        <div *ngIf="mostrarGraficaCE">
+        <div class="pdt08 ft500 ft13 centertext fw border-t">Cabezal Politrópico</div>
+        <div *ngIf="mostrarGraficaCE" class="pd10">
             <google-chart #chart
-            [title]="titleCE"
             [type]="type"
             [data]="yDataCe"
             [options]="optionsCe"
-            [columns]="columnsCE"
-            [width]="width"
-            [height]="height">
+            [columns]="columnsCE">
             </google-chart>
         </div>
     </div>

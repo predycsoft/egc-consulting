@@ -46,14 +46,12 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   type = ChartType.LineChart
   mostrarGraficaCP = false
   mostrarGraficaCE = false
-  titleCP = 'Head Politrópico (μ)'
-  titleCE = 'Eficiencia Politrópica (η)';
   columnsCP = ["Q/N", "Escaneada", "Generada"]
   columnsCE = ["Q/N", "Escaneada", "Generada"]
   optionsCp;
   optionsCe;
-  width = 400;
-  height = 400;
+  width = 390;
+  height = 290;
 
   curva = new curva
 
@@ -68,7 +66,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     this.ngxCsvParser.parse(files[0], { header: this.header, delimiter: ';' })
       .pipe().subscribe(result => {
         console.log('Result', result);
-        if(result instanceof NgxCSVParserError) {
+        if (result instanceof NgxCSVParserError) {
         } else {
           this.csvRecords = result;
           this.armarData();
@@ -78,7 +76,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       });
   }
 
-  armarData(){
+  armarData() {
     this.dataSetCP = []
     this.dataSetCE = []
     for (let index = 0; index < this.csvRecords.length; index++) {
@@ -97,7 +95,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     this.dataSetCE = this.dataSetCE.filter(x => x.x != "")
   }
 
-  @ViewChild('fileImportInput', {static: false}) myInputVariable: ElementRef;
+  @ViewChild('fileImportInput', { static: false }) myInputVariable: ElementRef;
   reset() {
     this.myInputVariable.nativeElement.value = '';
     this.csvRecords = []
@@ -112,12 +110,12 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     });
   }
 
-  descargarCSV(){
+  descargarCSV() {
     this.csvRecords = []
     let len = 0
     const cpLen = this.dataSetCP.length
     const efiLen = this.dataSetCE.length
-    if (this.dataSetCP.length > this.dataSetCE.length){
+    if (this.dataSetCP.length > this.dataSetCE.length) {
       len = this.dataSetCP.length
     } else {
       len = this.dataSetCE.length
@@ -127,14 +125,14 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       let CP = ""
       let x2 = ""
       let EFI = ""
-      if  (index < cpLen) {
+      if (index < cpLen) {
         x1 = this.dataSetCP[index]["x"]
         CP = this.dataSetCP[index]["y"]
       } else {
         x1 = ""
         CP = ""
       }
-      if  (index < efiLen) {
+      if (index < efiLen) {
         x2 = this.dataSetCE[index]["x"]
         EFI = this.dataSetCE[index]["y"]
       } else {
@@ -149,146 +147,136 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       }
       this.csvRecords.push(obj)
     }
-    this.data.downloadFile(this.csvRecords,"data-curvas",['x1','CP', 'x2', 'EFI'])
+    this.data.downloadFile(this.csvRecords, "data-curvas", ['x1', 'CP', 'x2', 'EFI'])
   }
 
-  verGraficaCP(){
+  verGraficaCP() {
     this.yDataCp = []
-    this.dataSetCP.sort((a,b) => a.x - b.x)
-    let minx:number = +this.dataSetCP[0].x
+    this.dataSetCP.sort((a, b) => a.x - b.x)
+    let minx: number = +this.dataSetCP[0].x
     minx = +minx.toFixed(1) - 0.05
-    let maxx: number = +this.dataSetCP[this.dataSetCP.length-1].x
+    let maxx: number = +this.dataSetCP[this.dataSetCP.length - 1].x
     maxx = +maxx.toFixed(1) + 0.05
-    const nPuntos = (this.dataSetCP[this.dataSetCP.length-1].x - this.dataSetCP[0].x) / 100
-    for (let index = +this.dataSetCP[0].x; index <= this.dataSetCP[this.dataSetCP.length-1].x; index= index + nPuntos) {
-      const punto = this.curva.cp4 + this.curva.cp3*index + this.curva.cp2*(index**2) + this.curva.cp1*(index**this.curva.expocp)
-      let row: Array<number> = [+index,,punto]
+    const nPuntos = (this.dataSetCP[this.dataSetCP.length - 1].x - this.dataSetCP[0].x) / 100
+    for (let index = +this.dataSetCP[0].x; index <= this.dataSetCP[this.dataSetCP.length - 1].x; index = index + nPuntos) {
+      const punto = this.curva.cp4 + this.curva.cp3 * index + this.curva.cp2 * (index ** 2) + this.curva.cp1 * (index ** this.curva.expocp)
+      let row: Array<number> = [+index, , punto]
       if (this.dataSetCP.find(x => x.x == index)) {
         const value = +this.dataSetCP.find(x => x.x == index).y
-        row = [+index,+value,punto]
+        row = [+index, +value, punto]
       }
-      this.yDataCp = [...this.yDataCp,row]
+      this.yDataCp = [...this.yDataCp, row]
     }
     for (let index = 0; index < this.dataSetCP.length; index++) {
       const element = this.dataSetCP[index];
       const row: Array<number> = [+element.x, +element.y, ,]
-      this.yDataCp = [...this.yDataCp , row]
+      this.yDataCp = [...this.yDataCp, row]
     }
-    const ultimoPunto = this.dataSetCP[this.dataSetCP.length-1]
-    const ultimoPuntoValue = this.curva.cp4 + this.curva.cp3*ultimoPunto.x + this.curva.cp2*(ultimoPunto.x**2) + this.curva.cp1*(ultimoPunto.x**this.curva.expocp)
-    this.yDataCp = [...this.yDataCp,[+ultimoPunto.x,+ultimoPunto.y,+ultimoPuntoValue]]
-    this.yDataCp.sort((a,b) => a[0] -b[0])
+    const ultimoPunto = this.dataSetCP[this.dataSetCP.length - 1]
+    const ultimoPuntoValue = this.curva.cp4 + this.curva.cp3 * ultimoPunto.x + this.curva.cp2 * (ultimoPunto.x ** 2) + this.curva.cp1 * (ultimoPunto.x ** this.curva.expocp)
+    this.yDataCp = [...this.yDataCp, [+ultimoPunto.x, +ultimoPunto.y, +ultimoPuntoValue]]
+    this.yDataCp.sort((a, b) => a[0] - b[0])
     this.optionsCp = {
-      legend: {
-        textStyle: {
-          italic: true
-        }
-      },
       interpolateNulls: true,
+      chartArea: { top: 30, bottom: 66, left: 60, right: 18, backgroundColor: 'transparent' },
+      height: this.height,
+      width: this.width,
       series: {
         0: {
           lineWidth: 0,
           pointsVisible: true,
-          pointSize:4
+          pointSize: 4
         }
       },
       hAxis: {
-         title: 'Q/N',
-         viewWindowMode:'explicit',
-         viewWindow: {
-           max:maxx,
-           min:minx
-         },
-         minorGridlines: {
-           interval: 0.005
-         }
+        title: 'Q/N',
+        titleTextStyle: { italic: false, fontSize: 13, fontName: 'Roboto' },
+        viewWindowMode: 'explicit',
+        viewWindow: { max: maxx, min: minx },
+        minorGridlines: { interval: 0.005 }
       },
-      vAxis:{
-         title: 'Coeficiente μ',
-         titleTextStyle: {
-           italic:false,
-         },
-         minorGridlines: {
-          interval: 0.005
-        }
+      vAxis: {
+        title: 'Coeficiente μ',
+        titleTextStyle: { italic: false, fontSize: 13, fontName: 'Roboto', },
+        minorGridlines: { interval: 0.005 }
       },
-   };
+      legend: { position: 'bottom', alignment: 'center' },
+    };
     this.mostrarGraficaCP = true
   }
 
-  verGraficaEfi(){
+  verGraficaEfi() {
     this.yDataCe = []
-    this.dataSetCE.sort((a,b) => a.x - b.x)
-    let minx:number = +this.dataSetCE[0].x
+    this.dataSetCE.sort((a, b) => a.x - b.x)
+    let minx: number = +this.dataSetCE[0].x
     minx = +minx.toFixed(1) - 0.05
-    let maxx: number = +this.dataSetCE[this.dataSetCE.length-1].x
+    let maxx: number = +this.dataSetCE[this.dataSetCE.length - 1].x
     maxx = +maxx.toFixed(1) + 0.05
-    const step = (this.dataSetCE[this.dataSetCE.length-1].x - this.dataSetCE[0].x) / 100
-    for (let index = +this.dataSetCE[0].x; index <= this.dataSetCE[this.dataSetCE.length-1].x; index= index + step) {
-      const punto = this.curva.ce4 + this.curva.ce3*index + this.curva.ce2*(index**2) + this.curva.ce1*(index**this.curva.expoce)
-      let row: Array<number> = [+index,,punto]
+    const step = (this.dataSetCE[this.dataSetCE.length - 1].x - this.dataSetCE[0].x) / 100
+    for (let index = +this.dataSetCE[0].x; index <= this.dataSetCE[this.dataSetCE.length - 1].x; index = index + step) {
+      const punto = this.curva.ce4 + this.curva.ce3 * index + this.curva.ce2 * (index ** 2) + this.curva.ce1 * (index ** this.curva.expoce)
+      let row: Array<number> = [+index, , punto]
       if (this.dataSetCE.find(x => x.x == index)) {
         const value = +this.dataSetCE.find(x => x.x == index).y
-        row = [+index,+value,punto]
+        row = [+index, +value, punto]
       }
-      this.yDataCe = [...this.yDataCe,row]
+      this.yDataCe = [...this.yDataCe, row]
     }
 
     for (let index = 0; index < this.dataSetCE.length; index++) {
       const element = this.dataSetCE[index];
       const row: Array<number> = [+element.x, +element.y, ,]
-      this.yDataCe = [...this.yDataCe , row]
+      this.yDataCe = [...this.yDataCe, row]
     }
-    const ultimoPunto = this.dataSetCE[this.dataSetCE.length-1]
-    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3*ultimoPunto.x + this.curva.ce2*(ultimoPunto.x**2) + this.curva.ce1*(ultimoPunto.x**this.curva.expoce)
-    this.yDataCe = [...this.yDataCe,[ultimoPunto.x,ultimoPunto.y,ultimoPuntoValue]]
-    this.yDataCe.sort((a,b) => a[0] -b[0])
+    const ultimoPunto = this.dataSetCE[this.dataSetCE.length - 1]
+    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3 * ultimoPunto.x + this.curva.ce2 * (ultimoPunto.x ** 2) + this.curva.ce1 * (ultimoPunto.x ** this.curva.expoce)
+    this.yDataCe = [...this.yDataCe, [ultimoPunto.x, ultimoPunto.y, ultimoPuntoValue]]
+    this.yDataCe.sort((a, b) => a[0] - b[0])
     console.log(this.yDataCe)
     this.optionsCe = {
       interpolateNulls: true,
+      chartArea: { top: 30, bottom: 66, left: 60, right: 18, backgroundColor: 'transparent' },
+      height: this.height,
+      width: this.width,
       series: {
         0: {
           lineWidth: 0,
           pointsVisible: true,
-          pointSize:4
+          pointSize: 4
         }
       },
       hAxis: {
-         title: 'Q/N',
-         viewWindowMode:'explicit',
-         viewWindow: {
-           max:maxx,
-           min:minx
-         },
-         minorGridlines: {
-           interval: 0.005
-         }
+        title: 'Q/N',
+        titleTextStyle: { italic: false, fontSize: 13, fontName: 'Roboto' },
+        viewWindowMode: 'explicit',
+        viewWindow: { max: maxx, min: minx },
+        minorGridlines: { interval: 0.005 }
       },
-      vAxis:{
-         title: 'Coeficiente (η)',
-         minorGridlines: {
-          interval: 0.005
-        }
+      vAxis: {
+        title: 'Coeficiente μ',
+        titleTextStyle: { italic: false, fontSize: 13, fontName: 'Roboto', },
+        minorGridlines: { interval: 0.005 }
       },
-   };
+      legend: { position: 'bottom', alignment: 'center' },
+    };
     this.mostrarGraficaCE = true
   }
 
-  ajustarPolinomios(){
+  ajustarPolinomios() {
     this.envio = []
     let len = 0
     const cpLen = this.dataSetCP.length
     const efiLen = this.dataSetCE.length
-    this.envio.push(["X Coef Head","Y Coef Head","X Coef Efic","Y Coef Efic"])
+    this.envio.push(["X Coef Head", "Y Coef Head", "X Coef Efic", "Y Coef Efic"])
     // Seleccion puede ser 1: Manual, 2: Automatico y Orden debe ser mayor a 3
     let seleccion = 1
-    if(this.curva.tipoAjuste == "Manual") {
+    if (this.curva.tipoAjuste == "Manual") {
       seleccion = 1
     } else {
       seleccion = 2
     }
-    this.envio.push(["Seleccion",seleccion,"Orden",this.curva.orden])
-    if (this.dataSetCP.length > this.dataSetCE.length){
+    this.envio.push(["Seleccion", seleccion, "Orden", this.curva.orden])
+    if (this.dataSetCP.length > this.dataSetCE.length) {
       len = this.dataSetCP.length
     } else {
       len = this.dataSetCE.length
@@ -298,14 +286,14 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       let CP = 0
       let x2 = 0
       let EFI = 0
-      if  (index < cpLen) {
+      if (index < cpLen) {
         x1 = this.dataSetCP[index]["x"]
         CP = this.dataSetCP[index]["y"]
       } else {
         x1 = 0
         CP = 0
       }
-      if  (index < efiLen) {
+      if (index < efiLen) {
         x2 = this.dataSetCE[index]["x"]
         EFI = this.dataSetCE[index]["y"]
       } else {
@@ -316,7 +304,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       this.envio.push(row)
     }
     console.log(this.envio)
-    this.http.post(this.url,JSON.stringify(this.envio)).subscribe(res => {
+    this.http.post(this.url, JSON.stringify(this.envio)).subscribe(res => {
       let data = []
       data = res as Array<Array<any>>
       console.log(this.data)
