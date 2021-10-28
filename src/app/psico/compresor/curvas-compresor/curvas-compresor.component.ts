@@ -2,7 +2,7 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { curva, DataServiceService } from 'src/app/services/data-service.service';
+import { curva, DataServiceService, equipo, Proyecto } from 'src/app/services/data-service.service';
 import { DialogPolinomiosCurvasCompresorComponent } from '../dialog-polinomios-curvas-compresor/dialog-polinomios-curvas-compresor.component';
 
 
@@ -18,40 +18,44 @@ import { DialogPolinomiosCurvasCompresorComponent } from '../dialog-polinomios-c
 })
 export class CurvasCompresorComponent implements OnInit {
 
+  proyecto: Proyecto;
+  equipo: equipo
   impEqSel: string = '';
   impSel: number;
   impulsores: curva[] = []
+  filteredImpulsores: curva[] = []
+  impusoresEq: curva[] = []
+  filteredImpulsoresEq: curva[] = []
   curvas: curva[] = []
-
-  numSecciones: number;
-  seccionActual: number;
+  seccionActual: number = 1;
+  secciones: number[] = [];
   trenTag;
-  equipoTag;
+  nSecciones;
+  flagEqFab = false
+  flagEqPsico = false
 
-  usuario = JSON.parse(JSON.stringify("user"))
+
+  usuario = JSON.parse(localStorage.getItem("user"))
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public data: DataServiceService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.trenTag = params.trenTag;
-      this.equipoTag = params.equipoTag;
+    this.route.parent.params.subscribe(params => {
+      this.data.obtenerProyecto(params.id).subscribe(data => {
+        this.proyecto = data;
+        this.route.params.subscribe(params => {
+          const trenTag = params.trenTag;
+          const equipoTag = params.equipoTag;
+          this.data.obtenerEquipo(this.proyecto.id, equipoTag).subscribe((equipo) => {
+            this.equipo = equipo
+            console.log("equipo tag" + this.equipo.tag)
+            this.nSecciones = this.equipo.nSecciones
+            this.secciones = Array(this.nSecciones).fill(0).map((x,i)=>i+1); // [0,1,2,3,4]
+            this.cargarImpulsores();
+          })
+        })
+      })
     })
-    // let impulsor = new curva
-    // impulsor.fab = true
-    // impulsor.numSeccion = 1
-    // this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").doc(`impulsor-eq-fabricate-s1`).set(impulsor)
-    // impulsor.fab = true
-    // impulsor.numSeccion = 2
-    // this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").doc(`impulsor-eq-fabricate-s2`).set(impulsor)
-    // impulsor.fab = false
-    // impulsor.numSeccion = 1
-    // this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").doc(`impulsor-eq-psico-s1`).set(impulsor)
-    // impulsor.fab = false
-    // impulsor.numSeccion = 2
-    // this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").doc(`impulsor-eq-psico-s2`).set(impulsor)
-
-    this.cargarImpulsores()
   }
 
   seleccionarImpulsorEquivalente(data) {
@@ -64,31 +68,106 @@ export class CurvasCompresorComponent implements OnInit {
     this.impSel = i;
   }
 
-  openDialogPolinomios() {
-    const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  openDialogPolinomios(i:number,fab: boolean) {
+    if(i == 0){
+      let impulsor = this.filteredImpulsoresEq.find(x => x.fab == fab)
+      if (impulsor) {
+        const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent, {
+          data: {
+            equipoTag: this.equipo.tag,
+            proyectoId: this.proyecto.id,
+            impulsor: impulsor,
+            equivalente: true,
+            fab: fab,
+            seccion: this.seccionActual,
+          }
+        });
+      } else {
+        const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent, {
+          data: {
+            equipoTag: this.equipo.tag,
+            proyectoId: this.proyecto.id,
+            impulsor: null,
+            equivalente: true,
+            fab: fab,
+            seccion: this.seccionActual,
+          }
+        });
+      }
+    } else {
+      const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent, {
+        data: {
+          equipoTag: this.equipo.tag,
+            proyectoId: this.proyecto.id,
+            impulsor: this.filteredImpulsores.find(x => x.numImpulsor == i ),
+            equivalente: false,
+            fab: fab,
+            seccion: this.seccionActual,
+        }
+      });
+    }
   }
 
   cargarImpulsores() {
-    this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").valueChanges().subscribe(curvas => {
-      this.curvas = curvas as curva[]
-      this.curvas.sort((a,b) => +a.numImpulsor-+b.numImpulsor)
-      this.impulsores = this.curvas.slice(2)
-      console.log(this.curvas)
-      console.log(this.impulsores)
+    this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipo.tag).collection<curva>("curvas").valueChanges().subscribe(curvas => {
+      this.curvas = curvas
+      this.impusoresEq = []
+      this.impulsores = []
+      for (let index = 0; index < this.curvas.length; index++) {
+        const curva: curva = curvas[index];
+        if(curva.equivalente == true){
+            this.impusoresEq = this.impusoresEq.concat(curva)
+        } else {
+          this.impulsores = this.impulsores.concat(curva)
+        }
+      }
+      this.filterImpulsores()
     })
   }
-  agregarImpulsor(){
+  async agregarImpulsor(){
     let impulsor = new curva
-    impulsor.numImpulsor = this.impulsores.length -1
+    impulsor.numImpulsor = this.filteredImpulsores.length + 1
+    console.log(this.usuario)
     impulsor.ultimoEditor = this.usuario.correo
-    this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").doc(`impulsor-${impulsor.numImpulsor}-${this.seccionActual}`).set(impulsor)
+    impulsor.fab = true
+    impulsor.equivalente = false
+    impulsor.numSeccion = this.seccionActual
+    await this.afs.collection("proyectos")
+    .doc(this.proyecto.id)
+    .collection("equipos")
+    .doc(this.equipo.tag)
+    .collection("curvas")
+    .doc(`s${this.seccionActual}-impulsor-${impulsor.numImpulsor}`).set({...impulsor})
+    this.equipo.nImpulsores[this.seccionActual -1]++
+    await this.afs.collection("proyectos")
+    .doc(this.proyecto.id)
+    .collection("equipos")
+    .doc(this.equipo.tag).update({
+      nImpulsores: this.equipo.nImpulsores
+    })
+
+
+
+
   }
 
-  eliminarImpulsor(numImpulsor){
-    this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipoTag).collection("curvas").doc(`impulsor-${numImpulsor}-${this.seccionActual}`).delete()
+  eliminarImpulsor(idImpulsor){
+    this.afs.collection("proyectos").doc(this.trenTag).collection("equipos").doc(this.equipo.tag).collection("curvas").doc(idImpulsor).delete()
+  }
+
+  filterImpulsores(){
+    console.log("entre")
+    this.filteredImpulsores = this.impulsores.filter(x => x.numSeccion == this.seccionActual).sort((a,b) => +a.numImpulsor - +b.numImpulsor)
+    this.filteredImpulsoresEq = this.impusoresEq.filter(x => x.numSeccion == this.seccionActual)
+    this.flagEqFab = false
+    this.flagEqPsico = false
+    this.filteredImpulsoresEq.forEach(impulsor => {
+      if (impulsor.fab == true) {
+        this.flagEqFab = true;
+      }
+      if (impulsor.fab == false) {
+        this.flagEqPsico = true;
+      }
+    })
   }
 }

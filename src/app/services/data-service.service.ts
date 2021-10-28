@@ -103,7 +103,7 @@ export class curva {
   orden: number = 3
 
   // Coeficiente de Head
-  coefHeadDataSet: dataSet; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
+  coefHeadDataSet: dataSet[] = []; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
   cp1: number = 0; //termino independiente a0*x^0
   cp2: number = 0; //a1*X^1
   cp3: number = 0; //a2*X^2
@@ -113,7 +113,7 @@ export class curva {
   headImg:  string = ''; //Es una imagen que se carga de referencia
 
   // Eficiencia politropica
-  eficPoliDataSet: dataSet;  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
+  eficPoliDataSet: dataSet[]  = [];  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
   ce1: number = 0; //termino independiente a0*x^0
   ce2: number = 0; //a1*X^1
   ce3: number = 0; //a2*X^2
@@ -124,8 +124,8 @@ export class curva {
 }
 
 class dataSet{
-  x: number = 0;
-  y: number = 0;
+  x: number| string = 0;
+  y: number| string = 0;
 }
 
 
@@ -216,7 +216,7 @@ export class DataServiceService {
     .doc(proyectoId)
     .collection("trenes")
     .doc(tagTren)
-    .ref.get()
+    .valueChanges()
   }
 
   getTrenes(proyectoId: string){

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataServiceService, Proyecto } from 'src/app/services/data-service.service';
+import { DataServiceService, Proyecto, tren } from 'src/app/services/data-service.service';
 import { IconServiceService } from 'src/app/services/icon-service.service';
 import { isThisTypeNode } from 'typescript';
 
@@ -18,6 +18,7 @@ export class MenuVerticalComponent implements OnInit {
 
   usuario = JSON.parse(localStorage.getItem("user"))
   proyecto: Proyecto;
+  trenes: tren[];
 
 
   ngOnInit(): void {
@@ -25,10 +26,13 @@ export class MenuVerticalComponent implements OnInit {
       console.log(params.id)
       this.data.obtenerProyecto(params.id).subscribe(data => {
         this.proyecto = data;
+        this.data.getTrenes(params.id).subscribe(trenes => {
+          this.trenes = trenes as tren[]
+        })
       })
     })
   }
-
+  
   tagSeleccionado(tag){
     this.selectedTag = tag;
   }

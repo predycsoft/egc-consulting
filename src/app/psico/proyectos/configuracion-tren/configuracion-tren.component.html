@@ -50,7 +50,7 @@
 </div>
 
 <mat-menu #contextMenu2="matMenu" class="contextMenu">
-    <li class="menuItem" [routerLink]="['/psico/proyecto',proyecto.id,'equipo',tren.tag,equipoSelected.tag]">Configurar
+    <li class="menuItem" [routerLink]="['/psico/proyecto',proyectoId,'equipo',tren.tag,equipoSelected.tag]">Configurar
     </li>
     <li class="menuItem" (click)="modificarEquipo(equipoSelected) ">Cambiar nombre</li>
     <li class="menuItem" *ngIf="equipoSelected.orden !=0" (click)="moverIzquierda(equipoSelected.tag)">Mover a la
