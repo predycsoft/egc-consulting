@@ -13,12 +13,12 @@ export class equipo_tren {
   tag: string = "";
   orden: number = 0;
   familia: string = "";
-  tipologia: string = "";
+  tipologia: "Inline" | "Back to Back" = "Inline";
 }
 
 export class Proyecto {
   id: string = "";
-  userId: string = "";
+  userId: string = ""; 
   titulo: string = "";
   revision: string = "A";
   cliente: string = "";
@@ -43,15 +43,16 @@ export class Usuario {
 
 export class equipo {
   tag: string = "";
-  tipologia: string = "";
+  tipologia: "Inline" | "Back to Back" = "Inline";
   familia: string = "";
   orden: number = 0;
   general: general = new general;
   puntosDatasheet: puntosDatasheet[] = [];
   fabricante: string = "";
   modelo: string = "";
-  mapas: mapas = new mapas();
   documentos: file[] = [];
+  nImpulsores: number[] = []
+  nSecciones: number = 1
 }
 
 export class file {
@@ -86,11 +87,12 @@ export class curva {
   ultimaEdicion: Date = new Date; // Fecha de creación o edición del mapa.
   ultimoEditor: string = '';
   dimQ: string = 'Q/N';
+  equivalente: boolean = true // Flag que determina si el impulsor es equivalente
 
   // General
   numCompresor: number = 0;
-  numSeccion: number = 0;
-  numImpulsor: number = 0; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
+  numSeccion: number = 1;
+  numImpulsor: number = 1; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
   fab: boolean= true; // Flag para identificar si la data viene del fabricante
   diametro: number = 0; // diametro de cada impulsor
   limSurge: number = 0; //Límite Q/N de surge
@@ -100,8 +102,8 @@ export class curva {
   tipoAjuste: string = 'Manual';
   orden: number = 3
 
-  // Coeficiente de Head 
-  coefHeadDataSet: dataSet; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
+  // Coeficiente de Head
+  coefHeadDataSet: dataSet[] = []; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
   cp1: number = 0; //termino independiente a0*x^0
   cp2: number = 0; //a1*X^1
   cp3: number = 0; //a2*X^2
@@ -110,8 +112,8 @@ export class curva {
   errcp: number = 0;
   headImg:  string = ''; //Es una imagen que se carga de referencia
 
-  // Eficiencia politropica 
-  eficPoliDataSet: dataSet;  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
+  // Eficiencia politropica
+  eficPoliDataSet: dataSet[]  = [];  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
   ce1: number = 0; //termino independiente a0*x^0
   ce2: number = 0; //a1*X^1
   ce3: number = 0; //a2*X^2
@@ -122,8 +124,8 @@ export class curva {
 }
 
 class dataSet{
-  x: number = 0;
-  y: number = 0;
+  x: number| string = 0;
+  y: number| string = 0;
 }
 
 
@@ -209,28 +211,43 @@ export class DataServiceService {
   }
 
   // Trenes ////////////////////////////////////////////////////////////////////
+  getTren(proyectoId: string, tagTren: string) {
+    return this.afs.collection("proyectos")
+    .doc(proyectoId)
+    .collection("trenes")
+    .doc(tagTren)
+    .valueChanges()
+  }
 
-  updateTren(proyectoId: string, trenes: tren[]) {
+  getTrenes(proyectoId: string){
+    return this.afs.collection("proyectos")
+      .doc(proyectoId)
+      .collection("trenes")
+      .valueChanges()
+  }
+
+  updateTren(proyectoId: string, tren: tren) {
     return this.afs
       .collection('proyectos')
       .doc(proyectoId)
-      .set({trenes: trenes}, {merge:true});
+      .collection("trenes").doc(tren.tag)
+      .set({...tren}, {merge:true});
   }
 
   anexarTren(proyectoId: string, tren: tren) {
     return this.afs.collection("proyectos").doc(proyectoId)
-      .update({
-        trenes: firebase.firestore.FieldValue.arrayUnion(Object.assign({}, tren))
-      })
+      .collection("trenes")
+      .doc(tren.tag)
+      .set({...tren})
   }
 
   eliminarTren(proyectoId: string, tren: tren) {
     return this.afs
       .collection('proyectos')
       .doc(proyectoId)
-      .update({
-        trenes: firebase.firestore.FieldValue.arrayRemove(tren)
-      });
+      .collection("trenes")
+      .doc(tren.tag)
+      .delete()
   }
 
 
@@ -238,10 +255,22 @@ export class DataServiceService {
   obtenerEquipo(proyectoId:string, tag: string){
     return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).collection<equipo>("equipos").doc(tag).valueChanges()
   }
+
   async createEquipo(proyectoId:string, equipo: equipo) {
-    return this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
-      ...equipo
-    }).catch(error => console.log(error))
+    if(equipo.tipologia == "Inline"){
+      equipo.nSecciones = 1
+      equipo.nImpulsores = [0,0]
+      await this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
+        ...equipo
+      })
+    }
+    if(equipo.tipologia == "Back to Back"){
+      equipo.nSecciones = 2
+      equipo.nImpulsores = [0,0]
+      await this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
+        ...equipo
+      })
+    }
   }
 
   async eliminarEquipo(proyectoId: string, equipoTag: string) {

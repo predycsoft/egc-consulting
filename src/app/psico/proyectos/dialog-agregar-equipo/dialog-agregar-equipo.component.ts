@@ -18,7 +18,7 @@ export class DialogAgregarEquipoComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogAgregarEquipoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: equipo_tren = new equipo_tren(),
+    @Inject(MAT_DIALOG_DATA) public data: equipo_tren,
     public fb: FormBuilder,
     public icon: IconServiceService
   ) { }
@@ -41,6 +41,8 @@ export class DialogAgregarEquipoComponent implements OnInit {
         tipologia: this.data.tipologia,
       })
     }
+
+    this.data = new equipo_tren()
   }
 
   guardar() {

@@ -34,13 +34,15 @@ export class ConfiguracionTrenComponent implements OnInit {
   ngOnInit(): void {
     this.route.parent.params.subscribe(params => {
       this.proyectoId = params.id
+      this.data.obtenerProyecto(this.proyectoId).subscribe((proyecto) => {
+        this.proyecto = proyecto
+      })
       this.route.params.subscribe(params => {
         this.trenTag = params.trenTag;
         console.log(this.proyectoId);
         console.log(this.trenTag);
-        this.data.obtenerProyecto(this.proyectoId).subscribe((proyecto) => {
-          this.proyecto = proyecto
-          this.tren = proyecto.trenes.find(x => x.tag == this.trenTag)
+        this.data.getTren(this.proyectoId, this.trenTag).subscribe((Tren) => {
+          this.tren = Tren as tren
         })
       })
     })
@@ -68,16 +70,15 @@ export class ConfiguracionTrenComponent implements OnInit {
       if (result) {
         result.orden = this.tren.equipos.length;
         this.tren.equipos = this.tren.equipos.concat(result)
-        const index = this.proyecto.trenes.findIndex(x => x.tag == this.trenTag)
-        this.proyecto.trenes[index] = this.tren
-        await this.data.updateTren(this.proyectoId, JSON.parse(JSON.stringify(this.proyecto.trenes))).catch(error => console.log(error))
+        await this.data.updateTren(this.proyectoId,this.tren).catch(error => console.log(error))
         const newEquipo: equipo = new equipo()
         newEquipo.tag = result.tag
         newEquipo.orden = result.orden
         newEquipo.familia = result.familia
         newEquipo.tipologia = result.tipologia
+        newEquipo.general = JSON.parse(JSON.stringify(newEquipo.general))
         console.log(newEquipo)
-        await this.data.createEquipo(this.proyectoId, JSON.parse(JSON.stringify(newEquipo))).catch(error => console.log(error))
+        await this.data.createEquipo(this.proyectoId, newEquipo).catch(error => console.log(error))
       }
     })
   }

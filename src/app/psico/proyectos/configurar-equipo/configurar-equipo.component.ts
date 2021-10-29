@@ -28,9 +28,9 @@ export class ConfigurarEquipoComponent implements OnInit {
         this.route.params.subscribe(params => {
           const trenTag = params.trenTag;
           const equipoTag = params.equipoTag;
-          const idxTren = this.proyecto.trenes.findIndex(x => x.tag == trenTag);
-          const idxEquipo = this.proyecto.trenes[idxTren].equipos.findIndex(x => x.tag == equipoTag)
-          this.equipo = this.proyecto.trenes[idxTren].equipos[idxEquipo]
+          this.data.obtenerEquipo(this.proyecto.id, equipoTag).subscribe((equipo) => {
+            this.equipo = equipo
+          })
           console.log(this.equipo)
         })
       })

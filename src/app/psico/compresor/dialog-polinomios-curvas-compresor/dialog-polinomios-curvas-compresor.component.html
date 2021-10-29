@@ -133,14 +133,14 @@
 
             <div fxLayout="row" fxLayoutAlign=" start" class="dataSetContainer">
                 <table class="mgt05">
-                    <tr *ngFor="let item of dataSetCP; let i = index">
+                    <tr *ngFor="let item of curva.coefHeadDataSet; let i = index">
                         <td class="nowrap text3 ft13">{{i + 1}}</td>
                         <td class="nowrap text3 ft13">{{item.x}}</td>
                         <td class="nowrap text3 ft13">{{item.y}}</td>
                     </tr>
                 </table>
                 <table class="mgt05">
-                    <tr *ngFor="let item of dataSetCE; let i = index">
+                    <tr *ngFor="let item of curva.eficPoliDataSet; let i = index">
                         <td class="nowrap text3 ft13">{{i + 1}}</td>
                         <td class="nowrap text3 ft13">{{item.x}}</td>
                         <td class="nowrap text3 ft13">{{item.y}}</td>

@@ -1,10 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { HttpClient } from '@angular/common/http';
 import { curva } from 'src/app/services/data-service.service';
 import { ChartType } from 'angular-google-charts';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 interface point {
   "x": number,
@@ -27,11 +29,15 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   grado: number;
   unidadFlujo: string = 'Q/N';
 
-  constructor(public dialogService: DialogService, private ngxCsvParser: NgxCsvParser, private data: DataServiceService, private http: HttpClient) { }
+  constructor(public dialogService: DialogService, 
+    private afs: AngularFirestore,
+    private ngxCsvParser: NgxCsvParser, 
+    private data: DataServiceService, 
+    private http: HttpClient,
+    public dialogRef: MatDialogRef<DialogPolinomiosCurvasCompresorComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataEnviada) { }
 
   csvRecords: any[] = [];
-  dataSetCP: any[] = [];
-  dataSetCE: any[] = []
   header = true;
   file;
 
@@ -56,6 +62,17 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   curva = new curva
 
   ngOnInit(): void {
+    if(this.dataEnviada.impulsor){
+      this.curva = this.dataEnviada.impulsor
+      if (this.curva.expocp != 0){
+        this.verGraficaCP()
+        this.verGraficaEfi()
+      }
+    }
+    this.curva.equivalente = this.dataEnviada.equivalente
+    this.curva.fab = this.dataEnviada.fab
+    this.curva.numSeccion = this.dataEnviada.seccion
+    console.log(this.curva)
   }
 
   fileChangeListener($event: any): void {
@@ -77,8 +94,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   }
 
   armarData() {
-    this.dataSetCP = []
-    this.dataSetCE = []
+    this.curva.coefHeadDataSet = []
+    this.curva.eficPoliDataSet = []
     for (let index = 0; index < this.csvRecords.length; index++) {
       const cpData = {
         x: this.csvRecords[index]["x1"],
@@ -88,19 +105,19 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
         x: this.csvRecords[index]["x2"],
         y: this.csvRecords[index]["EFI"]
       }
-      this.dataSetCP.push(cpData)
-      this.dataSetCE.push(efiData)
+      this.curva.coefHeadDataSet.push(cpData)
+      this.curva.eficPoliDataSet.push(efiData)
     }
-    this.dataSetCP = this.dataSetCP.filter(x => x.x != "")
-    this.dataSetCE = this.dataSetCE.filter(x => x.x != "")
+    this.curva.coefHeadDataSet = this.curva.coefHeadDataSet.filter(x => x.x != "")
+    this.curva.eficPoliDataSet = this.curva.eficPoliDataSet.filter(x => x.x != "")
   }
 
   @ViewChild('fileImportInput', { static: false }) myInputVariable: ElementRef;
   reset() {
     this.myInputVariable.nativeElement.value = '';
     this.csvRecords = []
-    this.dataSetCE = []
-    this.dataSetCP = []
+    this.curva.eficPoliDataSet = []
+    this.curva.coefHeadDataSet = []
   }
 
   eliminarCurva() {
@@ -113,28 +130,28 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   descargarCSV() {
     this.csvRecords = []
     let len = 0
-    const cpLen = this.dataSetCP.length
-    const efiLen = this.dataSetCE.length
-    if (this.dataSetCP.length > this.dataSetCE.length) {
-      len = this.dataSetCP.length
+    const cpLen = this.curva.coefHeadDataSet.length
+    const efiLen = this.curva.eficPoliDataSet.length
+    if (this.curva.coefHeadDataSet.length > this.curva.eficPoliDataSet.length) {
+      len = this.curva.coefHeadDataSet.length
     } else {
-      len = this.dataSetCE.length
+      len = this.curva.eficPoliDataSet.length
     }
     for (let index = 0; index < len; index++) {
-      let x1 = ""
-      let CP = ""
-      let x2 = ""
-      let EFI = ""
+      let x1: number | string = ""
+      let CP:  number | string = ""
+      let x2: number | string = ""
+      let EFI: number | string = ""
       if (index < cpLen) {
-        x1 = this.dataSetCP[index]["x"]
-        CP = this.dataSetCP[index]["y"]
+        x1 = this.curva.coefHeadDataSet[index]["x"]
+        CP = this.curva.coefHeadDataSet[index]["y"]
       } else {
         x1 = ""
         CP = ""
       }
       if (index < efiLen) {
-        x2 = this.dataSetCE[index]["x"]
-        EFI = this.dataSetCE[index]["y"]
+        x2 = this.curva.eficPoliDataSet[index]["x"]
+        EFI = this.curva.eficPoliDataSet[index]["y"]
       } else {
         x2 = ""
         EFI = ""
@@ -152,28 +169,28 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
 
   verGraficaCP() {
     this.yDataCp = []
-    this.dataSetCP.sort((a, b) => a.x - b.x)
-    let minx: number = +this.dataSetCP[0].x
+    this.curva.coefHeadDataSet.sort((a, b) => +a.x - +b.x)
+    let minx: number = +this.curva.coefHeadDataSet[0].x
     minx = +minx.toFixed(1) - 0.05
-    let maxx: number = +this.dataSetCP[this.dataSetCP.length - 1].x
+    let maxx: number = +this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1].x
     maxx = +maxx.toFixed(1) + 0.05
-    const nPuntos = (this.dataSetCP[this.dataSetCP.length - 1].x - this.dataSetCP[0].x) / 100
-    for (let index = +this.dataSetCP[0].x; index <= this.dataSetCP[this.dataSetCP.length - 1].x; index = index + nPuntos) {
+    const nPuntos = (+this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1].x - +this.curva.coefHeadDataSet[0].x) / 100
+    for (let index = +this.curva.coefHeadDataSet[0].x; index <= this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1].x; index = index + nPuntos) {
       const punto = this.curva.cp4 + this.curva.cp3 * index + this.curva.cp2 * (index ** 2) + this.curva.cp1 * (index ** this.curva.expocp)
       let row: Array<number> = [+index, , punto]
-      if (this.dataSetCP.find(x => x.x == index)) {
-        const value = +this.dataSetCP.find(x => x.x == index).y
+      if (this.curva.coefHeadDataSet.find(x => x.x == index)) {
+        const value = +this.curva.coefHeadDataSet.find(x => x.x == index).y
         row = [+index, +value, punto]
       }
       this.yDataCp = [...this.yDataCp, row]
     }
-    for (let index = 0; index < this.dataSetCP.length; index++) {
-      const element = this.dataSetCP[index];
+    for (let index = 0; index < this.curva.coefHeadDataSet.length; index++) {
+      const element = this.curva.coefHeadDataSet[index];
       const row: Array<number> = [+element.x, +element.y, ,]
       this.yDataCp = [...this.yDataCp, row]
     }
-    const ultimoPunto = this.dataSetCP[this.dataSetCP.length - 1]
-    const ultimoPuntoValue = this.curva.cp4 + this.curva.cp3 * ultimoPunto.x + this.curva.cp2 * (ultimoPunto.x ** 2) + this.curva.cp1 * (ultimoPunto.x ** this.curva.expocp)
+    const ultimoPunto = this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1]
+    const ultimoPuntoValue = this.curva.cp4 + this.curva.cp3 * +ultimoPunto.x + this.curva.cp2 * (+ultimoPunto.x) ** 2 + this.curva.cp1 * (+ultimoPunto.x) ** this.curva.expocp
     this.yDataCp = [...this.yDataCp, [+ultimoPunto.x, +ultimoPunto.y, +ultimoPuntoValue]]
     this.yDataCp.sort((a, b) => a[0] - b[0])
     this.optionsCp = {
@@ -207,30 +224,30 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
 
   verGraficaEfi() {
     this.yDataCe = []
-    this.dataSetCE.sort((a, b) => a.x - b.x)
-    let minx: number = +this.dataSetCE[0].x
+    this.curva.eficPoliDataSet.sort((a, b) => +a.x - +b.x)
+    let minx: number = +this.curva.eficPoliDataSet[0].x
     minx = +minx.toFixed(1) - 0.05
-    let maxx: number = +this.dataSetCE[this.dataSetCE.length - 1].x
+    let maxx: number = +this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1].x
     maxx = +maxx.toFixed(1) + 0.05
-    const step = (this.dataSetCE[this.dataSetCE.length - 1].x - this.dataSetCE[0].x) / 100
-    for (let index = +this.dataSetCE[0].x; index <= this.dataSetCE[this.dataSetCE.length - 1].x; index = index + step) {
+    const step = (+this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1].x - +this.curva.eficPoliDataSet[0].x) / 100
+    for (let index = +this.curva.eficPoliDataSet[0].x; index <= this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1].x; index = index + step) {
       const punto = this.curva.ce4 + this.curva.ce3 * index + this.curva.ce2 * (index ** 2) + this.curva.ce1 * (index ** this.curva.expoce)
       let row: Array<number> = [+index, , punto]
-      if (this.dataSetCE.find(x => x.x == index)) {
-        const value = +this.dataSetCE.find(x => x.x == index).y
+      if (this.curva.eficPoliDataSet.find(x => x.x == index)) {
+        const value = +this.curva.eficPoliDataSet.find(x => x.x == index).y
         row = [+index, +value, punto]
       }
       this.yDataCe = [...this.yDataCe, row]
     }
 
-    for (let index = 0; index < this.dataSetCE.length; index++) {
-      const element = this.dataSetCE[index];
+    for (let index = 0; index < this.curva.eficPoliDataSet.length; index++) {
+      const element = this.curva.eficPoliDataSet[index];
       const row: Array<number> = [+element.x, +element.y, ,]
       this.yDataCe = [...this.yDataCe, row]
     }
-    const ultimoPunto = this.dataSetCE[this.dataSetCE.length - 1]
-    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3 * ultimoPunto.x + this.curva.ce2 * (ultimoPunto.x ** 2) + this.curva.ce1 * (ultimoPunto.x ** this.curva.expoce)
-    this.yDataCe = [...this.yDataCe, [ultimoPunto.x, ultimoPunto.y, ultimoPuntoValue]]
+    const ultimoPunto = this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1]
+    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3 * +ultimoPunto.x + this.curva.ce2 * (+ultimoPunto.x)**2  + this.curva.ce1 * (+ultimoPunto.x)**this.curva.expoce
+    this.yDataCe = [...this.yDataCe, [+ultimoPunto.x, +ultimoPunto.y, ultimoPuntoValue]]
     this.yDataCe.sort((a, b) => a[0] - b[0])
     console.log(this.yDataCe)
     this.optionsCe = {
@@ -265,8 +282,8 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   ajustarPolinomios() {
     this.envio = []
     let len = 0
-    const cpLen = this.dataSetCP.length
-    const efiLen = this.dataSetCE.length
+    const cpLen = this.curva.coefHeadDataSet.length
+    const efiLen = this.curva.eficPoliDataSet.length
     this.envio.push(["X Coef Head", "Y Coef Head", "X Coef Efic", "Y Coef Efic"])
     // Seleccion puede ser 1: Manual, 2: Automatico y Orden debe ser mayor a 3
     let seleccion = 1
@@ -276,26 +293,26 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       seleccion = 2
     }
     this.envio.push(["Seleccion", seleccion, "Orden", this.curva.orden])
-    if (this.dataSetCP.length > this.dataSetCE.length) {
-      len = this.dataSetCP.length
+    if (this.curva.coefHeadDataSet.length > this.curva.eficPoliDataSet.length) {
+      len = this.curva.coefHeadDataSet.length
     } else {
-      len = this.dataSetCE.length
+      len = this.curva.eficPoliDataSet.length
     }
     for (let index = 0; index < len; index++) {
-      let x1 = 0
-      let CP = 0
-      let x2 = 0
-      let EFI = 0
+      let x1: number | string = 0
+      let CP: number | string = 0
+      let x2: number | string = 0
+      let EFI: number | string = 0
       if (index < cpLen) {
-        x1 = this.dataSetCP[index]["x"]
-        CP = this.dataSetCP[index]["y"]
+        x1 = this.curva.coefHeadDataSet[index]["x"]
+        CP = this.curva.coefHeadDataSet[index]["y"]
       } else {
         x1 = 0
         CP = 0
       }
       if (index < efiLen) {
-        x2 = this.dataSetCE[index]["x"]
-        EFI = this.dataSetCE[index]["y"]
+        x2 = this.curva.eficPoliDataSet[index]["x"]
+        EFI = this.curva.eficPoliDataSet[index]["y"]
       } else {
         x2 = 0
         EFI = 0
@@ -329,7 +346,27 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     })
   }
 
-  guardarCurva(){
-
+  guardarCurva(){ 
+      if(this.curva.equivalente == false) {
+        this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
+        .collection("curvas")
+        .doc(`s${this.dataEnviada.seccion}-impulsor-${this.curva.numImpulsor}`).set({
+          ...this.curva
+        })
+      } else {
+        if(this.curva.fab == true){
+          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
+          .collection("curvas")
+          .doc(`s${this.dataEnviada.seccion}-impulsor-eq-fab`).set({
+            ...this.curva
+          })
+        } else {
+          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
+          .collection("curvas")
+          .doc(`s${this.dataEnviada.seccion}-impulsor-eq-psico`).set({
+            ...this.curva
+          })
+        }
+      }
   }
 }

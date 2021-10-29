@@ -26,9 +26,9 @@ export class ListaTrenesComponent implements OnInit {
     this.route.parent.params.subscribe(params => {
       console.log(params.id)
       this.id = params.id
-      this.data.obtenerProyecto(this.id).subscribe((proyecto) => {
-        this.trenes = proyecto.trenes
-      })
+      this.data.getTrenes(this.id).subscribe((trenes => {
+        this.trenes = trenes as tren[]
+      }))
     })
   }
 

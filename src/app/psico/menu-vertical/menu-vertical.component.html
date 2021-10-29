@@ -61,7 +61,7 @@
             <img  [src]="icon.instalacionMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': proyecto.titulo == selectedTag}">
             <span [routerLink]="['/psico/proyecto',proyecto.id,'trenes']" class="mgl05"  (click)="tagSeleccionado(proyecto.titulo)">{{proyecto.titulo}}</span>
         </div>
-        <div fxLayout="column" *ngFor="let tren of proyecto.trenes">
+        <div fxLayout="column" *ngFor="let tren of trenes">
             <div [ngClass]="{'selectedTag': tren.tag == selectedTag}" class="mgl10 pd03" fxLayout="row" fxLayoutAlign=" center">
                 <img  [src]="icon.trenMiniIcon" class="miniIcon" [ngClass]="{'miniIconSelected': tren.tag == selectedTag}">
                 <span [routerLink]="['/psico/proyecto',proyecto.id,'tren',tren.tag]" class="mgl05"  (click)="tagSeleccionado(tren.tag)" >{{tren.tag}}</span>
