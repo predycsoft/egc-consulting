@@ -320,6 +320,7 @@ body {
 /* ------------------------------------------------------------------------ COLORS */
 
 /* System colors */
+.whiteFill{ background: white !important;}
 .minContrast{ background: var(--minContrast);}
 .neutralFill1{ background: var(--neutral1) !important;}
 .neutralFill2{ background: var(--neutral2);}
@@ -337,13 +338,13 @@ body {
 
 
 /* Accent colors */
-.accentFill1{ background: var(--accent1);}
-.accentFill2{ background: var(--accent2);}
-.accentFill3{ background: var(--accent3);}
-.accentFill4{ background: var(--accent4);}
-.accentFill5{ background: var(--accent5);}
-.accentFill6{ background: var(--accent6);}
-.accentFill7{ background: var(--accent7);}
+.accentFill1{ background: var(--accent1)!important;}
+.accentFill2{ background: var(--accent2)!important;}
+.accentFill3{ background: var(--accent3)!important;}
+.accentFill4{ background: var(--accent4)!important;}
+.accentFill5{ background: var(--accent5)!important;}
+.accentFill6{ background: var(--accent6)!important;}
+.accentFill7{ background: var(--accent7)!important;}
 
 /* Complementary colors */
 .greenFill5{ background: var(--green5) !important;}
@@ -646,7 +647,11 @@ body {
 .h-90{height: 90%;}
 .h-100{height: 100%;}
 .vh100{min-height: 100vh;}
-.vh80{min-height: 100vh;}
+.vh75{min-height: 75vh;}
+.vh50{min-height: 50vh;}
+.vh25{min-height: 25vh;}
+.vh10{min-height: 10vh;}
+
 .vw100{width: 100vw;}
 
 .scale07{ transform: scale(.7);}
@@ -936,7 +941,36 @@ h1{
     transition: .1s !important;
     font-size: 20px;
     cursor: pointer !important;
+    user-select: none;
 }
+
+.accentIconButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    min-width: auto;
+    /* min-height: 32px !important; */
+    border-radius: var(--defaultBorderRadius) !important;
+    transition: .1s !important;
+    font-size: 20px;
+    cursor: pointer !important;
+    user-select: none;
+    box-shadow: var(--shadow8);
+   background-color: var(--accentControl1);
+   color: var(--oaText1);
+}
+
+.accentIconButton:hover{
+    background-color: var(--accentControl2) !important;
+    color: var(--oaText1) !important;
+ }
+ 
+ .accentIconButton:active{
+     background-color: var(--accentControl3) !important;
+     color: var(--oaText1) !important;
+  }
 
 .iconButton:hover{
     color: var(--text1);
@@ -1014,7 +1048,6 @@ h1{
 
 .contextMenu{
     position: relative;
-    background: var(--neutral1) !important;
     box-shadow: var(--shadow32) !important;
     padding: 4px !important;
     padding-top: 0px !important;
@@ -1120,6 +1153,7 @@ button{
     height: 32px;
     border-radius: var(--defaultBorderRadius);
     font-size: 14px;
+    box-shadow: var(--shadow8) !important;
 }
 
 .standard{
@@ -1262,6 +1296,7 @@ a:active, .accentLink:active{
     background: var(--neutral3);
     box-shadow: none;
     font-size: 12px;
+    user-select: none;
 }
 
 .chip{
@@ -1270,13 +1305,14 @@ a:active, .accentLink:active{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 5px 12px 7px;
+    padding: 5px 12px 5px 12px;
     height: 20px !important;
     border-radius: 10px;
     white-space: nowrap;
     cursor: default;
     background: var(--neutral3);
     font-size: 12px;
+    user-select: none;
 }
 
 .borderChip{
@@ -1529,8 +1565,7 @@ input, textarea, select{
     font-size: 14px !important;
     background: var(--control1) !important;
     border: 1px solid var(--stroke1);
-    border-bottom: 1px solid var(--strokeStrong);
-    border-radius: var(--defaultBorderRadius);
+    border-radius: var(--defaultBorderRadius) !important;
     /* box-shadow: var(--shadow8); */
     padding-left: 12px;
     padding-right: 12px;
@@ -1550,7 +1585,8 @@ input::selection, textarea::selection{
 
 input:focus, textarea:focus {
     outline: none;
-    border-bottom: 2px solid var(--accent5);
+    border: 2px solid var(--accent5);
+    border-radius: var(--defaultBorderRadius) !important;
     color: var(--text1) !important;
 }
 

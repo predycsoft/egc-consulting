@@ -1,0 +1,47 @@
+.firstRow{
+    background: var(--neutral1) !important;
+    padding: 9px;
+    padding-left: 12px;
+    padding-right: 6px;
+    border-bottom: solid 1px var(--stroke1);
+    height: 47px;
+}
+
+tr{
+    height: 32px;
+    border-bottom: 1px solid var(--stroke1);
+}
+
+th{
+    color: var(--text2);
+    background: var(--neutral1) !important;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 41px;
+    font-size: 12px;
+    font-weight: 500px !important;
+    border-top: none;
+    border-right: none;
+}
+
+td{
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 12px;
+}
+
+
+input{
+    border-radius: 1px;
+    font-size: 12px !important;
+    height: 32px;
+    background-color: white !important;
+    min-width: 70px !important;
+    box-shadow: var(--shadow8);
+    width: 80px;
+}
+
+
+
+/*  */
+

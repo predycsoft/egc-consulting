@@ -6,11 +6,7 @@
         <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}" (click)="tabSelect('datosTecnicos')">Datos Técnicos</span>
         <span class="textButton" [ngClass]="{'selected2': tabSelected === 'cromatografia'}" (click)="tabSelect('cromatografia')">Cromatografia</span>
         <span class="textButton" [ngClass]="{'selected2': tabSelected === 'mapas'}" (click)="tabSelect('mapas')">Mapas</span>
-        <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'simulacionTeorica'}" (click)="tabSelect('simulacionTeorica')">Simulación Teórica</span>
-        <span class="textButton"  [ngClass]="{'selected2': tabSelected === 'adimensionalizacion'}" (click)="tabSelect('adimensionalizacion')">Adimensionalización</span>
-    </div>
+   </div>
 
     <cromatografia *ngIf="tabSelected==='cromatografia'"></cromatografia>
-    <simulacion-teorica *ngIf="tabSelected==='simulacionTeorica'"></simulacion-teorica>
-    <adimensionalizacion *ngIf="tabSelected==='adimensionalizacion'"></adimensionalizacion>
 </div>
