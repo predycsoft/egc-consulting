@@ -25,7 +25,7 @@
                         <span class="mgr10 ft18"> {{tren.tag}} </span>
                     </div>
 
-                    <div class="trenContainer" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]"
+                    <div class="trenContainer" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag,'sim-campo']"
                         (contextmenu)="onContextMenu($event)">
                         <div fxLayout="row" fxLayoutGap="1rem">
                             <div *ngFor="let equipo of tren.equipos; let i = index">

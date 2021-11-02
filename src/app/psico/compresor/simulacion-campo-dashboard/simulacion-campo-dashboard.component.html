@@ -1,0 +1,58 @@
+<div fxLayout="row" class="fw pd10" fxLayoutGap="1rem" *ngFor="let item of params; let i = index" (click)="clickParam(item.var, i)">
+
+    <div class="border radius4 h300px whiteFill" fxFlex="60%" >
+        <div fxLayout="column" fxLayoutAlign="space-between" class="fh">
+        <div class="fw centertext mgt05 ft500" fxLayoutAlign="space-between center">
+            <span></span>
+            Param 1 vs Param 2
+            <div class="mgr05">
+                <mat-icon class="iconButton">more_vert</mat-icon>
+            </div>
+            
+        </div>
+        <google-chart #chart [type]="type" [data]="data" [options]="options" [columns]="columnNames">
+        </google-chart>
+        <div fxLayout="row" fxLayoutAlign=" center" class="pdl10 pdb05">
+            <span class="ft500 ft14 mgr10">Parametro seleccionado</span>
+            <mat-icon class="iconButton" [matMenuTriggerFor]="filter" *ngIf="item.min == null && item.max == null ">filter_list</mat-icon>
+            <mat-icon class="iconButton aText5" [matMenuTriggerFor]="filter" *ngIf="item.min != null || item.max != null ">filter_list</mat-icon>
+            <span class="mgl10 chip border" *ngIf="item.min != null ">Min: &nbsp; {{item.min}}</span>
+            <span class="mgl10 chip border" *ngIf="item.max != null ">Max: &nbsp; {{item.max}}</span>
+        </div>
+    </div>
+
+    </div>
+    <div class="border radius4 h300px whiteFill" fxFlex="40%">
+        <google-chart #chart [type]="type" [data]="data" [options]="options" [columns]="columnNames">
+        </google-chart>
+    </div>
+</div>
+
+
+<button class="accent" (click)="agregarDataBlock()">Agregar</button>
+
+<mat-menu #filter="matMenu" class="contextMenu">
+    <div class="pdt05 pdl08 pdr08 pdb05" (click)="$event.stopPropagation();">
+        <div fxLayoutAlign="space-between center">
+            <span class="ft500 ft14">Aplicar filtro</span>
+            <mat-icon class="ft18 text3 textButton">close</mat-icon>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center end" fxLayoutGap=".5rem" class="mgt10">
+            <div fxLayout="column" fxLayoutAlign="center center" class="">
+                <div class="ft12">Max.</div>
+                <input type="number" placeholder="-" class=" centertext" [(ngModel)]="actualMin">
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+                <div class="ft12">Min.</div>
+                <input type="number" placeholder="-" class=" centertext" [(ngModel)]="actualMax">
+            </div>
+            <div>
+                <mat-icon class="iconButton white border whiteFill text3 shadow8" (click)="borrarFiltro($event)">
+                    delete_outline</mat-icon>
+            </div>
+            <div>
+                <mat-icon class="accentIconButton" (click)="aplicarFiltro($event)">check</mat-icon>
+            </div>
+        </div>
+    </div>
+</mat-menu>

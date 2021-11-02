@@ -1,0 +1,19 @@
+<div class="topBarContainer" fxLayout="row" fxLayoutGap=".5rem">
+    <div>
+        <input type="datetime-local">
+    </div>
+    <div>
+        <input type="datetime-local">
+    </div>
+    <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'dashboard'}" (click)="vista='dashboard'"> bar_chart</mat-icon>
+    <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'lista'}" (click)="vista='lista'"> format_list_numbered</mat-icon>
+    <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
+    <mat-icon class="iconButton text3 ft18">settings</mat-icon>
+</div>
+
+<div *ngIf="vista==='dashboard'">
+    <simulacion-campo-dashboard></simulacion-campo-dashboard>
+</div>
+<div *ngIf="vista==='lista'">
+    <simulacion-campo-lista></simulacion-campo-lista>
+</div>

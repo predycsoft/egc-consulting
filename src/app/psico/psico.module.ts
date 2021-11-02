@@ -10,9 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CromatografiaComponent } from './inputs/cromatografia/cromatografia.component';
 import { DatasheetPuntosCompresorComponent } from './compresor/datasheet-puntos-compresor/datasheet-puntos-compresor.component';
 import { CaracteristicasTurbinaComponent } from './turbina/caracteristicas-turbina/caracteristicas-turbina.component';
-import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica/simulacion-teorica.component';
 import { MapasCompresorComponent } from './compresor/mapas-compresor/mapas-compresor.component';
-import { AdimensionalizacionComponent } from './simulacion-campo/adimensionalizacion/adimensionalizacion.component';
 import { ConfiguracionCompresorComponent } from './compresor/configuracion-compresor/configuracion-compresor.component';
 import { ConfiguracionTurbinaComponent } from './turbina/configuracion-turbina/configuracion-turbina.component';
 import { ConfiguracionTrenComponent } from './proyectos/configuracion-tren/configuracion-tren.component';
@@ -36,8 +34,6 @@ import { EnvioDataComponent } from './envio-data/envio-data.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListaTrenesComponent } from './proyectos/lista-trenes/lista-trenes.component';
 import { DialogNuevoTrenComponent } from './proyectos/dialog-nuevo-tren/dialog-nuevo-tren.component';
-import { ListaSimulacionesTeoricasComponent } from './simulacion-teorica/lista-simulaciones-teoricas/lista-simulaciones-teoricas.component';
-import { TablaSimulacionesTeoricasComponent } from './simulacion-teorica/tabla-simulaciones-teoricas/tabla-simulaciones-teoricas.component';
 import { DialogLibreriaCromatografiasComponent } from './inputs/dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
 import { DialogDuplicarNuevoTagComponent } from './proyectos/dialog-duplicar-nuevo-tag/dialog-duplicar-nuevo-tag.component';
 import { DialogLibreriaEquiposComponent } from './dialog-libreria-equipos/dialog-libreria-equipos.component';
@@ -45,6 +41,10 @@ import { DialogMapaCompresorComponent } from './compresor/dialog-mapa-compresor/
 import { ChartsModule } from 'ng2-charts';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulacion-campo-input.component';
+import { SimulacionCampoComponent } from './compresor/simulacion-campo/simulacion-campo.component';
+import { SimulacionCampoListaComponent } from './compresor/simulacion-campo-lista/simulacion-campo-lista.component';
+import { SimulacionCampoDashboardComponent } from './compresor/simulacion-campo-dashboard/simulacion-campo-dashboard.component';
+import { SimulacionCampoDialogResultadosComponent } from './compresor/simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
 
 @NgModule({
   declarations: [
@@ -53,9 +53,7 @@ import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulaci
     CromatografiaComponent,
     DatasheetPuntosCompresorComponent,
     CaracteristicasTurbinaComponent,
-    SimulacionTeoricaComponent,
     MapasCompresorComponent,
-    AdimensionalizacionComponent,
     ConfiguracionCompresorComponent,
     ConfiguracionTurbinaComponent,
     ConfiguracionTrenComponent,
@@ -78,13 +76,15 @@ import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulaci
     EnvioDataComponent,
     ListaTrenesComponent,
     DialogNuevoTrenComponent,
-    ListaSimulacionesTeoricasComponent,
-    TablaSimulacionesTeoricasComponent,
     DialogLibreriaCromatografiasComponent,
     DialogDuplicarNuevoTagComponent,
     DialogLibreriaEquiposComponent,
     DialogMapaCompresorComponent,
-    SimulacionCampoInputComponent
+    SimulacionCampoInputComponent,
+    SimulacionCampoComponent,
+    SimulacionCampoListaComponent,
+    SimulacionCampoDashboardComponent,
+    SimulacionCampoDialogResultadosComponent
   ],
   imports: [
     CommonModule,
