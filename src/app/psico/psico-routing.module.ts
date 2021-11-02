@@ -8,6 +8,7 @@ import { InputsComponent } from './inputs/inputs.component';
 import { ListaProyectosComponent } from './proyectos/lista-proyectos/lista-proyectos.component';
 import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.component';
 import { ListaTrenesComponent } from '../psico/proyectos/lista-trenes/lista-trenes.component';
+import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulacion-campo-input.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     {path: 'trenes', component:ListaTrenesComponent},
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
     {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
+    {path: 'simulacion-input/:trenTag/:equipoTag', component: SimulacionCampoInputComponent}
 
  ]}
 

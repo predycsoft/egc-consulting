@@ -44,6 +44,7 @@ import { DialogLibreriaEquiposComponent } from './dialog-libreria-equipos/dialog
 import { DialogMapaCompresorComponent } from './compresor/dialog-mapa-compresor/dialog-mapa-compresor.component';
 import { ChartsModule } from 'ng2-charts';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulacion-campo-input.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
     DialogLibreriaCromatografiasComponent,
     DialogDuplicarNuevoTagComponent,
     DialogLibreriaEquiposComponent,
-    DialogMapaCompresorComponent
+    DialogMapaCompresorComponent,
+    SimulacionCampoInputComponent
   ],
   imports: [
     CommonModule,
