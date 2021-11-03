@@ -341,19 +341,23 @@ export class DataServiceService {
   }
 
   async getCurvas(proyectoId: string, equipoTag: string) {
-    let curvas = []
+    let curvas: curva[] = []
     const docs= await this.afs
     .collection('proyectos')
       .doc(proyectoId)
       .collection("equipos")
       .doc(equipoTag)
-      .collection("curvas")
+      .collection<curva>("curvas")
       .ref
       .get()
-    docs.forEach(doc => {
-      return curvas.push(doc.data())
-    })
+    const len = docs.size
+    let i = 0
+    for (let index = 0; index < len; index++) {
+      const curva = docs.docs[i].data();
+      curvas.push(curva)
+    }
     return curvas
+
   }
 
   /**
