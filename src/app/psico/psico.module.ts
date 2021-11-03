@@ -51,6 +51,7 @@ import { ReportePuntoComponent } from './reportes/reporte-punto/reporte-punto.co
 import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/reporte-punto-sumario.component';
 import { CompresorDimsComponent } from './compresor/compresor-dims/compresor-dims.component';
 import { DialogComentarioComponent } from './dialogs/dialog-comentario/dialog-comentario.component';
+import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim-campo.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { DialogComentarioComponent } from './dialogs/dialog-comentario/dialog-co
     ReportePuntoComponent,
     ReportePuntoSumarioComponent,
     CompresorDimsComponent,
-    DialogComentarioComponent
+    DialogComentarioComponent,
+    DialogSimCampoComponent
   ],
   imports: [
     CommonModule,

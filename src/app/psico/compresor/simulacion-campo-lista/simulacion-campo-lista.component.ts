@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogSimCampoComponent } from '../dialog-sim-campo/dialog-sim-campo.component';
 import { SimulacionCampoDialogResultadosComponent } from '../simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
 
 interface param {
@@ -71,6 +72,10 @@ export class SimulacionCampoListaComponent implements OnInit {
 
   openDialogResultados(){
     const dialogRef = this.dialog.open(SimulacionCampoDialogResultadosComponent);
+  }
+
+  nuevaSimCampo(){
+    const dialogRef = this.dialog.open(DialogSimCampoComponent);
   }
 
 }
