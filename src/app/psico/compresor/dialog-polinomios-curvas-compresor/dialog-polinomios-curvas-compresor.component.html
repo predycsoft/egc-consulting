@@ -31,15 +31,15 @@
 
             <div fxLayoutAlign="space-between center" class="mgt08">
                 <div class="mgr20 ft12">Diámedivo [pulg]</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                <div><input [(ngModel)]="curva.diametro" type="number" placeholder="vacio" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr20 ft12">Límite Q/N de surge</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                <div><input [(ngModel)]="curva.limSurge" type="number" placeholder="vacio" class="w100px centertext"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr20 ft12">Límite Q/N de stw</div>
-                <div><input type="number" placeholder="vacio" class="w100px centertext"></div>
+                <div><input [(ngModel)]="curva.limStw" type="number" placeholder="vacio" class="w100px centertext"></div>
             </div>
 
             <!-- Coeficientes calculados de Efic. Politropica -->

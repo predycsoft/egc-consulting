@@ -151,6 +151,7 @@ class cromatografia {
 // ------------------------------------------------------------------------------------------------------------------------ XXXXXXXXXXXX
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -189,6 +190,8 @@ export class DataServiceService {
   /**
    * Crear nuevo proyecto
    */
+
+
   async createProyecto(data: Proyecto) {
     const docRef = this.afs.collection("proyectos").doc()
     data.id = docRef.ref.id
