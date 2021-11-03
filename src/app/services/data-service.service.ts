@@ -91,6 +91,7 @@ export class curva {
   nombre: string = '';
   comentario: string = '';
   vigencia: boolean = true;
+  default: boolean = true;
 
   // General
   numCompresor: number = 0;
