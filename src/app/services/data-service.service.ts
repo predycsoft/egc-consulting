@@ -128,6 +128,17 @@ class dataSet{
   y: number| string = 0;
 }
 
+export class compresorDims {
+  flujo: string = 'MMscfd';
+  velocidad: 'rpm';
+  presion: string = 'psig';
+  temperatura: string = '°F';
+  volEspecifico: string = 'pie3/lbm';
+  densidad: string = 'lbm/pie3';
+  potencia: string = 'Hp';
+  diametro: string = 'm';
+}
+
 class cromatografia {
   metano: number = 0;
   etano: number = 0;
