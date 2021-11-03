@@ -33,8 +33,7 @@ export class DialogSimCampoComponent implements OnInit {
             this.tren = tren
             this.data.getEquipos(this.proyecto.id,trenTag).subscribe(async equipos => {
               this.equipos = equipos
-              this.curvas = []
-              this.curvas = []
+              let curvasCompletas = []
               for (let i = 0; i < this.equipos.length; i++) {
                 let curvas = []
                 const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
@@ -47,8 +46,9 @@ export class DialogSimCampoComponent implements OnInit {
                   curvas: curvas
                 }
                 curvas = []
-                this.curvas = this.curvas.concat(obj)
+                curvasCompletas = curvasCompletas.concat(obj)
               }
+              this.curvas = curvasCompletas
               console.log(this.proyecto)
               console.log(this.tren)
               console.log(this.equipos)
