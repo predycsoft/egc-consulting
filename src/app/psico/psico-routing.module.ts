@@ -27,6 +27,9 @@ const routes: Routes = [
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
     {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
     {path: 'simulacion-input/:trenTag/:equipoTag', component: SimulacionCampoInputComponent},
+
+
+    
     {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
     {path: 'tren/:trenTag/sim-campo', component: SimulacionCampoComponent},
     {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
@@ -34,7 +37,6 @@ const routes: Routes = [
     {path: 'tren/:trenTag/reporte-punto', component: ReportePuntoComponent},
     {path: 'tren/:trenTag/reporte-punto-sumario', component: ReportePuntoSumarioComponent},
 
-    
     
 
  ]}
