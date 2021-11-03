@@ -49,6 +49,7 @@ import { ReporteSumarioSeccionComponent } from './reportes/reporte-sumario-secci
 import { ReporteSumarioInputsComponent } from './reportes/reporte-sumario-inputs/reporte-sumario-inputs.component';
 import { ReportePuntoComponent } from './reportes/reporte-punto/reporte-punto.component';
 import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/reporte-punto-sumario.component';
+import { CompresorDimsComponent } from './compresor/compresor-dims/compresor-dims.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/r
     ReporteSumarioSeccionComponent,
     ReporteSumarioInputsComponent,
     ReportePuntoComponent,
-    ReportePuntoSumarioComponent
+    ReportePuntoSumarioComponent,
+    CompresorDimsComponent
   ],
   imports: [
     CommonModule,
