@@ -1,17 +1,55 @@
 <!-- Prueba de eficiencia -->
 
-<div fxLayout="column">
+<div fxLayout="column" class="pd20">
+    <div fxLayout="column">
+        <span class="ft24 ft500">Prueba de eficiencia del TREN *TAG*</span>
+        <span> Fecha de creación: *fecha*</span>
+        <div fxLayout="column">
+            <span> Responsable de la recolección de data: *fecha*</span>
+            <input type="date">
+        </div>
+        <div fxLayout="column">
+            <span> Consultor responsable de simulación</span>
+            <input type="date">
+        </div>
+        <div fxLayout="column">
+            <span> Fecha de inicio de recolección de data</span>
+            <input type="datetime-local">
+        </div>
+        <div fxLayout="column">
+            <span> Fecha de fin de recolección de data</span>
+            <input type="datetime-local">
+        </div>
+    </div>
+    
+
+
+
+
+
+
+
 
     <span>Tren: </span>
     <span>Num de compresores (TAGS y tipologia y nSecciones</span>
     <span>Num de secciones total: </span>
+    <span>Perdidas de caja</span>
+    <span>Perdidas mecanicas</span>
+    <span>Curva seleccionada</span>
 
-    <!-- por equipo -->
-    <span>Perdidas mecanicas: (se traen de la config del compresor) </span>
-    <span>Perdidas de caja: (se traen de la config del compresor) </span>
 
-    <!-- Curvas seleccionadas -->
-    <span>curva por seccion a utilizar</span>
+
+    <div>
+        <table>
+            <tr>
+                <th> Variable de entrada</th>
+                <td *ngFor="let item of [1,2,3,4]; let i = index"> 
+                    <input type="number" placeholder="-">
+                </td>  
+            </tr>
+            
+        </table>
+    </div>
 
     <!-- Datos utilizados para una prueba de eficiencia -->
     <span>Fecha de simulacion (new date)</span>
