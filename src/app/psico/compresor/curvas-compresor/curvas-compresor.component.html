@@ -2,9 +2,6 @@
 
     <div>
 
-
-
-
         <div class="border radius4 pd10">
 
             <div fxLayout="column" >
@@ -17,6 +14,14 @@
             <div class="mgt20">
                 <p class="ft14 text3 ft500 pdb05 border-b mgb10">Impulsor equivalente</p>
             </div>
+
+            <div fxLayout="column" >
+                <span class="text3 ft14">Impulsor de simulación teórico</span>
+                <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()" class="mgt05">
+                    <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}} </mat-option>
+                </mat-select>
+            </div>
+
 
             <!-- Impulsor equivalente de fabricante -->
             <div fxLayout="row" fxLayoutAlign=" center">
