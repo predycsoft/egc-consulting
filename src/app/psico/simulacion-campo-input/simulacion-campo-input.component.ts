@@ -34,13 +34,13 @@ export class SimulacionCampoInputComponent implements OnInit {
   flagEqPsico
   date = new Date
 
-  PSUC = 150
-  PDES = 365.53881
+  PSUC = 105
+  PDES = 200
   TSUC = 101.3
   TDES = 248.9
   RPMS = [7400, 8450, 9500, 10570, 11100]
-  RPM = 6194
-  flujo = 51
+  RPM = 11000
+  flujo = 54
   qdim = "[MMSCFD]"
   tdim = "[°F]"
   pdim = "[psia]"
