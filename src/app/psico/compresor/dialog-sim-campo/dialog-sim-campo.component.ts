@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { curva, DataServiceService, equipo, Proyecto, tren } from 'src/app/services/data-service.service';
+
+interface curvaEquipo {
+  equipoTag: string,
+  curvas: curva[]
+}
 
 @Component({
   selector: 'app-dialog-sim-campo',
@@ -9,14 +15,11 @@ import { curva, DataServiceService, equipo, Proyecto, tren } from 'src/app/servi
 })
 export class DialogSimCampoComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private data: DataServiceService) { }
+  constructor(private route: ActivatedRoute, private data: DataServiceService, private afs: AngularFirestore) { }
   proyecto: Proyecto;
   tren: tren;
   equipos: equipo[];
-  curvas: {
-    equipotag: string,
-    curvas: curva[]
-  }[]
+  curvas: curvaEquipo[]
 
 
 
@@ -28,16 +31,28 @@ export class DialogSimCampoComponent implements OnInit {
           const trenTag = params.trenTag;
           this.data.getTren(this.proyecto.id, trenTag).subscribe(tren => {
             this.tren = tren
-            this.data.getEquipos(this.proyecto.id,trenTag).subscribe(equipos => {
+            this.data.getEquipos(this.proyecto.id,trenTag).subscribe(async equipos => {
               this.equipos = equipos
               this.curvas = []
-              this.equipos.forEach(equipo => {
-                const curvas = this.data.getCurvas(this.proyecto.id, trenTag)
+              this.curvas = []
+              for (let i = 0; i < this.equipos.length; i++) {
+                let curvas = []
+                const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
+                for (let j = 0; j < curvasDocs.docs.length; j++) {
+                  const curva = curvasDocs.docs[j].data();
+                  curvas.push(curva)
+                }
                 const obj = {
-                  equipoTag: equipo.tag,
+                  equipoTag: this.equipos[i].tag,
                   curvas: curvas
                 }
-              })
+                curvas = []
+                this.curvas = this.curvas.concat(obj)
+              }
+              console.log(this.proyecto)
+              console.log(this.tren)
+              console.log(this.equipos)
+              console.log(this.curvas)
             })
           })
         })
