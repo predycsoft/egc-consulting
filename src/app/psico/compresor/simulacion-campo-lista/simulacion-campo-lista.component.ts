@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { DialogSimCampoComponent } from '../dialog-sim-campo/dialog-sim-campo.component';
 import { SimulacionCampoDialogResultadosComponent } from '../simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
 
@@ -36,10 +37,19 @@ export class SimulacionCampoListaComponent implements OnInit {
     { nombre: 'Coef. Cab. Poli', var: 'cabP', min: null, max: null },
     { nombre: 'Efic. Poli', var: 'efiP', min: null, max: null },
   ]
+  
+  proyectoId: string;
+  trenTag: string;
 
-  constructor(public dialog:MatDialog) { }
+  constructor(public dialog:MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.parent.params.subscribe(params => {
+      this.proyectoId = params.id
+      this.route.params.subscribe( params => {
+        this.trenTag = params.trenTag
+      })
+    })
   }
 
   actualMin;

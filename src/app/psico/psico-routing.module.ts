@@ -15,6 +15,7 @@ import { ReporteSumarioSeccionComponent } from './reportes/reporte-sumario-secci
 import { ReporteSumarioInputsComponent } from './reportes/reporte-sumario-inputs/reporte-sumario-inputs.component';
 import { ReportePuntoComponent } from './reportes/reporte-punto/reporte-punto.component';
 import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/reporte-punto-sumario.component';
+import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim-campo.component';
 
 
 const routes: Routes = [
@@ -29,9 +30,17 @@ const routes: Routes = [
     {path: 'simulacion-input/:trenTag/:equipoTag', component: SimulacionCampoInputComponent},
 
 
-    
+
+
+
     {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
+
+
     {path: 'tren/:trenTag/sim-campo', component: SimulacionCampoComponent},
+    {path: 'tren/:trenTag/sim-campo-config', component: DialogSimCampoComponent},
+    {path: 'tren/:trenTag/sim-campo-config/:id', component: DialogSimCampoComponent},
+
+
     {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
     {path: 'tren/:trenTag/reporte-sumario-inputs', component: ReporteSumarioInputsComponent},
     {path: 'tren/:trenTag/reporte-punto', component: ReportePuntoComponent},
