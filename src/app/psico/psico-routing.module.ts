@@ -10,6 +10,10 @@ import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.compo
 import { ListaTrenesComponent } from '../psico/proyectos/lista-trenes/lista-trenes.component';
 import { SimulacionTeoricaComponent } from './compresor/simulacion-teorica/simulacion-teorica.component';
 import { SimulacionCampoComponent } from './compresor/simulacion-campo/simulacion-campo.component';
+import { ReporteSumarioSeccionComponent } from './reportes/reporte-sumario-seccion/reporte-sumario-seccion.component';
+import { ReporteSumarioInputsComponent } from './reportes/reporte-sumario-inputs/reporte-sumario-inputs.component';
+import { ReportePuntoComponent } from './reportes/reporte-punto/reporte-punto.component';
+import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/reporte-punto-sumario.component';
 
 
 const routes: Routes = [
@@ -23,6 +27,10 @@ const routes: Routes = [
     {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
     {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
     {path: 'tren/:trenTag/sim-campo', component: SimulacionCampoComponent},
+    {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
+    {path: 'tren/:trenTag/reporte-sumario-inputs', component: ReporteSumarioInputsComponent},
+    {path: 'tren/:trenTag/reporte-punto', component: ReportePuntoComponent},
+    {path: 'tren/:trenTag/reporte-punto-sumario', component: ReportePuntoSumarioComponent},
 
     
     

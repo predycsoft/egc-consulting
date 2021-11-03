@@ -44,6 +44,10 @@ import { SimulacionCampoComponent } from './compresor/simulacion-campo/simulacio
 import { SimulacionCampoListaComponent } from './compresor/simulacion-campo-lista/simulacion-campo-lista.component';
 import { SimulacionCampoDashboardComponent } from './compresor/simulacion-campo-dashboard/simulacion-campo-dashboard.component';
 import { SimulacionCampoDialogResultadosComponent } from './compresor/simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
+import { ReporteSumarioSeccionComponent } from './reportes/reporte-sumario-seccion/reporte-sumario-seccion.component';
+import { ReporteSumarioInputsComponent } from './reportes/reporte-sumario-inputs/reporte-sumario-inputs.component';
+import { ReportePuntoComponent } from './reportes/reporte-punto/reporte-punto.component';
+import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/reporte-punto-sumario.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +86,11 @@ import { SimulacionCampoDialogResultadosComponent } from './compresor/simulacion
     SimulacionCampoComponent,
     SimulacionCampoListaComponent,
     SimulacionCampoDashboardComponent,
-    SimulacionCampoDialogResultadosComponent
+    SimulacionCampoDialogResultadosComponent,
+    ReporteSumarioSeccionComponent,
+    ReporteSumarioInputsComponent,
+    ReportePuntoComponent,
+    ReportePuntoSumarioComponent
   ],
   imports: [
     CommonModule,

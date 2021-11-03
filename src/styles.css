@@ -1616,13 +1616,14 @@ input[type=number]::-webkit-outer-spin-button {
 /* ------------------------------------------ SELECT */
 
 .mat-select{
+    margin-top: 0px !important;
     height: 32px;
     background: var(--control1) !important;
     border: 1px solid var(--stroke1);
-    border-bottom: 2px solid var(--strokeStrong);
+    border-bottom: 1px solid var(--stroke2);
     border-radius: var(--defaultBorderRadius);
     min-width: 128px;
-    padding: 1px 8px 0 12px !important;
+    padding: 4px 8px 0 12px !important;
     color: var(--text2) !important;
     user-select: none;
 }
@@ -2159,5 +2160,42 @@ o.`Y8b Y8   8P 88"Yb  88""    dP__Yb  Yb      88""   o.`Y8b
      html{font-size: 16px !important; }
   }
   
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+@media print
+{    
+  /* @page { margin: 0; }
+  body { margin: 1.6cm; } */
+  
+    .noPrint, .noPprint *
+    {
+        display: none !important;
+    }
+
+    @page 
+    {
+        size:  auto;   /* auto is the initial value */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+
+    html
+    {
+        height: auto;
+        margin: 0px;  /* this affects the margin on the html before sending to printer */
+    }
+
+    body
+    {
+        height: auto;
+    }
+
+    .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}
+
+.print:last-child {
+  page-break-after: auto;
+}

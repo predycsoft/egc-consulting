@@ -1,46 +1,352 @@
-<div class="pd10">
+<div fxLayout="row">
 
-    <div fxLayout="row">
-        <div>
-            <div fxLayout="row" fxLayoutGap="1rem" fxLayoutGap="2rem" class="pd10">
+    <!---------------------------------------------------------------------- Barra lateral izquierda -->
 
-                <div class="centertext">
-                    <span class="ft13 ft500">Efic. Poli</span>
-                    <div class="mgt08 ft500 ftxxl">75 %</div>
-                    <div class="mgt05 ft500 ft13 redText">-6 %</div>
+    <div fxLayout="column" fxLayoutGap=".3rem" class="pd03 neutralFill1 w150px">
+        <span class="textButton ">Tren</span>
+        <span class="textButton ft600 neutralFill3">Compresor 1</span>
+        <span class="textButton">Sección 1</span>
+        <span class="textButton">Sección 2</span>
+        <span class="textButton">Compresor 2</span>
+        <span class="textButton">Sección 1</span>
+        <span class="textButton">Impulsor 1</span>
+        <span class="textButton">Impulsor 2</span>
+        <span class="textButton">Impulsor 3</span>
+        <span class="textButton">Impulsor 4</span>
+        <span class="textButton">Impulsor 5</span>
+        <span class="textButton">Impulsor 6</span>
+        <span class="textButton">Impulsor 7</span>
+        <span class="textButton">Impulsor 8</span>
+    </div>
+
+
+    <!---------------------------------------------------------------------- Contenedor derecho -->
+    <div fxLayout="column">
+
+        <!---------------------------------------------------------------------- Barra superior-->
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="neutralFill1 pd03">
+            <div class="w50px"></div>
+            <div fxLayout="row" fxLayoutAlign=" center">
+                <div>
+                    <span class="mgl05 ft500 ft18">Comportamiento real </span>
+                    <span class="ft18">- Punto No. 832 - 20:32 21-23-05</span>
                 </div>
-
-                <div class="centertext">
-                    <span class="ft13 ft500">Potencia</span>
-                    <div class="mgt08 ft500 ftxxl">6500 Hp</div>
-                    <div class="mgt05 ft500 ft13 redText">-11 %</div>
-                </div>
-
-                
-                <div class="centertext">
-                    <span class="ft13 ft500">Cab Poli</span>
-                    <div class="mgt08 ft500 ftxxl">75 %</div>
-                    <div class="mgt05 ft500 ft13 redText">-5 %</div>
+                <div class="mgl10" fxLayoutGap=".5rem">
+                    <mat-icon class="iconButton border shadow8 whiteFill">keyboard_arrow_left</mat-icon>
+                    <mat-icon class="iconButton border shadow8 whiteFill">keyboard_arrow_right</mat-icon>
                 </div>
             </div>
-
-            <div fxLayout="row" fxLayoutGap="1rem">
-                <div>
-                    <div class="ft500 ft13">Out params 2</div>
-                    <div *ngFor="let item of outParams1" class="ft12 text2">{{item}}</div>
-                </div>
-                <div>
-                    <div class="ft500 ft13">Out params 1</div>
-                    <div *ngFor="let item of outParams" class="ft12 text2">{{item}}</div>
-                </div>
+            <div class="mgl10" fxLayoutGap=".5rem">
+                <mat-icon class="iconButton border shadow8 whiteFill">print</mat-icon>
+                <mat-icon class="iconButton ">close</mat-icon>
             </div>
         </div>
 
-        <div class="mgl20 border radius4 h600px w400px">
-            <div class="ft14 ft500 centertext mgt05">Mapa de compresión del tren</div>
-            <div fxLayoutAlign="center center" class="fh text3 ft12"> Mapa del compresor aqui</div>
-        </div>
+        <!---------------------------------------------------------------------- Contenedor inferior-->
+        <div fxLayout="row" class="radius4 border">
 
+            <!-- left container (table and selector) -->
+            <div class="border-r">
+
+                <!-- Table container -->
+                <div class="border-r">
+                    <table class="fw">
+                        <tr>
+                            <th colspan="2" class="centertext">Parámetro</th>
+                            <th class="centertext">Unidad</th>
+                            <th class="centertext">
+                                <div fxLayoutAlign=" center">
+                                    Succión
+                                    <mat-icon class="info ft14 text3">info</mat-icon>
+                                </div>
+                            </th>
+                            <th class="centertext">
+                                <div fxLayoutAlign=" center">
+                                    Descarga
+                                    <mat-icon class="info ft14 text3">info</mat-icon>
+                                </div>
+                            </th>
+                            <th class="centertext">
+                                Isentrópico
+                                <mat-icon class="info ft14 text3">info</mat-icon>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">Flujo</td>
+                            <td rowspan="2">Volumétrico</td>
+                            <td class="dimension">MMscfd</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td class="dimension">Acfm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td>Másico</td>
+                            <td class="dimension">lbm/min</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Velocidad de giro</td>
+                            <td class="dimension">rpm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Presión</td>
+                            <td class="dimension">psig</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Temperatúra</td>
+                            <td class="dimension">psig</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Volúmen específico</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Densidad</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Calor específico</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Factor de compresibilidad</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Entalpía</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Entropía</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Relación de compresión</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Relación de volumenes</td>
+                            <td class="dimension">pie3/lbm</td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                            <td> <span>.985</span> <span *ngIf="tipoSim === 'campo' && tipoComparacion" class="ft10"
+                                    class="mgl05 ft9 redText">.787</span> </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Cabezal</td>
+                            <td>Politrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <tr>
+                            <!-- <td rowspan="2">Cabezal</td> -->
+                            <td>Isentrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <!--  -->
+                        <tr>
+                            <td rowspan="2">Potencia</td>
+                            <td>Politrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <tr>
+                            <!-- <td rowspan="2">Cabezal</td> -->
+                            <td>Isentrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <!--  -->
+                        <tr>
+                            <td rowspan="2">Coef. de cabezal</td>
+                            <td>Politrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <tr>
+                            <!-- <td rowspan="2">Cabezal</td> -->
+                            <td>Isentrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <!--  -->
+                        <!--  -->
+                        <tr>
+                            <td rowspan="2">Eficiencia</td>
+                            <td>Politrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <tr>
+                            <!-- <td rowspan="2">Cabezal</td> -->
+                            <td>Isentrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <!--  -->
+                        <!--  -->
+                        <tr>
+                            <td rowspan="2">Coef. entrada de trabajo</td>
+                            <td>Politrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <tr>
+                            <!-- <td rowspan="2">Cabezal</td> -->
+                            <td>Isentrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <!--  -->
+                        <!--  -->
+                        <tr>
+                            <td rowspan="2">Coef. de flujo <br> (referido a succión)</td>
+                            <td>Politrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                        <tr>
+                            <!-- <td rowspan="2">Cabezal</td> -->
+                            <td>Isentrópico</td>
+                            <td class="dimension">dim</td>
+                            <td colspan="3">-</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Selector -->
+                <div fxLayoutAlign="end" class="mgt10">
+                    <div fxLayoutAlign=" center" class="w400px">
+                        <div class="ft14 ft500 nowrap">Método de comparación:</div>
+                        <mat-select [(ngModel)]="tipoComparacion" (ngModelChange)="actualizarMetodoComparacion()"
+                            class="mgl05 mgt05 shadow8">
+                            <mat-option value="'valor'" class="optionItem"> Valor teórico </mat-option>
+                            <mat-option value="'absoluta'" class="optionItem"> Diferencia absoluta </mat-option>
+                            <mat-option value="porcentual" class="optionItem"> Diferencia porcentual (%) </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div>
+                <!-- Resumen de parametros importantes -->
+                <div fxLayout="row" fxLayoutGap="1rem" fxLayoutGap="1rem" class="fw">
+                    <div class="centertext radius4 pd05 fw border-r">
+                        <span class="ft13 ft500">Potencia</span>
+                        <div class="mgt05 ft500 ftxxl">6500 Hp</div>
+                        <div class="mgt05 ft500 ft13 redText">-11 %</div>
+                    </div>
+
+                    <div class="centertext radius4 pd05 fw">
+                        <span class="ft13 ft500">Efic. Poli</span>
+                        <div class="mgt05 ft500 ftxxl">75 %</div>
+                        <div class="mgt05 ft500 ft13 redText">-6 %</div>
+                    </div>
+                </div>
+
+                <div class="border-t radius4 w500px h600px">
+                    <div class="ft14 ft500 centertext mgt05">Mapa de compresión del tren</div>
+                    <div fxLayoutAlign="center center" class="fh text3 ft12"> Mapa del compresor aqui</div>
+                </div>
+
+                <!-- Selector -->
+                <div fxLayoutAlign="end" class="pd10">
+                    <div fxLayoutAlign=" center" class="w300px">
+                        <div class="ft14 ft500 nowrap">Tipo de gráfico</div>
+                        <mat-select [(ngModel)]="tipoGrafico"
+                            class="mgl05 mgt05 shadow8">
+                            <mat-option value="'valor'" class="optionItem"> Potencia </mat-option>
+                            <mat-option value="'absoluta'" class="optionItem"> Presión descarga </mat-option>
+                            <mat-option value="porcentual" class="optionItem"> Curvas </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 </div>

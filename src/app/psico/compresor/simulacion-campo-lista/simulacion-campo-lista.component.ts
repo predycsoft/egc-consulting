@@ -19,18 +19,21 @@ export class SimulacionCampoListaComponent implements OnInit {
 
   params: param[] = [
     { nombre: 'Fecha y hora.', var: 'fecha', min: null, max: null },
+    { nombre: 'Simulacion', var: 'fecha', min: null, max: null },
     { nombre: 'Mezcla', var: 'mezcla', min: null, max: null },
+    { nombre: 'Q', var: 'q', min: null, max: null },
+    { nombre: 'RPM', var: 'rpm', min: null, max: null },
     { nombre: 'Psucc.', var: 'psuc', min: null, max: null },
     { nombre: 'Pdesc.', var: 'pdesc', min: null, max: null },
     { nombre: 'Tsucc.', var: 'tsuc', min: null, max: null },
     { nombre: 'Tdesc.', var: 'tdesc', min: null, max: null },
-    { nombre: 'Q', var: 'q', min: null, max: null },
-    { nombre: 'ΣQ', var: 'qSum', min: null, max: null },
-    { nombre: 'RPM', var: 'rpm', min: null, max: null },
+
     { nombre: 'Pot.', var: 'pot', min: null, max: null },
     { nombre: 'ΣPot.', var: 'potSum', min: null, max: null },
+    // Coeficientes adimensionales
+    { nombre: 'Q/N', var: 'cabP', min: null, max: null },
+    { nombre: 'Coef. Cab. Poli', var: 'cabP', min: null, max: null },
     { nombre: 'Efic. Poli', var: 'efiP', min: null, max: null },
-    { nombre: 'Cab. Poli', var: 'cabP', min: null, max: null },
   ]
 
   constructor(public dialog:MatDialog) { }
