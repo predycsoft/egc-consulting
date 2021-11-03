@@ -15,7 +15,7 @@ interface curvaEquipo {
 })
 export class DialogSimCampoComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private data: DataServiceService, private afs: AngularFirestore) { }
+  constructor(private route: ActivatedRoute, public data: DataServiceService, private afs: AngularFirestore) { }
   proyecto: Proyecto;
   tren: tren;
   equipos: equipo[];
