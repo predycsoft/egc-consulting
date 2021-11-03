@@ -1,0 +1,70 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+
+    <div class="w900px mgt40">
+        <table class="fw">
+            <tr>
+                <th rowspan="2">Fecha y Hora</th>
+                <th rowspan="2">Punto</th>
+                <th rowspan="2">Flujo</th>
+                <th rowspan="2">Veloc</th>
+                <th rowspan="2">P.M. Gas</th>
+                <th colspan="2">Succión</th>
+                <th colspan="2">Descarga</th>
+                <th colspan="2">Potencia</th>
+                <th rowspan="2">Eficiencia</th>
+            </tr>
+            <tr>
+                <!-- Succión -->
+                <th>Pres.</th>
+                <th>Temp.</th>
+                <!-- Succión -->
+                <th>Pres.</th>
+                <th>Temp.</th>
+                <!-- Potencia -->
+                <th>Gas</th>
+                <th>Freno</th>
+                <!-- Eficiencia -->
+
+            </tr>
+            <tr *ngFor="let item of [1,2,3,4,5,6,7,8,1,2,3,4,5,6,1,2,32,4,5,4,6,3,6]; let i = index">
+                <td class="nowrap">03:00 12-04-21 </td>
+                <td>{{i}}</td>
+                <td>123</td>
+                <td>6700
+                    <span class="mgl05 ft10 redText">(-7.6%)</span>
+                </td>
+                <td>.76</td>
+                <!-- Succión -->
+                <td>67</td>
+                <td>87</td>
+                <!-- Succión -->
+                <td>67</td>
+                <td>98</td>
+                <!-- Potencia -->
+                <td>6700</td>
+                <td>7500</td>
+                <!-- Eficiencia -->
+                <td>.86</td>
+            </tr>
+        </table>
+
+        <!-- Graficos -->
+        <div fxLayout="row" class="">
+            <div class="fw h400px border">
+                <div class="mgt05 ft500 centertext ft12">Mapa 1</div>
+
+            </div>
+            <div class="fw h400px border">
+                <div class="mgt05 ft500 centertext ft12">Mapa 2</div>
+
+            </div>
+        </div>
+
+        <!-- Comentarios -->
+        <div fxLayout="row" class="mgt10">
+            <div class="ft500 ft13">Comentarios</div>
+        </div>
+
+    </div>
+
+</div>

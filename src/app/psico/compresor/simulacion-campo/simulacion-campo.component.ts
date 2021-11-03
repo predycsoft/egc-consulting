@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SimulacionCampoComponent implements OnInit {
 
+
   vista: string = 'lista'
 
 

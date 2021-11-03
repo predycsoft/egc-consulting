@@ -128,6 +128,25 @@ class dataSet{
   y: number| string = 0;
 }
 
+class cromatografia {
+  metano: number = 0;
+  etano: number = 0;
+  propano: number = 0;
+  iButano: number = 0;
+  nButano: number = 0;
+  iPentano: number = 0;
+  nPentano: number = 0;
+  hexano: number = 0;
+  heptano: number = 0;
+  octano: number = 0;
+  nonano: number = 0;
+  decano: number = 0;
+  nitrogeno: number = 0;
+  dioxCarbono: number = 0;
+  sulfHidrogeno: number = 0;
+  aire: number = 0;
+}
+
 
 // ------------------------------------------------------------------------------------------------------------------------ XXXXXXXXXXXX
 
@@ -138,6 +157,28 @@ class dataSet{
 })
 export class DataServiceService {
 
+  cromatografiaNombre: string[] = ['Metano (CH4)','Metano (CH4)','Etano (C2H6)','Propano (C3H8)',	'iso-Butano (C4H10)', 'n-Butano (C4H10)','iso-Pentano (C5H12)','n-Pentano (C5H12)','Hexanos  (C6H14)','Heptanos (C7H16)','Octanos (C8H18)','Nonanos (C9H20)','Decanos (C10H22)','Diox. Carbono (CO2)','Nitrogeno (N2)','Sulf. Hidrógeno (H2S)']
+  cromatografiaPM: string[] = ['16.043','30.07','44.097','58.124','58.124','72.151','72.151','86.178','100.205','114.232','128.259','142.286','44.01','28.013','34.076']
+
+  
+    // 
+  // 
+  // 
+  // 
+  // 	
+  // 	
+  // 
+  // 	
+  // 	
+  // 	
+  // 	
+  // 	
+  // 
+  // 
+  // 
+
+
+  
   // ########  ########   #######  ##    ## ########  ######  ########  #######   ######  
   // ##     ## ##     ## ##     ##  ##  ##  ##       ##    ##    ##    ##     ## ##    ## 
   // ##     ## ##     ## ##     ##   ####   ##       ##          ##    ##     ## ##       

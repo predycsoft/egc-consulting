@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SimulacionCampoDialogResultadosComponent implements OnInit {
 
+  tipoComparacion: string = "porcentual"
+  tipoSim = "campo"
+  tipoGrafico = "potencia"
+
+
   outParams: string[] = ['Temp. Succión [ºF]', 'Temp. Descarga [ºF]', 'Temp. Isentrópica [ºF]', 'Presión Succión [psia]', 
   'Presión Descarga [psia]', 'Presión Isentrópica [psia]', 'Densidad Succión [g/cm3]', 'Densidad Descarga [lbm/pie3]', 
   'Densidad Isentrópica [lbm/pie3]', 'Volumen Succión [pie3/lbm]', 'Volumen Descarga [pie3/lbm]', 'Volumen isentrópico [pie3/lbm]', 
@@ -22,6 +27,10 @@ export class SimulacionCampoDialogResultadosComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.outParams)
+  }
+
+  actualizarMetodoComparacion(){
+    
   }
 
 }

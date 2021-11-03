@@ -1,16 +1,6 @@
 tr{
     padding-top: 0px !important;
     padding-bottom: 0px !important;
-    height: 24px;
-}
-
-tr:hover{
-    background-color: var(--neutral1);
-}
-
-th {
-    /* background-color: var(--neutral1); */
-    height: 32px !important;
 }
 
 th, td{
@@ -18,30 +8,21 @@ th, td{
     padding-right: 8px !important;
     padding-top: 0px !important;
     padding-bottom: 0px !important;
-    font-size: 13px !important;
+    font-size: 9px !important;
     border: .5px solid var(--stroke1);
     line-height: 1.5 !important;
 
 }
+
 
 td{ 
     font-weight: 400 !important;
     text-align: right;
     border: .5px solid var(--stroke1);
     line-height: 1.5 !important;
-    border-bottom: 1px solid var(--stroke1);
 }
 
 .dimension{
-    font-size: 11px !important;
+    font-size: 7px !important;
     text-align: center;
-}
-
-.simpleSelect{
-    text-align: end !important;
-    border: none !important;
-    height: 30px !important;
-    position: relative;
-    right: -5px !important;
-    background-color: transparent !important;
 }
