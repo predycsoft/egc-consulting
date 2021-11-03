@@ -269,7 +269,7 @@ export class DataServiceService {
   getTren(proyectoId: string, tagTren: string) {
     return this.afs.collection("proyectos")
     .doc(proyectoId)
-    .collection("trenes")
+    .collection<tren>("trenes")
     .doc(tagTren)
     .valueChanges()
   }
@@ -307,6 +307,9 @@ export class DataServiceService {
 
 
   //////////////////////////////////////////////////////////////////////////////////
+  getEquipos(proyectoId:string, trenTag: string){
+    return this.afs.collection("proyectos").doc(proyectoId).collection<equipo>("equipos").valueChanges()
+  }
   obtenerEquipo(proyectoId:string, tag: string){
     return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).collection<equipo>("equipos").doc(tag).valueChanges()
   }
@@ -335,6 +338,22 @@ export class DataServiceService {
       .collection("equipos")
       .doc(equipoTag)
       .delete().catch(error => console.log(error))
+  }
+
+  async getCurvas(proyectoId: string, equipoTag: string) {
+    let curvas = []
+    const docs= await this.afs
+    .collection('proyectos')
+      .doc(proyectoId)
+      .collection("equipos")
+      .doc(equipoTag)
+      .collection("curvas")
+      .ref
+      .get()
+    docs.forEach(doc => {
+      return curvas.push(doc.data())
+    })
+    return curvas
   }
 
   /**
