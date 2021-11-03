@@ -88,6 +88,9 @@ export class curva {
   ultimoEditor: string = '';
   dimQ: string = 'Q/N';
   equivalente: boolean = true // Flag que determina si el impulsor es equivalente
+  nombre: string = '';
+  comentario: string = '';
+  vigencia: boolean = true;
 
   // General
   numCompresor: number = 0;

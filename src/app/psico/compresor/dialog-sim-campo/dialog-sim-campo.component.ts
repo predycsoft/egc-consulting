@@ -39,7 +39,9 @@ export class DialogSimCampoComponent implements OnInit {
                 const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
                 for (let j = 0; j < curvasDocs.docs.length; j++) {
                   const curva = curvasDocs.docs[j].data();
-                  curvas.push(curva)
+                  if (curva.equivalente == true){
+                    curvas.push(curva)
+                  }
                 }
                 const obj = {
                   equipoTag: this.equipos[i].tag,

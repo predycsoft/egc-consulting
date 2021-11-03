@@ -30,12 +30,27 @@
 
 
 
-    <span>Tren: </span>
-    <span>Num de compresores (TAGS y tipologia y nSecciones</span>
-    <span>Num de secciones total: </span>
-    <span>Perdidas de caja</span>
-    <span>Perdidas mecanicas</span>
-    <span>Curva seleccionada</span>
+    <span>Tren: {{tren.tag}}</span>
+    <span>Num de compresores: {{this.equipos.length}}</span>
+
+    <div *ngFor="let equipo of equipos; let i = index"> 
+        <div>{{equipo.familia}} {{equipo.tag}} </div>
+        <div>{{equipo.tipologia}} </div>
+        <div>{{equipo.nSecciones}} </div>
+        <span>Perdidas de caja</span>
+        <span>Perdidas mecanicas</span>
+        <div >
+            
+        </div>
+        <div>curvas</div>
+        <mat-select value="" >
+            <mat-option *ngFor="let curva of this.curvas[i].curvas" value="curva" class="optionItem" > {{curva}} </mat-option>
+        </mat-select>
+    
+        <span></span>
+    </div>
+
+    <div *ngFor="let curva of "></div>
 
 
 
