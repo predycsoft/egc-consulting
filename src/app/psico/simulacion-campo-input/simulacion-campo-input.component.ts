@@ -34,19 +34,40 @@ export class SimulacionCampoInputComponent implements OnInit {
   flagEqPsico
   date = new Date
 
-  PSUC
-  TSUC
-  RPMS = [0,0,0,0,0]
-  qdim
-  tdim
-  pdim
-  ddim
+  PSUC = 150
+  PDES = 365.53881
+  TSUC = 101.3
+  TDES = 248.9
+  RPMS = [7400, 8450, 9500, 10570, 11100]
+  RPM = 6194
+  flujo = 51
+  qdim = "[MMSCFD]"
+  tdim = "[°F]"
+  pdim = "[psia]"
+  ddim = "[pulg]"
+  mezcla = {
+    metano: 0.480000,
+    etano: 0.066000,
+    propano: 0.040100,
+    iButano: 0.005000,
+    nButano: 0.018000,
+    iPentano: 0.005000,
+    nPentano: 0.006500,
+    hexano: 0.007400,
+    heptano: 0.000000,
+    octano: 0.000000,
+    nonano: 0.000000,
+    decano: 0.000000,
+    nitrogeno: 0.330000,
+    dioxCarbono: 0.021000,
+    sulfHidrogeno: 0.021000
+  }
 
   //Tabla
   mostrarTabla = false
   dataSets;
 
-   ///////////////// Grafica //////////////////////
+  ///////////////// Grafica //////////////////////
   // Data para el plot
   yData: Array<Array<number>> = [];
   // options
@@ -117,12 +138,12 @@ export class SimulacionCampoInputComponent implements OnInit {
 
   generarMapa() {
     this.envio = []
-    this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno", 
-    "TSUC", "PSUC","RPM","CP1","CP2","CP3","CP4","EXPOCP","CE1","CE2","CE3","CE4","EXPOCE","SURGE","STONEW","DIAM","DDIM","TDIM","PDIM","QDIM"])
+    this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+      "TSUC", "PSUC", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DIAM", "DDIM", "TDIM", "PDIM", "QDIM"])
     for (let index = 0; index < this.RPMS.length; index++) {
       const RPM = this.RPMS[index];
-      this.envio.push([0.480000, 0.066000, 0.040100, 0.005000, 0.018000, 0.005000, 0.006500, 0.007400, 0.000000, 0.000000, 0.000000, 0.000000, 0.330000, 0.021000, 0.021000,
-      this.TSUC,this.PSUC, RPM, this.curva.cp1,this.curva.cp2,this.curva.cp3,this.curva.cp4,this.curva.expocp,this.curva.ce1,this.curva.ce2,this.curva.ce3,this.curva.ce4,this.curva.expoce,this.curva.limSurge,this.curva.limStw,this.curva.diametro,"[pulg]",this.tdim, this.pdim,"[MMSCFD]"])
+      this.envio.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
+      this.TSUC, this.PSUC, RPM, this.curva.cp1, this.curva.cp2, this.curva.cp3, this.curva.cp4, this.curva.expocp, this.curva.ce1, this.curva.ce2, this.curva.ce3, this.curva.ce4, this.curva.expoce, this.curva.limSurge, this.curva.limStw, this.curva.diametro, "[pulg]", this.tdim, this.pdim, "[MMSCFD]"])
     }
     console.log(this.envio)
     this.http.post(this.url, JSON.stringify(this.envio)).subscribe((res) => {
@@ -142,27 +163,27 @@ export class SimulacionCampoInputComponent implements OnInit {
     for (let i = 1; i < this.dataSets[0].length; i++) {
       const Q = this.dataSets[5][i]
       const Pot = +this.dataSets[4][i]
-      if (this.dataSets[0][i] != this.dataSets[0][i-1]) {
+      if (this.dataSets[0][i] != this.dataSets[0][i - 1]) {
         RPMS.push(this.dataSets[0][i])
         flagCambioRPM++
       }
       if (flagCambioRPM == 1) {
-        this.yData = [...this.yData,[+Q,+Pot,,,,,]]
+        this.yData = [...this.yData, [+Q, +Pot, , , , ,]]
       }
       if (flagCambioRPM == 2) {
-        this.yData = [...this.yData,[+Q,,+Pot,,,,]]
+        this.yData = [...this.yData, [+Q, , +Pot, , , ,]]
       }
       if (flagCambioRPM == 3) {
-        this.yData = [...this.yData,[+Q,,,+Pot,,,]]
+        this.yData = [...this.yData, [+Q, , , +Pot, , ,]]
       }
       if (flagCambioRPM == 4) {
-        this.yData = [...this.yData,[+Q,,,,+Pot,,]]
+        this.yData = [...this.yData, [+Q, , , , +Pot, ,]]
       }
       if (flagCambioRPM == 5) {
-        this.yData = [...this.yData,[+Q,,,,,+Pot]]
+        this.yData = [...this.yData, [+Q, , , , , +Pot]]
       }
     }
-    this.columns = ["Q",RPMS[0],RPMS[1],RPMS[2],RPMS[3],RPMS[4]]
+    this.columns = ["Q", RPMS[0], RPMS[1], RPMS[2], RPMS[3], RPMS[4]]
     console.log(this.yData)
     this.options = {
       interpolateNulls: true,
@@ -185,8 +206,32 @@ export class SimulacionCampoInputComponent implements OnInit {
     this.mostrarGrafica = true
   }
 
+  evaluar() {
+    this.envio = []
+    this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+      "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
+    this.envio.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
+    this.curva.diametro, this.TSUC, this.PSUC, this.TDES, this.PDES, this.flujo, this.RPM, this.ddim, this.tdim, this.pdim, this.qdim])
+    console.log(this.envio)
+    this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(this.envio)).subscribe((res) => {
+      if (res) {
+        console.log(res)
+        let envioPrueba = []
+        envioPrueba.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+          "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
+        envioPrueba.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
+        this.TSUC, this.PSUC, this.flujo, this.curva.diametro, this.RPM, this.curva.cp1, this.curva.cp2, this.curva.cp3, this.curva.cp4, this.curva.expocp, this.curva.ce1, this.curva.ce2, this.curva.ce3, this.curva.ce4, this.curva.expoce, this.curva.limSurge, this.curva.limStw, this.ddim, this.tdim, this.pdim, this.qdim, this.PDES])
+        this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((res) => {
+          if (res) {
+            console.log(res)
+          }
+        })
+      }
+    })
+  }
+
   customTrackBy(index: number, obj: any): any {
     return index;
-}
+  }
 
 }
