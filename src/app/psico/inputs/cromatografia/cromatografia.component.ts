@@ -66,9 +66,14 @@ export class CromatografiaComponent implements OnInit {
   }
 
   guardarCromatografia(){
+    this.nombreCromatografia = this.nombreCromatografia.replace(" ","-")
+    this.nombreCromatografia = this.nombreCromatografia.replace(",","-")
+    this.nombreCromatografia = this.nombreCromatografia.replace(".","-")
+    this.nombreCromatografia = this.nombreCromatografia.replace("@","-")
     this.afs.collection("proyectos").doc(this.proyectoId).collection("cromatografias").doc(this.nombreCromatografia).set({
-      cromatografiaOriginal: this.cromatografiaOriginal,
-      cromatografiaNormalizada: this.cromatografiaNormalizada
+      nombre: this.nombreCromatografia,
+      cromatografiaOriginal: JSON.parse(JSON.stringify(this.cromatografiaOriginal)),
+      cromatografiaNormalizada: JSON.parse(JSON.stringify(this.cromatografiaNormalizada)),
     })
   }
 
