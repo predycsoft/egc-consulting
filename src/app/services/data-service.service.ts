@@ -172,7 +172,7 @@ export class cromatografia {
 })
 export class DataServiceService {
 
-  cromatografiaNombre: string[] = ['Metano (CH4)','Metano (CH4)','Etano (C2H6)','Propano (C3H8)',	'iso-Butano (C4H10)', 'n-Butano (C4H10)','iso-Pentano (C5H12)','n-Pentano (C5H12)','Hexanos  (C6H14)','Heptanos (C7H16)','Octanos (C8H18)','Nonanos (C9H20)','Decanos (C10H22)','Diox. Carbono (CO2)','Nitrogeno (N2)','Sulf. Hidrógeno (H2S)']
+  cromatografiaNombre: string[] = ['Metano (CH4)','Etano (C2H6)','Propano (C3H8)',	'iso-Butano (C4H10)', 'n-Butano (C4H10)','iso-Pentano (C5H12)','n-Pentano (C5H12)','Hexanos  (C6H14)','Heptanos (C7H16)','Octanos (C8H18)','Nonanos (C9H20)','Decanos (C10H22)','Diox. Carbono (CO2)','Nitrogeno (N2)','Sulf. Hidrógeno (H2S)']
   cromatografiaPM: string[] = ['16.043','30.07','44.097','58.124','58.124','72.151','72.151','86.178','100.205','114.232','128.259','142.286','44.01','28.013','34.076']
   inputPruebaEficiencia: string[] = ['P. succ.','T. succ','P desc.','T desc.','RPM','Flujo','Mezcla Gas']
 
