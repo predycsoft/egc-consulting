@@ -80,6 +80,7 @@ class simulacionPE {
   equipoTipologia: string = "";
   seccion: number = 0;
   curvas: curva[] = [];
+  curva: curva;
   inputs: inputs = new inputs()
   outputPE: outputTeorico = new outputTeorico()
   outputAdim: outputAdim = new outputAdim()
@@ -112,7 +113,7 @@ export class DialogSimCampoComponent implements OnInit {
             this.data.getEquipos(this.proyecto.id, trenTag).subscribe(async equipos => {
               this.equipos = []
               this.equipos = equipos
-              this.armarSecciones()
+              await this.armarSecciones()
               console.log(this.proyecto)
               console.log(this.tren)
               console.log(this.equipos)
@@ -125,29 +126,41 @@ export class DialogSimCampoComponent implements OnInit {
   }
 
   async armarSecciones(){
-    let simulaciones: simulacionPE[] = []
-    this.simulaciones = []
-    for (let i = 0; i < this.equipos.length; i++) {
-      let curvas = []
-      const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
-      for (let j = 0; j < curvasDocs.docs.length; j++) {
-        const curva = curvasDocs.docs[j].data() as curva;
-        if (curva.equivalente == true) {
-          curvas.push(curva)
+    try {
+      let simulaciones: simulacionPE[] = []
+      this.simulaciones = []
+      for (let i = 0; i < this.equipos.length; i++) {
+        let curvas = []
+        const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
+        for (let j = 0; j < curvasDocs.docs.length; j++) {
+          const curva = curvasDocs.docs[j].data() as curva;
+          if (curva.equivalente == true) {
+            curvas.push(curva)
+          }
         }
+        for (let sec = 1; sec < this.equipos[i].nSecciones+1; sec++) {
+          const simulacion = new simulacionPE()
+          simulacion.equipoTag = this.equipos[i].tag
+          simulacion.equipoFamilia = this.equipos[i].familia
+          simulacion.seccion = sec
+          simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
+          simulacion.curva = simulacion.curvas.find(x => x.default == true)
+          simulaciones.push(simulacion)
+        }
+        curvas = []
       }
-      for (let sec = 1; sec < this.equipos[i].nSecciones+1; sec++) {
-        const simulacion = new simulacionPE()
-        simulacion.equipoTag = this.equipos[i].tag
-        simulacion.equipoFamilia = this.equipos[i].familia
-        simulacion.seccion = sec
-        simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
-        simulaciones.push(simulacion)
-      }
-      curvas = []
+      this.simulaciones = [simulaciones]
+      simulaciones = []
+    } catch(err) {
+      console.log(err)
     }
-    this.simulaciones = [...this.simulaciones, simulaciones]
-    simulaciones = []
+  }
+
+  agregarPunto(){
+    const len = this.simulaciones.length
+    const simulacion: simulacionPE[] = this.simulaciones[len -1]
+    this.simulaciones = [...this.simulaciones,simulacion]
+
   }
 
   openCromatografia() {
