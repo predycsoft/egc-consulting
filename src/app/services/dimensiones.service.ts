@@ -13,7 +13,7 @@ export interface variable {
 export class DimensionesService {
 
   constructor() { }
-
+  diametro = ["[pulg]"]
   temperatura = ["[°F]", "[°K]", "[°C]", "[°R]"];
   presion = ["[psig]", "[psia]", "[barg]", "[KPag]"];
   densidad = ["[lbmol/pie3]", "[lbm/pie3]", "[lbm/pulg3]", "[Kg/m3]", "[g/cm3]", "[°API]"];

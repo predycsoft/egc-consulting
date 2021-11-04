@@ -3,6 +3,21 @@
 
         <label for="">Flujo</label>
         <mat-select [(ngModel)]="compresorDims.flujo" class="simpleSelect">
-            <mat-option [value]="'flujo'" class="optionItem"> Flujo </mat-option>
+            <mat-option *ngFor="let item of dims.flujo" [value]="'item'" class="optionItem"> {{item}} </mat-option>
         </mat-select>
+        <label for="">Temperatura</label>
+        <mat-select [(ngModel)]="compresorDims.temperatura" class="simpleSelect">
+            <mat-option *ngFor="let item of dims.temperatura" [value]="'item'" class="optionItem"> {{item}} </mat-option>
+        </mat-select>
+
+        <label for="">Diametros</label>
+        <mat-select [(ngModel)]="compresorDims.diametro" class="simpleSelect">
+            <mat-option *ngFor="let item of dims.diametro" [value]="'item'" class="optionItem"> {{item}} </mat-option>
+        </mat-select>
+
+        <label for="">Presion</label>
+        <mat-select [(ngModel)]="compresorDims.presion" class="simpleSelect">
+            <mat-option *ngFor="let item of dims.presion" [value]="'item'" class="optionItem"> {{item}} </mat-option>
+        </mat-select>
+
         
