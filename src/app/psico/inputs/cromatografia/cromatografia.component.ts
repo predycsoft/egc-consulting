@@ -72,6 +72,7 @@ export class CromatografiaComponent implements OnInit {
     this.nombreCromatografia = this.nombreCromatografia.replace("@","-")
     this.afs.collection("proyectos").doc(this.proyectoId).collection("cromatografias").doc(this.nombreCromatografia).set({
       nombre: this.nombreCromatografia,
+      fechaCreacion: new Date(),
       cromatografiaOriginal: JSON.parse(JSON.stringify(this.cromatografiaOriginal)),
       cromatografiaNormalizada: JSON.parse(JSON.stringify(this.cromatografiaNormalizada)),
     })
@@ -86,8 +87,11 @@ export class CromatografiaComponent implements OnInit {
   }
 
   openLibreriaCromatografias(){
-    const dialogRef = this.dialog.open(DialogLibreriaCromatografiasComponent, {
-    });
+      const dialogRef = this.dialog.open(DialogLibreriaCromatografiasComponent, {
+        data: {
+          proyectoId: this.proyectoId,
+        }
+      })
   }
 
 
