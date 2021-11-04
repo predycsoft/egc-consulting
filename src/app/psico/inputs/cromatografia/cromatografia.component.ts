@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { cromatografia, DataServiceService } from 'src/app/services/data-service.service';
 import { DialogLibreriaCromatografiasComponent } from '../dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
@@ -28,27 +29,44 @@ class propiedadesCromatografia{
 export class CromatografiaComponent implements OnInit {
 
   nombreCromatografia: string = ''
-  cromatografiaOriginal = new cromatografia
-  cromatografiaNormalizada = new cromatografia
+  cromatografiaOriginal = new cromatografia;
+  cromatografiaNormalizada = new cromatografia;
   propidadesCromatografia = new propiedadesCromatografia();
-  fraccMolarTotal: number = 0;
-
-  constructor(private dialog: MatDialog, public data: DataServiceService) { }
+  fraccMolarOriginal: number = 0;
+  fraccMolarNorm: number = 0;
+  constructor(private dialog: MatDialog, public data: DataServiceService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
 
   }
 
   normalizar() {
-    this.fraccMolarTotal = 0
-    let val = JSON.parse(JSON.stringify(this.cromatografiaNormalizada))
-    Object.keys(val).forEach(key => {
-      this.fraccMolarTotal = this.fraccMolarTotal + +val[key]
+    this.cromatografiaOriginal.fraccMolar = 0
+    this.cromatografiaNormalizada.fraccMolar = 0
+    this.cromatografiaOriginal.fraccMolar = +this.cromatografiaOriginal.metano + +this.cromatografiaOriginal.etano + +this.cromatografiaOriginal.propano + +this.cromatografiaOriginal.iButano + +this.cromatografiaOriginal.nButano + +this.cromatografiaOriginal.iPentano + +this.cromatografiaOriginal.nPentano + +this.cromatografiaOriginal.hexano + +this.cromatografiaOriginal.heptano + +this.cromatografiaOriginal.octano + +this.cromatografiaOriginal.nonano + +this.cromatografiaOriginal.decano + +this.cromatografiaOriginal.nitrogeno  + +this.cromatografiaOriginal.dioxCarbono + +this.cromatografiaOriginal.sulfHidrogeno
+    this.cromatografiaNormalizada.metano = this.cromatografiaOriginal.metano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.etano = this.cromatografiaOriginal.etano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.propano = this.cromatografiaOriginal.propano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.iButano = this.cromatografiaOriginal.iButano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.nButano = this.cromatografiaOriginal.nButano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.iPentano = this.cromatografiaOriginal.iPentano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.nPentano = this.cromatografiaOriginal.nPentano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.hexano = this.cromatografiaOriginal.hexano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.heptano = this.cromatografiaOriginal.heptano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.octano = this.cromatografiaOriginal.octano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.nonano = this.cromatografiaOriginal.nonano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.decano = this.cromatografiaOriginal.decano/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.dioxCarbono = this.cromatografiaOriginal.dioxCarbono/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.nitrogeno = this.cromatografiaOriginal.nitrogeno/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.sulfHidrogeno = this.cromatografiaOriginal.sulfHidrogeno/this.cromatografiaOriginal.fraccMolar;
+    this.cromatografiaNormalizada.fraccMolar = +this.cromatografiaNormalizada.metano + +this.cromatografiaNormalizada.etano + +this.cromatografiaNormalizada.propano + +this.cromatografiaNormalizada.iButano + +this.cromatografiaNormalizada.nButano + +this.cromatografiaNormalizada.iPentano + +this.cromatografiaNormalizada.nPentano + +this.cromatografiaNormalizada.hexano + +this.cromatografiaNormalizada.heptano + +this.cromatografiaNormalizada.octano + +this.cromatografiaNormalizada.nonano + +this.cromatografiaNormalizada.decano + +this.cromatografiaNormalizada.nitrogeno  + +this.cromatografiaNormalizada.dioxCarbono + +this.cromatografiaNormalizada.sulfHidrogeno
+  }
+
+  guardarCromatografia(){
+    this.afs.collection("proyectos").doc(this.proyectoId).collection("cromatografias").doc(this.nombreCromatografia).set({
+      cromatografiaOriginal: this.cromatografiaOriginal,
+      cromatografiaNormalizada: this.cromatografiaNormalizada
     })
-    Object.keys(val).forEach(key => {
-      val[key] = val[key]/this.fraccMolarTotal
-    })
-    this.cromatografiaNormalizada= val;
   }
 
   returnZero() {
