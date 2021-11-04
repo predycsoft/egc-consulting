@@ -48,15 +48,28 @@
 
         <!-------------------------------------------------------------------- Propiedades del gas -->
 
-        <div class="border-l">
-            <div class="firstRow" fxLayoutAlign="space-between center">
-                {{cromatografiaOriginal | json}}
+        export class cromatografia {
+            metano: number = 0;
+            etano: number = 0;
+            propano: number = 0;
+            iButano: number = 0;
+            nButano: number = 0;
+            iPentano: number = 0;
+            nPentano: number = 0;
+            hexano: number = 0;
+            heptano: number = 0;
+            octano: number = 0;
+            nonano: number = 0;
+            decano: number = 0;
+            nitrogeno: number = 0;
+            dioxCarbono: number = 0;
+            sulfHidrogeno: number = 0;
+            aire: number = 0;
+          }    
 
-                <br><br>
-                {{cromatografiaNormalizada | json}}
-                <span class="ft16 text2">Propiedades del gas</span>
-                <!-- <span class="textButton" (click)="normalizar()">Calcular</span> -->
-            </div>
+
+        <div class="border-l">
+
             <table>
                 <!-- <tr>
                     <th>Propiedades del gas</th>

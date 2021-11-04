@@ -1,8 +1,10 @@
 <!-- Prueba de eficiencia -->
 
 <div fxLayout="column" class="pd20">
-    <div fxLayout="column">
+
+    <div fxLayout="column" class="w300px">
         <span class="ft24 ft500">Prueba de eficiencia del TREN *TAG*</span>
+        
         <span> Fecha de creación: *fecha*</span>
         <div fxLayout="column">
             <span> Responsable de la recolección de data: *fecha*</span>
@@ -21,34 +23,32 @@
             <input type="datetime-local">
         </div>
     </div>
-    
 
+    <hr>
 
+    <div fxLayout="column">
+        <span>Tren: {{tren.tag}}</span>
+        <span>Num de compresores: {{this.equipos.length}}</span>
+    </div>
 
-
-
-
-
-
-    <span>Tren: {{tren.tag}}</span>
-    <span>Num de compresores: {{this.equipos.length}}</span>
-
-    <div *ngFor="let equipo of equipos; let i = index"> 
+    <div *ngFor="let equipo of equipos; let i = index" class="pd10 border radius4 ">
         <div>{{equipo.familia}} {{equipo.tag}} </div>
         <div>{{equipo.tipologia}} </div>
-        <div>{{equipo.nSecciones}} </div>
         <span>Perdidas de caja</span>
         <span>Perdidas mecanicas</span>
-        <div >
-            
-        </div>
-        <div>curvas</div>
-        <mat-select value="" >
-            <mat-option *ngFor="let curva of this.curvas[i].curvas" value="curva" class="optionItem" > {{curva}} </mat-option>
+
+        <div>Curva de sección</div>
+        <mat-select value="">
+            <mat-option *ngFor="let curva of this.curvas[i].curvas" value="curva.nombre" class="optionItem"> {{curva.nombre}}
+            </mat-option>
         </mat-select>
-    
+
         <span></span>
     </div>
+
+
+
+
 
     <div *ngFor="let curva of "></div>
 
@@ -58,45 +58,45 @@
         <table>
             <tr>
                 <th> Variable de entrada</th>
-                <td *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <td *ngFor="let item of [1,2,3,4]; let i = index">
                     <input type="number" placeholder="-">
-                </td>  
+                </td>
             </tr>
             <tr>
                 <th> Temp. succ. (dim)</th>
-                <th *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <th *ngFor="let item of [1,2,3,4]; let i = index">
                     <input type="number" placeholder="-">
-                </th>  
+                </th>
             </tr>
             <tr>
                 <th> Pres. desc. (dim)</th>
-                <th *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <th *ngFor="let item of [1,2,3,4]; let i = index">
                     <input type="number" placeholder="-">
-                </th>  
+                </th>
             </tr>
             <tr>
                 <th> Temp. desc. (dim) </th>
-                <th *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <th *ngFor="let item of [1,2,3,4]; let i = index">
                     <input type="number" placeholder="-">
-                </th>  
+                </th>
             </tr>
             <tr>
-                <th> RPM  (dim)</th>
-                <th *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <th> RPM (dim)</th>
+                <th *ngFor="let item of [1,2,3,4]; let i = index">
                     <input type="number" placeholder="-">
-                </th>  
+                </th>
             </tr>
             <tr>
                 <th> Flujo (dim) </th>
-                <th *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <th *ngFor="let item of [1,2,3,4]; let i = index">
                     <input type="number" placeholder="-">
-                </th>  
+                </th>
             </tr>'
             <tr>
                 <th> Flujo (dim) </th>
-                <th *ngFor="let item of [1,2,3,4]; let i = index"> 
+                <th *ngFor="let item of [1,2,3,4]; let i = index">
                     <a (click)="openCromatografia()" class="ft16">Mezcla</a>
-                </th>  
+                </th>
             </tr>'
 
 
@@ -128,7 +128,8 @@
         <div>
             <span class="w100px">dimension:</span>
             <span class="w100px">seleccionada</span>
-        </div>        <div>
+        </div>
+        <div>
             <span class="w100px">dimension:</span>
             <span class="w100px">seleccionada</span>
         </div>
