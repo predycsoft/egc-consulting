@@ -1,4 +1,6 @@
-<div class="topBarContainer" fxLayout="row" fxLayoutGap=".5rem">
+<div class="border-l topBarContainer pd05" fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign=" center">
+
+    <span class="mgl10 ft500 ft16">Comportamiento real del tren (Historico)</span>
     <div>
         <input type="datetime-local">
     </div>
@@ -11,9 +13,9 @@
     <mat-icon class="iconButton text3 ft18">settings</mat-icon>
 </div>
 
-<div *ngIf="vista==='dashboard'">
+<div *ngIf="vista==='dashboard'" class="border-l">
     <simulacion-campo-dashboard></simulacion-campo-dashboard>
 </div>
-<div *ngIf="vista==='lista'">
+<div *ngIf="vista==='lista'" class="border-l">
     <simulacion-campo-lista></simulacion-campo-lista>
 </div>

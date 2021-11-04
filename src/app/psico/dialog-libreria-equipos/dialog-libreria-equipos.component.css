@@ -1,65 +1,94 @@
-.firstRow{
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    background: var(--neutral1);
-    padding: 4px;
-    padding-left: 12px;
-    padding-right: 12px;
-    border: solid 1px var(--stroke1);
-    border-bottom: 0px;
-}
-
-
-.containerData{
-    padding: 1rem !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-}
-
-.titleContainer{
-    margin-top: 12px;
-    margin-bottom: 12px;
-}
-
-.title{
-    margin-top: 2px;
-    font-weight: 500;
-}
-
-::ng-deep input{
-    border: 1px solid transparent;
-    border-radius: 0px;
-    height: 28px;
-}
-
-::ng-deep input:focus{
-    border: 1px solid var(--stroke1);
-    background: var(--control1) !important;
-    border-radius: 4px;
-}
-
-::ng-deep tr{
-    height: 32px;
-}
-
-th{
-    color: var(--text2);
-    background: var(--neutral1) !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-td{
-    color: var(--text1);
-    font-size: 14px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-tr:hover{
-    background: var(--neutral1);
-}
-
-.filaSeleccionada{
-    background: var(--neutral3) !important;
-}
+.dataImpulsorContainer{
+    overflow-x: auto;
+    overflow-y: auto;
+ }
+ 
+ input{
+     border: 1px solid transparent;
+     border-radius: 0px;
+     font-size: 12px !important;
+     height: 20px;
+     background-color: var(--neutral1) !important;
+     min-width: 70px !important;
+     width: 70px !important;
+ }
+ 
+ input:focus{
+     border: 1px solid var(--stroke1);
+     background: var(--control1) !important;
+     border-radius: 4px;
+ }
+ 
+ label{
+   margin-top: 0px !important;
+   margin-bottom: 0px !important;
+ }
+ 
+ .simpleSelect{
+     text-align: end !important;
+     border: none !important;
+     height: 30px !important;
+     position: relative;
+     right: -5px !important;
+     background-color: transparent !important;
+ 
+ }
+ 
+ 
+ /* Data set Table */
+ 
+ .dataSetContainer{
+     overflow-y: auto;
+     overflow-x: hidden;
+     height: 607px;
+ }
+ 
+ tr{
+     padding: 8px !important;
+     height: 30px;
+ }
+ 
+ th{
+     min-width: 50px;
+     font-size: 13px !important;
+     font-weight: 500 !important;
+     text-align: center;
+ }
+ 
+ 
+ 
+ 
+ td{ 
+     min-width: 50px;
+     font-size: 11px !important;
+     font-weight: 400 !important;
+     text-align: center;
+ }
+ 
+ /* Scrollbar */
+ 
+ ::-webkit-scrollbar {
+     border-radius: 50%;
+     transition: .1 ease;
+     width: 6px;
+ }
+ 
+ ::-webkit-scrollbar-track  {
+     background: transparent;
+ }
+   
+ ::-webkit-scrollbar-track  {
+     background: transparent;
+ }
+   
+ ::-webkit-scrollbar-thumb  {
+     background: transparent;
+     border-radius: 3px;
+     transition: .3s !important;
+ }
+ 
+ .dataSetContainer:hover::-webkit-scrollbar-thumb  {
+     background: var(--stroke2);
+     transition: .3s !important;
+ }
+ 
