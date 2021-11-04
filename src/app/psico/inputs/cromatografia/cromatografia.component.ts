@@ -39,17 +39,17 @@ export class CromatografiaComponent implements OnInit {
 
   }
 
-  // normalizar() {
-  //   this.fraccMolarTotal = 0
-  //   let val = JSON.parse(JSON.stringify(this.cr))
-  //   Object.keys(val).forEach(key => {
-  //     this.fraccMolarTotal = this.fraccMolarTotal + +val[key]
-  //   })
-  //   Object.keys(val).forEach(key => {
-  //     val[key] = val[key]/this.fraccMolarTotal
-  //   })
-  //   this.cr= val;
-  // }
+  normalizar() {
+    this.fraccMolarTotal = 0
+    let val = JSON.parse(JSON.stringify(this.cromatografiaNormalizada))
+    Object.keys(val).forEach(key => {
+      this.fraccMolarTotal = this.fraccMolarTotal + +val[key]
+    })
+    Object.keys(val).forEach(key => {
+      val[key] = val[key]/this.fraccMolarTotal
+    })
+    this.cromatografiaNormalizada= val;
+  }
 
   returnZero() {
     return 0
