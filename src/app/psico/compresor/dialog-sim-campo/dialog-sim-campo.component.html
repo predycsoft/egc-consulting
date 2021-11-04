@@ -113,6 +113,12 @@
                     <input type="number" placeholder="-" class="inputNumber">
                 </td>
             </tr>
+            <tr>
+                <th> Mezcla (dim) </th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <a class="ft12" (click)="openCromatografia()">Mezcla</a>
+                </td>
+            </tr>
 
 
         </table>
