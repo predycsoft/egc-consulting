@@ -26,37 +26,37 @@ class inputs {
 }
 
 class outputTeorica {
-  eficPoli: number = 0 
-  coefWorkInput: number = 0 
-  coefHead: number = 0 
-  workPoli: number = 0 
-  gashp: number = 0 
-  flujoMasico: number = 0 
-  relacion_de_compresion: number = 0 
-  relacion_de_volumen: number = 0 
-  tIsent: number = 0 
+  eficPoli: number = 0
+  coefWorkInput: number = 0
+  coefHead: number = 0
+  workPoli: number = 0
+  gashp: number = 0
+  flujoMasico: number = 0
+  relacion_de_compresion: number = 0
+  relacion_de_volumen: number = 0
+  tIsent: number = 0
   pIsent: number = 0
-  densSuc: number = 0 
-  densDes: number = 0 
-  densIsen: number = 0 
-  volSuc: number = 0 
-  volDes: number = 0 
-  volIsent: number = 0 
-  hSuc: number = 0 
-  hDes: number = 0 
-  hIsnet: number = 0 
-  sSuc: number = 0 
-  sDes: number = 0 
+  densSuc: number = 0
+  densDes: number = 0
+  densIsen: number = 0
+  volSuc: number = 0
+  volDes: number = 0
+  volIsent: number = 0
+  hSuc: number = 0
+  hDes: number = 0
+  hIsnet: number = 0
+  sSuc: number = 0
+  sDes: number = 0
   sIsent: number = 0
-  compSuc: number = 0 
-  compDes: number = 0 
-  compIsent: number = 0 
-  ymw: number = 0 
+  compSuc: number = 0
+  compDes: number = 0
+  compIsent: number = 0
+  ymw: number = 0
   qn: number = 0
 }
 
-class outputPE{
-  
+class outputPE {
+
 }
 
 class simulacionPE {
@@ -102,7 +102,7 @@ export class DialogSimCampoComponent implements OnInit {
                     curvas.push(curva)
                   }
                 }
-                if (this.equipos[i].nSecciones == 2){
+                if (this.equipos[i].nSecciones == 2) {
                   const obj1 = {
                     equipoTag: this.equipos[i].tag,
                     seccion: 1,
@@ -140,6 +140,9 @@ export class DialogSimCampoComponent implements OnInit {
 
   openCromatografia() {
     const dialogRef = this.dialog.open(CromatografiaComponent, {
-    });
+      data: {
+        proyectoId: this.proyecto.id,
+      }
+    })
   }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { cromatografia, DataServiceService } from 'src/app/services/data-service.service';
 import { DialogLibreriaCromatografiasComponent } from '../dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
 
@@ -28,16 +28,19 @@ class propiedadesCromatografia{
 })
 export class CromatografiaComponent implements OnInit {
 
-  nombreCromatografia: string = ''
+  proyectoId: string = '';
+  nombreCromatografia: string = '';
   cromatografiaOriginal = new cromatografia;
   cromatografiaNormalizada = new cromatografia;
   propidadesCromatografia = new propiedadesCromatografia();
   fraccMolarOriginal: number = 0;
   fraccMolarNorm: number = 0;
-  constructor(private dialog: MatDialog, public data: DataServiceService, private afs: AngularFirestore) { }
+  constructor(private dialog: MatDialog, public data: DataServiceService, private afs: AngularFirestore,
+    public dialogRef: MatDialogRef<CromatografiaComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataEnviada) { }
 
   ngOnInit(): void {
-
+     this.proyectoId = this.dataEnviada.proyectoId
   }
 
   normalizar() {
