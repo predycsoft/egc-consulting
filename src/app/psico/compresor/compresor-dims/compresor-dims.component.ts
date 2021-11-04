@@ -28,9 +28,16 @@ export class CompresorDimsComponent implements OnInit {
           this.data.getTren(this.proyecto.id,trenTag).subscribe(tren => {
             this.tren = tren
             this.compresorDims = this.tren.dimensiones
+            console.log(this.compresorDims)
           })
         })
       })
+    })
+  }
+
+  guardarTren(){
+    this.afs.collection("proyectos").doc(this.proyecto.id).collection("trenes").doc(this.tren.tag).update({
+      dimensiones: JSON.parse(JSON.stringify(this.tren.dimensiones))
     })
   }
 
