@@ -29,7 +29,7 @@
         <span>Tren: {{tren.tag}}</span>
         <span>Num de compresores: {{this.equipos.length}}</span>
     </div>
-
+    <!-- 
     <div *ngFor="let equipo of equipos; let i = index" class="pd10 border radius4 ">
         <div>{{equipo.familia}} {{equipo.tag}} </div>
         <div>{{equipo.tipologia}} </div>
@@ -43,13 +43,23 @@
         </mat-select>
 
         <span></span>
+    </div> -->
+    <div *ngFor="let simulacion of simulaciones; let i = index">
+        <div *ngFor="let secciones of this.simulaciones[i]; let j = index">
+            <div *ngIf="j == 0 || (j > 0 && this.simulaciones[i][j].equipoTag !=  this.simulaciones[i][j -1].equipoTag)">
+                <div>{{secciones.equipoFamilia}} {{secciones.equipoTag}}</div>
+                <div>{{secciones.equipoTipologia}}</div>
+                <div>Perdidas de caja</div>
+                <div>Perdidas mecanicas</div>
+            </div>
+            <div>Curva de sección {{secciones.seccion}}</div>
+            <mat-select value="">
+                <mat-option *ngFor="let curva of secciones.curvas" value="curva.nombre" class="optionItem">
+                    {{curva.nombre}}
+                </mat-option>
+            </mat-select>
+        </div>
     </div>
-
-
-
-
-
-    <div *ngFor="let curva of "></div>
 
 
 
