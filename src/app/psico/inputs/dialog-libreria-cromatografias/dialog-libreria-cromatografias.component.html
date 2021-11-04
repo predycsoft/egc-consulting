@@ -1,12 +1,12 @@
-<table>
+<table class="w500px">
     <tr>
         <th class="w-80">Nombre</th>
         <th class="w-10">Fecha creación</th>
         <th class="w-10">accion</th>
     </tr>
-    <tr>
-        <td>Nombre cromatografia</td>
-        <td>Fecha </td>
+    <tr *ngFor="let item of cromatografias">
+        <td>{{item.nombre}}</td>
+        <td>{{item.fechaCreacion}} </td>
         <td>
             <mat-icon class="iconButton text2">delete</mat-icon>
         </td>
