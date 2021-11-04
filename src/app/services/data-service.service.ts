@@ -7,6 +7,7 @@ import { switchMap, map } from 'rxjs/operators';
 export class tren {
   tag: string = "";
   equipos: equipo_tren[] = [];
+  dimensiones: compresorDims = new compresorDims()
 }
 
 export class equipo_tren {
@@ -133,14 +134,10 @@ class dataSet{
 }
 
 export class compresorDims {
-  flujo: string = 'MMscfd';
-  velocidad: 'rpm';
-  presion: string = 'psig';
-  temperatura: string = '°F';
-  volEspecifico: string = 'pie3/lbm';
-  densidad: string = 'lbm/pie3';
-  potencia: string = 'Hp';
-  diametro: string = 'm';
+  flujo: string = '[MMSCFD]';
+  presion: string = '[psig]';
+  temperatura: string = '[°F]';
+  diametro: string = '[pulg]';
 }
 
 export class cromatografia {
