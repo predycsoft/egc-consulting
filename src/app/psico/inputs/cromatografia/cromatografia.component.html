@@ -31,17 +31,17 @@
                         <mat-icon class="iconButton text2" matTooltip="Normalizar">exposure_plus_1</mat-icon>
                     </th>
                 </tr>
-                <tr *ngFor="let item of cr | keyvalue: returnZero; let i=index; ; trackBy:customTrackBy;" >
-                    <td>{{this.cromatografia[i].nombre}}</td>
-                    <td class="centertext">{{this.cromatografia[i].formula}}</td>
-                    <td class="centertext">{{this.cromatografia[i].pesoMolecular}}</td>
-                    <td> <input type="number" [(ngModel)]="this.cr[item.key]" class="w100px"></td>
+                <tr *ngFor="let item of data.cromatografiaNombre | keyvalue: returnZero; let i=index" >
+                    <td>{{data.cromatografiaNombre[i]}}</td>
+                    <td class="centertext">{{this.data.cromatografiaPM[i]}}</td>
+                    <td> <input type="number" [(ngModel)]="this.cromatografiaOriginal[item.key]" class="w100px"></td>
+                    <td> <input type="number" [(ngModel)]="this.cromatografiaNormalizada[item.key]" class="w100px"></td>
                 </tr>
                 <tr class="border-t">
                     <td >Total</td>
                     <td></td>
-                    <td></td>
-                    <td class="centertext">{{fraccMolarTotal}}</td>
+                    <!-- <td></td> -->
+                    <!-- <td class="centertext">{{fraccMolarTotal}}</td> -->
                 </tr>
             </table>
         </div>
@@ -50,8 +50,9 @@
 
         <div class="border-l">
             <div class="firstRow" fxLayoutAlign="space-between center">
+                {{cromatografiaOriginal | json}}
                 <span class="ft16 text2">Propiedades del gas</span>
-                <span class="textButton" (click)="normalizar()">Calcular</span>
+                <!-- <span class="textButton" (click)="normalizar()">Calcular</span> -->
             </div>
             <table>
                 <!-- <tr>
