@@ -29,10 +29,10 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   grado: number;
   unidadFlujo: string = 'Q/N';
 
-  constructor(public dialogService: DialogService, 
+  constructor(public dialogService: DialogService,
     private afs: AngularFirestore,
-    private ngxCsvParser: NgxCsvParser, 
-    private data: DataServiceService, 
+    private ngxCsvParser: NgxCsvParser,
+    private data: DataServiceService,
     private http: HttpClient,
     public dialogRef: MatDialogRef<DialogPolinomiosCurvasCompresorComponent>,
     @Inject(MAT_DIALOG_DATA) public dataEnviada) { }
@@ -62,9 +62,10 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   curva = new curva
 
   ngOnInit(): void {
-    if(this.dataEnviada.impulsor){
+    if (this.dataEnviada.impulsor) {
       this.curva = this.dataEnviada.impulsor
-      if (this.curva.expocp != 0){
+      console.log(this.curva)
+      if (this.curva.expocp != 0) {
         this.verGraficaCP()
         this.verGraficaEfi()
       }
@@ -72,7 +73,6 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     this.curva.equivalente = this.dataEnviada.equivalente
     this.curva.fab = this.dataEnviada.fab
     this.curva.numSeccion = this.dataEnviada.seccion
-    console.log(this.curva)
   }
 
   fileChangeListener($event: any): void {
@@ -123,6 +123,14 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   eliminarCurva() {
     this.dialogService.dialogConfirmar().afterClosed().subscribe(res => {
       if (res == true) {
+        if (this.curva.equivalente) {
+          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("").doc(this.dataEnviada.equipoTag)
+            .collection("curvas").ref.where("nombre", "==", this.curva.nombre).get().then(snap => {
+              const id = snap.docs[0].id
+              this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("").doc(this.dataEnviada.equipoTag)
+                .collection("curvas").doc(id).delete()
+            })
+        }
       }
     });
   }
@@ -139,7 +147,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     }
     for (let index = 0; index < len; index++) {
       let x1: number | string = ""
-      let CP:  number | string = ""
+      let CP: number | string = ""
       let x2: number | string = ""
       let EFI: number | string = ""
       if (index < cpLen) {
@@ -169,6 +177,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
 
   verGraficaCP() {
     this.yDataCp = []
+    console.log(this.curva)
     this.curva.coefHeadDataSet.sort((a, b) => +a.x - +b.x)
     let minx: number = +this.curva.coefHeadDataSet[0].x
     minx = +minx.toFixed(1) - 0.05
@@ -246,7 +255,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
       this.yDataCe = [...this.yDataCe, row]
     }
     const ultimoPunto = this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1]
-    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3 * +ultimoPunto.x + this.curva.ce2 * (+ultimoPunto.x)**2  + this.curva.ce1 * (+ultimoPunto.x)**this.curva.expoce
+    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3 * +ultimoPunto.x + this.curva.ce2 * (+ultimoPunto.x) ** 2 + this.curva.ce1 * (+ultimoPunto.x) ** this.curva.expoce
     this.yDataCe = [...this.yDataCe, [+ultimoPunto.x, +ultimoPunto.y, ultimoPuntoValue]]
     this.yDataCe.sort((a, b) => a[0] - b[0])
     console.log(this.yDataCe)
@@ -346,27 +355,22 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     })
   }
 
-  guardarCurva(){ 
-      if(this.curva.equivalente == false) {
-        this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
+  guardarCurva() {
+    if (this.curva.equivalente == false) {
+      this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
         .collection("curvas")
         .doc(`s${this.dataEnviada.seccion}-impulsor-${this.curva.numImpulsor}`).set({
           ...this.curva
         })
-      } else {
-        if(this.curva.fab == true){
-          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
+    } else {
+      if (this.curva.fab == true) {
+        const nombre = this.curva.nombre.replace(" ", "-")
+        this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
           .collection("curvas")
-          .doc(`s${this.dataEnviada.seccion}-impulsor-eq-fab`).set({
+          .doc(`s${this.dataEnviada.seccion}-${nombre}`).set({
             ...this.curva
           })
-        } else {
-          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
-          .collection("curvas")
-          .doc(`s${this.dataEnviada.seccion}-impulsor-eq-psico`).set({
-            ...this.curva
-          })
-        }
       }
+    }
   }
 }
