@@ -34,6 +34,9 @@ export class CurvasCompresorComponent implements OnInit {
   flagEqFab = false
   flagEqPsico = false
 
+  nombre = ""
+  agregando = false
+
 
   usuario = JSON.parse(localStorage.getItem("user"))
 
@@ -68,40 +71,28 @@ export class CurvasCompresorComponent implements OnInit {
     this.impSel = i;
   }
 
-  openDialogPolinomios(i:number,fab: boolean) {
+  openDialogPolinomios(i:number,nombre: string) {
     if(i == 0){
-      let impulsor = this.filteredImpulsoresEq.find(x => x.fab == fab)
-      if (impulsor) {
+        let impulsor = this.impusoresEq.find(x => x.nombre == nombre)
+        console.log(impulsor)
         const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent, {
           data: {
             equipoTag: this.equipo.tag,
             proyectoId: this.proyecto.id,
             impulsor: impulsor,
             equivalente: true,
-            fab: fab,
+            fab: false,
             seccion: this.seccionActual,
           }
         });
       } else {
-        const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent, {
-          data: {
-            equipoTag: this.equipo.tag,
-            proyectoId: this.proyecto.id,
-            impulsor: null,
-            equivalente: true,
-            fab: fab,
-            seccion: this.seccionActual,
-          }
-        });
-      }
-    } else {
       const dialogRef = this.dialog.open(DialogPolinomiosCurvasCompresorComponent, {
         data: {
           equipoTag: this.equipo.tag,
             proyectoId: this.proyecto.id,
             impulsor: this.filteredImpulsores.find(x => x.numImpulsor == i ),
             equivalente: false,
-            fab: fab,
+            fab: true,
             seccion: this.seccionActual,
         }
       });
@@ -125,7 +116,7 @@ export class CurvasCompresorComponent implements OnInit {
     })
   }
   async agregarImpulsor(){
-    let impulsor = new curva
+    let impulsor = new curva()
     impulsor.numImpulsor = this.filteredImpulsores.length + 1
     console.log(this.usuario)
     impulsor.ultimoEditor = this.usuario.correo
@@ -145,10 +136,23 @@ export class CurvasCompresorComponent implements OnInit {
     .doc(this.equipo.tag).update({
       nImpulsores: this.equipo.nImpulsores
     })
+  }
 
-
-
-
+  async agregarImpulsorEquivalente(nombre: string){
+    nombre = nombre.replace(" ","-")
+    let impulsor = new curva()
+    impulsor.numImpulsor = 1
+    impulsor.ultimoEditor = this.usuario.correo
+    impulsor.fab = false
+    impulsor.equivalente = true
+    impulsor.numSeccion = this.seccionActual
+    impulsor.nombre = nombre
+    await this.afs.collection("proyectos")
+    .doc(this.proyecto.id)
+    .collection("equipos")
+    .doc(this.equipo.tag)
+    .collection("curvas")
+    .doc(`s${this.seccionActual}-${nombre}`).set({...impulsor})
   }
 
   eliminarImpulsor(idImpulsor){

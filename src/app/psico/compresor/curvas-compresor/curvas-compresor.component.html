@@ -15,41 +15,19 @@
                 <p class="ft14 text3 ft500 pdb05 border-b mgb10">Impulsor equivalente</p>
             </div>
 
-            <div fxLayout="column" >
-                <span class="text3 ft14">Impulsor de simulación teórico</span>
-                <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()" class="mgt05">
-                    <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}} </mat-option>
-                </mat-select>
-            </div>
-
-
-            <!-- Impulsor equivalente de fabricante -->
-            <div fxLayout="row" fxLayoutAlign=" center">
+            <div fxLayout="row" fxLayoutAlign=" center" class="w300px" *ngFor="let impulsor of filteredImpulsoresEq">
                 <mat-checkbox> </mat-checkbox>
 
-                <!-- <span class="impText text3" (dblclick)="openDialogPolinomios()">
-                Cargar impulsor equivalente (Fabricante)
-            </span> -->
-
-                <span (click)="seleccionarImpulsorEquivalente('fabricante')" (dblclick)="openDialogPolinomios(0,true)"
-                    class="impText text3" [ngClass]="{'impSel': impEqSel === 'fabricante'}">
-                    Impulsor equivalente (Fabricante) {{flagEqFab}}
+                <span class="impText text3" (dblclick)="openDialogPolinomios(0,impulsor.nombre)">
+                    {{impulsor.nombre}}
                 </span>
+                <span *ngIf="impulsor.default == true"> Default</span>
             </div>
+            <button class="standard fw" (click)="agregando = true">agregar</button>
+            <label *ngIf="agregando" for="">Introduzca el nombre del impulsor</label>
+            <input *ngIf="agregando" [(ngModel)]="nombre">
+            <button  *ngIf="agregando" class="standard fw" (click)="agregando = false; agregarImpulsorEquivalente(nombre)">agregar</button>
 
-            <!-- Impulsor equivalente generado en psico -->
-            <div fxLayout="row" fxLayoutAlign=" center" class="w300px">
-                <mat-checkbox> </mat-checkbox>
-
-                <span class="impText text3" (dblclick)="openDialogPolinomios(0,false)">
-                    Generar impulsor equivalente (PSICO) {{flagEqPsico}}
-                </span>
-
-                <!-- <span (click)="seleccionarImpulsorEquivalente('psico')" (dblclick)="openDialogPolinomios()"
-                class="impText" [ngClass]="{'impSel': impEqSel === 'psico'}">
-                Impulsor equivalente (PSICO)
-            </span> -->
-            </div>
 
 
 
@@ -59,7 +37,7 @@
 
             <div *ngFor="let item of filteredImpulsores; let i = index" fxLayout="row" fxLayoutAlign=" center">
                 <mat-checkbox> </mat-checkbox>
-                <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios(item.numImpulsor,true)"
+                <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios(item.numImpulsor,'')"
                     class="impText impulsor" [ngClass]="{'impSel': impSel == i}">
                     Impulsor {{i + 1}}
                     <!-- <div class="impulsorInfoTooltip">
