@@ -25,12 +25,12 @@ class inputs {
   DDIM: string = "";
 }
 
-class outputTeorica {
-  eficPoli: number = 0
+class outputAdim {
+  EFIC: number = 0
   coefWorkInput: number = 0
-  coefHead: number = 0
+  CFHEAD: number = 0
   workPoli: number = 0
-  gashp: number = 0
+  HP: number = 0
   flujoMasico: number = 0
   relacion_de_compresion: number = 0
   relacion_de_volumen: number = 0
@@ -55,15 +55,34 @@ class outputTeorica {
   qn: number = 0
 }
 
-class outputPE {
-
+class outputTeorico {
+  PSUC: number = 0 
+  PDES: number = 0
+  TSUC: number = 0 
+  TDES: number = 0 
+  DG: number = 0 
+  HG: number = 0 
+  SURGE: number = 0 
+  QN: number = 0 
+  STONEW: number = 0 
+  CFHEAD: number = 0 
+  HEAD: number = 0 
+  EFIC: number = 0 
+  HP: number = 0 
+  POLLY: number = 0 
+  FLUJO: number = 0 
+  RPM: number = 0
 }
 
 class simulacionPE {
   equipoTag: string = "";
+  equipoFamilia: string = "";
+  equipoTipologia: string = "";
   seccion: number = 0;
   curvas: curva[] = [];
-  inputs: inputs = new inputs
+  inputs: inputs = new inputs()
+  outputPE: outputTeorico = new outputTeorico()
+  outputAdim: outputAdim = new outputAdim()
 }
 
 @Component({
@@ -78,7 +97,7 @@ export class DialogSimCampoComponent implements OnInit {
   tren: tren;
   equipos: equipo[];
   curvas: curvaEquipo[]
-  simulaciones
+  simulaciones:Array<Array<simulacionPE>> = []
 
 
 
@@ -91,45 +110,13 @@ export class DialogSimCampoComponent implements OnInit {
           this.data.getTren(this.proyecto.id, trenTag).subscribe(tren => {
             this.tren = tren
             this.data.getEquipos(this.proyecto.id, trenTag).subscribe(async equipos => {
+              this.equipos = []
               this.equipos = equipos
-              let curvasCompletas = []
-              for (let i = 0; i < this.equipos.length; i++) {
-                let curvas: curva[] = []
-                const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
-                for (let j = 0; j < curvasDocs.docs.length; j++) {
-                  const curva = curvasDocs.docs[j].data() as curva;
-                  if (curva.equivalente == true) {
-                    curvas.push(curva)
-                  }
-                }
-                if (this.equipos[i].nSecciones == 2) {
-                  const obj1 = {
-                    equipoTag: this.equipos[i].tag,
-                    seccion: 1,
-                    curvas: curvas.filter(x => x.numSeccion == 1)
-                  }
-                  const obj2 = {
-                    equipoTag: this.equipos[i].tag,
-                    seccion: 2,
-                    curvas: curvas.filter(x => x.numSeccion == 2)
-                  }
-                  curvasCompletas = curvasCompletas.concat(obj1)
-                  curvasCompletas = curvasCompletas.concat(obj2)
-                } else {
-                  const obj = {
-                    equipoTag: this.equipos[i].tag,
-                    seccion: 1,
-                    curvas: curvas
-                  }
-                  curvasCompletas = curvasCompletas.concat(obj)
-                }
-                curvas = []
-              }
-              this.curvas = curvasCompletas
+              this.armarSecciones()
               console.log(this.proyecto)
               console.log(this.tren)
               console.log(this.equipos)
-              console.log(this.curvas)
+              console.log(this.simulaciones)
             })
           })
         })
@@ -137,6 +124,31 @@ export class DialogSimCampoComponent implements OnInit {
     })
   }
 
+  async armarSecciones(){
+    let simulaciones: simulacionPE[] = []
+    this.simulaciones = []
+    for (let i = 0; i < this.equipos.length; i++) {
+      let curvas = []
+      const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
+      for (let j = 0; j < curvasDocs.docs.length; j++) {
+        const curva = curvasDocs.docs[j].data() as curva;
+        if (curva.equivalente == true) {
+          curvas.push(curva)
+        }
+      }
+      for (let sec = 1; sec < this.equipos[i].nSecciones+1; sec++) {
+        const simulacion = new simulacionPE()
+        simulacion.equipoTag = this.equipos[i].tag
+        simulacion.equipoFamilia = this.equipos[i].familia
+        simulacion.seccion = sec
+        simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
+        simulaciones.push(simulacion)
+      }
+      curvas = []
+    }
+    this.simulaciones = [...this.simulaciones, simulaciones]
+    simulaciones = []
+  }
 
   openCromatografia() {
     const dialogRef = this.dialog.open(CromatografiaComponent, {
