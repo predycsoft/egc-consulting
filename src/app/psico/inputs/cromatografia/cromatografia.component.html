@@ -24,36 +24,115 @@
             <table class="fw">
                 <tr>
                     <th>Componente</th>
-                    <th >Formula</th>
-                    <th >P.M.</th>
-                    <th fxLayoutAlign="center center"> 
-                        F.M. &nbsp;
-                        <mat-icon class="iconButton text2" matTooltip="Normalizar">exposure_plus_1</mat-icon>
-                    </th>
+                    <th>P.M.</th>
+                    <th>F.M (Original)</th>
+                    <th>F.M (Norm)</th>
                 </tr>
-                <tr *ngFor="let item of data.cromatografiaNombre | keyvalue: returnZero; let i=index" >
-                    <td>{{data.cromatografiaNombre[i]}}</td>
-                    <td class="centertext">{{this.data.cromatografiaPM[i]}}</td>
-                    <td> <input type="number" [(ngModel)]="this.cromatografiaOriginal[item.key]" class="w100px"></td>
-                    <td> <input type="number" [(ngModel)]="this.cromatografiaNormalizada[item.key]" class="w100px"></td>
+                <tr>
+                    <th>Metano (CH4)</th>
+                    <th>16.043</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.metano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.metano | number: '1.3-3'}}</th>
                 </tr>
-                <tr class="border-t">
-                    <td >Total</td>
-                    <td></td>
-                    <!-- <td></td> -->
-                    <!-- <td class="centertext">{{fraccMolarTotal}}</td> -->
+                <tr>
+                    <th>Etano (C2H6)</th>
+                    <th>30.07</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.etano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.etano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Propano (C3H8)</th>
+                    <th>44.097</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.propano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.propano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>iso-Butano (C4H10)</th>
+                    <th>58.124</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.iButano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.iButano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>n-Butano (C4H10)</th>
+                    <th>58.124</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.nButano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.nButano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>iso-Pentano (C5H12)</th>
+                    <th>72.151</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.iPentano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.iPentano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>n-Pentano (C5H12)</th>
+                    <th>72.151</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.nPentano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.nPentano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Hexanos  (C6H14)</th>
+                    <th>86.178</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.hexano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.hexano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Heptanos (C7H16)</th>
+                    <th>100.205</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.heptano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.heptano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Octanos (C8H18)</th>
+                    <th>114.232</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.octano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.octano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Nonanos (C9H20)</th>
+                    <th>128.259</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.nonano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.nonano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Decanos (C10H22)</th>
+                    <th>142.286</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.decano" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.decano | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Diox. Carbono (CO2)</th>
+                    <th>44.01</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.dioxCarbono" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.dioxCarbono | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Nitrogeno (N2)</th>
+                    <th>28.013</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.nitrogeno" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.nitrogeno | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th>Sulf. Hidrógeno (H2S)</th>
+                    <th>34.076</th>
+                    <th><input type="text" [(ngModel)]="cromatografiaOriginal.sulfHidrogeno" (ngModelChange)="normalizar()"></th>
+                    <th>{{cromatografiaNormalizada.sulfHidrogeno | number: '1.3-3'}}</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>{{this.cromatografiaOriginal.fraccMolar | number: '1.3-3'}}</th>
+                    <th>{{this.cromatografiaNormalizada.fraccMolar | number: '1.3-3'}}</th>
                 </tr>
             </table>
         </div>
+
+
 
         <!-------------------------------------------------------------------- Propiedades del gas -->
 
         <div class="border-l">
             <div class="firstRow" fxLayoutAlign="space-between center">
-                {{cromatografiaOriginal | json}}
-
-                <br><br>
-                {{cromatografiaOriginal | json}}
                 <span class="ft16 text2">Propiedades del gas</span>
                 <!-- <span class="textButton" (click)="normalizar()">Calcular</span> -->
             </div>

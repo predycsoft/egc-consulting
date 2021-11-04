@@ -159,7 +159,7 @@ export class cromatografia {
   nitrogeno: number = 0;
   dioxCarbono: number = 0;
   sulfHidrogeno: number = 0;
-  aire: number = 0;
+  fraccMolar: number = 0;
 }
 
 
