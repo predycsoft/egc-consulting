@@ -12,7 +12,7 @@
     <li class="menuItem" (click)="trenSeleccionado = 'TC-5200A'">Eliminar tren</li>
 </mat-menu>
 
-<div fxLayout="column" fxLayoutAlign="center center" class="fw fh">
+<div fxLayout="column" fxLayoutAlign="center center" class="pdb10 fw fh">
 
     <div class="trenContainer">
         <div fxLayout="row" fxLayoutGap="1rem">
@@ -42,7 +42,16 @@
             </div>
         </div>
     </div>
+    <div fxLayoutAlign="center center" fxLayoutGap=".5rem" >
+        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/sim-campo-config">P.E</button>
+        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/sim-campo">Data Historica</button>
+        <button class="accent">Sim Teorica</button>
+    
+    </div>
+    
 </div>
+
+
 
 <!-- Context menu -->
 <div #trigger="matMenuTrigger" style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
