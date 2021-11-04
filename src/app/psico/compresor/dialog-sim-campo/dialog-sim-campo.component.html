@@ -72,9 +72,9 @@
         <div class="ft14">Seccion {{seccion.seccion}}</div>
         <table class="mgt10">
             <tr>
-                <th> Variable de entrada</th>
+                <th> Temp. succ. {{this.simulaciones[0][j].inputs.TDIM}}</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TSUC" placeholder="-" class="inputNumber">
                 </td>
             </tr>
             <tr>

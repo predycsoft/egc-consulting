@@ -145,6 +145,10 @@ export class DialogSimCampoComponent implements OnInit {
           simulacion.seccion = sec
           simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
           simulacion.curva = simulacion.curvas.find(x => x.default == true)
+          simulacion.inputs.DDIM = this.tren.dimensiones.diametro
+          simulacion.inputs.PDIM =this.tren.dimensiones.presion
+          simulacion.inputs.QDIM = this.tren.dimensiones.flujo
+          simulacion.inputs.TDIM = this.tren. dimensiones.temperatura
           simulaciones.push(simulacion)
         }
         curvas = []
