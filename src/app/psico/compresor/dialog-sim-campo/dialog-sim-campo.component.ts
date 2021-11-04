@@ -55,14 +55,16 @@ class outputTeorica {
   qn: number = 0
 }
 
-class output
+class outputPE{
+  
+}
 
-// class simulacionPE {
-//   equipoTag: string = "";
-//   seccion: number = 0;
-//   curvas: curva[] = [];
-//   inputs: inputs = new inputs
-// }
+class simulacionPE {
+  equipoTag: string = "";
+  seccion: number = 0;
+  curvas: curva[] = [];
+  inputs: inputs = new inputs
+}
 
 @Component({
   selector: 'app-dialog-sim-campo',
