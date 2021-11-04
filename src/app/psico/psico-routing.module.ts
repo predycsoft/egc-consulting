@@ -28,19 +28,10 @@ const routes: Routes = [
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
     {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
     {path: 'simulacion-input/:trenTag/:equipoTag', component: SimulacionCampoInputComponent},
-
-
-
-
-
     {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
-
-
     {path: 'tren/:trenTag/sim-campo', component: SimulacionCampoComponent},
     {path: 'tren/:trenTag/sim-campo-config', component: DialogSimCampoComponent},
     {path: 'tren/:trenTag/sim-campo-config/:id', component: DialogSimCampoComponent},
-
-
     {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
     {path: 'tren/:trenTag/reporte-sumario-inputs', component: ReporteSumarioInputsComponent},
     {path: 'tren/:trenTag/reporte-punto', component: ReportePuntoComponent},
