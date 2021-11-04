@@ -124,10 +124,10 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
     this.dialogService.dialogConfirmar().afterClosed().subscribe(res => {
       if (res == true) {
         if (this.curva.equivalente) {
-          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("").doc(this.dataEnviada.equipoTag)
+          this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
             .collection("curvas").ref.where("nombre", "==", this.curva.nombre).get().then(snap => {
               const id = snap.docs[0].id
-              this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("").doc(this.dataEnviada.equipoTag)
+              this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
                 .collection("curvas").doc(id).delete()
             })
         }
