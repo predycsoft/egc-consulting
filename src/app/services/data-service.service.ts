@@ -143,7 +143,7 @@ export class compresorDims {
   diametro: string = 'm';
 }
 
-class cromatografia {
+export class cromatografia {
   metano: number = 0;
   etano: number = 0;
   propano: number = 0;

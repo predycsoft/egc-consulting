@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DataServiceService } from 'src/app/services/data-service.service';
+import { cromatografia, DataServiceService } from 'src/app/services/data-service.service';
 import { DialogLibreriaCromatografiasComponent } from '../dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
 
 class propiedadesCromatografia{
@@ -51,13 +51,13 @@ export class CromatografiaComponent implements OnInit {
   //   this.cr= val;
   // }
 
-  // returnZero() {
-  //   return 0
-  // }
+  returnZero() {
+    return 0
+  }
 
-  // customTrackBy(index: number, obj: any): any {
-  //   return index;
-  // }
+  customTrackBy(index: number, obj: any): any {
+    return index;
+  }
 
   openLibreriaCromatografias(){
     const dialogRef = this.dialog.open(DialogLibreriaCromatografiasComponent, {
