@@ -1,4 +1,7 @@
 <!-- Prueba de eficiencia -->
+<!-- °F : <input type="number" [(ngModel)]="F" (click)="cambiando='F'" (ngModelChange)="cambiar()">
+°C: <input type="number"  [(ngModel)]="C" (click)="cambiando='C'" (ngModelChange)="cambiar()">
+°K: <input type="number"  [(ngModel)]="K" (click)="cambiando='K'" (ngModelChange)="cambiar()"> -->
 
 <div fxLayout="column" class="border-l pd20">
     <span class="ft24 ft500">Prueba de eficiencia del TREN {{tren.tag}}</span>
@@ -74,54 +77,58 @@
             <tr>
                 <th> Temp. succ. {{this.simulaciones[0][j].inputs.TDIM}}</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TSUC" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TSUC" placeholder="-"
+                        class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Temp. succ. (dim)</th>
+                <th> Pres. succ. {{this.simulaciones[0][j].inputs.PDIM}}</th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.PSUC" placeholder="-"
+                        class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Pres. desc. (dim)</th>
+                <th> Temp. desc.{{this.simulaciones[0][j].inputs.TDIM}}</th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TDES" placeholder="-"
+                        class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Temp. desc. (dim) </th>
+                <th> PRes. desc. {{this.simulaciones[0][j].inputs.PDIM}} </th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.PDES" placeholder="-"
+                        class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> RPM (dim)</th>
+                <th> RPM </th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.RPM" placeholder="-"
+                        class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Flujo (dim) </th>
+                <th> Flujo {{this.simulaciones[0][j].inputs.QDIM}} </th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.FLUJO" placeholder="-"
+                        class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Flujo (dim) </th>
+                <th> Mezcla </th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" placeholder="-" class="inputNumber">
+                    <a class="ft12" (click)="openCromatografia(i,j)">
+                        <div>Mezcla</div>
+                        <div>{{this.simulaciones[i][j].inputs.Mezcla.nombre}}</div>
+                    </a>
                 </td>
             </tr>
-            <tr>
-                <th> Mezcla (dim) </th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <a class="ft12" (click)="openCromatografia()">Mezcla</a>
-                </td>
-            </tr>
-
-
         </table>
+    </div>
+    <div>
+        <button (click)="simular()">Simular</button>
     </div>
 
     <!-- Datos utilizados para una prueba de eficiencia -->

@@ -36,4 +36,8 @@ export class DialogLibreriaCromatografiasComponent implements OnInit {
 
   }
 
+  seleccionar(cromatografia){
+    this.dialogRef.close(cromatografia)
+  }
+
 }

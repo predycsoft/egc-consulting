@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,6 +12,12 @@ interface curvaEquipo {
   curvas: curva[]
 }
 
+interface mezcla {
+  id: string,
+  nombre: string,
+  cromatografía: cromatografia,
+}
+
 class inputs {
   TSUC: number = 0;
   PSUC: number = 0;
@@ -18,7 +25,11 @@ class inputs {
   TDES: number = 0;
   RPM: number = 0;
   FLUJO: number = 0;
-  Mezcla: cromatografia = new cromatografia;
+  Mezcla: mezcla = {
+    id: "",
+    nombre:"",
+    cromatografía: new cromatografia()
+  }
   TDIM: string = "";
   QDIM: string = "";
   PDIM: string = "";
@@ -93,14 +104,19 @@ class simulacionPE {
 })
 export class DialogSimCampoComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, public data: DataServiceService, private afs: AngularFirestore, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, public data: DataServiceService, private afs: AngularFirestore, private dialog: MatDialog, private http: HttpClient) { }
   proyecto: Proyecto;
   tren: tren;
   equipos: equipo[];
   curvas: curvaEquipo[]
   simulaciones:Array<Array<simulacionPE>> = []
 
-
+  F: number = 0
+  C: number = 0
+  K: number = 0
+  cambiando = "";
+  mezclas: cromatografia[] = []
+  envio = []
 
   ngOnInit(): void {
     this.route.parent.params.subscribe(params => {
@@ -167,11 +183,59 @@ export class DialogSimCampoComponent implements OnInit {
 
   }
 
-  openCromatografia() {
+  openCromatografia(i,j) {
     const dialogRef = this.dialog.open(CromatografiaComponent, {
       data: {
         proyectoId: this.proyecto.id,
       }
     })
+    dialogRef.afterClosed().subscribe((result => {
+      if(result){
+        this.simulaciones[i][j].inputs.Mezcla = result
+      }
+    }))
   }
+
+  cargarCromatografias(){
+    this.afs.collection("proyectos").doc(this.proyecto.id).collection
+  }
+
+  simular(){
+    this.envio = []
+    this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+      "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
+    // this.envio.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
+    // this.curva.diametro, this.TSUC, this.PSUC, this.TDES, this.PDES, this.flujo, this.RPM, this.ddim, this.tdim, this.pdim, this.qdim])
+    // console.log(this.envio)
+    // this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(this.envio)).subscribe((res) => {
+    //   if (res) {
+    //     console.log(res)
+    //     let envioPrueba = []
+    //     envioPrueba.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+    //       "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
+    //     envioPrueba.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
+    //     this.TSUC, this.PSUC, this.flujo, this.curva.diametro, this.RPM, this.curva.cp1, this.curva.cp2, this.curva.cp3, this.curva.cp4, this.curva.expocp, this.curva.ce1, this.curva.ce2, this.curva.ce3, this.curva.ce4, this.curva.expoce, this.curva.limSurge, this.curva.limStw, this.ddim, this.tdim, this.pdim, this.qdim, this.PDES])
+    //     this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((res) => {
+    //       if (res) {
+    //         console.log(res)
+    //       }
+    //     })
+    //   }
+    // })
+  }
+
+  // cambiar(){
+  //   if (this.cambiando == "F"){
+  //     this.C = (this.F-32)/1.8
+  //     this.K = this.C +273.15
+  //   }
+  //   if (this.cambiando == "C"){
+  //     this.F = this.C*1.8 + 32
+  //     this.K = this.C + 273.15
+  //   }
+  //   if (this.cambiando == "K"){
+  //     this.C = this.K - 273.15
+  //     this.F = this.C*1.8 + 32
+  //   }
+  // }
 }
