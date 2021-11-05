@@ -15,7 +15,7 @@ interface curvaEquipo {
 interface mezcla {
   id: string,
   nombre: string,
-  cromatografía: cromatografia,
+  cromatografia: cromatografia,
 }
 
 class inputs {
@@ -27,8 +27,8 @@ class inputs {
   FLUJO: number = 0;
   Mezcla: mezcla = {
     id: "",
-    nombre:"",
-    cromatografía: new cromatografia()
+    nombre: "",
+    cromatografia: new cromatografia()
   }
   TDIM: string = "";
   QDIM: string = "";
@@ -67,21 +67,21 @@ class outputAdim {
 }
 
 class outputTeorico {
-  PSUC: number = 0 
+  PSUC: number = 0
   PDES: number = 0
-  TSUC: number = 0 
-  TDES: number = 0 
-  DG: number = 0 
-  HG: number = 0 
-  SURGE: number = 0 
-  QN: number = 0 
-  STONEW: number = 0 
-  CFHEAD: number = 0 
-  HEAD: number = 0 
-  EFIC: number = 0 
-  HP: number = 0 
-  POLLY: number = 0 
-  FLUJO: number = 0 
+  TSUC: number = 0
+  TDES: number = 0
+  DG: number = 0
+  HG: number = 0
+  SURGE: number = 0
+  QN: number = 0
+  STONEW: number = 0
+  CFHEAD: number = 0
+  HEAD: number = 0
+  EFIC: number = 0
+  HP: number = 0
+  POLLY: number = 0
+  FLUJO: number = 0
   RPM: number = 0
 }
 
@@ -109,7 +109,7 @@ export class DialogSimCampoComponent implements OnInit {
   tren: tren;
   equipos: equipo[];
   curvas: curvaEquipo[]
-  simulaciones:Array<Array<simulacionPE>> = []
+  simulaciones: Array<Array<simulacionPE>> = []
 
   F: number = 0
   C: number = 0
@@ -141,7 +141,7 @@ export class DialogSimCampoComponent implements OnInit {
     })
   }
 
-  async armarSecciones(){
+  async armarSecciones() {
     try {
       let simulaciones: simulacionPE[] = []
       this.simulaciones = []
@@ -154,7 +154,7 @@ export class DialogSimCampoComponent implements OnInit {
             curvas.push(curva)
           }
         }
-        for (let sec = 1; sec < this.equipos[i].nSecciones+1; sec++) {
+        for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
           const simulacion = new simulacionPE()
           simulacion.equipoTag = this.equipos[i].tag
           simulacion.equipoFamilia = this.equipos[i].familia
@@ -162,48 +162,64 @@ export class DialogSimCampoComponent implements OnInit {
           simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
           simulacion.curva = simulacion.curvas.find(x => x.default == true)
           simulacion.inputs.DDIM = this.tren.dimensiones.diametro
-          simulacion.inputs.PDIM =this.tren.dimensiones.presion
+          simulacion.inputs.PDIM = this.tren.dimensiones.presion
           simulacion.inputs.QDIM = this.tren.dimensiones.flujo
-          simulacion.inputs.TDIM = this.tren. dimensiones.temperatura
+          simulacion.inputs.TDIM = this.tren.dimensiones.temperatura
           simulaciones.push(simulacion)
         }
         curvas = []
       }
       this.simulaciones = [simulaciones]
       simulaciones = []
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
 
-  agregarPunto(){
+  agregarPunto() {
     const len = this.simulaciones.length
-    const simulacion: simulacionPE[] = this.simulaciones[len -1]
-    this.simulaciones = [...this.simulaciones,simulacion]
+    const simulacion: simulacionPE[] = this.simulaciones[len - 1]
+    this.simulaciones = [...this.simulaciones, simulacion]
 
   }
 
-  openCromatografia(i,j) {
+  openCromatografia(i, j) {
     const dialogRef = this.dialog.open(CromatografiaComponent, {
       data: {
         proyectoId: this.proyecto.id,
       }
     })
     dialogRef.afterClosed().subscribe((result => {
-      if(result){
+      if (result) {
         this.simulaciones[i][j].inputs.Mezcla = result
       }
     }))
   }
 
-  cargarCromatografias(){
+  cargarCromatografias() {
     this.afs.collection("proyectos").doc(this.proyecto.id).collection
   }
 
-  simular(){
+  guardarSimulacion(){
+    
+  }
+
+  simular() {
     this.envio = []
     this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
       "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
+    for (let i = 0; i < this.simulaciones.length; i++) {
+      for (let j = 0; j < this.simulaciones[i].length; j++) {
+        const sim = this.simulaciones[i][j]
+        this.envio.push([sim.inputs.Mezcla.cromatografia.metano, sim.inputs.Mezcla.cromatografia.etano, sim.inputs.Mezcla.cromatografia.propano, sim.inputs.Mezcla.cromatografia.iButano, sim.inputs.Mezcla.cromatografia.nButano, sim.inputs.Mezcla.cromatografia.iPentano, sim.inputs.Mezcla.cromatografia.nPentano, sim.inputs.Mezcla.cromatografia.hexano, sim.inputs.Mezcla.cromatografia.heptano, sim.inputs.Mezcla.cromatografia.octano, sim.inputs.Mezcla.cromatografia.nonano, sim.inputs.Mezcla.cromatografia.decano, sim.inputs.Mezcla.cromatografia.nitrogeno, sim.inputs.Mezcla.cromatografia.dioxCarbono, sim.inputs.Mezcla.cromatografia.sulfHidrogeno,
+        sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJO, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
+      }
+      this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(this.envio)).subscribe((res) => {
+        if (res) {
+          console.log(res)
+        }
+      })
+    }
     // this.envio.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
     // this.curva.diametro, this.TSUC, this.PSUC, this.TDES, this.PDES, this.flujo, this.RPM, this.ddim, this.tdim, this.pdim, this.qdim])
     // console.log(this.envio)
@@ -220,7 +236,7 @@ export class DialogSimCampoComponent implements OnInit {
     //         console.log(res)
     //       }
     //     })
-    //   }
+    //   }v
     // })
   }
 
