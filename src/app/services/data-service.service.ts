@@ -36,6 +36,22 @@ export class inputs {
   DDIM: string = "";
 }
 
+export class inputsTeorica {
+  TSUC: number = 0;
+  PSUC: number = 0;
+  RPM: number = 0;
+  FLUJO: number = 0;
+  Mezcla: mezcla = {
+    id: "",
+    nombre: "",
+    cromatografia: new cromatografia()
+  }
+  TDIM: string = "";
+  QDIM: string = "";
+  PDIM: string = "";
+  DDIM: string = "";
+}
+
 export class outputAdim {
   EFIC: number = 0
   coefWorkInput: number = 0
@@ -104,7 +120,7 @@ export class simulacionTeorica {
   seccion: number = 0;
   curvas: curva[] = [];
   curva: curva;
-  inputs: inputs = new inputs()
+  inputs: inputsTeorica = new inputsTeorica()
   outputTeorico: outputTeorico = new outputTeorico()
 }
 

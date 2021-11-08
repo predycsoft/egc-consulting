@@ -1,1 +1,177 @@
-<p>simulacion-teorica works!</p>
+<!-- Prueba de eficiencia -->
+<!-- °F : <input type="number" [(ngModel)]="F" (click)="cambiando='F'" (ngModelChange)="cambiar()">
+°C: <input type="number"  [(ngModel)]="C" (click)="cambiando='C'" (ngModelChange)="cambiar()">
+°K: <input type="number"  [(ngModel)]="K" (click)="cambiando='K'" (ngModelChange)="cambiar()"> -->
+
+<div fxLayout="column" class="border-l pd20">
+    <span class="ft24 ft500">Prueba de eficiencia del TREN {{tren.tag}}</span>
+    <span class="mgt10 ft16"> Fecha de creación: *fecha*</span>
+    <div fxLayout="column" class="border-t pdt20 ft500 ft16 mgt10 mgb10">
+        <span>Tren: {{tren.tag}}</span>
+        <span>Num de compresores: {{this.equipos.length}}</span>
+    </div>
+
+    <div fxLayout="column" class="mgt10 w300px">
+
+
+        <div fxLayout="column" class="mgt10">
+            <span> Responsable de la recolección de data: *fecha*</span>
+            <input type="date">
+        </div>
+        <div fxLayout="column" class="mgt10">
+            <span> Consultor responsable de simulación</span>
+            <input type="date">
+        </div>
+        <div fxLayout="column" class="mgt10">
+            <span> Fecha de inicio de recolección de data</span>
+            <input type="datetime-local">
+        </div>
+        <div fxLayout="column" class="mgt10">
+            <span> Fecha de fin de recolección de data</span>
+            <input type="datetime-local">
+        </div>
+    </div>
+
+    <hr>
+
+
+
+
+
+
+    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
+        <div *ngFor="let secciones of this.simulaciones[0]; let j = index"
+            class="pd10 border radius4 shadow8 whiteFill w300px">
+            <div>
+                <!-- <div *ngIf="j == 0 || (j > 0 && this.simulaciones[0][j].equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
+                <div class="ft500 ft14">{{secciones.equipoFamilia}} {{secciones.equipoTag}}</div>
+                <div class="ft13 text3">{{secciones.equipoTipologia}}</div>
+                <div class="ft12 text3">Perdidas de caja</div>
+                <div class="ft12 text3">Perdidas mecanicas</div>
+            </div>
+            <div class="mgt10 ft13">Curva de sección {{secciones.seccion}}</div>
+            <mat-select value="" [(ngModel)]="secciones.curva">
+                <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
+                    {{item.nombre}}
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+
+    <div fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
+        <span class="ft500 ft20">Datos recolectados de campo</span> <button (click)="guardarSimulacion()">Guardar Simulación</button>
+        <div fxLayout="row" fxLayoutGap=".5rem">
+            <button (click)="agregarPunto()" class="standard">Agregar Punto</button>
+            <button (click)="agregarPunto()" class="accent">Simular</button>
+        </div>
+    </div>
+
+
+    <div *ngFor="let seccion of simulaciones[0]; let j = index" class="mgt10 pd10 border radius4  whiteFill shadow8">
+        <div>
+            <!-- <div *ngIf="j == 0 || (j > 0 && this.simulaciones[0][j].equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
+            <div class="ft16 ft500">{{seccion.equipoFamilia}} {{seccion.equipoTag}}</div>
+        </div>
+        <div class="ft14">Seccion {{seccion.seccion}}</div>
+        <table class="mgt10">
+            <tr>
+                <th> Temp. succ. {{this.simulaciones[0][j].inputs.TDIM}}</th>
+                <td *ngFor="let item of simulaciones; let i = index" class="">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TSUC" placeholder="-"
+                        class="inputNumber">
+                </td>
+            </tr>
+            <tr>
+                <th> Pres. succ. {{this.simulaciones[0][j].inputs.PDIM}}</th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.PSUC" placeholder="-"
+                        class="inputNumber">
+                </td>
+            </tr>
+            <tr>
+                <th> Temp. desc.{{this.simulaciones[0][j].inputs.TDIM}}</th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TDES" placeholder="-"
+                        class="inputNumber">
+                </td>
+            </tr>
+            <tr>
+                <th> PRes. desc. {{this.simulaciones[0][j].inputs.PDIM}} </th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.PDES" placeholder="-"
+                        class="inputNumber">
+                </td>
+            </tr>
+            <tr>
+                <th> RPM </th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.RPM" placeholder="-"
+                        class="inputNumber">
+                </td>
+            </tr>
+            <tr>
+                <th> Flujo {{this.simulaciones[0][j].inputs.QDIM}} </th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.FLUJO" placeholder="-"
+                        class="inputNumber">
+                </td>
+            </tr>
+            <tr>
+                <th> Mezcla </th>
+                <td *ngFor="let item of simulaciones; let i = index">
+                    <a class="ft12" (click)="openCromatografia(i,j)">
+                        <div>Mezcla</div>
+                        <div>{{this.simulaciones[i][j].inputs.Mezcla.nombre}}</div>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button (click)="simular()">Simular</button>
+    </div>
+
+    <!-- Datos utilizados para una prueba de eficiencia -->
+
+    <!--  -->
+
+    <!-- Dimensiones default del tren (no se deben poder modificar en la ventana de simulacion)-->
+    <!-- Son solo de referencia para el usuario, de meanera que sepa con que variables esta simulando/ -->
+    <!-- <div fxLayout="column">
+        <div>
+            <span class="w100px">dimension:</span>
+            <span class="w100px">seleccionada</span>
+        </div>
+        <div>
+            <span class="w100px">dimension:</span>
+            <span class="w100px">seleccionada</span>
+        </div>
+        <div>
+            <span class="w100px">dimension:</span>
+            <span class="w100px">seleccionada</span>
+        </div>
+        <div>
+            <span class="w100px">dimension:</span>
+            <span class="w100px">seleccionada</span>
+        </div>
+        <div>
+            <span class="w100px">dimension:</span>
+            <span class="w100px">seleccionada</span>
+        </div>
+        <div>
+            <span class="w100px">dimension:</span>
+            <span class="w100px">seleccionada</span>
+        </div>
+    </div>
+
+
+    <span>Num. RPMS</span>
+    <span>Valores de rpm</span>
+
+
+    <span>Inputs de cromatografia sin normalizar</span>
+    <span>checkbox para indicar usar cromatografia previa</span>
+    <span>Introducir cromatrografia</span>
+    <span>cargar cromatografia de libreria</span> -->
+
+</div>
