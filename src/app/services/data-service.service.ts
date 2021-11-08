@@ -97,6 +97,17 @@ export class simulacionPE {
   outputAdim: outputAdim = new outputAdim()
 }
 
+export class simulacionTeorica {
+  equipoTag: string = "";
+  equipoFamilia: string = "";
+  equipoTipologia: string = "";
+  seccion: number = 0;
+  curvas: curva[] = [];
+  curva: curva;
+  inputs: inputs = new inputs()
+  outputTeorico: outputTeorico = new outputTeorico()
+}
+
 export class tren {
   tag: string = "";
   equipos: equipo_tren[] = [];

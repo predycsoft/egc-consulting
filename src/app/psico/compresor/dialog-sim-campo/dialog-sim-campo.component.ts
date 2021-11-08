@@ -26,7 +26,7 @@ export class DialogSimCampoComponent implements OnInit {
   cambiando = "";
   mezclas: cromatografia[] = []
   envio = []
-  prueba;
+  pruebaId;
 
   ngOnInit(): void {
     this.route.parent.params.subscribe(params => {
@@ -34,16 +34,13 @@ export class DialogSimCampoComponent implements OnInit {
         this.proyecto = data;
         this.route.params.subscribe(params => {
           const trenTag = params.trenTag;
+          this.pruebaId = params.idPrueba
           this.data.getTren(this.proyecto.id, trenTag).subscribe(tren => {
             this.tren = tren
             this.data.getEquipos(this.proyecto.id, trenTag).subscribe(async equipos => {
               this.equipos = []
               this.equipos = equipos
-              if (this.prueba) {
-                this.cargarSimulacion()
-              } else {
-                await this.armarSecciones()
-              }
+              await this.cargarSimulacion()
               console.log(this.proyecto)
               console.log(this.tren)
               console.log(this.equipos)
@@ -119,11 +116,15 @@ export class DialogSimCampoComponent implements OnInit {
   }
 
   async cargarSimulacion() {
-    const sims = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("trenes").doc(this.tren.tag).collection("pruebas-eficiencia").doc(this.prueba).collection("puntos").ref.get()
+    const sims = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("trenes").doc(this.tren.tag).collection("pruebas-eficiencia").doc(this.pruebaId).collection("puntos").ref.get()
     this.simulaciones = []
-    sims.docs.forEach(doc => {
-      this.simulaciones = [...this.simulaciones, doc.data().simulacion as simulacionPE[]]
-    })
+    if (sims.docs.length > 0){
+      sims.docs.forEach(doc => {
+        this.simulaciones = [...this.simulaciones, doc.data().simulacion as simulacionPE[]]
+      })
+    } else {
+      this.armarSecciones()
+    }
   }
 
   simular() {
