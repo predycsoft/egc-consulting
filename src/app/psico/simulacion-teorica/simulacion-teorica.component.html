@@ -40,10 +40,10 @@
 
 
     <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let secciones of this.simulaciones[0]; let j = index"
+        <div *ngFor="let secciones of this.simulaciones; let j = index"
             class="pd10 border radius4 shadow8 whiteFill w300px">
             <div>
-                <!-- <div *ngIf="j == 0 || (j > 0 && this.simulaciones[0][j].equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
+                <!-- <div *ngIf="j == 0 || (j > 0 && seccion.equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
                 <div class="ft500 ft14">{{secciones.equipoFamilia}} {{secciones.equipoTag}}</div>
                 <div class="ft13 text3">{{secciones.equipoTipologia}}</div>
                 <div class="ft12 text3">Perdidas de caja</div>
@@ -60,68 +60,54 @@
 
     <div fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
         <span class="ft500 ft20">Datos recolectados de campo</span> <button (click)="guardarSimulacion()">Guardar Simulación</button>
-        <div fxLayout="row" fxLayoutGap=".5rem">
+        <!-- <div fxLayout="row" fxLayoutGap=".5rem">
             <button (click)="agregarPunto()" class="standard">Agregar Punto</button>
             <button (click)="agregarPunto()" class="accent">Simular</button>
-        </div>
+        </div> -->
     </div>
 
 
-    <div *ngFor="let seccion of simulaciones[0]; let j = index" class="mgt10 pd10 border radius4  whiteFill shadow8">
+    <div *ngFor="let seccion of simulaciones; let j = index" class="mgt10 pd10 border radius4  whiteFill shadow8">
         <div>
-            <!-- <div *ngIf="j == 0 || (j > 0 && this.simulaciones[0][j].equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
+            <!-- <div *ngIf="j == 0 || (j > 0 && seccion.equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
             <div class="ft16 ft500">{{seccion.equipoFamilia}} {{seccion.equipoTag}}</div>
         </div>
         <div class="ft14">Seccion {{seccion.seccion}}</div>
         <table class="mgt10">
             <tr>
-                <th> Temp. succ. {{this.simulaciones[0][j].inputs.TDIM}}</th>
-                <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TSUC" placeholder="-"
+                <th> Temp. succ. {{seccion.inputs.TDIM}}</th>
+                <td class="">
+                    <input type="number" [(ngModel)]="seccion.inputs.TSUC" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Pres. succ. {{this.simulaciones[0][j].inputs.PDIM}}</th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.PSUC" placeholder="-"
-                        class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Temp. desc.{{this.simulaciones[0][j].inputs.TDIM}}</th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.TDES" placeholder="-"
-                        class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> PRes. desc. {{this.simulaciones[0][j].inputs.PDIM}} </th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.PDES" placeholder="-"
+                <th> Pres. succ. {{seccion.inputs.PDIM}}</th>
+                <td>
+                    <input type="number" [(ngModel)]="seccion.inputs.PSUC" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> RPM </th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.RPM" placeholder="-"
+                <td>
+                    <input type="number" [(ngModel)]="seccion.inputs.RPM" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
-                <th> Flujo {{this.simulaciones[0][j].inputs.QDIM}} </th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.FLUJO" placeholder="-"
+                <th> Flujo {{seccion.inputs.QDIM}} </th>
+                <td>
+                    <input type="number" [(ngModel)]="seccion.inputs.FLUJO" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> Mezcla </th>
-                <td *ngFor="let item of simulaciones; let i = index">
-                    <a class="ft12" (click)="openCromatografia(i,j)">
+                <td>
+                    <a class="ft12" (click)="openCromatografia()">
                         <div>Mezcla</div>
-                        <div>{{this.simulaciones[i][j].inputs.Mezcla.nombre}}</div>
+                        <div>{{seccion.inputs.Mezcla.nombre}}</div>
                     </a>
                 </td>
             </tr>

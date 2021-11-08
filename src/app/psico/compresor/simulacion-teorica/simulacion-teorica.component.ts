@@ -11,11 +11,12 @@ import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, Proyecto
 export class SimulacionTeoricaComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private data: DataServiceService, private afs: AngularFirestore) { }
+  
   proyecto: Proyecto;
   tren: tren;
   equipos: equipo[];
   curvas: curvaEquipo[]
-  simulaciones: Array<Array<simulacionTeorica>> = []
+  simulaciones: Array<simulacionTeorica> = []
 
   F: number = 0
   C: number = 0
@@ -47,6 +48,18 @@ export class SimulacionTeoricaComponent implements OnInit {
         })
       })
     })
+  }
+
+  simular(){
+    
+  }
+
+  guardarSimulacion(){
+
+  }
+
+  openCromatografia(){
+
   }
 
   async cargarSimulacion() {
@@ -86,14 +99,10 @@ export class SimulacionTeoricaComponent implements OnInit {
         }
         curvas = []
       }
-      this.simulaciones = [simulaciones]
+      this.simulaciones = simulaciones
       simulaciones = []
     } catch (err) {
       console.log(err)
     }
-  }
-
-  simular(){
-    console.log("")
   }
 }
