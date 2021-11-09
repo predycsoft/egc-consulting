@@ -10,10 +10,10 @@ import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, Proyecto
 })
 export class SimulacionTeoricaComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private data: DataServiceService, private afs: AngularFirestore) { }
-  
+  constructor(private route: ActivatedRoute, public data: DataServiceService, private afs: AngularFirestore) { }
+
   proyecto: Proyecto;
-  tren: tren;
+  tren: tren = new tren();
   equipos: equipo[];
   curvas: curvaEquipo[]
   simulaciones: Array<simulacionTeorica> = []
@@ -26,12 +26,12 @@ export class SimulacionTeoricaComponent implements OnInit {
   envio = []
   pruebaId;
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.route.parent.params.subscribe(params => {
       this.data.obtenerProyecto(params.id).subscribe(data => {
         this.proyecto = data;
         this.route.params.subscribe(params => {
-          const trenTag = params.trenTag; 
+          const trenTag = params.trenTag;
           this.pruebaId = params.idPrueba
           this.data.getTren(this.proyecto.id, trenTag).subscribe(tren => {
             this.tren = tren
@@ -51,7 +51,7 @@ export class SimulacionTeoricaComponent implements OnInit {
   }
 
   simular(){
-    
+
   }
 
   guardarSimulacion(){
