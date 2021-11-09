@@ -4,160 +4,273 @@
 °K: <input type="number"  [(ngModel)]="K" (click)="cambiando='K'" (ngModelChange)="cambiar()"> -->
 
 <div fxLayout="column" class="border-l pd20">
-    <span class="ft24 ft500">Prueba de eficiencia del TREN {{tren.tag}}</span>
+    <span class="ft24 ft500">Simulacion Teorica del TREN {{tren.tag}} - Prueba: {{pruebaId}}</span>
     <span class="mgt10 ft16"> Fecha de creación: *fecha*</span>
     <div fxLayout="column" class="border-t pdt20 ft500 ft16 mgt10 mgb10">
         <span>Tren: {{tren.tag}}</span>
         <span>Num de compresores: {{this.equipos.length}}</span>
     </div>
-
-    <div fxLayout="column" class="mgt10 w300px">
-
-
-        <div fxLayout="column" class="mgt10">
-            <span> Responsable de la recolección de data: *fecha*</span>
-            <input type="date">
-        </div>
-        <div fxLayout="column" class="mgt10">
-            <span> Consultor responsable de simulación</span>
-            <input type="date">
-        </div>
-        <div fxLayout="column" class="mgt10">
-            <span> Fecha de inicio de recolección de data</span>
-            <input type="datetime-local">
-        </div>
-        <div fxLayout="column" class="mgt10">
-            <span> Fecha de fin de recolección de data</span>
-            <input type="datetime-local">
-        </div>
-    </div>
-
     <hr>
 
 
-
-
-
-
     <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let secciones of this.simulaciones; let j = index"
+        <div *ngFor="let seccion of this.simulaciones; let j = index"
             class="pd10 border radius4 shadow8 whiteFill w300px">
             <div>
-                <!-- <div *ngIf="j == 0 || (j > 0 && seccion.equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
-                <div class="ft500 ft14">{{secciones.equipoFamilia}} {{secciones.equipoTag}}</div>
-                <div class="ft13 text3">{{secciones.equipoTipologia}}</div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <span   class="ft500 ft14">{{seccion.equipoFamilia}} {{seccion.equipoTag}}</span>
+                    <mat-icon class="iconButton ft16" routerLink="/psico/proyecto/{{proyecto.id}}/equipo/{{tren.tag}}/{{seccion.equipoTag}}">settings</mat-icon>
+                </div>
+                <div class="ft13 text3">{{seccion.equipoTipologia}}</div>
                 <div class="ft12 text3">Perdidas de caja</div>
                 <div class="ft12 text3">Perdidas mecanicas</div>
             </div>
-            <div class="mgt10 ft13">Curva de sección {{secciones.seccion}}</div>
-            <mat-select value="" [(ngModel)]="secciones.curva">
-                <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
+            <div class="mgt10 ft13">Curva de sección {{seccion.seccion}} *</div>
+            <mat-select  [(ngModel)]="seccion.curva.nombre">
+                <mat-option *ngFor="let item of seccion.curvas" [value]="item.nombre" class="optionItem" (click)="cambioCurva(j, item)">
                     {{item.nombre}}
                 </mat-option>
             </mat-select>
+            <table class="mgt10">
+                <tr>
+                    <th> Temp. succ. {{seccion.inputs.TDIM}} *</th>
+                    <td class="">
+                        <input type="number" [(ngModel)]="seccion.inputs.TSUC" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Pres. succ. {{seccion.inputs.PDIM}} <span *ngIf="j == 0">*</span></th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.inputs.PSUC" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> RPM *</th>
+                    <td>
+                        <input *ngIf="j==0" type="number" [(ngModel)]="seccion.inputs.RPM" placeholder="-" (ngModelChange)="actualizarRPMS()" class="inputNumber">
+                        <input *ngIf="j!=0" type="number" [(ngModel)]="seccion.inputs.RPM" placeholder="-" class="inputNumber" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Rel.de Velocidad c/r al tren * </th>
+                    <td>
+                        <input *ngIf="j==0" type="number" [(ngModel)]="seccion.inputs.RELVEL" placeholder="-" class="inputNumber" readonly>
+                        <input *ngIf="j!=0" type="number" [(ngModel)]="seccion.inputs.RELVEL" placeholder="-"  (ngModelChange)="actualizarRPMS()" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Flujo {{seccion.inputs.QDIM}} * </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.inputs.FLUJO" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Extracción de gas {{seccion.inputs.QDIM}} </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.inputs.QEXT" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Caida de presion  {{seccion.inputs.PDIM}} </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.inputs.CAIPRES" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <!-- Descripcion de curva -->
+                <!-- <tr>
+                    <th> Diametro *</th>
+                    <td class="">
+                        <input type="number" [(ngModel)]="seccion.curva.diametro" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Limite Q/N de surge <span *ngIf="j == 0">*</span></th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.limSurge" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Limite Q/N de stw </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.limStw" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Exp. polin. coef. head </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.expocp" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(1) coef.head </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.cp1" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(2) coef.head  </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.cp2" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(3) coef.head </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.cp3" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(4) coef.head </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.cp4" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Exp. polin. efic. polit. </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.expoce" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(1) efic. polit </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.ce1" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(2) efic. polit  </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.ce2" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(3) efic. polit </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.ce3" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Coef. A(4) efic. polit </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.curva.ce4" placeholder="-" class="inputNumber">
+                    </td>
+                </tr> -->
+                <!-- Mezcla -->
+                <tr>
+                    <th> Mezcla *</th>
+                    <td>
+                        <a class="ft12" (click)="openCromatografia(j)">
+                            <div>Mezcla</div>
+                            <div>{{seccion.inputs.Mezcla.nombre}}</div>
+                        </a>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-
-    <div fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
-        <span class="ft500 ft20">Datos recolectados de campo</span> <button (click)="guardarSimulacion()">Guardar Simulación</button>
-        <!-- <div fxLayout="row" fxLayoutGap=".5rem">
-            <button (click)="agregarPunto()" class="standard">Agregar Punto</button>
-            <button (click)="agregarPunto()" class="accent">Simular</button>
-        </div> -->
-    </div>
-
-
-    <div *ngFor="let seccion of simulaciones; let j = index" class="mgt10 pd10 border radius4  whiteFill shadow8">
-        <div>
-            <!-- <div *ngIf="j == 0 || (j > 0 && seccion.equipoTag !=  this.simulaciones[0][j -1].equipoTag)"> -->
-            <div class="ft16 ft500">{{seccion.equipoFamilia}} {{seccion.equipoTag}}</div>
-        </div>
-        <div class="ft14">Seccion {{seccion.seccion}}</div>
-        <table class="mgt10">
-            <tr>
-                <th> Temp. succ. {{seccion.inputs.TDIM}}</th>
-                <td class="">
-                    <input type="number" [(ngModel)]="seccion.inputs.TSUC" placeholder="-"
-                        class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Pres. succ. {{seccion.inputs.PDIM}}</th>
-                <td>
-                    <input type="number" [(ngModel)]="seccion.inputs.PSUC" placeholder="-"
-                        class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> RPM </th>
-                <td>
-                    <input type="number" [(ngModel)]="seccion.inputs.RPM" placeholder="-"
-                        class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Flujo {{seccion.inputs.QDIM}} </th>
-                <td>
-                    <input type="number" [(ngModel)]="seccion.inputs.FLUJO" placeholder="-"
-                        class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Mezcla </th>
-                <td>
-                    <a class="ft12" (click)="openCromatografia()">
-                        <div>Mezcla</div>
-                        <div>{{seccion.inputs.Mezcla.nombre}}</div>
-                    </a>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
+        <button (click)="guardarSimulacion()">Guardar Simulación</button>
         <button (click)="simular()">Simular</button>
     </div>
 
-    <!-- Datos utilizados para una prueba de eficiencia -->
-
-    <!--  -->
-
-    <!-- Dimensiones default del tren (no se deben poder modificar en la ventana de simulacion)-->
-    <!-- Son solo de referencia para el usuario, de meanera que sepa con que variables esta simulando/ -->
-    <!-- <div fxLayout="column">
-        <div>
-            <span class="w100px">dimension:</span>
-            <span class="w100px">seleccionada</span>
-        </div>
-        <div>
-            <span class="w100px">dimension:</span>
-            <span class="w100px">seleccionada</span>
-        </div>
-        <div>
-            <span class="w100px">dimension:</span>
-            <span class="w100px">seleccionada</span>
-        </div>
-        <div>
-            <span class="w100px">dimension:</span>
-            <span class="w100px">seleccionada</span>
-        </div>
-        <div>
-            <span class="w100px">dimension:</span>
-            <span class="w100px">seleccionada</span>
-        </div>
-        <div>
-            <span class="w100px">dimension:</span>
-            <span class="w100px">seleccionada</span>
+    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
+        <div *ngFor="let seccion of this.simulaciones; let j = index"
+            class="pd10 border radius4 shadow8 whiteFill w300px">
+            <div>
+                <div class="ft500 ft14"> Resultado </div>
+            </div>
+            <table class="mgt10">
+                <tr>
+                    <th> Temp. succ. [°F]</th>
+                    <td class="">
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.TSUC" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Pres. succ. [psig]</th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.PSUC" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> RPM </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.RPM" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Flujo [MMSCFD] </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.FLUJO" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Presion de descarga [psig] </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.PDES" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Temperatura de descarga [°F]  </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.TDES" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Hp Gas </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.HP" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Entalpia[btu/lbmol] </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.HG" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>.<tr>
+                    <th> Densidad [lbm/ft3] </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.DG" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Q/N Surge: </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.SURGE" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Q/N: </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.QN" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Q/N stw </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.STONEW" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Coef. Head </th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.CFHEAD" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Eficiencia Politrópica</th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.EFIC" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Exp. polit</th>
+                    <td>
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.POLLY" placeholder="-" class="inputNumber">
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-
-
-    <span>Num. RPMS</span>
-    <span>Valores de rpm</span>
-
-
-    <span>Inputs de cromatografia sin normalizar</span>
-    <span>checkbox para indicar usar cromatografia previa</span>
-    <span>Introducir cromatrografia</span>
-    <span>cargar cromatografia de libreria</span> -->
 
 </div>

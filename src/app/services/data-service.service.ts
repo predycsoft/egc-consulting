@@ -41,6 +41,9 @@ export class inputsTeorica {
   PSUC: number = 0;
   RPM: number = 0;
   FLUJO: number = 0;
+  RELVEL: number = 1;
+  QEXT: number = 0;
+  CAIPRES: number = 0;
   Mezcla: mezcla = {
     id: "",
     nombre: "",
