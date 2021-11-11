@@ -1,0 +1,138 @@
+<div fxLayout="row">
+    <div fxLayout="column">
+        <h4>Inputs</h4>
+        <span class="text3 ft14">Sección</span>
+        <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()" class="mgt05">
+            <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}} </mat-option>
+        </mat-select>
+        <span class="text3 ft14">Sección a simular</span>
+        <mat-select [(ngModel)]="curva" class="fw">
+            <mat-option *ngFor="let item of filteredImpulsoresEq; let i = index" [value]="item" class="optionItem">
+                {{i+1}} impulsor
+            </mat-option>
+        </mat-select>
+
+
+        <div fxLayoutAlign="space-between center" class="mgt08">
+            <div class="mgr20 ft12">Temperatura de Succión</div>
+            <div><input [(ngModel)]="TSUC" placeholder="vacio" class="w100px centertext"></div>
+            <div class="mgr20 ft12">Temperatura de Descarga</div>
+            <div><input [(ngModel)]="TDES" placeholder="vacio" class="w100px centertext"></div>
+
+            <div class="mgr20 ft12">Dimensión Temperatura</div>
+            <mat-select [(ngModel)]="tdim" class="fw">
+                <mat-option value="[°F]" class="optionItem"> °F </mat-option>
+                <mat-option value="[°C]" class="optionItem"> °C </mat-option>
+            </mat-select>
+        </div>
+
+        <div fxLayoutAlign="space-between center" class="mgt08">
+            <div class="mgr20 ft12">Presión de Succión</div>
+            <div><input [(ngModel)]="PSUC" type="number" placeholder="vacio" class="w100px centertext"></div>
+            <div class="mgr20 ft12">Presión de Descarga</div>
+            <div><input [(ngModel)]="PDES" type="number" placeholder="vacio" class="w100px centertext"></div>
+            <div class="mgr20 ft12">Dimensión Presión</div>
+            <mat-select [(ngModel)]="pdim" class="fw">
+                <mat-option value="[psia]" class="optionItem"> [psia] </mat-option>
+                <mat-option value="[psig]" class="optionItem"> [psig] </mat-option>
+            </mat-select>
+        </div>
+
+        <div fxLayoutAlign="space-between center" class="mgt08">
+            <div class="mgr20 ft12">RPMS</div>
+            <div *ngFor="let item of RPMS; let i = index; trackBy:customTrackBy">
+                <input [(ngModel)]="RPMS[i]" type="number" placeholder="vacio" class="w100px centertext">
+            </div>
+        </div>
+        <button (click)="generarMapa()">Generar Mapa</button>
+        {{dataSets | json}}
+        <div *ngIf="mostrarTabla">
+            <tr *ngFor="let item of dataSets; let i = index">
+                <td *ngFor="let elem of item; let j = index">
+                    {{this.dataSets[i][j]}}
+                </td>
+            </tr>
+            <div *ngIf="mostrarGrafica" class="pd10">
+                <google-chart #chart [type]="type" [data]="yData" [options]="options" [columns]="columns">
+                </google-chart>
+            </div>
+        </div>
+        <div fxLayoutAlign="space-between center" class="mgt08">
+            <div class="mgr20 ft12">Flujo</div>
+            <div><input [(ngModel)]="flujo" placeholder="vacio" class="w100px centertext"></div>
+
+            <div class="mgr20 ft12">Dimensión Flujo</div>
+            <mat-select [(ngModel)]="qdim" class="fw">
+                <mat-option value="[MMSCFD]" class="optionItem"> [MMSCFD] </mat-option>
+                <mat-option value="[ACFM]" class="optionItem"> [ACFM] </mat-option>
+            </mat-select>
+        </div>
+        <div fxLayoutAlign="space-between center" class="mgt08">
+            <div class="mgr20 ft12">RPM: </div>
+            <div><input [(ngModel)]="RPM" placeholder="vacio" class="w100px centertext"></div>
+
+        </div>
+        <h4>Mezcla de gas</h4>
+
+        <div class="mgr20 ft12"> Metano
+            <input [(ngModel)]="mezcla.metano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Etano
+            <input [(ngModel)]="mezcla.etano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Propano
+            <input [(ngModel)]="mezcla.propano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> I-Butano
+            <input [(ngModel)]="mezcla.iButano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> N-Butano
+            <input [(ngModel)]="mezcla.nButano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> I-Pentano
+            <input [(ngModel)]="mezcla.iPentano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> N-Pentano
+            <input [(ngModel)]="mezcla.nPentano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Hexano
+            <input [(ngModel)]="mezcla.hexano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Heptano
+            <input [(ngModel)]="mezcla.heptano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Octano
+            <input [(ngModel)]="mezcla.octano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Nonano
+            <input [(ngModel)]="mezcla.nonano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Decano
+            <input [(ngModel)]="mezcla.decano" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Nitrógeno
+            <input [(ngModel)]="mezcla.nitrogeno" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Diox. Carbono
+            <input [(ngModel)]="mezcla.dioxCarbono" placeholder="vacio" class="w100px centertext">
+        </div>
+
+        <div class="mgr20 ft12"> Sulf. Hidrógeno
+            <input [(ngModel)]="mezcla.sulfHidrogeno" placeholder="vacio" class="w100px centertext">
+        </div>
+    </div>
+    <button (click)="evaluar()">Evaluar</button>
+</div>
