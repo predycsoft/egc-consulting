@@ -35,6 +35,11 @@
                                         <span class="tagText"> {{equipo.tag}} </span>
                                     </div>
                                     <div *ngIf="i>0" class="shaftContainer"></div>
+                                    <div class="configContainer">
+                                        <mat-icon class="iconButton text3 ft16">settings</mat-icon>
+                                        <mat-icon class="statusIcon greenText ft15">check</mat-icon>
+                                    </div>
+
                                 </div>
                                 <div *ngIf="equipo.familia==='Turbina'" class="equipoContainer">
                                     <img [src]="icon.turbinaIcon" class="equipoIcon">

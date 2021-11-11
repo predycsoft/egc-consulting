@@ -1,3 +1,18 @@
+<div class="border-l topBarContainer pd05" fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign=" center">
+
+    <span class="mgl10 ft500 ft16">Comportamiento real del tren (Historico)</span>
+    <div>
+        <input type="datetime-local">
+    </div>
+    <div>
+        <input type="datetime-local">
+    </div>
+    <!-- <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'dashboard'}" (click)="vista='dashboard'"> bar_chart</mat-icon>
+    <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'lista'}" (click)="vista='lista'"> format_list_numbered</mat-icon> -->
+    <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
+    <mat-icon class="iconButton text3 ft18">settings</mat-icon>
+    <button class="accent">Agregar set de datos</button>
+</div>
 <div class="fw">
     <table class="fw">
         <tr>
@@ -10,6 +25,7 @@
             </th>
         </tr>
         <tr *ngFor="let item of [1,2,3,4,5,6,7,6,5,6,7,5,3]" (dblclick)="openDialogResultados()" class="cursorPointer">
+            <td class="centertext"><mat-checkbox></mat-checkbox></td>
             <td class="centertext">22-06-09</td>
             <td class="centertext">
                 <span class="border sqChip greenFill1">R + T</span>
