@@ -125,6 +125,7 @@ export class simulacionTeorica {
   curva: curva;
   inputs: inputsTeorica = new inputsTeorica()
   outputTeorico: outputTeorico = new outputTeorico()
+  mapas: puntoMapa[] = []
 }
 
 export class tren {
@@ -199,6 +200,19 @@ export class general {
 export class puntosDatasheet {
   nombre: string = "";
   numero: number = 0;
+}
+
+export class puntoMapa{
+  RPM: number = 0;
+  QN: number = 0;
+  TDES: number = 0;
+  PDES: number = 0;
+  HP: number = 0;
+  FLUJO: number = 0;
+  EFIC: number = 0;
+  CFHEAD: number = 0;
+  CFWORKIN: number = 0;
+  HEAD: number = 0;
 }
 
 

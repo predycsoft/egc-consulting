@@ -363,6 +363,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
           ...this.curva
         })
     } else {
+      console.log(this.curva.nombre)
       this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
         .collection("curvas")
         .doc(this.curva.nombre).set({

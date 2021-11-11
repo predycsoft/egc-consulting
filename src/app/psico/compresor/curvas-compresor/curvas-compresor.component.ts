@@ -152,7 +152,7 @@ export class CurvasCompresorComponent implements OnInit {
     .collection("equipos")
     .doc(this.equipo.tag)
     .collection("curvas")
-    .doc(`${nombre}`).set({...impulsor})
+    .doc(nombre).set({...impulsor})
   }
 
   eliminarImpulsor(idImpulsor){
