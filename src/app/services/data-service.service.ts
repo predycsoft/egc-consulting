@@ -4,6 +4,130 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { switchMap, map } from 'rxjs/operators';
 
+/// Clases de Simulacion 
+
+export interface curvaEquipo {
+  equipoTag: string,
+  seccion: number,
+  curvas: curva[]
+}
+
+export interface mezcla {
+  id: string,
+  nombre: string,
+  cromatografia: cromatografia,
+}
+
+export class inputs {
+  TSUC: number = 0;
+  PSUC: number = 0;
+  PDES: number = 0;
+  TDES: number = 0;
+  RPM: number = 0;
+  FLUJO: number = 0;
+  Mezcla: mezcla = {
+    id: "",
+    nombre: "",
+    cromatografia: new cromatografia()
+  }
+  TDIM: string = "";
+  QDIM: string = "";
+  PDIM: string = "";
+  DDIM: string = "";
+}
+
+export class inputsTeorica {
+  TSUC: number = 0;
+  PSUC: number = 0;
+  RPM: number = 0;
+  FLUJO: number = 0;
+  RELVEL: number = 1;
+  QEXT: number = 0;
+  CAIPRES: number = 0;
+  Mezcla: mezcla = {
+    id: "",
+    nombre: "",
+    cromatografia: new cromatografia()
+  }
+  TDIM: string = "";
+  QDIM: string = "";
+  PDIM: string = "";
+  DDIM: string = "";
+}
+
+export class outputAdim {
+  EFIC: number = 0
+  coefWorkInput: number = 0
+  CFHEAD: number = 0
+  workPoli: number = 0
+  HP: number = 0
+  flujoMasico: number = 0
+  relacion_de_compresion: number = 0
+  relacion_de_volumen: number = 0
+  tIsent: number = 0
+  pIsent: number = 0
+  densSuc: number = 0
+  densDes: number = 0
+  densIsen: number = 0
+  volSuc: number = 0
+  volDes: number = 0
+  volIsent: number = 0
+  hSuc: number = 0
+  hDes: number = 0
+  hIsnet: number = 0
+  sSuc: number = 0
+  sDes: number = 0
+  sIsent: number = 0
+  compSuc: number = 0
+  compDes: number = 0
+  compIsent: number = 0
+  ymw: number = 0
+  qn: number = 0
+}
+
+export class outputTeorico {
+  PSUC: number = 0
+  PDES: number = 0
+  TSUC: number = 0
+  TDES: number = 0
+  DG: number = 0
+  HG: number = 0
+  SURGE: number = 0
+  QN: number = 0
+  STONEW: number = 0
+  CFHEAD: number = 0
+  HEAD: number = 0
+  EFIC: number = 0
+  HP: number = 0
+  POLLY: number = 0
+  FLUJO: number = 0
+  RPM: number = 0
+}
+
+export class simulacionPE {
+  equipoTag: string = "";
+  equipoFamilia: string = "";
+  equipoTipologia: string = "";
+  seccion: number = 0;
+  curvas: curva[] = [];
+  curva: curva;
+  inputs: inputs = new inputs()
+  outputTeorico: outputTeorico = new outputTeorico()
+  outputAdim: outputAdim = new outputAdim()
+}
+
+export class simulacionTeorica {
+  equipoTag: string = "";
+  equipoFamilia: string = "";
+  equipoTipologia: string = "";
+  seccion: number = 0;
+  curvas: curva[] = [];
+  curva: curva;
+  inputs: inputsTeorica = new inputsTeorica()
+  outputTeorico: outputTeorico = new outputTeorico()
+  mapas: puntoMapa[] = []
+}
+
 export class tren {
   tag: string = "";
   equipos: equipo_tren[] = [];
@@ -76,6 +200,19 @@ export class general {
 export class puntosDatasheet {
   nombre: string = "";
   numero: number = 0;
+}
+
+export class puntoMapa{
+  RPM: number = 0;
+  QN: number = 0;
+  TDES: number = 0;
+  PDES: number = 0;
+  HP: number = 0;
+  FLUJO: number = 0;
+  EFIC: number = 0;
+  CFHEAD: number = 0;
+  CFWORKIN: number = 0;
+  HEAD: number = 0;
 }
 
 

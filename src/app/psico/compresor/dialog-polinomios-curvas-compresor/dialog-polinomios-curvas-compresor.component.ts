@@ -363,14 +363,12 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
           ...this.curva
         })
     } else {
-      if (this.curva.fab == true) {
-        const nombre = this.curva.nombre.replace(" ", "-")
-        this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
-          .collection("curvas")
-          .doc(`s${this.dataEnviada.seccion}-${nombre}`).set({
-            ...this.curva
-          })
-      }
+      console.log(this.curva.nombre)
+      this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).collection("equipos").doc(this.dataEnviada.equipoTag)
+        .collection("curvas")
+        .doc(this.curva.nombre).set({
+          ...this.curva
+        })
     }
   }
 }

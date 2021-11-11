@@ -9,13 +9,15 @@ import { ListaProyectosComponent } from './proyectos/lista-proyectos/lista-proye
 import { PsicoDashboardComponent } from './psico-dashboard/psico-dashboard.component';
 import { ListaTrenesComponent } from '../psico/proyectos/lista-trenes/lista-trenes.component';
 import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulacion-campo-input.component';
-import { SimulacionTeoricaComponent } from './compresor/simulacion-teorica/simulacion-teorica.component';
 import { SimulacionCampoComponent } from './compresor/simulacion-campo/simulacion-campo.component';
 import { ReporteSumarioSeccionComponent } from './reportes/reporte-sumario-seccion/reporte-sumario-seccion.component';
 import { ReporteSumarioInputsComponent } from './reportes/reporte-sumario-inputs/reporte-sumario-inputs.component';
 import { ReportePuntoComponent } from './reportes/reporte-punto/reporte-punto.component';
 import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/reporte-punto-sumario.component';
 import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim-campo.component';
+import { ListaPeComponent } from './lista-pe/lista-pe.component';
+import { ListaStComponent } from './lista-st/lista-st.component';
+import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica.component';
 
 
 const routes: Routes = [
@@ -26,23 +28,19 @@ const routes: Routes = [
   {path: "proyecto/:id", component:PsicoDashboardComponent, children: [
     {path: 'trenes', component:ListaTrenesComponent},
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
-    {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
+    {path: 'tren/:trenTag/lista-pruebas-eficiencia', component:ListaPeComponent},
+    {path: 'tren/:trenTag/prueba-eficiencia/:idPrueba', component:DialogSimCampoComponent},
+    {path: 'tren/:trenTag/lista-simulaciones-teoricas', component:ListaStComponent},
+    {path: 'tren/:trenTag/simulacion-teorica/:idPrueba', component:SimulacionTeoricaComponent},
     {path: 'simulacion-input/:trenTag/:equipoTag', component: SimulacionCampoInputComponent},
-    {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
+    {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
+    // {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
     {path: 'tren/:trenTag/sim-campo', component: SimulacionCampoComponent},
-    {path: 'tren/:trenTag/sim-campo-config', component: DialogSimCampoComponent},
-    {path: 'tren/:trenTag/sim-campo-config/:id', component: DialogSimCampoComponent},
     {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
     {path: 'tren/:trenTag/reporte-sumario-inputs', component: ReporteSumarioInputsComponent},
     {path: 'tren/:trenTag/reporte-punto', component: ReportePuntoComponent},
     {path: 'tren/:trenTag/reporte-punto-sumario', component: ReportePuntoSumarioComponent},
-
-    
-
  ]}
-
-
-
 ];
 
 @NgModule({

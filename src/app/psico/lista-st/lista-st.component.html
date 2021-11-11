@@ -1,0 +1,26 @@
+<div>
+    <div>
+        <div class="border-l topBarContainer pd05" fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign=" center">
+
+            <span class="mgl10 ft500 ft16">Lista de Simulaciones Teóricas</span>
+            <span class="cursorPointer" *ngIf="anadiendo==false" (click)="anadiendo = true"> Añadir<mat-icon class="iconButton text3 ft18">add</mat-icon></span>
+            <span *ngIf="anadiendo==true">Escriba el nombre de la simulacion</span>
+            <input *ngIf="anadiendo==true" [(ngModel)]="nombre" type="text">
+            <button class="accent" *ngIf="anadiendo==true" (click)="anadiendo = false; anadirPrueba(nombre); nombre = ''">Confirmar</button>
+        </div>
+        <table>
+            <tr>
+                <td>Nombre</td>
+                <td>Fecha de creación</td>
+                <td>Simular</td>
+                <td>Eliminar</td>
+            </tr>
+            <tr *ngFor="let item of simulaciones">
+                <td>{{item.nombre}}</td>
+                <td>{{item.fechaCreacion}}</td>
+                <td><a routerLink='/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/simulacion-teorica/{{item.id}}'>	<mat-icon>input</mat-icon></a> </td>
+                <td><a (click)="eliminarPrueba(item.id)"><mat-icon>delete</mat-icon> </a></td>
+            </tr>
+        </table>
+    </div>
+</div>

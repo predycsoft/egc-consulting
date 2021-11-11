@@ -5,7 +5,7 @@
         <th class="w-10">accion</th>
     </tr>
     <tr *ngFor="let item of cromatografias">
-        <td>{{item.nombre}}</td>
+        <td (click)="seleccionar(item)">{{item.nombre}}</td>
         <td>{{item.fechaCreacion}} </td>
         <td>
             <mat-icon class="iconButton text2">delete</mat-icon>

@@ -16,12 +16,12 @@
                 <input type="text" [(ngModel)]="curva.comentario">
                 <span>Vigencia</span>
                 <mat-select [(ngModel)]="curva.vigencia" class="simpleSelect">
-                    <mat-option value="true" class="optionItem"> Vigente </mat-option>
-                    <mat-option value="false" class="optionItem"> No vigente</mat-option>
+                    <mat-option [value]="true" class="optionItem"> Vigente </mat-option>
+                    <mat-option [value]="false" class="optionItem"> No vigente</mat-option>
                 </mat-select>
                 <span>Default</span>
                 <mat-select [(ngModel)]="curva.default" class="simpleSelect" *ngIf="curva.equivalente == true">
-                    <mat-option value="true" class="optionItem"> Si </mat-option>
+                    <mat-option [value]="true" class="optionItem"> Si </mat-option>
                     <mat-option value="false" class="optionItem"> No</mat-option>
                 </mat-select>
             </div>

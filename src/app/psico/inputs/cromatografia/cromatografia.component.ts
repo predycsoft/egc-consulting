@@ -92,7 +92,30 @@ export class CromatografiaComponent implements OnInit {
           proyectoId: this.proyectoId,
         }
       })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result)
+          this.nombreCromatografia = result.nombre
+          this.cromatografiaOriginal = result.cromatografiaOriginal
+          this.cromatografiaNormalizada = result.cromatografiaNormalizada
+        }
+      })
   }
+
+  cerrar(){
+    this.nombreCromatografia = this.nombreCromatografia.replace(" ","-")
+    this.nombreCromatografia = this.nombreCromatografia.replace(",","-")
+    this.nombreCromatografia = this.nombreCromatografia.replace(".","-")
+    this.nombreCromatografia = this.nombreCromatografia.replace("@","-")
+    const obj = {
+      id: this.nombreCromatografia,
+      nombre: this.nombreCromatografia,
+      cromatografia: this.cromatografiaNormalizada
+    }
+    this.dialogRef.close(obj)
+  }
+
+ 
 
 
 }

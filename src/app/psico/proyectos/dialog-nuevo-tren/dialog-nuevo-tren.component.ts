@@ -17,6 +17,7 @@ export class DialogNuevoTrenComponent implements OnInit {
   }
 
   guardar() {
+    this.tren.dimensiones = JSON.parse(JSON.stringify(this.tren.dimensiones))
     this.matDialogRef.close(this.tren);
   }
 

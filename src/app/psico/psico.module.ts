@@ -52,6 +52,9 @@ import { ReportePuntoSumarioComponent } from './reportes/reporte-punto-sumario/r
 import { CompresorDimsComponent } from './compresor/compresor-dims/compresor-dims.component';
 import { DialogComentarioComponent } from './dialogs/dialog-comentario/dialog-comentario.component';
 import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim-campo.component';
+import { ListaPeComponent } from './lista-pe/lista-pe.component';
+import { ListaStComponent } from './lista-st/lista-st.component';
+import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +101,10 @@ import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim
     ReportePuntoSumarioComponent,
     CompresorDimsComponent,
     DialogComentarioComponent,
-    DialogSimCampoComponent
+    DialogSimCampoComponent,
+    ListaPeComponent,
+    ListaStComponent,
+    SimulacionTeoricaComponent
   ],
   imports: [
     CommonModule,
