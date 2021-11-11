@@ -11,6 +11,30 @@ interface param {
   min: number;
 }
 
+class pruebaCampo {
+  simDate: Date = new Date;
+  simTipo: string = '';
+  simCurvas: string = '';
+  simSecciones: simSeccion[] = []
+  simId: string = '';
+}
+
+class simSeccion {
+  equipoTag: string = '';
+  numSeccion: number = 0;
+  numCompresor: number = 0;
+  seccion: number = 0;
+  mezcla: string = '';
+  FLUJO: number = 0;
+  PSUC: number = 0;
+  PDES: number = 0;
+  TSUC: number = 0;
+  TDES: number = 0;
+  HP: number = 0;
+  QN: number = 0;
+  CFHEAD: number = 0;
+  EFIC: number = 0;
+}
 
 @Component({
   selector: 'simulacion-campo-lista',
