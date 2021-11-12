@@ -31,7 +31,7 @@
         </tr>
         <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId)" class="cursorPointer">
             <!-- <td class="centertext"><mat-checkbox></mat-checkbox></td> -->
-            <td class="centertext">{{item.simDate | date}}</td>
+            <td class="centertext">{{item.simDate | date: 'dd/MM/yyyy HH:mm'  }}</td>
             <td class="centertext">
                 <span class="border sqChip greenFill1">{{item.simTipo }}</span>
             </td>
@@ -48,7 +48,7 @@
             <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.TDES}}</div> </td>
             <!-- Out -->
             <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.HP}}</div> </td>
-            <td class="centertext">adsfdsf</td>
+            <td class="centertext">{{item.totHP}}</td>
             <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.QN}}</div> </td>
             <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.CFHEAD}}</div> </td>
             <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.EFIC}}</div></td>
