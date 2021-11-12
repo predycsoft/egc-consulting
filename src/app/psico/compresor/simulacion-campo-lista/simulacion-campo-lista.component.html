@@ -12,6 +12,11 @@
     <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
     <mat-icon class="iconButton text3 ft18">settings</mat-icon>
     <button class="accent" (click)="nuevaSimCampo()"> Agregar set de datos</button>
+    <label class="textButton border shadow8">
+        <mat-icon class="ft18">upload</mat-icon>
+        <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
+            (change)="fileChangeListener($event)" class="displayNone" />
+    </label>
 </div>
 <div class="fw">
     <table class="fw">
@@ -24,25 +29,29 @@
                 </div>
             </th>
         </tr>
-        <tr *ngFor="let item of [1,2,3,4,5,6,7,6,5,6,7,5,3]" (dblclick)="openDialogResultados()" class="cursorPointer">
-            <td class="centertext"><mat-checkbox></mat-checkbox></td>
-            <td class="centertext">22-06-09</td>
+        <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId)" class="cursorPointer">
+            <!-- <td class="centertext"><mat-checkbox></mat-checkbox></td> -->
+            <td class="centertext">{{item.simDate | date}}</td>
             <td class="centertext">
-                <span class="border sqChip greenFill1">R + T</span>
+                <span class="border sqChip greenFill1">{{item.simTipo }}</span>
             </td>
-            <td class="centertext">Mezcla Nombre</td>
-            <td class="centertext">70</td>
-            <td class="centertext">70</td>
-            <td class="centertext">180</td>
-            <td class="centertext">140</td>
-            <td class="centertext">70</td>
-            <td class="centertext">5600 </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones; let i = index">C: {{sec.numCompresor}} S: {{sec.numSeccion}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.FLUJO}}</div>
+            </td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.RPM}}</div></td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.PSUC}}</div></td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.PDES}}</div></td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.TSUC}}</div></td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.TDES}}</div> </td>
             <!-- Out -->
-            <td class="centertext">5600 </td>
-            <td class="centertext">9000 </td>
-            <td class="centertext">.76 </td>
-            <td class="centertext">1.4 </td>
-            <td class="centertext">160</td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.HP}}</div> </td>
+            <td class="centertext">adsfdsf</td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.QN}}</div> </td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.CFHEAD}}</div> </td>
+            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.EFIC}}</div></td>
         </tr>
     </table>
 

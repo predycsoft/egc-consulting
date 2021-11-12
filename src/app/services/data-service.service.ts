@@ -20,9 +20,9 @@ export interface mezcla {
 
 export class inputs {
   TSUC: number = 0;
+  TDES: number = 0;
   PSUC: number = 0;
   PDES: number = 0;
-  TDES: number = 0;
   RPM: number = 0;
   FLUJO: number = 0;
   Mezcla: mezcla = {
@@ -143,7 +143,7 @@ export class equipo_tren {
 
 export class Proyecto {
   id: string = "";
-  userId: string = ""; 
+  userId: string = "";
   titulo: string = "";
   revision: string = "A";
   cliente: string = "";
@@ -202,7 +202,7 @@ export class puntosDatasheet {
   numero: number = 0;
 }
 
-export class puntoMapa{
+export class puntoMapa {
   RPM: number = 0;
   QN: number = 0;
   TDES: number = 0;
@@ -235,7 +235,7 @@ export class curva {
   numCompresor: number = 0;
   numSeccion: number = 1;
   numImpulsor: number = 1; // 0 es el default para el impulsor requivalente y 1++ el numero que ocuparian los impulsores individuales
-  fab: boolean= true; // Flag para identificar si la data viene del fabricante
+  fab: boolean = true; // Flag para identificar si la data viene del fabricante
   diametro: number = 0; // diametro de cada impulsor
   limSurge: number = 0; //Límite Q/N de surge
   limStw: number = 0; //Límite Q/N de stw
@@ -252,10 +252,10 @@ export class curva {
   cp4: number = 0; //a3*X^3
   expocp: number = 0;
   errcp: number = 0;
-  headImg:  string = ''; //Es una imagen que se carga de referencia
+  headImg: string = ''; //Es una imagen que se carga de referencia
 
   // Eficiencia politropica
-  eficPoliDataSet: dataSet[]  = [];  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
+  eficPoliDataSet: dataSet[] = [];  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
   ce1: number = 0; //termino independiente a0*x^0
   ce2: number = 0; //a1*X^1
   ce3: number = 0; //a2*X^2
@@ -265,9 +265,9 @@ export class curva {
   eficImg: string = ''; //Es una imagen que se carga de referencia
 }
 
-class dataSet{
-  x: number| string = 0;
-  y: number| string = 0;
+class dataSet {
+  x: number | string = 0;
+  y: number | string = 0;
 }
 
 export class compresorDims {
@@ -306,29 +306,29 @@ export class cromatografia {
 })
 export class DataServiceService {
 
-  cromatografiaNombre: string[] = ['Metano (CH4)','Etano (C2H6)','Propano (C3H8)',	'iso-Butano (C4H10)', 'n-Butano (C4H10)','iso-Pentano (C5H12)','n-Pentano (C5H12)','Hexanos  (C6H14)','Heptanos (C7H16)','Octanos (C8H18)','Nonanos (C9H20)','Decanos (C10H22)','Diox. Carbono (CO2)','Nitrogeno (N2)','Sulf. Hidrógeno (H2S)']
-  cromatografiaPM: string[] = ['16.043','30.07','44.097','58.124','58.124','72.151','72.151','86.178','100.205','114.232','128.259','142.286','44.01','28.013','34.076']
-  inputPruebaEficiencia: string[] = ['P. succ.','T. succ','P desc.','T desc.','RPM','Flujo','Mezcla Gas']
-
-  
-    // 
-  // 
-  // 
-  // 
-  // 	
-  // 	
-  // 
-  // 	
-  // 	
-  // 	
-  // 	
-  // 	
-  // 
-  // 
-  // 
+  cromatografiaNombre: string[] = ['Metano (CH4)', 'Etano (C2H6)', 'Propano (C3H8)', 'iso-Butano (C4H10)', 'n-Butano (C4H10)', 'iso-Pentano (C5H12)', 'n-Pentano (C5H12)', 'Hexanos  (C6H14)', 'Heptanos (C7H16)', 'Octanos (C8H18)', 'Nonanos (C9H20)', 'Decanos (C10H22)', 'Diox. Carbono (CO2)', 'Nitrogeno (N2)', 'Sulf. Hidrógeno (H2S)']
+  cromatografiaPM: string[] = ['16.043', '30.07', '44.097', '58.124', '58.124', '72.151', '72.151', '86.178', '100.205', '114.232', '128.259', '142.286', '44.01', '28.013', '34.076']
+  inputPruebaEficiencia: string[] = ['P. succ.', 'T. succ', 'P desc.', 'T desc.', 'RPM', 'Flujo', 'Mezcla Gas']
 
 
-  
+  // 
+  // 
+  // 
+  // 
+  // 	
+  // 	
+  // 
+  // 	
+  // 	
+  // 	
+  // 	
+  // 	
+  // 
+  // 
+  // 
+
+
+
   // ########  ########   #######  ##    ## ########  ######  ########  #######   ######  
   // ##     ## ##     ## ##     ##  ##  ##  ##       ##    ##    ##    ##     ## ##    ## 
   // ##     ## ##     ## ##     ##   ####   ##       ##          ##    ##     ## ##       
@@ -407,13 +407,13 @@ export class DataServiceService {
   // Trenes ////////////////////////////////////////////////////////////////////
   getTren(proyectoId: string, tagTren: string) {
     return this.afs.collection("proyectos")
-    .doc(proyectoId)
-    .collection<tren>("trenes")
-    .doc(tagTren)
-    .valueChanges()
+      .doc(proyectoId)
+      .collection<tren>("trenes")
+      .doc(tagTren)
+      .valueChanges()
   }
 
-  getTrenes(proyectoId: string){
+  getTrenes(proyectoId: string) {
     return this.afs.collection("proyectos")
       .doc(proyectoId)
       .collection("trenes")
@@ -425,14 +425,14 @@ export class DataServiceService {
       .collection('proyectos')
       .doc(proyectoId)
       .collection("trenes").doc(tren.tag)
-      .set({...tren}, {merge:true});
+      .set({ ...tren }, { merge: true });
   }
 
   anexarTren(proyectoId: string, tren: tren) {
     return this.afs.collection("proyectos").doc(proyectoId)
       .collection("trenes")
       .doc(tren.tag)
-      .set({...tren})
+      .set({ ...tren })
   }
 
   eliminarTren(proyectoId: string, tren: tren) {
@@ -446,24 +446,24 @@ export class DataServiceService {
 
 
   //////////////////////////////////////////////////////////////////////////////////
-  getEquipos(proyectoId:string, trenTag: string){
+  getEquipos(proyectoId: string, trenTag: string) {
     return this.afs.collection("proyectos").doc(proyectoId).collection<equipo>("equipos").valueChanges()
   }
-  obtenerEquipo(proyectoId:string, tag: string){
+  obtenerEquipo(proyectoId: string, tag: string) {
     return this.afs.collection<Proyecto>("proyectos").doc(proyectoId).collection<equipo>("equipos").doc(tag).valueChanges()
   }
 
-  async createEquipo(proyectoId:string, equipo: equipo) {
-    if(equipo.tipologia == "Inline"){
+  async createEquipo(proyectoId: string, equipo: equipo) {
+    if (equipo.tipologia == "Inline") {
       equipo.nSecciones = 1
-      equipo.nImpulsores = [0,0]
+      equipo.nImpulsores = [0, 0]
       await this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
         ...equipo
       })
     }
-    if(equipo.tipologia == "Back to Back"){
+    if (equipo.tipologia == "Back to Back") {
       equipo.nSecciones = 2
-      equipo.nImpulsores = [0,0]
+      equipo.nImpulsores = [0, 0]
       await this.afs.collection("proyectos").doc(proyectoId).collection("equipos").doc(equipo.tag).set({
         ...equipo
       })
@@ -481,8 +481,8 @@ export class DataServiceService {
 
   async getCurvas(proyectoId: string, equipoTag: string) {
     let curvas: curva[] = []
-    const docs= await this.afs
-    .collection('proyectos')
+    const docs = await this.afs
+      .collection('proyectos')
       .doc(proyectoId)
       .collection("equipos")
       .doc(equipoTag)
@@ -603,22 +603,22 @@ export class DataServiceService {
     let str = '';
     let row = '';
     for (let index in headerList) {
-     row += headerList[index] + ';';
+      row += headerList[index] + ';';
     }
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (let i = 0; i < array.length; i++) {
-     let line = '';
-     for (let index in headerList) {
-      let head = headerList[index];
-      line +=   array[i][head]+ ';';
-     }
-     str += line + '\r\n';
+      let line = '';
+      for (let index in headerList) {
+        let head = headerList[index];
+        line += array[i][head] + ';';
+      }
+      str += line + '\r\n';
     }
     return str;
-   }
+  }
 
-   downloadFile(data, filename='data', headers) {
+  downloadFile(data, filename = 'data', headers) {
     let csvData = this.ConvertToCSV(data, headers);
     console.log(csvData)
     let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
@@ -626,7 +626,7 @@ export class DataServiceService {
     let url = URL.createObjectURL(blob);
     let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
     if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
-        dwldLink.setAttribute("target", "_blank");
+      dwldLink.setAttribute("target", "_blank");
     }
     dwldLink.setAttribute("href", url);
     dwldLink.setAttribute("download", filename + ".csv");
@@ -634,7 +634,7 @@ export class DataServiceService {
     document.body.appendChild(dwldLink);
     dwldLink.click();
     document.body.removeChild(dwldLink);
-}
+  }
 
   constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) { }
 }

@@ -1,4 +1,4 @@
-<div fxLayout="column" class="border-l pd20">
+<div fxLayout="column" class="border-l pd20 dialogContainer">
     <span class="ft24 ft500">Prueba de eficiencia del TREN {{tren.tag}}</span>
     <span class="mgt10 ft16"> Fecha de creación: *fecha*</span>
     <div fxLayout="column" class="border-t pdt20 ft500 ft16 mgt10 mgb10">
@@ -29,8 +29,14 @@
     <div fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
         <span class="ft500 ft20">Datos recolectados de campo</span>
     </div>
+    <div>
+        <input type="datetime-local" [(ngModel)]="simInfo.simDate">
+    </div>
 
-
+    <button (click)="simularAdim()"> Simulación adimensional</button>
+    <button *ngIf="simInfo.simTipo=='R' || simInfo.simTipo=='R+T'" (click)="simularPE()">Simulacion Prueba de
+        eficiencia</button>
+    <button (click)="guardarPunto()">Guardar Punto</button>
     <div *ngFor="let seccion of simulacion; let j = index" class="mgt10 pd10 border radius4  whiteFill shadow8">
         <div>
             <!-- <div *ngIf="j == 0 || (j > 0 && this.simulacion[j].equipoTag !=  this.simulacion[j -1].equipoTag)"> -->
@@ -40,49 +46,49 @@
         <table class="mgt10">
             <tr>
                 <th> Temp. succ. {{this.simulacion[j].inputs.TDIM}}</th>
-                <td  class="">
+                <td class="">
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.TSUC" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> Pres. succ. {{this.simulacion[j].inputs.PDIM}}</th>
-                <td >
+                <td>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.PSUC" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> Temp. desc.{{this.simulacion[j].inputs.TDIM}}</th>
-                <td >
+                <td>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.TDES" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> PRes. desc. {{this.simulacion[j].inputs.PDIM}} </th>
-                <td >
+                <td>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.PDES" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> RPM </th>
-                <td >
+                <td>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.RPM" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> Flujo {{this.simulacion[j].inputs.QDIM}} </th>
-                <td >
+                <td>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.FLUJO" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
             <tr>
                 <th> Mezcla </th>
-                <td >
+                <td>
                     <a class="ft12" (click)="openCromatografia(j)">
                         <div>Mezcla</div>
                         <div>{{this.simulacion[j].inputs.Mezcla.nombre}}</div>
@@ -91,3 +97,4 @@
             </tr>
         </table>
     </div>
+</div>
