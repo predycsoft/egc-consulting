@@ -437,6 +437,9 @@ body {
 .justify{  text-align: justify!important; }
 .nowrap{    white-space: nowrap;}
 
+
+.relative{  position: relative }
+
 .op0{  opacity: 0px; }
 .op10{  opacity: 0.1px; }
 .op20{  opacity: 0.2px; }
@@ -1623,7 +1626,7 @@ input[type=number]::-webkit-outer-spin-button {
     border-bottom: 1px solid var(--stroke2);
     border-radius: var(--defaultBorderRadius);
     min-width: 128px;
-    padding: 4px 8px 0 12px !important;
+    padding: 2px 4px 4px 12px !important;
     color: var(--text2) !important;
     user-select: none;
 }
@@ -1663,8 +1666,6 @@ input[type=number]::-webkit-outer-spin-button {
     background: var(--neutral3) !important;
     color: var(--text1) !important;
   }
-
-
 
 
 /* width */
@@ -1707,7 +1708,8 @@ textarea:focus::-webkit-scrollbar-thumb {
     border-color: var(--strokeStrong) !important;
   }
 
-.mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+.mat-
+-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
     background-color: var(--accent5) !important;
 }
 
