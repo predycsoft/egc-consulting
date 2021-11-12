@@ -49,9 +49,14 @@ export class SimulacionTeoricaComponent implements OnInit {
           this.pruebaId = params.idPrueba
           this.data.getTren(this.proyecto.id, trenTag).subscribe(tren => {
             this.tren = tren
+            let tag = []
+            for (let index = 0; index < this.tren.equipos.length; index++) {
+              const element = this.tren.equipos[index];
+              tag.push(element.tag)
+            }
             this.data.getEquipos(this.proyecto.id, trenTag).subscribe(async equipos => {
               this.equipos = []
-              this.equipos = equipos
+              this.equipos = equipos.filter(x => tag.includes(x.tag))
               await this.cargarSimulacion()
               console.log(this.proyecto)
               console.log(this.tren)

@@ -26,6 +26,7 @@ class simSeccion {
   equipoTag: string = '';
   numSeccion: number = 0;
   numCompresor: number = 0;
+  RPM: number = 0;
   FLUJO: number = 0;
   PSUC: number = 0;
   PDES: number = 0;
@@ -149,15 +150,98 @@ export class SimulacionCampoInputComponent implements OnInit {
   }
 
   simularAdim() {
+    let envio = []
+    envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+      "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
+    for (let j = 0; j < this.simulacion.length; j++) {
+      const sim = this.simulacion[j]
+      envio.push([+sim.inputs.Mezcla.cromatografia.metano, +sim.inputs.Mezcla.cromatografia.etano, +sim.inputs.Mezcla.cromatografia.propano, sim.inputs.Mezcla.cromatografia.iButano, sim.inputs.Mezcla.cromatografia.nButano, sim.inputs.Mezcla.cromatografia.iPentano, sim.inputs.Mezcla.cromatografia.nPentano, sim.inputs.Mezcla.cromatografia.hexano, sim.inputs.Mezcla.cromatografia.heptano, sim.inputs.Mezcla.cromatografia.octano, sim.inputs.Mezcla.cromatografia.nonano, sim.inputs.Mezcla.cromatografia.decano, sim.inputs.Mezcla.cromatografia.nitrogeno, sim.inputs.Mezcla.cromatografia.dioxCarbono, sim.inputs.Mezcla.cromatografia.sulfHidrogeno,
+      sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJO, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
+    }
+    this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(envio)).subscribe(async (res) => {
+      let OUTPUT: Array<Array<any>> = []
+      if (res) {
+        OUTPUT = res as []
+        console.log("Respuesta de adimensional")
+        console.log(res)
+        for (let index = 0; index < this.simulacion.length; index++) {
+          this.simulacion[index].outputAdim.EFIC = OUTPUT[0][index + 1]
+          this.simulacion[index].outputAdim.coefWorkInput = OUTPUT[1][index + 1]
+          this.simulacion[index].outputAdim.CFHEAD = OUTPUT[2][index + 1]
+          this.simulacion[index].outputAdim.workPoli = OUTPUT[3][index + 1]
+          this.simulacion[index].outputAdim.HP = OUTPUT[4][index + 1]
+          this.simulacion[index].outputAdim.flujoMasico = OUTPUT[5][index + 1]
+          this.simulacion[index].outputAdim.relacion_de_compresion = OUTPUT[6][index + 1]
+          this.simulacion[index].outputAdim.relacion_de_volumen = OUTPUT[7][index + 1]
+          this.simulacion[index].outputAdim.tIsent = OUTPUT[8][index + 1]
+          this.simulacion[index].outputAdim.pIsent = OUTPUT[9][index + 1]
+          this.simulacion[index].outputAdim.densSuc = OUTPUT[10][index + 1]
+          this.simulacion[index].outputAdim.densDes = OUTPUT[11][index + 1]
+          this.simulacion[index].outputAdim.densIsen = OUTPUT[12][index + 1]
+          this.simulacion[index].outputAdim.volSuc = OUTPUT[13][index + 1]
+          this.simulacion[index].outputAdim.volDes = OUTPUT[14][index + 1]
+          this.simulacion[index].outputAdim.volIsent = OUTPUT[15][index + 1]
+          this.simulacion[index].outputAdim.hSuc = OUTPUT[16][index + 1]
+          this.simulacion[index].outputAdim.hDes = OUTPUT[17][index + 1]
+          this.simulacion[index].outputAdim.hIsnet = OUTPUT[18][index + 1]
+          this.simulacion[index].outputAdim.sSuc = OUTPUT[19][index + 1]
+          this.simulacion[index].outputAdim.sDes = OUTPUT[20][index + 1]
+          this.simulacion[index].outputAdim.sIsent = OUTPUT[21][index + 1]
+          this.simulacion[index].outputAdim.compSuc = OUTPUT[22][index + 1]
+          this.simulacion[index].outputAdim.compDes = OUTPUT[23][index + 1]
+          this.simulacion[index].outputAdim.compIsent = OUTPUT[24][index + 1]
+          this.simulacion[index].outputAdim.ymw = OUTPUT[25][index + 1]
+          this.simulacion[index].outputAdim.qn = OUTPUT[26][index + 1]
+        }
+      }
+    })
     this.simInfo.simTipo = "R"
   }
 
   simularPE() {
+    let envioPrueba = []
+    envioPrueba.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+      "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
+    for (let j = 0; j < this.simulacion.length; j++) {
+      const sim = this.simulacion[j]
+      envioPrueba.push([+sim.inputs.Mezcla.cromatografia.metano, +sim.inputs.Mezcla.cromatografia.etano, +sim.inputs.Mezcla.cromatografia.propano, sim.inputs.Mezcla.cromatografia.iButano, sim.inputs.Mezcla.cromatografia.nButano, sim.inputs.Mezcla.cromatografia.iPentano, sim.inputs.Mezcla.cromatografia.nPentano, sim.inputs.Mezcla.cromatografia.hexano, sim.inputs.Mezcla.cromatografia.heptano, sim.inputs.Mezcla.cromatografia.octano, sim.inputs.Mezcla.cromatografia.nonano, sim.inputs.Mezcla.cromatografia.decano, sim.inputs.Mezcla.cromatografia.nitrogeno, sim.inputs.Mezcla.cromatografia.dioxCarbono, sim.inputs.Mezcla.cromatografia.sulfHidrogeno,
+      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJO, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
+    }
+    console.log("hice el llamado a prueba de eficiencia")
+    this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((respuesta) => {
+      let OUTPUT: Array<Array<any>> = []
+      if (respuesta) {
+        OUTPUT = respuesta as []
+        console.log("Respuesta Teorica")
+        for (let index = 0; index < this.simulacion.length; index++) {
+          this.simulacion[index].outputTeorico.PSUC = OUTPUT[2][index + 1]
+          this.simulacion[index].outputTeorico.PDES = OUTPUT[3][index + 1]
+          this.simulacion[index].outputTeorico.TSUC = OUTPUT[4][index + 1]
+          this.simulacion[index].outputTeorico.TDES = OUTPUT[5][index + 1]
+          this.simulacion[index].outputTeorico.DG = OUTPUT[6][index + 1]
+          this.simulacion[index].outputTeorico.HG = OUTPUT[7][index + 1]
+          this.simulacion[index].outputTeorico.SURGE = OUTPUT[8][index + 1]
+          this.simulacion[index].outputTeorico.QN = OUTPUT[9][index + 1]
+          this.simulacion[index].outputTeorico.STONEW = OUTPUT[10][index + 1]
+          this.simulacion[index].outputTeorico.CFHEAD = OUTPUT[11][index + 1]
+          this.simulacion[index].outputTeorico.HEAD = OUTPUT[12][index + 1]
+          this.simulacion[index].outputTeorico.EFIC = OUTPUT[13][index + 1]
+          this.simulacion[index].outputTeorico.HP = OUTPUT[14][index + 1]
+          this.simulacion[index].outputTeorico.POLLY = OUTPUT[15][index + 1]
+          this.simulacion[index].outputTeorico.FLUJO = OUTPUT[16][index + 1]
+          this.simulacion[index].outputTeorico.RPM = OUTPUT[17][index + 1]
+        }
+        console.log(respuesta)
+      } else {
+        console.log("no hubo respuesta")
+      }
+    })
     this.simInfo.simTipo = "R+T"
   }
 
   guardarPunto() {
     // Guardado en el documento
+    console.log(this.simInfo.simId)
     if (this.simInfo.simId != "") {
       this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
         .collection("trenes").doc(this.dataEnviada.trenTag)
@@ -171,7 +255,7 @@ export class SimulacionCampoInputComponent implements OnInit {
     } else {
       const docRef = this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
         .collection("trenes").doc(this.dataEnviada.trenTag)
-        .collection("simulaciones-campo").doc(this.simInfo.simId)
+        .collection("simulaciones-campo").doc()
       this.simInfo.simId = docRef.ref.id
       docRef.set({
         simulacion: JSON.parse(JSON.stringify(this.simulacion)),
@@ -198,6 +282,7 @@ export class SimulacionCampoInputComponent implements OnInit {
         numSeccion: element.seccion,
         FLUJO: element.inputs.FLUJO,
         PSUC: element.inputs.PSUC,
+        RPM: element.inputs.RPM,
         PDES: element.inputs.PDES,
         TSUC: element.inputs.TSUC,
         TDES: element.inputs.TDES,
@@ -213,7 +298,7 @@ export class SimulacionCampoInputComponent implements OnInit {
       .collection("trenes").doc(this.dataEnviada.trenTag)
       .collection("indices-campo").doc("indice-campo").set({
         [this.simInfo.simId]: JSON.parse(JSON.stringify(this.resumen))
-      })
+      }, {merge: true})
   }
 
   customTrackBy(index: number, obj: any): any {
