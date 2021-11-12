@@ -89,10 +89,10 @@ export class SimulacionCampoListaComponent implements OnInit {
   iParam;
 
   clickParam(param, i){
-    this.selectedParam = param  
+    this.selectedParam = param
     this.iParam = i
-    this.actualMin = this.params[this.iParam].min 
-    this.actualMax = this.params[this.iParam].max 
+    this.actualMin = this.params[this.iParam].min
+    this.actualMax = this.params[this.iParam].max
   }
 
   aplicarFiltro($event: any) {
