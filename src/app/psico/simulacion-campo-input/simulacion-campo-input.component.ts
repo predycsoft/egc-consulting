@@ -1,9 +1,41 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { curva, DataServiceService, equipo, Proyecto } from 'src/app/services/data-service.service';
+import { curva, curvaEquipo, DataServiceService, equipo, Proyecto, simulacionPE, tren } from 'src/app/services/data-service.service';
 import { ChartType } from 'angular-google-charts';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CromatografiaComponent } from '../inputs/cromatografia/cromatografia.component';
+
+class simInfo {
+  simId: string = "";
+  simDate: Date = new Date;
+  simTipo: string = "";
+}
+
+// CLASES PARA INDICE
+class pruebaCampo {
+  simDate: Date = new Date;
+  simTipo: string = '';
+  simCurvas: string = '';
+  simSecciones: simSeccion[] = []
+  simId: string = '';
+}
+
+class simSeccion {
+  equipoTag: string = '';
+  numSeccion: number = 0;
+  numCompresor: number = 0;
+  FLUJO: number = 0;
+  PSUC: number = 0;
+  PDES: number = 0;
+  TSUC: number = 0;
+  TDES: number = 0;
+  HP: number = 0;
+  QN: number = 0;
+  CFHEAD: number = 0;
+  EFIC: number = 0;
+}
 
 @Component({
   selector: 'app-simulacion-campo-input',
@@ -11,223 +43,167 @@ import { ChartType } from 'angular-google-charts';
   styleUrls: ['./simulacion-campo-input.component.css']
 })
 export class SimulacionCampoInputComponent implements OnInit {
+  proyecto: Proyecto;
+  tren: tren;
+  equipos: equipo[];
+  curvas: curvaEquipo[]
+  resumen: pruebaCampo = new pruebaCampo
+
+  simulacion: Array<simulacionPE> = [];
+  simId: string = "";
+  simInfo: simInfo = new simInfo;
 
   constructor(
     private route: ActivatedRoute,
     private data: DataServiceService,
     private afs: AngularFirestore,
     private http: HttpClient,
+    private dialogRef: MatDialogRef<SimulacionCampoInputComponent>,
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public dataEnviada
   ) { }
 
-  proyecto: Proyecto;
-  equipo: equipo;
-  nSecciones: number;
-  secciones: Array<number>
-  curvas: curva[];
-  impulsoresEq: curva[];
-  impulsores: curva[];
-  curva: curva;
-  seccionActual: number;
-  filteredImpulsores
-  filteredImpulsoresEq
-  flagEqFab
-  flagEqPsico
-  date = new Date
-
-  PSUC = 105
-  PDES = 200
-  TSUC = 101.3
-  TDES = 248.9
-  RPMS = [7400, 8450, 9500, 10570, 11100]
-  RPM = 11000
-  flujo = 54
-  qdim = "[MMSCFD]"
-  tdim = "[°F]"
-  pdim = "[psia]"
-  ddim = "[pulg]"
-  mezcla = {
-    metano: 0.480000,
-    etano: 0.066000,
-    propano: 0.040100,
-    iButano: 0.005000,
-    nButano: 0.018000,
-    iPentano: 0.005000,
-    nPentano: 0.006500,
-    hexano: 0.007400,
-    heptano: 0.000000,
-    octano: 0.000000,
-    nonano: 0.000000,
-    decano: 0.000000,
-    nitrogeno: 0.330000,
-    dioxCarbono: 0.021000,
-    sulfHidrogeno: 0.021000
-  }
-
-  //Tabla
-  mostrarTabla = false
-  dataSets;
-
-  ///////////////// Grafica //////////////////////
-  // Data para el plot
-  yData: Array<Array<number>> = [];
-  // options
-  type = ChartType.LineChart
-  mostrarGrafica = false
-  columns
-  options;
-  width = 390;
-  height = 290;
 
 
-  // envio de data
-  url = "http://127.0.0.1:5000/generarMapa/"
-  envio: Array<Array<any>>;
 
-  ngOnInit(): void {
-    console.log(this.date.getDay())
-    this.route.parent.params.subscribe(params => {
-      this.data.obtenerProyecto(params.id).subscribe(data => {
-        this.proyecto = data;
-        this.route.params.subscribe(params => {
-          const trenTag = params.trenTag;
-          const equipoTag = params.equipoTag;
-          this.data.obtenerEquipo(this.proyecto.id, equipoTag).subscribe((equipo) => {
-            this.equipo = equipo
-            console.log("equipo tag" + this.equipo.tag)
-            this.nSecciones = this.equipo.nSecciones
-            this.secciones = Array(this.nSecciones).fill(0).map((x, i) => i + 1); // [0,1,2,3,4]
-            this.cargarImpulsores();
-          })
-        })
-      })
-    })
-  }
-
-  cargarImpulsores() {
-    this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipo.tag).collection<curva>("curvas").valueChanges().subscribe(curvas => {
-      this.curvas = curvas
-      this.impulsoresEq = []
-      this.impulsores = []
-      for (let index = 0; index < this.curvas.length; index++) {
-        const curva: curva = curvas[index];
-        if (curva.equivalente == true) {
-          this.impulsoresEq = this.impulsoresEq.concat(curva)
-        } else {
-          this.impulsores = this.impulsores.concat(curva)
-        }
-      }
-      this.filterImpulsores()
-    })
-  }
-
-  filterImpulsores() {
-    console.log("entre")
-    this.filteredImpulsores = this.impulsores.filter(x => x.numSeccion == this.seccionActual).sort((a, b) => +a.numImpulsor - +b.numImpulsor)
-    this.filteredImpulsoresEq = this.impulsoresEq.filter(x => x.numSeccion == this.seccionActual)
-    this.flagEqFab = false
-    this.flagEqPsico = false
-    this.filteredImpulsoresEq.forEach(impulsor => {
-      if (impulsor.fab == true) {
-        this.flagEqFab = true;
-      }
-      if (impulsor.fab == false) {
-        this.flagEqPsico = true;
-      }
-    })
-  }
-
-  generarMapa() {
-    this.envio = []
-    this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
-      "TSUC", "PSUC", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DIAM", "DDIM", "TDIM", "PDIM", "QDIM"])
-    for (let index = 0; index < this.RPMS.length; index++) {
-      const RPM = this.RPMS[index];
-      this.envio.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
-      this.TSUC, this.PSUC, RPM, this.curva.cp1, this.curva.cp2, this.curva.cp3, this.curva.cp4, this.curva.expocp, this.curva.ce1, this.curva.ce2, this.curva.ce3, this.curva.ce4, this.curva.expoce, this.curva.limSurge, this.curva.limStw, this.curva.diametro, "[pulg]", this.tdim, this.pdim, "[MMSCFD]"])
+  async ngOnInit() {
+    // Get Proyecto
+    const docProyecto = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).ref.get()
+    this.proyecto = docProyecto.data() as Proyecto
+    // Get Tren
+    const docTren = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+      .collection("trenes").doc(this.dataEnviada.trenTag).ref.get()
+    this.tren = docTren.data() as tren
+    this.proyecto = docProyecto.data() as Proyecto
+    // Get punto de simulacion
+    if (this.dataEnviada.simId) {
+      const docSim = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+        .collection("trenes").doc(this.dataEnviada.trenTag)
+        .collection("simulaciones-campo").doc(this.dataEnviada.simId).ref
+        .get()
+      this.simulacion = docSim.data()["simulacion"]
+      this.simInfo.simDate = docSim.data()["simDate"]
+      this.simInfo.simId = docSim.data()["simId"]
+      this.simInfo.simTipo = docSim.data()["simTipo"]
+    } else {
+      this.armarNuevaSim()
     }
-    console.log(this.envio)
-    this.http.post(this.url, JSON.stringify(this.envio)).subscribe((res) => {
-      if (res) {
-        console.log(res)
-        this.mostrarTabla = true
-        this.dataSets = res
-        this.verGrafica()
-      }
-    })
   }
 
-  verGrafica() {
-    this.yData = []
-    let flagCambioRPM = 0
-    let RPMS = []
-    for (let i = 1; i < this.dataSets[0].length; i++) {
-      const Q = this.dataSets[5][i]
-      const Pot = +this.dataSets[4][i]
-      if (this.dataSets[0][i] != this.dataSets[0][i - 1]) {
-        RPMS.push(this.dataSets[0][i])
-        flagCambioRPM++
-      }
-      if (flagCambioRPM == 1) {
-        this.yData = [...this.yData, [+Q, +Pot, , , , ,]]
-      }
-      if (flagCambioRPM == 2) {
-        this.yData = [...this.yData, [+Q, , +Pot, , , ,]]
-      }
-      if (flagCambioRPM == 3) {
-        this.yData = [...this.yData, [+Q, , , +Pot, , ,]]
-      }
-      if (flagCambioRPM == 4) {
-        this.yData = [...this.yData, [+Q, , , , +Pot, ,]]
-      }
-      if (flagCambioRPM == 5) {
-        this.yData = [...this.yData, [+Q, , , , , +Pot]]
-      }
-    }
-    this.columns = ["Q", RPMS[0], RPMS[1], RPMS[2], RPMS[3], RPMS[4]]
-    console.log(this.yData)
-    this.options = {
-      interpolateNulls: true,
-      chartArea: { top: 30, bottom: 66, left: 60, right: 18, backgroundColor: 'transparent' },
-      height: this.height,
-      width: this.width,
-      hAxis: {
-        title: 'Q/N',
-        titleTextStyle: { italic: false, fontSize: 13, fontName: 'Roboto' },
-        viewWindowMode: 'explicit',
-        minorGridlines: { interval: 0.005 }
-      },
-      vAxis: {
-        title: 'Coeficiente μ',
-        titleTextStyle: { italic: false, fontSize: 13, fontName: 'Roboto', },
-        minorGridlines: { interval: 0.005 }
-      },
-      legend: { position: 'bottom', alignment: 'center' },
-    };
-    this.mostrarGrafica = true
-  }
-
-  evaluar() {
-    this.envio = []
-    this.envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
-      "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
-    this.envio.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
-    this.curva.diametro, this.TSUC, this.PSUC, this.TDES, this.PDES, this.flujo, this.RPM, this.ddim, this.tdim, this.pdim, this.qdim])
-    console.log(this.envio)
-    this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(this.envio)).subscribe((res) => {
-      if (res) {
-        console.log(res)
-        let envioPrueba = []
-        envioPrueba.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
-          "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
-        envioPrueba.push([this.mezcla.metano, this.mezcla.etano, this.mezcla.propano, this.mezcla.iButano, this.mezcla.nButano, this.mezcla.iPentano, this.mezcla.nPentano, this.mezcla.hexano, this.mezcla.heptano, this.mezcla.octano, this.mezcla.nonano, this.mezcla.decano, this.mezcla.nitrogeno, this.mezcla.dioxCarbono, this.mezcla.sulfHidrogeno,
-        this.TSUC, this.PSUC, this.flujo, this.curva.diametro, this.RPM, this.curva.cp1, this.curva.cp2, this.curva.cp3, this.curva.cp4, this.curva.expocp, this.curva.ce1, this.curva.ce2, this.curva.ce3, this.curva.ce4, this.curva.expoce, this.curva.limSurge, this.curva.limStw, this.ddim, this.tdim, this.pdim, this.qdim, this.PDES])
-        this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((res) => {
-          if (res) {
-            console.log(res)
+  async armarNuevaSim() {
+    try {
+      let simulaciones: simulacionPE[] = []
+      this.simulacion = []
+      for (let i = 0; i < this.equipos.length; i++) {
+        let curvas = []
+        const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
+        for (let j = 0; j < curvasDocs.docs.length; j++) {
+          const curva = curvasDocs.docs[j].data() as curva;
+          if (curva.equivalente == true) {
+            curvas.push(curva)
           }
-        })
+        }
+        for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
+          const simulacion = new simulacionPE()
+          simulacion.equipoTag = this.equipos[i].tag
+          simulacion.equipoFamilia = this.equipos[i].familia
+          simulacion.seccion = sec
+          simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
+          simulacion.curva = simulacion.curvas.find(x => x.default == true)
+          simulacion.inputs.DDIM = this.tren.dimensiones.diametro
+          simulacion.inputs.PDIM = this.tren.dimensiones.presion
+          simulacion.inputs.QDIM = this.tren.dimensiones.flujo
+          simulacion.inputs.TDIM = this.tren.dimensiones.temperatura
+          simulaciones.push(simulacion)
+        }
+        curvas = []
+      }
+      this.simulacion = simulaciones
+      simulaciones = []
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  openCromatografia(i) {
+    const dialogRef = this.dialog.open(CromatografiaComponent, {
+      data: {
+        proyectoId: this.proyecto.id,
       }
     })
+    dialogRef.afterClosed().subscribe((result => {
+      if (result) {
+        this.simulacion[i].inputs.Mezcla = result
+      }
+    }))
+  }
+
+  simularAdim(){
+    this.simInfo.simTipo = "R"
+  }
+
+  simularPE(){
+    this.simInfo.simTipo = "R+T"
+  }
+
+  guardarPunto() {
+    // Guardado en el documento
+    if (this.simInfo.simId != "") {
+      this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+        .collection("trenes").doc(this.dataEnviada.trenTag)
+        .collection("simulaciones-campo").doc(this.simInfo.simId)
+        .set({
+          simulacion: JSON.parse(JSON.stringify(this.simulacion)),
+          simDate: this.simInfo.simDate,
+          simId: this.simInfo.simId,
+          simTipo: this.simInfo.simTipo
+        })
+    } else {
+      const docRef = this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+        .collection("trenes").doc(this.dataEnviada.trenTag)
+        .collection("simulaciones-campo").doc(this.simInfo.simId)
+      this.simInfo.simId = docRef.ref.id
+      docRef.set({
+        simulacion: JSON.parse(JSON.stringify(this.simulacion)),
+        simDate: this.simInfo.simDate,
+        simId: this.simInfo.simId,
+        simTipo: this.simInfo.simTipo
+      })
+    }
+    // Guardado en el indice:
+    this.resumen.simId = this.simInfo.simId;
+    this.resumen.simDate = this.simInfo.simDate;
+    this.resumen.simCurvas = "";
+    this.resumen.simTipo = this.simInfo.simTipo
+    let simSecciones = []
+    let numCompresor = 1
+    for (let index = 0; index < this.simulacion.length; index++) {
+      const element = this.simulacion[index];
+      if (index > 0 && this.simulacion[index].equipoTag != this.simulacion[index-1].equipoTag){
+        numCompresor++
+      }
+      const sim: simSeccion = {
+        equipoTag: element.equipoTag, 
+        numCompresor: numCompresor,
+        numSeccion:  element.seccion,
+        FLUJO: element.inputs.FLUJO,
+        PSUC: element.inputs.PSUC,
+        PDES: element.inputs.PDES,
+        TSUC: element.inputs.TSUC,
+        TDES: element.inputs.TDES,
+        HP: element.outputAdim.HP,
+        QN: element.outputAdim.qn,
+        CFHEAD: element.outputAdim.CFHEAD,
+        EFIC: element.outputAdim.EFIC,
+      }
+      simSecciones.push(sim)
+    }
+    this.resumen.simSecciones = simSecciones
+    this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+      .collection("trenes").doc(this.dataEnviada.trenTag)
+      .collection("indices-campo").doc("indice-campo").set({
+        [this.simInfo.simId]: JSON.parse(JSON.stringify(this.resumen))
+      })
   }
 
   customTrackBy(index: number, obj: any): any {
