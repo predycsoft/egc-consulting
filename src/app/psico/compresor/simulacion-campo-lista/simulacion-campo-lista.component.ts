@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { SimulacionCampoInputComponent } from '../../simulacion-campo-input/simulacion-campo-input.component';
 import { DialogSimCampoComponent } from '../dialog-sim-campo/dialog-sim-campo.component';
 import { SimulacionCampoDialogResultadosComponent } from '../simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
 
@@ -24,7 +25,6 @@ class simSeccion {
   numSeccion: number = 0;
   numCompresor: number = 0;
   seccion: number = 0;
-  mezcla: string = '';
   FLUJO: number = 0;
   PSUC: number = 0;
   PDES: number = 0;
@@ -109,7 +109,23 @@ export class SimulacionCampoListaComponent implements OnInit {
   }
 
   nuevaSimCampo(){
-    const dialogRef = this.dialog.open(DialogSimCampoComponent);
+    // const dialogRef = this.dialog.open(DialogSimCampoComponent);
+    const dialogRef = this.dialog.open(SimulacionCampoInputComponent, {
+      data:{
+        proyectoId: this.proyectoId,
+        trenTag: this.trenTag,
+      }
+    })
+  }
+  openSimCampo(simId){
+    // const dialogRef = this.dialog.open(DialogSimCampoComponent);
+    const dialogRef = this.dialog.open(SimulacionCampoInputComponent, {
+      data:{
+        proyectoId: this.proyectoId,
+        trenTag: this.trenTag,
+        simId: simId
+      }
+    })
   }
 
 }
