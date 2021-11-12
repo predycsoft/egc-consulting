@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SimulacionCampoInputComponent } from '../../simulacion-campo-input/simulacion-campo-input.component';
@@ -61,17 +62,23 @@ export class SimulacionCampoListaComponent implements OnInit {
     { nombre: 'Coef. Cab. Poli', var: 'cabP', min: null, max: null },
     { nombre: 'Efic. Poli', var: 'efiP', min: null, max: null },
   ]
-  
+
   proyectoId: string;
   trenTag: string;
+  indice;
+  simulaciones: pruebaCampo[] = []
 
-  constructor(public dialog:MatDialog, private route: ActivatedRoute) { }
+  constructor(public dialog:MatDialog, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
     this.route.parent.params.subscribe(params => {
       this.proyectoId = params.id
       this.route.params.subscribe( params => {
         this.trenTag = params.trenTag
+        this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).collection("indices-campo").doc("indice-campo").valueChanges().subscribe(indice => {
+          this.indice = indice
+          this.simulaciones = Object.values(this.indice)
+        })
       })
     })
   }
