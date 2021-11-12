@@ -1,101 +1,26 @@
-/* 
-
-.trenContainer{
-    margin-bottom: 2rem;
-    padding: 1rem;
-    border: 2px solid var(--stroke2);
-    border-radius: 4px;
-    width: 80%;
-    min-height: 180px;
-} */
-
-.boxContainer{
+.optionContainer{
+    height: 300px;
+    width: 232px;
     position: relative;
+    cursor: pointer;
+    border: 2px solid var(--neutral2);
+    border-radius: 8px;
+    padding: .5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 150px;
-    width: 150px;
-    border: 2px solid var(--stroke2);
-    border-radius: 4px;
+    justify-content: center;
+
 }
 
-.optionsIcon{
-    position: absolute;
-    top: 12px;
-    right: 8px;
-    font-size: 18px;
-    cursor: pointer;
+.optionContainer:hover{
+    background-color: var(--neutral1);
+    transition: .25s;
+    box-shadow: var(--shadow16);  
+    border: 2px solid  var(--accent5);
 }
 
-
-/* Tren */
-
-.trenContainer{
-    position: relative;
-    width: fit-content;
-    cursor: pointer;
-    animation-name: entrada;
-    animation-duration: .5s;
-}
-
-@keyframes entrada {
-    0% {
-        opacity: 0;
-        transform: scale(.9);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-  }
-
-
-
-.equipoContainer{
-    height: 300px;
-    width: 200px;
-    position: relative;
-}
-
-.shaftContainer{
-    position: absolute;
-    top: 140px;
-    right: 80px;
-    width: 196px;
-    height: 20px;
-    border-top: 2px solid var(--stroke2);
-    border-bottom: 2px solid var(--stroke2);
-    background: var(--neutral3);
-    opacity: .3;
-}
-
-.equipoIcon{
-    position: absolute;
-    top: 0px;
-    z-index: 5;
-    width: 100%;
-    height: 100%;
-}
-
-.tagText{
-    position: absolute;
-    color: var(--text2) !important;
-    font-size: 11px !important;
-    z-index: 100 !important;
-    font-weight: 600;
-}
-.moreButton{
-    top: 6px;
-    right: 6px;
-    position: absolute;
-}
-
-.trainTagText{
-    position: absolute;
-    left: 8px;
-    top: 6px;
-    font-size: 16px;
-    font-weight: 600;
+.imgContainer{
+    width: 144px;
+    height: 144px;
 }

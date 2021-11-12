@@ -2,21 +2,24 @@
     <span class="ft22">Trenes</span>
     <div fxLayoutAlign="space-between">
 
-        <span class="textButton" [routerLink]="['/psico/proyecto/',id,'config-proyecto']">
+        <span class="textButton border shadow8" [routerLink]="['/psico/proyecto/',id,'config-proyecto']"
+            fxLayoutAlign=" center">
             Configuración del proyecto
-            <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">settings</mat-icon>
+            <span class="mgl05" fxLayoutAlign="center">
+                <mat-icon [matMenuTriggerFor]="menu" class="ft18">settings</mat-icon>
+            </span>
         </span>
-        <span class="textButton">
+        <span class="mgl10 textButton border shadow8">
             Agregar tren
-            <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="openDialogNuevoTren()">add</mat-icon>
+            <mat-icon (click)="openDialogNuevoTren()">add</mat-icon>
         </span>
     </div>
 </div>
 
 <mat-menu #menu="matMenu" class="contextMenu">
-    <li class="menuItem" >Configuración del proyecto</li>
-    <li class="menuItem" >Datos instalación</li>
-    <li class="menuItem" >Opc 2</li>
+    <li class="menuItem">Configuración del proyecto</li>
+    <li class="menuItem">Datos instalación</li>
+    <li class="menuItem">Opc 2</li>
 </mat-menu>
 
 
@@ -24,28 +27,35 @@
 
     <div class="fh">
         <!-- Lista de trenes -->
-        <div fxLayout="column" fxLayoutGap="3rem" fxLayoutAlign="center center" class="fh">
+        <div fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="center center" class="fh">
             <div *ngFor="let tren of trenes; let i = index" class="w600px">
 
                 <div fxLayout="row" fxLayout="start center" fxFlex=100%>
 
-                    <div fxLayout="row" fxLayoutAlign=" center" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
-                        <span class="mgr10 ft18"> {{tren.tag}} </span>
-                    </div>
-
-                    <div class="trenContainer" 
+                    <div class="trenContainer" [ngClass]="{'trenContainer2': select == 1}"
                         (contextmenu)="onContextMenu($event)" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
                         <div fxLayout="row" fxLayoutGap="1rem">
+
+
+                            <div fxLayout="row" fxLayoutAlign=" center"
+                                [routerLink]="['/psico/proyecto/',id,'tren',tren.tag]">
+                                <span class="mgl30 mgr10 ft18 ft600 text3"> {{tren.tag}} 
+
+                                </span>
+                            </div>
+
                             <div *ngFor="let equipo of tren.equipos; let i = index">
-                                <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer">
-                                    <img [src]="icon.compresorIcon" class="equipoIcon">
+                                <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer" (mouseover)="select=1"
+                                    (mouseout)="select=0">
+                                    <img *ngIf="equipo.tipologia==='Inline'" [src]="icon.inline" class="equipoIcon">
+                                    <img *ngIf="equipo.tipologia==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
+
                                     <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
                                         <span class="tagText"> {{equipo.tag}} </span>
                                     </div>
                                     <div *ngIf="i>0" class="shaftContainer"></div>
                                     <div class="configContainer">
                                         <mat-icon class="iconButton text3 ft16">settings</mat-icon>
-                                        <mat-icon class="statusIcon greenText ft15">check</mat-icon>
                                     </div>
 
                                 </div>
@@ -57,6 +67,10 @@
                                     <div *ngIf="i>0" class="shaftContainer"></div>
                                 </div>
                             </div>
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -66,11 +80,12 @@
 </div>
 
 
+
 <div #trigger="matMenuTrigger" style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
     [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu2">
 </div>
 
 <mat-menu #contextMenu2="matMenu" class="contextMenu">
-<li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
-<li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
+    <li class="menuItem" [routerLink]="['/psico/proyecto/',id,'tren',selectedTren.tag]">Ir a tren</li>
+    <li class="menuItem" (click)="eliminarTren(selectedTren)">Eliminar tren</li>
 </mat-menu>

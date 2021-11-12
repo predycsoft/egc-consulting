@@ -17,6 +17,7 @@ export class ListaTrenesComponent implements OnInit {
 
   constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog, public icon: IconServiceService,) { }
 
+  select = 0
   id: string = "";
   trenes: tren[] = [];
   selectedTren: tren = new tren()

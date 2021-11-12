@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 
 @Component({
@@ -10,7 +11,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListaStComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private afs: AngularFirestore) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private afs: AngularFirestore,
+    public data: DataServiceService,
+    ) { }
+    
   proyectoId: string;
   trenTag: string;
   simulaciones;
