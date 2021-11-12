@@ -11,7 +11,7 @@
     <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'lista'}" (click)="vista='lista'"> format_list_numbered</mat-icon> -->
     <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
     <mat-icon class="iconButton text3 ft18">settings</mat-icon>
-    <button class="accent">Agregar set de datos</button>
+    <button class="accent" (click)="nuevaSimCampo()"> Agregar set de datos</button>
 </div>
 <div class="fw">
     <table class="fw">
@@ -72,6 +72,5 @@
         </div>
     </mat-menu>
 
-    
 
 </div>

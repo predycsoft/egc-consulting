@@ -74,20 +74,30 @@ export class SimulacionCampoInputComponent implements OnInit {
     const docTren = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
       .collection("trenes").doc(this.dataEnviada.trenTag).ref.get()
     this.tren = docTren.data() as tren
-    this.proyecto = docProyecto.data() as Proyecto
-    // Get punto de simulacion
-    if (this.dataEnviada.simId) {
-      const docSim = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
-        .collection("trenes").doc(this.dataEnviada.trenTag)
-        .collection("simulaciones-campo").doc(this.dataEnviada.simId).ref
-        .get()
-      this.simulacion = docSim.data()["simulacion"]
-      this.simInfo.simDate = docSim.data()["simDate"]
-      this.simInfo.simId = docSim.data()["simId"]
-      this.simInfo.simTipo = docSim.data()["simTipo"]
-    } else {
-      this.armarNuevaSim()
+    let tags = []
+    for (let index = 0; index < this.tren.equipos.length; index++) {
+      const element = this.tren.equipos[index];
+      tags.push(element.tag)
     }
+    // Get Equipos
+    this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+      .collection<equipo>("equipos").valueChanges().subscribe(async equipos => {
+        this.equipos = []
+        this.equipos = equipos.filter(x => tags.includes(x.tag))
+        // Get punto de simulacion
+        if (this.dataEnviada.simId) {
+          const docSim = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+            .collection("trenes").doc(this.dataEnviada.trenTag)
+            .collection("simulaciones-campo").doc(this.dataEnviada.simId).ref
+            .get()
+          this.simulacion = docSim.data()["simulacion"]
+          this.simInfo.simDate = docSim.data()["simDate"]
+          this.simInfo.simId = docSim.data()["simId"]
+          this.simInfo.simTipo = docSim.data()["simTipo"]
+        } else {
+          this.armarNuevaSim()
+        }
+      })
   }
 
   async armarNuevaSim() {
@@ -138,11 +148,11 @@ export class SimulacionCampoInputComponent implements OnInit {
     }))
   }
 
-  simularAdim(){
+  simularAdim() {
     this.simInfo.simTipo = "R"
   }
 
-  simularPE(){
+  simularPE() {
     this.simInfo.simTipo = "R+T"
   }
 
@@ -179,13 +189,13 @@ export class SimulacionCampoInputComponent implements OnInit {
     let numCompresor = 1
     for (let index = 0; index < this.simulacion.length; index++) {
       const element = this.simulacion[index];
-      if (index > 0 && this.simulacion[index].equipoTag != this.simulacion[index-1].equipoTag){
+      if (index > 0 && this.simulacion[index].equipoTag != this.simulacion[index - 1].equipoTag) {
         numCompresor++
       }
       const sim: simSeccion = {
-        equipoTag: element.equipoTag, 
+        equipoTag: element.equipoTag,
         numCompresor: numCompresor,
-        numSeccion:  element.seccion,
+        numSeccion: element.seccion,
         FLUJO: element.inputs.FLUJO,
         PSUC: element.inputs.PSUC,
         PDES: element.inputs.PDES,
