@@ -110,12 +110,9 @@ export class CromatografiaComponent implements OnInit {
     const obj = {
       id: this.nombreCromatografia,
       nombre: this.nombreCromatografia,
-      cromatografia: this.cromatografiaNormalizada
+      cromatografiaNormalizada: this.cromatografiaNormalizada,
+      cromatografiaOriginal: this.cromatografiaOriginal,
     }
     this.dialogRef.close(obj)
   }
-
- 
-
-
 }
