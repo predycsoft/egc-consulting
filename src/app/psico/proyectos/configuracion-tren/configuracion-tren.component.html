@@ -1,73 +1,35 @@
-<div class="pdt20 pdl20 pdr20 menuToolbar" fxLayoutAlign="space-between">
-    <span class="ft22">Tren {{tren.tag}}</span>
-    <div fxLayoutAlign="space-between">
-        <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="anexarEquipo()">add</mat-icon>
-        <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-    </div>
-</div>
-
-<mat-menu #menu="matMenu" class="contextMenu">
-    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200B'">Info del tren</li>
-    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200B'">Duplicar tren</li>
-    <li class="menuItem" (click)="trenSeleccionado = 'TC-5200A'">Eliminar tren</li>
-</mat-menu>
 
 <div fxLayout="column" fxLayoutAlign="center center" class="pdb10 fw fh">
-
-    <div class="trenContainer">
-        <div fxLayout="row" fxLayoutGap="1rem">
-            <div *ngFor="let equipo of tren.equipos; let i = index" (contextmenu)="onContextMenu($event)">
-                <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer">
-                    <img *ngIf="equipo.tipologia ==='Inline'" [src]="icon.inline" class="equipoIcon">
-                    <!-- <img *ngIf="equipo.tipologia ==='Double Suction'" [src]="icon.doubleSuction" class="equipoIcon">
-                    <img *ngIf="equipo.tipologia ==='Double Discharge'" [src]="icon.doubleDischarge" class="equipoIcon"> -->
-                    <img *ngIf="equipo.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
-                    <!-- <img *ngIf="equipo.tipologia ==='Streamline'" [src]="icon.streamline" class="equipoIcon"> -->
-                    <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
-                        <span class="tagText"> {{equipo.tag}} </span>
-                    </div>
-                    <div *ngIf="i>0" class="shaftContainer"></div>
-                </div>
-                <div *ngIf="equipo.familia==='Turbina'" class="equipoContainer">
-                    <img *ngIf="equipo.tipologia ==='Inline'" [src]="icon.inline" class="equipoIcon">
-                    <!-- <img *ngIf="equipo.tipologia ==='Double Suction'" [src]="icon.doubleSuction" class="equipoIcon">
-                    <img *ngIf="equipo.tipologia ==='Double Discharge'" [src]="icon.doubleDischarge" class="equipoIcon"> -->
-                    <img *ngIf="equipo.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
-                    <!-- <img *ngIf="equipo.tipologia ==='Streamline'" [src]="icon.streamline" class="equipoIcon"> -->
-                    <div fxLayout="row" fxLayoutAlign="center center" class="fw fh">
-                        <span class="tagText"> {{equipo.tag}} </span>
-                    </div>
-                    <div *ngIf="i>0" class="shaftContainer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div fxLayoutAlign="center center" fxLayoutGap=".5rem" >
-        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-pruebas-eficiencia">P.E</button>
-        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/sim-campo">Data Historica</button>
-        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-simulaciones-teoricas">Sim Teorica</button> 
-        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/reporte-punto">Reporte punto</button>
-        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/reporte-punto-sumario">Rep. Sumario puntos</button>
-        <button class="accent" routerLink="/psico/proyecto/{{proyectoId}}/simulacion-input/{{trenTag}}/EQ-02">Mapa</button>
+    <div class="fw centertext">
+        <span class="ft26 ft500 text2">Tren TC-5200A</span>
     </div>
     
+
+<div fxLayout="row" fxLayoutGap="1rem" class="mgt20">
+
+    <div class="optionContainer" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-simulaciones-teoricas">
+
+        <img  [src]="icon.inline" class="imgContainer">
+        <span class="mgt20 ft14 ft600 text2 centertext">Simulación Teórica </span>
+    </div>
+
+    <div class="optionContainer">
+        <img  [src]="icon.ruedaRueda" class="imgContainer">
+        <span class="mgt20 ft14 ft600 text2 centertext">Simulación Rueda a Rueda</span>
+
+    </div>
+
+    <div class="optionContainer"  routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-pruebas-eficiencia">
+
+        <img  [src]="icon.pruebaEfic" class="imgContainer">
+        <span class="mgt20 ft14 ft600 text2 centertext">Prueba de Eficiencia</span>
+    </div>
+
+    <div class="optionContainer" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/sim-campo">
+
+        <img  [src]="icon.campo" class="imgContainer">
+        <span class="mgt20 ft14 ft600 text2 centertext">Comportamiento Real</span>
+    </div>
 </div>
-
-
-
-<!-- Context menu -->
-<div #trigger="matMenuTrigger" style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-    [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu2">
 </div>
-
-<mat-menu #contextMenu2="matMenu" class="contextMenu">
-    <li class="menuItem" [routerLink]="['/psico/proyecto',proyectoId,'equipo',tren.tag,equipoSelected.tag]">Configurar
-    </li>
-    <li class="menuItem" (click)="modificarEquipo(equipoSelected) ">Cambiar nombre</li>
-    <li class="menuItem" *ngIf="equipoSelected.orden !=0" (click)="moverIzquierda(equipoSelected.tag)">Mover a la
-        izquierda</li>
-    <li class="menuItem" *ngIf="equipoSelected.orden != tren.equipos.length-1"
-        (click)="moverDerecha(equipoSelected.tag)">Mover a la derecha</li>
-    <li class="menuItem" (click)="eliminarEquipo(equipoSelected.tag)">Eliminar</li>
-</mat-menu>
 

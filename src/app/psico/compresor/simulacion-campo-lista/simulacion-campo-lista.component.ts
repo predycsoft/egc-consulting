@@ -54,7 +54,6 @@ export class SimulacionCampoListaComponent implements OnInit {
     { nombre: 'Pdesc.', var: 'pdesc', min: null, max: null },
     { nombre: 'Tsucc.', var: 'tsuc', min: null, max: null },
     { nombre: 'Tdesc.', var: 'tdesc', min: null, max: null },
-
     { nombre: 'Pot.', var: 'pot', min: null, max: null },
     { nombre: 'ΣPot.', var: 'potSum', min: null, max: null },
     // Coeficientes adimensionales

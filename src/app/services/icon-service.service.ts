@@ -30,6 +30,11 @@ export class IconServiceService {
   b2b: string = "assets/images/icons/b2b.svg"
   streamline: string = "assets/images/icons/streamline.svg"
 
-  
+  ruedaRueda: string = "assets/images/icons/ruedaRueda.svg"
+  pruebaEfic: string = "assets/images/icons/pruebaEfic.svg"
+  campo: string = "assets/images/icons/campo.svg"
+
+
+
   constructor() { }
 }
