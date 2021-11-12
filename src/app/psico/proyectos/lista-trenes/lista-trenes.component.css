@@ -5,7 +5,6 @@
 }
 
 .equipoContainer{
-
     height: 100px;
     width: 100px;
     position: relative;
@@ -38,6 +37,7 @@
     z-index: 100 !important;
     font-weight: 600;
 }
+
 .moreButton{
     top: 6px;
     right: 6px;

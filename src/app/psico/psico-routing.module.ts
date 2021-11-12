@@ -18,6 +18,7 @@ import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim
 import { ListaPeComponent } from './lista-pe/lista-pe.component';
 import { ListaStComponent } from './lista-st/lista-st.component';
 import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica.component';
+import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'import-csv', component: ImportCsvComponent},
   {path: 'proyectos', component: ListaProyectosComponent},
   {path: "proyecto/:id", component:PsicoDashboardComponent, children: [
+    {path: 'config-proyecto', component:ConfigProyectoComponent},
     {path: 'trenes', component:ListaTrenesComponent},
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
     {path: 'tren/:trenTag/lista-pruebas-eficiencia', component:ListaPeComponent},

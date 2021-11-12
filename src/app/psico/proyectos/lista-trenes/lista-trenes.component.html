@@ -1,13 +1,21 @@
 <div class="pdt20 pdl20 pdr20 menuToolbar" fxLayoutAlign="space-between">
     <span class="ft22">Trenes</span>
     <div fxLayoutAlign="space-between">
-        <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="openDialogNuevoTren()">add</mat-icon>
-        <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+
+        <span class="textButton" [routerLink]="['/psico/proyecto/',id,'config-proyecto']">
+            Configuración del proyecto
+            <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">settings</mat-icon>
+        </span>
+        <span class="textButton">
+            Agregar tren
+            <mat-icon class="iconButton ft26" placeholder="Agregar tren" (click)="openDialogNuevoTren()">add</mat-icon>
+        </span>
     </div>
 </div>
 
 <mat-menu #menu="matMenu" class="contextMenu">
-    <li class="menuItem" >Opc 1</li>
+    <li class="menuItem" >Configuración del proyecto</li>
+    <li class="menuItem" >Datos instalación</li>
     <li class="menuItem" >Opc 2</li>
 </mat-menu>
 
