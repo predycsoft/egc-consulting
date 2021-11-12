@@ -55,6 +55,7 @@ import { DialogSimCampoComponent } from './compresor/dialog-sim-campo/dialog-sim
 import { ListaPeComponent } from './lista-pe/lista-pe.component';
 import { ListaStComponent } from './lista-st/lista-st.component';
 import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica.component';
+import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teor
     DialogSimCampoComponent,
     ListaPeComponent,
     ListaStComponent,
-    SimulacionTeoricaComponent
+    SimulacionTeoricaComponent,
+    ConfigProyectoComponent
   ],
   imports: [
     CommonModule,
