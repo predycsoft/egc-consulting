@@ -1,9 +1,8 @@
 <div class="pd20  menuToolbar" fxLayoutAlign="space-between">
-    <span class="ft22">{{equipo.familia}} {{equipo.tag}}</span>
-    <div fxLayoutAlign="space-between">
-        <mat-icon class="iconButton ft26" placeholder="Agregar tren">add</mat-icon>
-        <mat-icon class="iconButton ft26" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-    </div>
+
+    <!-- <div class="fw centertext">
+        <span class="ft26 ft500 text2">{{equipo.familia}} {{equipo.tag}}</span>
+    </div> -->
 
     <mat-menu #menu="matMenu" class="contextMenu">
         <li class="menuItem" *ngIf="equipo.familia==='Compresor'" (click)="dialogDuplicarCompresor()">Duplicar equipo</li>

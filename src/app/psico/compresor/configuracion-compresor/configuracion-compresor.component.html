@@ -1,19 +1,29 @@
-<div class="menuToolbar fw border-b">
-    <span class="textButton" [ngClass]="{'selected2': tabSelected === 'general'}"
-        (click)="tabSelect('general')">General</span>
-    <!-- <span class="textButton" [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}"
+<div fxLayoutAlign="start center" class="fw border-b ">
+
+    <div class="centertext" fxLayoutAlign=" center" fxLayoutGap=".5rem" >
+        <span class="mgl10 ft18 ft500 text2 cursorPointer">Ca-Ku-A1</span>
+        <mat-icon class="ft18">keyboard_arrow_right</mat-icon>
+        <span class="ft18 ft500 text2">Tren TC-5200A</span>
+    </div>
+
+    <div class="mgl30 menuToolbar">
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'general'}"
+            (click)="tabSelect('general')">General</span>
+        <!-- <span class="textButton" [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}"
         (click)="tabSelect('datosTecnicos')">Puntos Datasheet</span> -->
         <span class="textButton" [ngClass]="{'selected2': tabSelected === 'curvas'}"
-        (click)="tabSelect('dims')">Dimensiones</span>
-    <span class="textButton" [ngClass]="{'selected2': tabSelected === 'curvas'}"
-        (click)="tabSelect('curvas')">Curvas</span>
-    <span class="textButton" [ngClass]="{'selected2': tabSelected === 'mapas'}"
-        (click)="tabSelect('mapas')">Mapas</span>
-    <span class="textButton" [ngClass]="{'selected2': tabSelected === 'documentos'}"
-        (click)="tabSelect('documentos')">Documentos</span>
+            (click)="tabSelect('dims')">Dimensiones</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'curvas'}"
+            (click)="tabSelect('curvas')">Curvas</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'mapas'}"
+            (click)="tabSelect('mapas')">Mapas</span>
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'documentos'}"
+            (click)="tabSelect('documentos')">Documentos</span>
+    </div>
+
 </div>
 
-<div class="pd08">
+<div class="mgt20 fh pd08">
     <info-general-compresor *ngIf="tabSelected==='general'"></info-general-compresor>
     <compresor-dims *ngIf="tabSelected==='dims'"></compresor-dims>
     <!-- <datasheet-puntos-compresor *ngIf="tabSelected==='datosTecnicos'"></datasheet-puntos-compresor> -->

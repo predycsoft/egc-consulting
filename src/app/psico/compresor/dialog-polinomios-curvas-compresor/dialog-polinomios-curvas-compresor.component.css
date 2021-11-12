@@ -14,7 +14,7 @@ input{
 }
 
 input:focus{
-    border: 1px solid var(--stroke1);
+    border: 2px solid var(--accent5);
     background: var(--control1) !important;
     border-radius: 4px;
 }
