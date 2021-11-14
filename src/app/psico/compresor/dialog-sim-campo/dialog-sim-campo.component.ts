@@ -140,7 +140,7 @@ export class DialogSimCampoComponent implements OnInit {
       for (let j = 0; j < this.simulaciones[i].length; j++) {
         const sim = this.simulaciones[i][j]
         this.envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-        sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJO, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
+        sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJOSUC, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
       }
       this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(this.envio)).subscribe(async (res) => {
         let OUTPUT: Array<Array<any>> = []
@@ -149,33 +149,33 @@ export class DialogSimCampoComponent implements OnInit {
           console.log("Respuesta de adimensional")
           console.log(res)
           for (let index = 0; index < this.simulaciones[i].length; index++) {
-            this.simulaciones[i][index].outputAdim.EFIC = OUTPUT[0][index+1]
-            this.simulaciones[i][index].outputAdim.coefWorkInput = OUTPUT[1][index+1]
-            this.simulaciones[i][index].outputAdim.CFHEAD = OUTPUT[2][index+1]
-            this.simulaciones[i][index].outputAdim.workPoli = OUTPUT[3][index+1]
-            this.simulaciones[i][index].outputAdim.HP = OUTPUT[4][index+1]
-            this.simulaciones[i][index].outputAdim.flujoMasico = OUTPUT[5][index+1]
-            this.simulaciones[i][index].outputAdim.relacion_de_compresion = OUTPUT[6][index+1]
-            this.simulaciones[i][index].outputAdim.relacion_de_volumen = OUTPUT[7][index+1]
-            this.simulaciones[i][index].outputAdim.tIsent = OUTPUT[8][index+1]
-            this.simulaciones[i][index].outputAdim.pIsent = OUTPUT[9][index+1]
-            this.simulaciones[i][index].outputAdim.densSuc = OUTPUT[10][index+1]
-            this.simulaciones[i][index].outputAdim.densDes = OUTPUT[11][index+1]
-            this.simulaciones[i][index].outputAdim.densIsen = OUTPUT[12][index+1]
-            this.simulaciones[i][index].outputAdim.volSuc = OUTPUT[13][index+1]
-            this.simulaciones[i][index].outputAdim.volDes = OUTPUT[14][index+1]
-            this.simulaciones[i][index].outputAdim.volIsent = OUTPUT[15][index+1]
-            this.simulaciones[i][index].outputAdim.hSuc = OUTPUT[16][index+1]
-            this.simulaciones[i][index].outputAdim.hDes = OUTPUT[17][index+1]
-            this.simulaciones[i][index].outputAdim.hIsnet = OUTPUT[18][index+1]
-            this.simulaciones[i][index].outputAdim.sSuc = OUTPUT[19][index+1]
-            this.simulaciones[i][index].outputAdim.sDes = OUTPUT[20][index+1]
-            this.simulaciones[i][index].outputAdim.sIsent = OUTPUT[21][index+1]
-            this.simulaciones[i][index].outputAdim.compSuc = OUTPUT[22][index+1]
-            this.simulaciones[i][index].outputAdim.compDes = OUTPUT[23][index+1]
-            this.simulaciones[i][index].outputAdim.compIsent = OUTPUT[24][index+1]
-            this.simulaciones[i][index].outputAdim.ymw = OUTPUT[25][index+1]
-            this.simulaciones[i][index].outputAdim.qn = OUTPUT[26][index+1]
+            this.simulaciones[i][index].outputAdim.EFICPOLI = OUTPUT[0][index+1]
+            this.simulaciones[i][index].outputAdim.CFWORKPOLI = OUTPUT[1][index+1]
+            this.simulaciones[i][index].outputAdim.CFHEADPOLI = OUTPUT[2][index+1]
+            this.simulaciones[i][index].outputAdim.WORKPOLI = OUTPUT[3][index+1]
+            this.simulaciones[i][index].outputAdim.HPGAS = OUTPUT[4][index+1]
+            this.simulaciones[i][index].outputAdim.FLUJOMAS = OUTPUT[5][index+1]
+            this.simulaciones[i][index].outputAdim.RELCOMP = OUTPUT[6][index+1]
+            this.simulaciones[i][index].outputAdim.RELVOL = OUTPUT[7][index+1]
+            this.simulaciones[i][index].outputAdim.TISEN = OUTPUT[8][index+1]
+            this.simulaciones[i][index].outputAdim.PISEN = OUTPUT[9][index+1]
+            this.simulaciones[i][index].outputAdim.DENSUC = OUTPUT[10][index+1]
+            this.simulaciones[i][index].outputAdim.DENDES = OUTPUT[11][index+1]
+            this.simulaciones[i][index].outputAdim.DENISEN = OUTPUT[12][index+1]
+            this.simulaciones[i][index].outputAdim.VOLSUC = OUTPUT[13][index+1]
+            this.simulaciones[i][index].outputAdim.VOLDES = OUTPUT[14][index+1]
+            this.simulaciones[i][index].outputAdim.VOLISEN = OUTPUT[15][index+1]
+            this.simulaciones[i][index].outputAdim.HSUC = OUTPUT[16][index+1]
+            this.simulaciones[i][index].outputAdim.HDES = OUTPUT[17][index+1]
+            this.simulaciones[i][index].outputAdim.HISEN = OUTPUT[18][index+1]
+            this.simulaciones[i][index].outputAdim.SSUC = OUTPUT[19][index+1]
+            this.simulaciones[i][index].outputAdim.SDES = OUTPUT[20][index+1]
+            this.simulaciones[i][index].outputAdim.SISEN = OUTPUT[21][index+1]
+            this.simulaciones[i][index].outputAdim.ZSUC = OUTPUT[22][index+1]
+            this.simulaciones[i][index].outputAdim.ZDES = OUTPUT[23][index+1]
+            this.simulaciones[i][index].outputAdim.ZISEN = OUTPUT[24][index+1]
+            this.simulaciones[i][index].outputAdim.YWM = OUTPUT[25][index+1]
+            this.simulaciones[i][index].outputAdim.QN = OUTPUT[26][index+1]
           }
         }
       })
@@ -190,7 +190,7 @@ export class DialogSimCampoComponent implements OnInit {
       for (let j = 0; j < this.simulaciones[i].length; j++) {
         const sim = this.simulaciones[i][j]
         envioPrueba.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-        sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJO, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
+        sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJOSUC, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
       }
       console.log("hice el llamado a prueba de eficiencia")
       this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((respuesta) => {
@@ -203,17 +203,17 @@ export class DialogSimCampoComponent implements OnInit {
             this.simulaciones[i][index].outputTeorico.PDES = OUTPUT[3][index+1]
             this.simulaciones[i][index].outputTeorico.TSUC = OUTPUT[4][index+1]
             this.simulaciones[i][index].outputTeorico.TDES = OUTPUT[5][index+1]
-            this.simulaciones[i][index].outputTeorico.DG = OUTPUT[6][index+1]
-            this.simulaciones[i][index].outputTeorico.HG = OUTPUT[7][index+1]
+            this.simulaciones[i][index].outputTeorico.DENDES = OUTPUT[6][index+1]
+            this.simulaciones[i][index].outputTeorico.HDES = OUTPUT[7][index+1]
             this.simulaciones[i][index].outputTeorico.SURGE = OUTPUT[8][index+1]
             this.simulaciones[i][index].outputTeorico.QN = OUTPUT[9][index+1]
             this.simulaciones[i][index].outputTeorico.STONEW = OUTPUT[10][index+1]
-            this.simulaciones[i][index].outputTeorico.CFHEAD = OUTPUT[11][index+1]
-            this.simulaciones[i][index].outputTeorico.HEAD = OUTPUT[12][index+1]
-            this.simulaciones[i][index].outputTeorico.EFIC = OUTPUT[13][index+1]
-            this.simulaciones[i][index].outputTeorico.HP = OUTPUT[14][index+1]
-            this.simulaciones[i][index].outputTeorico.POLLY = OUTPUT[15][index+1]
-            this.simulaciones[i][index].outputTeorico.FLUJO = OUTPUT[16][index+1]
+            this.simulaciones[i][index].outputTeorico.CFHEADPOLI = OUTPUT[11][index+1]
+            this.simulaciones[i][index].outputTeorico.HEADPOLI = OUTPUT[12][index+1]
+            this.simulaciones[i][index].outputTeorico.EFICPOLI = OUTPUT[13][index+1]
+            this.simulaciones[i][index].outputTeorico.HPGAS = OUTPUT[14][index+1]
+            this.simulaciones[i][index].outputTeorico.EXPPOLI = OUTPUT[15][index+1]
+            this.simulaciones[i][index].outputTeorico.FLUJODES = OUTPUT[16][index+1]
             this.simulaciones[i][index].outputTeorico.RPM = OUTPUT[17][index+1]
           }
           console.log(respuesta)

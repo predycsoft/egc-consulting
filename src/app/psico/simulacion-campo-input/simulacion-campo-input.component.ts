@@ -186,7 +186,8 @@ export class SimulacionCampoInputComponent implements OnInit {
               PSUC: this.resumen.simSecciones[iSec].PSUC,
               PDES: this.resumen.simSecciones[iSec].PDES,
               RPM: this.resumen.simSecciones[iSec].RPM,
-              FLUJO: this.resumen.simSecciones[iSec].FLUJO,
+              FLUJOSUC: this.resumen.simSecciones[iSec].FLUJOSUC,
+              FLUJODES: this.resumen.simSecciones[iSec].FLUJODES,
               TDIM: this.tren.dimensiones.temperatura,
               PDIM: this.tren.dimensiones.presion,
               QDIM: this.tren.dimensiones.flujo,
@@ -230,7 +231,7 @@ export class SimulacionCampoInputComponent implements OnInit {
     for (let j = 0; j < this.simulacion.length; j++) {
       const sim = this.simulacion[j]
       envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJO, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
+      sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJOSUC, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
     }
     this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(envio)).subscribe(async (res) => {
       let OUTPUT: Array<Array<any>> = []
@@ -239,33 +240,33 @@ export class SimulacionCampoInputComponent implements OnInit {
         console.log("Respuesta de adimensional")
         console.log(res)
         for (let index = 0; index < this.simulacion.length; index++) {
-          this.simulacion[index].outputAdim.EFIC = OUTPUT[0][index + 1]
-          this.simulacion[index].outputAdim.coefWorkInput = OUTPUT[1][index + 1]
-          this.simulacion[index].outputAdim.CFHEAD = OUTPUT[2][index + 1]
-          this.simulacion[index].outputAdim.workPoli = OUTPUT[3][index + 1]
-          this.simulacion[index].outputAdim.HP = OUTPUT[4][index + 1]
-          this.simulacion[index].outputAdim.flujoMasico = OUTPUT[5][index + 1]
-          this.simulacion[index].outputAdim.relacion_de_compresion = OUTPUT[6][index + 1]
-          this.simulacion[index].outputAdim.relacion_de_volumen = OUTPUT[7][index + 1]
-          this.simulacion[index].outputAdim.tIsent = OUTPUT[8][index + 1]
-          this.simulacion[index].outputAdim.pIsent = OUTPUT[9][index + 1]
-          this.simulacion[index].outputAdim.densSuc = OUTPUT[10][index + 1]
-          this.simulacion[index].outputAdim.densDes = OUTPUT[11][index + 1]
-          this.simulacion[index].outputAdim.densIsen = OUTPUT[12][index + 1]
-          this.simulacion[index].outputAdim.volSuc = OUTPUT[13][index + 1]
-          this.simulacion[index].outputAdim.volDes = OUTPUT[14][index + 1]
-          this.simulacion[index].outputAdim.volIsent = OUTPUT[15][index + 1]
-          this.simulacion[index].outputAdim.hSuc = OUTPUT[16][index + 1]
-          this.simulacion[index].outputAdim.hDes = OUTPUT[17][index + 1]
-          this.simulacion[index].outputAdim.hIsnet = OUTPUT[18][index + 1]
-          this.simulacion[index].outputAdim.sSuc = OUTPUT[19][index + 1]
-          this.simulacion[index].outputAdim.sDes = OUTPUT[20][index + 1]
-          this.simulacion[index].outputAdim.sIsent = OUTPUT[21][index + 1]
-          this.simulacion[index].outputAdim.compSuc = OUTPUT[22][index + 1]
-          this.simulacion[index].outputAdim.compDes = OUTPUT[23][index + 1]
-          this.simulacion[index].outputAdim.compIsent = OUTPUT[24][index + 1]
-          this.simulacion[index].outputAdim.ymw = OUTPUT[25][index + 1]
-          this.simulacion[index].outputAdim.qn = OUTPUT[26][index + 1]
+          this.simulacion[index].outputAdim.EFICPOLI = OUTPUT[0][index + 1]
+          this.simulacion[index].outputAdim.CFWORKPOLI = OUTPUT[1][index + 1]
+          this.simulacion[index].outputAdim.CFHEADPOLI = OUTPUT[2][index + 1]
+          this.simulacion[index].outputAdim.WORKPOLI = OUTPUT[3][index + 1]
+          this.simulacion[index].outputAdim.HPGAS = OUTPUT[4][index + 1]
+          this.simulacion[index].outputAdim.FLUJOMAS = OUTPUT[5][index + 1]
+          this.simulacion[index].outputAdim.RELCOMP = OUTPUT[6][index + 1]
+          this.simulacion[index].outputAdim.RELVOL = OUTPUT[7][index + 1]
+          this.simulacion[index].outputAdim.TISEN = OUTPUT[8][index + 1]
+          this.simulacion[index].outputAdim.PISEN = OUTPUT[9][index + 1]
+          this.simulacion[index].outputAdim.DENSUC = OUTPUT[10][index + 1]
+          this.simulacion[index].outputAdim.DENDES = OUTPUT[11][index + 1]
+          this.simulacion[index].outputAdim.DENISEN = OUTPUT[12][index + 1]
+          this.simulacion[index].outputAdim.VOLSUC = OUTPUT[13][index + 1]
+          this.simulacion[index].outputAdim.VOLDES = OUTPUT[14][index + 1]
+          this.simulacion[index].outputAdim.VOLISEN = OUTPUT[15][index + 1]
+          this.simulacion[index].outputAdim.HSUC = OUTPUT[16][index + 1]
+          this.simulacion[index].outputAdim.HDES = OUTPUT[17][index + 1]
+          this.simulacion[index].outputAdim.HISEN = OUTPUT[18][index + 1]
+          this.simulacion[index].outputAdim.SSUC = OUTPUT[19][index + 1]
+          this.simulacion[index].outputAdim.SDES = OUTPUT[20][index + 1]
+          this.simulacion[index].outputAdim.SISEN = OUTPUT[21][index + 1]
+          this.simulacion[index].outputAdim.ZSUC = OUTPUT[22][index + 1]
+          this.simulacion[index].outputAdim.ZDES = OUTPUT[23][index + 1]
+          this.simulacion[index].outputAdim.ZISEN = OUTPUT[24][index + 1]
+          this.simulacion[index].outputAdim.YWM = OUTPUT[25][index + 1]
+          this.simulacion[index].outputAdim.QN = OUTPUT[26][index + 1]
         }
       }
     })
@@ -279,7 +280,7 @@ export class SimulacionCampoInputComponent implements OnInit {
     for (let j = 0; j < this.simulacion.length; j++) {
       const sim = this.simulacion[j]
       envioPrueba.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJO, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
+      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJOSUC, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
     }
     console.log("hice el llamado a prueba de eficiencia")
     this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((respuesta) => {
@@ -292,17 +293,17 @@ export class SimulacionCampoInputComponent implements OnInit {
           this.simulacion[index].outputTeorico.PDES = OUTPUT[3][index + 1]
           this.simulacion[index].outputTeorico.TSUC = OUTPUT[4][index + 1]
           this.simulacion[index].outputTeorico.TDES = OUTPUT[5][index + 1]
-          this.simulacion[index].outputTeorico.DG = OUTPUT[6][index + 1]
-          this.simulacion[index].outputTeorico.HG = OUTPUT[7][index + 1]
+          this.simulacion[index].outputTeorico.DENDES = OUTPUT[6][index + 1]
+          this.simulacion[index].outputTeorico.HDES = OUTPUT[7][index + 1]
           this.simulacion[index].outputTeorico.SURGE = OUTPUT[8][index + 1]
           this.simulacion[index].outputTeorico.QN = OUTPUT[9][index + 1]
           this.simulacion[index].outputTeorico.STONEW = OUTPUT[10][index + 1]
-          this.simulacion[index].outputTeorico.CFHEAD = OUTPUT[11][index + 1]
-          this.simulacion[index].outputTeorico.HEAD = OUTPUT[12][index + 1]
-          this.simulacion[index].outputTeorico.EFIC = OUTPUT[13][index + 1]
-          this.simulacion[index].outputTeorico.HP = OUTPUT[14][index + 1]
-          this.simulacion[index].outputTeorico.POLLY = OUTPUT[15][index + 1]
-          this.simulacion[index].outputTeorico.FLUJO = OUTPUT[16][index + 1]
+          this.simulacion[index].outputTeorico.CFHEADPOLI = OUTPUT[11][index + 1]
+          this.simulacion[index].outputTeorico.HEADPOLI = OUTPUT[12][index + 1]
+          this.simulacion[index].outputTeorico.EFICPOLI = OUTPUT[13][index + 1]
+          this.simulacion[index].outputTeorico.HPGAS = OUTPUT[14][index + 1]
+          this.simulacion[index].outputTeorico.EXPPOLI = OUTPUT[15][index + 1]
+          this.simulacion[index].outputTeorico.FLUJODES = OUTPUT[16][index + 1]
           this.simulacion[index].outputTeorico.RPM = OUTPUT[17][index + 1]
         }
         console.log(respuesta)
@@ -356,16 +357,17 @@ export class SimulacionCampoInputComponent implements OnInit {
         numCompresor: numCompresor,
         numSeccion: element.seccion,
         seccion: element.seccion,
-        FLUJO: element.inputs.FLUJO,
+        FLUJOSUC: element.inputs.FLUJOSUC,
+        FLUJODES: element.inputs.FLUJODES,
         PSUC: element.inputs.PSUC,
         RPM: element.inputs.RPM,
         PDES: element.inputs.PDES,
         TSUC: element.inputs.TSUC,
         TDES: element.inputs.TDES,
-        HP: element.outputAdim.HP,
-        QN: element.outputAdim.qn,
-        CFHEAD: element.outputAdim.CFHEAD,
-        EFIC: element.outputAdim.EFIC,
+        HP: element.outputAdim.HPGAS,
+        QN: element.outputAdim.QN,
+        CFHEAD: element.outputAdim.CFHEADPOLI,
+        EFIC: element.outputAdim.EFICPOLI,
         metano: element.inputs.Mezcla.cromatografiaNormalizada.metano,
         etano: element.inputs.Mezcla.cromatografiaNormalizada.etano,
         propano: element.inputs.Mezcla.cromatografiaNormalizada.propano,

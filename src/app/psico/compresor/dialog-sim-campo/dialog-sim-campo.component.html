@@ -112,7 +112,7 @@
             <tr>
                 <th> Flujo {{this.simulaciones[0][j].inputs.QDIM}} </th>
                 <td *ngFor="let item of simulaciones; let i = index">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.FLUJO" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].inputs.FLUJOSUC" placeholder="-"
                         class="inputNumber">
                 </td>
             </tr>
@@ -152,63 +152,63 @@
             <tr>
                 <th>  Flujo Másico [kg/hr]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.flujoMasico" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.FLUJOMAS" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Potencia del Gas [Hp]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.HP" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.HPGAS" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Eficiencia Politropica</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.EFIC" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.EFICPOLI" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Coef. de Flujo Q/N</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.qn" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.QN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th> Coef. Head Politropico</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.CFHEAD" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.CFHEADPOLI" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th> Coef. Work Input</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.coefWorkInput" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.CFWORKPOLI" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th> Trabajo Politropico</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.workPoli" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.WORKPOLI" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th> Relacion de compresion</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.relacion_de_compresion" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.RELCOMP" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th> Relacion de Volumen</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.relacion_de_volumen" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.RELVOL" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
@@ -232,7 +232,7 @@
             <tr>
                 <th>  Temperatura Isentrópica [°F]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.tIsent" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.TISEN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
@@ -253,98 +253,98 @@
             <tr>
                 <th>  Presión Isentrópica [psia]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.pIsent" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.PISEN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Densidad de Succion [lbm/pie3]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.densSuc" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.DENSUC" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Densidad de Descarga [lbm/pie3]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.densDes" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.DENDES" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Densidad Isentrópica [lbm/pie3]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.densIsen" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.DENISEN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Entalpia de Succion [BTU/lbm]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.hSuc" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.HSUC" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Entalpia de Descarga [BTU/lbm]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.hDes" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.HDES" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Entalpia Isentrópica [BTU/lbm]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.hIsnet" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.HISEN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Entropia de Succion [BTU/lbm°F]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.sSuc" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.SSUC" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Entropia de Descarga [BTU/lbm°F]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.sDes" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.SDES" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Entropia Isentrópica [BTU/lbm°F]</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.sIsent" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.SISEN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Fact. Comp. Succion </th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.compSuc" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.ZSUC" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Fact. Comp. Descarga </th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.compDes" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.ZDES" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>  Fact. Comp. Isentrópica </th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.compIsent" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.ZISEN" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
             <tr>
                 <th>Peso Molecular</th>
                 <td *ngFor="let item of simulaciones; let i = index" class="">
-                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.ymw" placeholder="-"
+                    <input type="number" [(ngModel)]="this.simulaciones[i][j].outputAdim.YWM" placeholder="-"
                         class="inputNumber" readonly>
                 </td>
             </tr>
