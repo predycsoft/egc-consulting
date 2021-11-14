@@ -17,6 +17,7 @@
         <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
             (change)="fileChangeListener($event)" class="displayNone" />
     </label>
+    <button (click)="guardarIndice()">Guardar Indice</button>
 </div>
 <div class="fw">
     <table class="fw">
@@ -29,11 +30,13 @@
                 </div>
             </th>
         </tr>
-        <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId)" class="cursorPointer">
+        <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId, item.simTimestamp)" class="cursorPointer">
             <!-- <td class="centertext"><mat-checkbox></mat-checkbox></td> -->
             <td class="centertext">{{item.simDate | date: 'dd/MM/yyyy HH:mm'  }}</td>
             <td class="centertext">
-                <span class="border sqChip greenFill1">{{item.simTipo }}</span>
+                <span class="border sqChip greenFill1">{{item.simTipo }}
+                    <span *ngIf="item.simId">*</span>
+                </span>
             </td>
             <td class="centertext">
                 <div *ngFor="let sec of item.simSecciones; let i = index">C: {{sec.numCompresor}} S: {{sec.numSeccion}}</div>

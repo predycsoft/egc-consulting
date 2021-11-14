@@ -6,6 +6,48 @@ import { switchMap, map } from 'rxjs/operators';
 
 /// Clases de Simulacion 
 
+export class pruebaCampo {
+  simDate: Date = new Date;
+  simTimestamp: number = 0
+  simTipo: string = '';
+  simCurvas: string = '';
+  simSecciones: simSeccion[] = []
+  totHP: number = 0;
+  simId: string = '';
+}
+
+export class simSeccion {
+  equipoTag: string = '';
+  numSeccion: number = 0;
+  numCompresor: number = 0;
+  seccion: number = 0;
+  FLUJO: number = 0;
+  PSUC: number = 0;
+  PDES: number = 0;
+  TSUC: number = 0;
+  TDES: number = 0;
+  RPM: number = 0;
+  HP: number = 0;
+  QN: number = 0;
+  CFHEAD: number = 0;
+  EFIC: number = 0;
+  metano: number = 0;
+  etano: number = 0;
+  propano: number = 0;
+  iButano: number = 0;
+  nButano: number = 0;
+  iPentano: number = 0;
+  nPentano: number = 0;
+  hexano: number = 0;
+  heptano: number = 0;
+  octano: number = 0;
+  nonano: number = 0;
+  decano: number = 0;
+  nitrogeno: number = 0;
+  dioxCarbono: number = 0;
+  sulfHidrogeno: number = 0;
+}
+
 export interface curvaEquipo {
   equipoTag: string,
   seccion: number,
@@ -15,7 +57,8 @@ export interface curvaEquipo {
 export interface mezcla {
   id: string,
   nombre: string,
-  cromatografia: cromatografia,
+  cromatografiaOriginal: cromatografia,
+  cromatografiaNormalizada: cromatografia,
 }
 
 export class inputs {
@@ -28,7 +71,8 @@ export class inputs {
   Mezcla: mezcla = {
     id: "",
     nombre: "",
-    cromatografia: new cromatografia()
+    cromatografiaOriginal: new cromatografia(),
+    cromatografiaNormalizada: new cromatografia(),
   }
   TDIM: string = "";
   QDIM: string = "";
@@ -47,7 +91,8 @@ export class inputsTeorica {
   Mezcla: mezcla = {
     id: "",
     nombre: "",
-    cromatografia: new cromatografia()
+    cromatografiaOriginal: new cromatografia(),
+    cromatografiaNormalizada: new cromatografia(),
   }
   TDIM: string = "";
   QDIM: string = "";

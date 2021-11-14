@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { curva, curvaEquipo, DataServiceService, equipo, Proyecto, simulacionPE, tren } from 'src/app/services/data-service.service';
+import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, mezcla, Proyecto, pruebaCampo, simSeccion, simulacionPE, tren } from 'src/app/services/data-service.service';
 import { ChartType } from 'angular-google-charts';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CromatografiaComponent } from '../inputs/cromatografia/cromatografia.component';
@@ -11,33 +11,8 @@ class simInfo {
   simId: string = "";
   simDate: Date = new Date;
   simTipo: string = "";
+  simTimestamp: number = 0
 }
-
-// CLASES PARA INDICE
-class pruebaCampo {
-  simDate: Date = new Date;
-  simTipo: string = '';
-  simCurvas: string = '';
-  simSecciones: simSeccion[] = []
-  simId: string = '';
-}
-
-class simSeccion {
-  equipoTag: string = '';
-  numSeccion: number = 0;
-  numCompresor: number = 0;
-  RPM: number = 0;
-  FLUJO: number = 0;
-  PSUC: number = 0;
-  PDES: number = 0;
-  TSUC: number = 0;
-  TDES: number = 0;
-  HP: number = 0;
-  QN: number = 0;
-  CFHEAD: number = 0;
-  EFIC: number = 0;
-}
-
 @Component({
   selector: 'app-simulacion-campo-input',
   templateUrl: './simulacion-campo-input.component.html',
@@ -53,6 +28,7 @@ export class SimulacionCampoInputComponent implements OnInit {
   simulacion: Array<simulacionPE> = [];
   simId: string = "";
   simInfo: simInfo = new simInfo;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -87,52 +63,150 @@ export class SimulacionCampoInputComponent implements OnInit {
         this.equipos = equipos.filter(x => tags.includes(x.tag))
         // Get punto de simulacion
         if (this.dataEnviada.simId) {
-          const docSim = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
-            .collection("trenes").doc(this.dataEnviada.trenTag)
-            .collection("simulaciones-campo").doc(this.dataEnviada.simId).ref
-            .get()
-          this.simulacion = docSim.data()["simulacion"]
-          this.simInfo.simDate = docSim.data()["simDate"]
-          this.simInfo.simId = docSim.data()["simId"]
-          this.simInfo.simTipo = docSim.data()["simTipo"]
+          // Caso de simulación existente o preexistente en el indice
+          if (this.dataEnviada.simId == "nuevo") {
+            const docIndice = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+              .collection("trenes").doc(this.dataEnviada.trenTag)
+              .collection("indices-campo").doc("indice-campo").ref.get()
+            let indice = docIndice.data()
+            const punto = indice[this.dataEnviada.simTimestamp]
+            this.resumen = punto
+            this.simInfo = {
+              simDate: punto.simDate,
+              simId: punto.simTimestamp,
+              simTipo: punto.simTipo,
+              simTimestamp: punto.simtimestamp,
+            }
+            this.armarNuevaSim("indice")
+          } else {
+            const docSim = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
+              .collection("trenes").doc(this.dataEnviada.trenTag)
+              .collection("simulaciones-campo").doc(this.dataEnviada.simId).ref
+              .get()
+            this.simulacion = docSim.data()["simulacion"]
+            this.simInfo = {
+              simDate: docSim.data()["simDate"],
+              simId: docSim.data()["simId"],
+              simTipo: docSim.data()["simTipo"],
+              simTimestamp: docSim.data()["timestamp"],
+            }
+
+          }
+          // Caso de nuevo punto
         } else {
-          this.armarNuevaSim()
+          this.armarNuevaSim("nuevo")
         }
       })
   }
 
-  async armarNuevaSim() {
-    try {
-      let simulaciones: simulacionPE[] = []
-      this.simulacion = []
-      for (let i = 0; i < this.equipos.length; i++) {
-        let curvas = []
-        const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
-        for (let j = 0; j < curvasDocs.docs.length; j++) {
-          const curva = curvasDocs.docs[j].data() as curva;
-          if (curva.equivalente == true) {
-            curvas.push(curva)
+  async armarNuevaSim(tipo: "nuevo" | "indice") {
+    if (tipo == "nuevo") {
+      try {
+        let simulaciones: simulacionPE[] = []
+        this.simulacion = []
+        for (let i = 0; i < this.equipos.length; i++) {
+          let curvas = []
+          const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
+          for (let j = 0; j < curvasDocs.docs.length; j++) {
+            const curva = curvasDocs.docs[j].data() as curva;
+            if (curva.equivalente == true) {
+              curvas.push(curva)
+            }
           }
+          for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
+            const simulacion = new simulacionPE()
+            simulacion.equipoTag = this.equipos[i].tag
+            simulacion.equipoFamilia = this.equipos[i].familia
+            simulacion.seccion = sec
+            simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
+            simulacion.curva = simulacion.curvas.find(x => x.default == true)
+            simulacion.inputs.DDIM = this.tren.dimensiones.diametro
+            simulacion.inputs.PDIM = this.tren.dimensiones.presion
+            simulacion.inputs.QDIM = this.tren.dimensiones.flujo
+            simulacion.inputs.TDIM = this.tren.dimensiones.temperatura
+            simulaciones.push(simulacion)
+          }
+          curvas = []
         }
-        for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
-          const simulacion = new simulacionPE()
-          simulacion.equipoTag = this.equipos[i].tag
-          simulacion.equipoFamilia = this.equipos[i].familia
-          simulacion.seccion = sec
-          simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
-          simulacion.curva = simulacion.curvas.find(x => x.default == true)
-          simulacion.inputs.DDIM = this.tren.dimensiones.diametro
-          simulacion.inputs.PDIM = this.tren.dimensiones.presion
-          simulacion.inputs.QDIM = this.tren.dimensiones.flujo
-          simulacion.inputs.TDIM = this.tren.dimensiones.temperatura
-          simulaciones.push(simulacion)
-        }
-        curvas = []
+        this.simulacion = simulaciones
+        simulaciones = []
+      } catch (err) {
+        console.log(err)
       }
-      this.simulacion = simulaciones
-      simulaciones = []
-    } catch (err) {
-      console.log(err)
+    }
+    if (tipo == "indice") {
+      try {
+        let simulaciones: simulacionPE[] = []
+        this.simulacion = []
+        let iSec = 0
+        for (let i = 0; i < this.equipos.length; i++) {
+          let curvas = []
+          const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
+          for (let j = 0; j < curvasDocs.docs.length; j++) {
+            const curva = curvasDocs.docs[j].data() as curva;
+            if (curva.equivalente == true) {
+              curvas.push(curva)
+            }
+          }
+          for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
+            const simulacion = new simulacionPE()
+            simulacion.equipoTag = this.equipos[i].tag
+            simulacion.equipoFamilia = this.equipos[i].familia
+            simulacion.seccion = sec
+            simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
+            simulacion.curva = simulacion.curvas.find(x => x.default == true)
+            let cromatografiaOriginal: cromatografia = {
+              metano: this.resumen.simSecciones[iSec].metano,
+              etano: this.resumen.simSecciones[iSec].etano,
+              propano: this.resumen.simSecciones[iSec].propano,
+              iButano: this.resumen.simSecciones[iSec].iButano,
+              nButano: this.resumen.simSecciones[iSec].nButano,
+              iPentano: this.resumen.simSecciones[iSec].iPentano,
+              nPentano: this.resumen.simSecciones[iSec].nPentano,
+              hexano: this.resumen.simSecciones[iSec].hexano,
+              heptano: this.resumen.simSecciones[iSec].heptano,
+              octano: this.resumen.simSecciones[iSec].octano,
+              nonano: this.resumen.simSecciones[iSec].nonano,
+              decano: this.resumen.simSecciones[iSec].decano,
+              nitrogeno: this.resumen.simSecciones[iSec].nitrogeno,
+              dioxCarbono: this.resumen.simSecciones[iSec].dioxCarbono,
+              sulfHidrogeno: this.resumen.simSecciones[iSec].sulfHidrogeno,
+              fraccMolar: 0,
+            }
+            let cromatografiaNormalizada: cromatografia = this.normalizarCromatografia(cromatografiaOriginal)
+            let mezcla: mezcla = {
+              id: "",
+              nombre: `c:${i + 1}-s:${sec}-${this.resumen.simTimestamp}`,
+              cromatografiaOriginal: cromatografiaOriginal,
+              cromatografiaNormalizada: cromatografiaNormalizada
+            }
+            simulacion.inputs = {
+              TSUC: this.resumen.simSecciones[iSec].TSUC,
+              TDES: this.resumen.simSecciones[iSec].TDES,
+              PSUC: this.resumen.simSecciones[iSec].PSUC,
+              PDES: this.resumen.simSecciones[iSec].PDES,
+              RPM: this.resumen.simSecciones[iSec].RPM,
+              FLUJO: this.resumen.simSecciones[iSec].FLUJO,
+              TDIM: this.tren.dimensiones.temperatura,
+              PDIM: this.tren.dimensiones.presion,
+              QDIM: this.tren.dimensiones.flujo,
+              DDIM: this.tren.dimensiones.diametro,
+              Mezcla: mezcla
+            }
+            simulacion.inputs.DDIM = this.tren.dimensiones.diametro
+            simulacion.inputs.PDIM = this.tren.dimensiones.presion
+            simulacion.inputs.QDIM = this.tren.dimensiones.flujo
+            simulacion.inputs.TDIM = this.tren.dimensiones.temperatura
+            simulaciones.push(simulacion)
+            iSec++
+          }
+          curvas = []
+        }
+        this.simulacion = simulaciones
+        simulaciones = []
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
@@ -155,7 +229,7 @@ export class SimulacionCampoInputComponent implements OnInit {
       "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
     for (let j = 0; j < this.simulacion.length; j++) {
       const sim = this.simulacion[j]
-      envio.push([+sim.inputs.Mezcla.cromatografia.metano, +sim.inputs.Mezcla.cromatografia.etano, +sim.inputs.Mezcla.cromatografia.propano, sim.inputs.Mezcla.cromatografia.iButano, sim.inputs.Mezcla.cromatografia.nButano, sim.inputs.Mezcla.cromatografia.iPentano, sim.inputs.Mezcla.cromatografia.nPentano, sim.inputs.Mezcla.cromatografia.hexano, sim.inputs.Mezcla.cromatografia.heptano, sim.inputs.Mezcla.cromatografia.octano, sim.inputs.Mezcla.cromatografia.nonano, sim.inputs.Mezcla.cromatografia.decano, sim.inputs.Mezcla.cromatografia.nitrogeno, sim.inputs.Mezcla.cromatografia.dioxCarbono, sim.inputs.Mezcla.cromatografia.sulfHidrogeno,
+      envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
       sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJO, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
     }
     this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(envio)).subscribe(async (res) => {
@@ -204,7 +278,7 @@ export class SimulacionCampoInputComponent implements OnInit {
       "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
     for (let j = 0; j < this.simulacion.length; j++) {
       const sim = this.simulacion[j]
-      envioPrueba.push([+sim.inputs.Mezcla.cromatografia.metano, +sim.inputs.Mezcla.cromatografia.etano, +sim.inputs.Mezcla.cromatografia.propano, sim.inputs.Mezcla.cromatografia.iButano, sim.inputs.Mezcla.cromatografia.nButano, sim.inputs.Mezcla.cromatografia.iPentano, sim.inputs.Mezcla.cromatografia.nPentano, sim.inputs.Mezcla.cromatografia.hexano, sim.inputs.Mezcla.cromatografia.heptano, sim.inputs.Mezcla.cromatografia.octano, sim.inputs.Mezcla.cromatografia.nonano, sim.inputs.Mezcla.cromatografia.decano, sim.inputs.Mezcla.cromatografia.nitrogeno, sim.inputs.Mezcla.cromatografia.dioxCarbono, sim.inputs.Mezcla.cromatografia.sulfHidrogeno,
+      envioPrueba.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
       sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJO, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
     }
     console.log("hice el llamado a prueba de eficiencia")
@@ -245,27 +319,28 @@ export class SimulacionCampoInputComponent implements OnInit {
     if (this.simInfo.simId != "") {
       this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
         .collection("trenes").doc(this.dataEnviada.trenTag)
-        .collection("simulaciones-campo").doc(this.simInfo.simId)
+        .collection("simulaciones-campo").doc(`${this.simInfo.simId}`)
         .set({
           simulacion: JSON.parse(JSON.stringify(this.simulacion)),
           simDate: this.simInfo.simDate,
-          simId: this.simInfo.simId,
+          simId: `${this.simInfo.simId}`,
           simTipo: this.simInfo.simTipo
         })
     } else {
+      this.simInfo.simTimestamp = +this.simInfo.simDate*1000
       const docRef = this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
         .collection("trenes").doc(this.dataEnviada.trenTag)
-        .collection("simulaciones-campo").doc()
-      this.simInfo.simId = docRef.ref.id
+        .collection("simulaciones-campo").doc(`${this.simInfo.simTimestamp}`)
       docRef.set({
         simulacion: JSON.parse(JSON.stringify(this.simulacion)),
         simDate: this.simInfo.simDate,
         simId: this.simInfo.simId,
-        simTipo: this.simInfo.simTipo
+        simTipo: this.simInfo.simTipo,
+        simTimestamp: this.simInfo.simTimestamp
       })
     }
     // Guardado en el indice:
-    this.resumen.simId = this.simInfo.simId;
+    this.resumen.simId = `${this.simInfo.simId}`;
     this.resumen.simDate = this.simInfo.simDate;
     this.resumen.simCurvas = "";
     this.resumen.simTipo = this.simInfo.simTipo
@@ -280,6 +355,7 @@ export class SimulacionCampoInputComponent implements OnInit {
         equipoTag: element.equipoTag,
         numCompresor: numCompresor,
         numSeccion: element.seccion,
+        seccion: element.seccion,
         FLUJO: element.inputs.FLUJO,
         PSUC: element.inputs.PSUC,
         RPM: element.inputs.RPM,
@@ -290,6 +366,21 @@ export class SimulacionCampoInputComponent implements OnInit {
         QN: element.outputAdim.qn,
         CFHEAD: element.outputAdim.CFHEAD,
         EFIC: element.outputAdim.EFIC,
+        metano: element.inputs.Mezcla.cromatografiaNormalizada.metano,
+        etano: element.inputs.Mezcla.cromatografiaNormalizada.etano,
+        propano: element.inputs.Mezcla.cromatografiaNormalizada.propano,
+        iButano: element.inputs.Mezcla.cromatografiaNormalizada.iButano,
+        nButano: element.inputs.Mezcla.cromatografiaNormalizada.nButano,
+        iPentano: element.inputs.Mezcla.cromatografiaNormalizada.iPentano,
+        nPentano: element.inputs.Mezcla.cromatografiaNormalizada.nPentano,
+        hexano: element.inputs.Mezcla.cromatografiaNormalizada.hexano,
+        heptano: element.inputs.Mezcla.cromatografiaNormalizada.heptano,
+        octano: element.inputs.Mezcla.cromatografiaNormalizada.octano,
+        nonano: element.inputs.Mezcla.cromatografiaNormalizada.nonano,
+        decano: element.inputs.Mezcla.cromatografiaNormalizada.decano,
+        nitrogeno: element.inputs.Mezcla.cromatografiaNormalizada.nitrogeno,
+        dioxCarbono: element.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono,
+        sulfHidrogeno: element.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
       }
       simSecciones.push(sim)
     }
@@ -298,11 +389,51 @@ export class SimulacionCampoInputComponent implements OnInit {
       .collection("trenes").doc(this.dataEnviada.trenTag)
       .collection("indices-campo").doc("indice-campo").set({
         [this.simInfo.simId]: JSON.parse(JSON.stringify(this.resumen))
-      }, {merge: true})
+      }, { merge: true })
   }
 
   customTrackBy(index: number, obj: any): any {
     return index;
+  }
+
+  normalizarCromatografia(original: cromatografia){
+    let sum =
+    +original.metano
+    +original.etano
+    +original.propano
+    +original.iButano
+    +original.nButano
+    +original.iPentano
+    +original.nPentano
+    +original.hexano
+    +original.heptano
+    +original.octano
+    +original.nonano
+    +original.decano
+    +original.nitrogeno
+    +original.dioxCarbono
+    +original.sulfHidrogeno
+
+    let normalizada: cromatografia = {
+      metano: original.metano/sum,
+      etano: original.etano/sum,
+      propano: original.propano/sum,
+      iButano: original.iButano/sum,
+      nButano: original.nButano/sum,
+      iPentano: original.iPentano/sum,
+      nPentano: original.nPentano/sum,
+      hexano: original.hexano/sum,
+      heptano: original.heptano/sum,
+      octano: original.octano/sum,
+      nonano: original.nonano/sum,
+      decano: original.decano/sum,
+      nitrogeno: original.nitrogeno/sum,
+      dioxCarbono: original.dioxCarbono/sum,
+      sulfHidrogeno: original.sulfHidrogeno/sum,
+      fraccMolar: 0
+    }
+
+    return normalizada
   }
 
 }
