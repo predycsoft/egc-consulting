@@ -156,6 +156,11 @@ export class SimulacionCampoListaComponent implements OnInit {
   }
 
   armarData() {
+    let timestamps = []
+    for (let index = 0; index < this.simulaciones.length; index++) {
+      const element = this.simulaciones[index];
+      timestamps.push(element.simTimestamp)
+    }
     let simulaciones: pruebaCampo[] = []
     for (let index = 1; index < this.csvRecords.length; index++) {
       const punto: Array<any> = this.csvRecords[index]
@@ -231,7 +236,11 @@ export class SimulacionCampoListaComponent implements OnInit {
             sim.simSecciones.push(obj)
           }
         }
-        simulaciones.push(sim)
+        if(timestamps.includes(sim.simTimestamp)){
+          simulaciones.push(this.simulaciones.find(x => x.simTimestamp == sim.simTimestamp))
+        } else {
+          simulaciones.push(sim)
+        }
         // sim.simTipo =
         // sim.simCurvas
       }

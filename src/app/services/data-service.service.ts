@@ -11,6 +11,7 @@ export class pruebaCampo {
   simTimestamp: number = 0
   simTipo: string = '';
   simCurvas: string = '';
+  dataValida: false
   simSecciones: simSeccion[] = []
   totHP: number = 0;
   simId: string = '';
@@ -150,6 +151,7 @@ export class outputTeorico {
 }
 
 export class simulacionPE {
+  dataValida: false
   equipoTag: string = "";
   equipoFamilia: string = "";
   equipoTipologia: string = "";
