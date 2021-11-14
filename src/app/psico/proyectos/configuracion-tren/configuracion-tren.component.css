@@ -1,3 +1,112 @@
+.containerMenu{
+    height: 40px;
+    box-shadow: var(--shadow8);
+    border-bottom: 1px solid var(--stroke1);
+}
+
+.logoContainer{
+    border-right: 1px solid var(--stroke1);
+    padding-top: 10px;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+}
+
+.logoContainer:hover{
+    background: var(--neutral3);
+}
+
+.logoMenu{
+    height: 26px;    opacity: .7;
+}
+
+.logoContainer:hover > .logoMenu{
+    height: 26px;
+    opacity: 1;
+    transform: scale(1.03);
+    transition: .2s ease;
+    animation-name: rotate;
+    animation-duration: .3s;
+}
+
+.predycText{
+    font-weight: 600;
+    font-size: 14px !important;
+    margin-left: 14px;
+    color: var(--text1) !important;
+    opacity: .8;
+    animation-name: fade;
+    animation-duration: .5s;
+    user-select: none;
+}
+
+.containerUsuario{
+    padding-right: 1rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
+    margin-right: .2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.avatarImg{
+    height: 2rem;
+    border-radius: 100%;
+    transition: ease .3s;
+}
+
+.nombreUsuario{
+    font-weight: 600;
+    padding-right: 1rem;
+    opacity: .7;
+    transition: .2s ease-in-out;
+    font-size: 14px !important;
+
+}
+
+.containerUsuario:hover{
+ background-color: var(--neutral2);   
+ transition: .2s ease-in-out;
+ border: 1px solid var(--stroke1);
+}
+
+.containerUsuario:hover > .nombreUsuario {
+    opacity: 1;
+    transition: .2s ease-in-out;
+}
+
+.letterContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid var(--stroke1);
+    background-color: var(--accent5);
+    border-radius: 100%;
+    color: white;
+}
+
+
+/* Contenido */
+
+.contentContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+
+
+
 .optionContainer{
     height: 300px;
     width: 232px;

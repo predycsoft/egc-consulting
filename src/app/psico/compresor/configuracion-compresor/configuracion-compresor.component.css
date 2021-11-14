@@ -90,3 +90,16 @@
     border-radius: 100%;
     color: white;
 }
+
+
+/* Contenido */
+
+.contentContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    overflow-x: auto;
+}

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigurarEquipoComponent } from './proyectos/configurar-equipo/configurar-equipo.component';
 import { EnvioDataComponent } from './envio-data/envio-data.component';
 import { ImportCsvComponent } from './import-csv/import-csv.component';
 import { ConfiguracionTrenComponent } from './proyectos/configuracion-tren/configuracion-tren.component';

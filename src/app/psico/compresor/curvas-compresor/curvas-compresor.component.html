@@ -1,110 +1,58 @@
-<div fxLayout="row" fxLayoutGap="2rem">
+<div fxLayout="row">
 
-    <div>
+    <div fxLayout="column" class="leftContainer">
 
-        <div class="border radius4 pd10">
+        <div>
+            <p class="ft14 text3 ft500 pdb05 border-b mgb10">Sección</p>
+        </div>
+        <div class="mgt05">
+            <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()">
+                <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}}
+                </mat-option>
+            </mat-select>
+        </div>
 
-            <div fxLayout="column" >
-                <span class="text3 ft14">Sección</span>
-                <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()" class="mgt05">
-                    <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}} </mat-option>
-                </mat-select>
+
+
+
+        <div class="mgt20 border radius4 pd05 shadow8">
+            <div fxLayoutAlign="space-between center" class="border-b pdb05 mgb10">
+                <span class="ft14 text3 ft500">Impulsor equivalente</span>
+                <mat-icon class="iconButton ft16">add</mat-icon>
             </div>
 
-            <div class="mgt20">
-                <p class="ft14 text3 ft500 pdb05 border-b mgb10">Impulsor equivalente</p>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign=" center" class="w300px" *ngFor="let impulsor of filteredImpulsoresEq">
-                <mat-checkbox> </mat-checkbox>
-
-                <span class="impText text3" (dblclick)="openDialogPolinomios(0,impulsor.nombre)">
+            <div fxLayout="row" fxLayoutAlign=" center" *ngFor="let impulsor of filteredImpulsoresEq" class="pd03">
+                <span class="text2 ft13" (dblclick)="openDialogPolinomios(0,impulsor.nombre)">
                     {{impulsor.nombre}}
                 </span>
-                <span *ngIf="impulsor.default == true"> Default</span>
+                <span *ngIf="impulsor.default == true" class="mgl05 ft500 ft12"> (Default)</span>
             </div>
-            <button class="standard fw" (click)="agregando = true">agregar</button>
-            <label *ngIf="agregando" for="">Introduzca el nombre del impulsor</label>
-            <input *ngIf="agregando" [(ngModel)]="nombre">
-            <button  *ngIf="agregando" class="standard fw" (click)="agregando = false; agregarImpulsorEquivalente(nombre)">agregar</button>
+            <!-- <button class="standard fw" (click)="agregando = true">agregar</button> -->
+            <!-- <label *ngIf="agregando" for="">Introduzca el nombre del impulsor</label> -->
+            <!-- <input *ngIf="agregando" [(ngModel)]="nombre"> -->
+            <!-- <button  *ngIf="agregando" class="standard fw" (click)="agregando = false; agregarImpulsorEquivalente(nombre)">agregar</button> -->
+        </div>
 
 
+        <div class="mgt10 pd05 border radius4 shadow8">
 
-
-            <div class="mgt20">
-                <p class="ft14 text3 ft500 pdb05 border-b mgb10">Impulsores del compresor</p>
+            <div fxLayoutAlign="space-between center" class="border-b pdb05 mgb10">
+                <span class="ft14 text3 ft500">Impulsores</span>
+                <mat-icon class="iconButton ft16" (click)="agregarImpulsor()">add</mat-icon>
             </div>
 
-            <div *ngFor="let item of filteredImpulsores; let i = index" fxLayout="row" fxLayoutAlign=" center">
-                <mat-checkbox> </mat-checkbox>
+            <div *ngFor="let item of filteredImpulsores; let i = index" fxLayout="row" fxLayoutAlign=" center" class="pd03">
                 <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios(item.numImpulsor,'')"
-                    class="impText impulsor" [ngClass]="{'impSel': impSel == i}">
+                    class="impulsor" [ngClass]="{'impSel': impSel == i}">
                     Impulsor {{i + 1}}
-                    <!-- <div class="impulsorInfoTooltip">
-                        <div class="mainTitleContainer">
-                            <td colspan="2" class="title ft14">Coeficientes calculados</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Diámetro [pulg]</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Límite Q/N de surge</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Límite Q/N de stw</td>
-                            <td>value</td>
-                        </div>
-                        <div class="titleContainer">
-                            <td colspan="2" class="title">Exp.polin.coef.head</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(1) coe.head</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(2) coe.head</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(3) coe.head</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(4) coe.head</td>
-                            <td>value</td>
-                        </div>
-                        <div class="titleContainer">
-                            <td colspan="2" class="title">Exp.polin.efic.polit.</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(1) efic.polit.</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(2) efic.polit.</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(3) efic.polit.</td>
-                            <td>value</td>
-                        </div>
-                        <div>
-                            <td class="nowrap w150px">Coef.A(4) efic.polit.</td>
-                            <td>value</td>
-                        </div>
-                    </div> -->
                 </span>
             </div>
-            <br>
-            <button class="standard fw" (click)="agregarImpulsor()">agregar</button>
-
-
         </div>
     </div>
-    <div class="neutralFill1 fh fw">
-        Grafico container
+
+
+    <div fxLayout="column" class="rightContainer">
+
     </div>
 
 </div>

@@ -24,6 +24,7 @@ export class ConfiguracionTrenComponent implements OnInit {
     public dialogService: DialogService,
   ) { }
   proyecto: Proyecto;
+  
   tipoSimulacion: "real" | "teorica" | "ambas";
   trenSeleccionado: string = 'TC-5200A';
   tren: tren = new tren()
