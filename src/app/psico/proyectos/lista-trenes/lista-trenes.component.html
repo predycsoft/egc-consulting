@@ -46,7 +46,7 @@
 
                             <div *ngFor="let equipo of tren.equipos; let i = index">
                                 <div *ngIf="equipo.familia==='Compresor'" class="equipoContainer" (mouseover)="select=1"
-                                    (mouseout)="select=0">
+                                    (mouseout)="select=0" [routerLink]="['/psico/proyecto/',id,'tren',tren.tag,'conf',equipo.tag]">
                                     <img *ngIf="equipo.tipologia==='Inline'" [src]="icon.inline" class="equipoIcon">
                                     <img *ngIf="equipo.tipologia==='Back to Back'" [src]="icon.b2b" class="equipoIcon">
 

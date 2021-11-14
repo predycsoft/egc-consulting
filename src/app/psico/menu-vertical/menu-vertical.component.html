@@ -55,6 +55,26 @@
             <br>
         </div>
     </div>
+<!-- 
+    <div>
+        <div fxLayout="row" fxLayoutAlign=" center" class="containerUsuario" [matMenuTriggerFor]="menu">
+            <span class="nombreUsuario">{{primerNombre}}</span>
+            <div *ngIf="!usuario.photoURL" class="letterContainer">{{primeraLetra}}</div>
+            <img *ngIf="usuario.photoURL"  [src]="usuario.photoURL" class="avatarImg">
+        </div>
+    </div>
+
+    <mat-menu #menu="matMenu" class="contextMenu">
+        <li class="menuItem fw ft14" routerLink="/admin/lista-cursos" *ngIf="auth.isAdmin(usuario)">Admin Dashb.</li>
+        <li class="menuItem fw ft14" routerLink="/est/mi-cuenta">Mi cuenta</li>
+        <li class="menuItem fw ft14" >Política de privacidad</li>
+        <li class="menuItem fw ft14">Términos y condiciones</li>
+        <li class="menuItem fw ft14">Política de cookies</li>
+        <li class="menuItem fw ft14" (click)="auth.signOut()">Cerrar sesión</li>
+    </mat-menu> -->
+
+<div></div>
+
 
     <div class="mgl05">
         <div class="pd03" [ngClass]="{'selectedTag': proyecto.titulo == selectedTag}" fxLayout="row" fxLayoutAlign=" center">

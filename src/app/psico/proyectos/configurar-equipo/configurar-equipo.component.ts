@@ -13,20 +13,24 @@ import { DialogDuplicarNuevoTagComponent } from '../dialog-duplicar-nuevo-tag/di
 })
 export class ConfigurarEquipoComponent implements OnInit {
 
-  tagEquipo: string;
-  tipoEquipo: string = 'Compresor'
+
 
   constructor(private route: ActivatedRoute, private afs: AngularFirestore, private data: DataServiceService, public dialogAgregar: MatDialog) { }
 
+  trenTag
+  tagEquipo: string;
   proyecto: Proyecto
   equipo: equipo_tren
+  id: string;
 
   ngOnInit(): void {
     this.route.parent.params.subscribe(params => {
       this.data.obtenerProyecto(params.id).subscribe(data => {
         this.proyecto = data;
+        this.id = params.id
         this.route.params.subscribe(params => {
-          const trenTag = params.trenTag;
+          this.trenTag = params.trenTag;
+
           const equipoTag = params.equipoTag;
           this.data.obtenerEquipo(this.proyecto.id, equipoTag).subscribe((equipo) => {
             this.equipo = equipo

@@ -19,6 +19,7 @@ import { ListaPeComponent } from './lista-pe/lista-pe.component';
 import { ListaStComponent } from './lista-st/lista-st.component';
 import { SimulacionTeoricaComponent } from './simulacion-teorica/simulacion-teorica.component';
 import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.component';
+import { ConfiguracionCompresorComponent } from './compresor/configuracion-compresor/configuracion-compresor.component';
 
 
 const routes: Routes = [
@@ -27,15 +28,16 @@ const routes: Routes = [
   {path: 'import-csv', component: ImportCsvComponent},
   {path: 'proyectos', component: ListaProyectosComponent},
   {path: "proyecto/:id", component:PsicoDashboardComponent, children: [
+
+    {path: '', component:ListaTrenesComponent},
     {path: 'config-proyecto', component:ConfigProyectoComponent},
-    {path: 'trenes', component:ListaTrenesComponent},
     {path: 'tren/:trenTag', component: ConfiguracionTrenComponent},
     {path: 'tren/:trenTag/lista-pruebas-eficiencia', component:ListaPeComponent},
     {path: 'tren/:trenTag/prueba-eficiencia/:idPrueba', component:DialogSimCampoComponent},
     {path: 'tren/:trenTag/lista-simulaciones-teoricas', component:ListaStComponent},
     {path: 'tren/:trenTag/simulacion-teorica/:idPrueba', component:SimulacionTeoricaComponent},
     {path: 'simulacion-input/:trenTag/:equipoTag', component: SimulacionCampoInputComponent},
-    {path: 'equipo/:trenTag/:equipoTag', component: ConfigurarEquipoComponent},
+    {path: 'tren/:trenTag/conf/:equipoTag', component: ConfiguracionCompresorComponent},
     // {path: 'tren/:trenTag/sim-teorica', component: SimulacionTeoricaComponent},
     {path: 'tren/:trenTag/sim-campo', component: SimulacionCampoComponent},
     {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
