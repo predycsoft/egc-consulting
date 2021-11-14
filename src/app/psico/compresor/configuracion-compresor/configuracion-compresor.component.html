@@ -1,11 +1,16 @@
 <div fxLayoutAlign="space-between center" class="containerMenu">
 
-    <div class="centertext" fxLayoutAlign=" center" fxLayoutGap=".5rem" >
-    <span class="mgl10 ft18 ft500 text2 cursorPointer" [routerLink]="['/psico/proyecto/',id]">Ca-Ku-A1</span>
-        <mat-icon class="ft18">keyboard_arrow_right</mat-icon>
-        <span class="ft18 ft500 text2" [routerLink]="['/psico/proyecto/',id,'tren',trenTag]">Tren TC-5200A</span>
-        <mat-icon class="ft18">keyboard_arrow_right</mat-icon>
-        <span class="ft18 ft500 text2">{{tagEquipo}}</span>
+    <div class="centertext" fxLayoutAlign=" center">
+        <span class="mgl05 ft16 ft500 text2 cursorPointer textButton" [routerLink]="['/psico/proyecto/',id]">
+            {{proyecto.titulo}}
+            <mat-icon class="ft20">keyboard_arrow_right</mat-icon>
+        </span>
+
+        <span class="ft16 ft500 text2 cursorPointer textButton"
+            [routerLink]="['/psico/proyecto/',id,'tren',trenTag]">{{trenTag}}
+            <mat-icon class="ft20">keyboard_arrow_right</mat-icon>
+        </span>
+        <span class="mgl10 ft16 ft500 text2">{{tagEquipo}}</span>
     </div>
 
     <div class="mgl30 menuToolbar">
@@ -24,7 +29,7 @@
     </div>
 
     <div>
-        <div fxLayout="row" fxLayoutAlign=" center" class="containerUsuario" >
+        <div fxLayout="row" fxLayoutAlign=" center" class="containerUsuario">
             <!-- <span class="nombreUsuario">{{primerNombre}}</span>
             <div *ngIf="!usuario.photoURL" class="letterContainer">{{primeraLetra}}</div>
             <img *ngIf="usuario.photoURL"  [src]="usuario.photoURL" class="avatarImg"> -->
@@ -46,7 +51,7 @@
 
 </div>
 
-<div class="mgt20 fh pd08">
+<div class="contentContainer">
     <info-general-compresor *ngIf="tabSelected==='general'"></info-general-compresor>
     <compresor-dims *ngIf="tabSelected==='dims'"></compresor-dims>
     <!-- <datasheet-puntos-compresor *ngIf="tabSelected==='datosTecnicos'"></datasheet-puntos-compresor> -->
