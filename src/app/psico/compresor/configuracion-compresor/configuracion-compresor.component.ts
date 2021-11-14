@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { DataServiceService, equipo_tren, Proyecto } from 'src/app/services/data-service.service';
+import { DialogLibreriaEquiposComponent } from '../../dialog-libreria-equipos/dialog-libreria-equipos.component';
 
 
 // Variables compartidas para todas las corridas
@@ -86,10 +91,32 @@ interface cromatografia{
 export class ConfiguracionCompresorComponent implements OnInit {
 
   tabSelected: string = 'general';
+  proyecto: Proyecto
+  equipo: equipo_tren
+  tagEquipo: string;
+  tipoEquipo: string = 'Compresor'
+  id: string;
+  trenTag: string;
 
-  constructor() { }
+
+
+  constructor(private route: ActivatedRoute, private afs: AngularFirestore, private data: DataServiceService, public dialogAgregar: MatDialog) { }
 
   ngOnInit(): void {
+    this.route.parent.params.subscribe(params => {
+      this.data.obtenerProyecto(params.id).subscribe(data => {
+        this.proyecto = data;
+        this.id = params.id
+        this.route.params.subscribe(params => {
+          this.trenTag = params.trenTag;
+          this.tagEquipo = params.equipoTag;
+          this.data.obtenerEquipo(this.proyecto.id, this.tagEquipo).subscribe((equipo) => {
+            this.equipo = equipo
+          })
+          console.log(this.equipo)
+        })
+      })
+    })
   }
 
   tabSelect(id: string){
