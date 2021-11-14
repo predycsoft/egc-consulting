@@ -9,10 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { CromatografiaComponent } from './inputs/cromatografia/cromatografia.component';
 import { DatasheetPuntosCompresorComponent } from './compresor/datasheet-puntos-compresor/datasheet-puntos-compresor.component';
-import { CaracteristicasTurbinaComponent } from './turbina/caracteristicas-turbina/caracteristicas-turbina.component';
 import { MapasCompresorComponent } from './compresor/mapas-compresor/mapas-compresor.component';
 import { ConfiguracionCompresorComponent } from './compresor/configuracion-compresor/configuracion-compresor.component';
-import { ConfiguracionTurbinaComponent } from './turbina/configuracion-turbina/configuracion-turbina.component';
 import { ConfiguracionTrenComponent } from './proyectos/configuracion-tren/configuracion-tren.component';
 import { DatosTecnicosCompresorComponent } from './compresor/datos-tecnicos-compresor/datos-tecnicos-compresor.component';
 import { DialogAgregarEquipoComponent } from './proyectos/dialog-agregar-equipo/dialog-agregar-equipo.component';
@@ -24,7 +22,6 @@ import { DialogExitoComponent } from './dialogs/dialog-exito/dialog-exito.compon
 import { DialogFracasoComponent } from './dialogs/dialog-fracaso/dialog-fracaso.component';
 import { DialogNuevoProyectoComponent } from './proyectos/dialog-nuevo-proyecto/dialog-nuevo-proyecto.component';
 import { MenuVerticalComponent } from './menu-vertical/menu-vertical.component';
-import { ConfigurarEquipoComponent } from './proyectos/configurar-equipo/configurar-equipo.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DialogDocumentoComponent } from './dialogs/dialog-documento/dialog-documento.component';
 import { CurvasCompresorComponent } from './compresor/curvas-compresor/curvas-compresor.component';
@@ -63,10 +60,8 @@ import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.compo
     ImportCsvComponent,
     CromatografiaComponent,
     DatasheetPuntosCompresorComponent,
-    CaracteristicasTurbinaComponent,
     MapasCompresorComponent,
     ConfiguracionCompresorComponent,
-    ConfiguracionTurbinaComponent,
     ConfiguracionTrenComponent,
     DatosTecnicosCompresorComponent,
     DialogAgregarEquipoComponent,
@@ -78,7 +73,6 @@ import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.compo
     DialogFracasoComponent,
     DialogNuevoProyectoComponent,
     MenuVerticalComponent,
-    ConfigurarEquipoComponent,
     DocumentosComponent,
     DialogDocumentoComponent,
     CurvasCompresorComponent,

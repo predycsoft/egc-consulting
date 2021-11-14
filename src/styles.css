@@ -1621,16 +1621,22 @@ input[type=number]::-webkit-outer-spin-button {
 
 .mat-select{
     margin-top: 0px !important;
-    height: 32px;
-    background: var(--control1) !important;
-    border: 1px solid var(--stroke1);
-    border-bottom: 1px solid var(--stroke2);
+    height: 28px !important;
+    background-color: var(--neutral1) !important;
+    border: 2px solid var(--stroke1);
     border-radius: var(--defaultBorderRadius);
     min-width: 128px;
-    padding: 2px 4px 4px 12px !important;
+    padding: 2px 7px 6px 12px !important;
     color: var(--text2) !important;
     user-select: none;
 }
+
+.mat-select:focus{
+    border: 2px solid var(--accent5);
+}
+
+
+
 
 .mat-select-panel {
     margin-top: 50px; 

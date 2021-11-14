@@ -1,35 +1,50 @@
+<div class="containerMenu">
+
+
+
+    <div class="centertext" fxLayoutAlign=" center">
+        <span class="mgl05 ft16 ft500 text2 cursorPointer textButton" [routerLink]="['/psico/proyecto/',proyecto.id]">
+            {{proyecto.titulo}}
+            <mat-icon class="ft20">keyboard_arrow_right</mat-icon>
+        </span>
+
+        <span class="mgl10 ft16 ft500 text2">{{trenTag}}</span>
+    </div>
+</div>
+
+
 
 <div fxLayout="column" fxLayoutAlign="center center" class="pdb10 fw fh">
     <div class="fw centertext">
         <span class="ft26 ft500 text2">Tren TC-5200A</span>
     </div>
-    
 
-<div fxLayout="row" fxLayoutGap="1rem" class="mgt20">
 
-    <div class="optionContainer" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-simulaciones-teoricas">
+    <div fxLayout="row" fxLayoutGap="1rem" class="mgt20">
 
-        <img  [src]="icon.inline" class="imgContainer">
-        <span class="mgt20 ft14 ft600 text2 centertext">Simulación Teórica </span>
-    </div>
+        <div class="optionContainer"
+            routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-simulaciones-teoricas">
 
-    <div class="optionContainer">
-        <img  [src]="icon.ruedaRueda" class="imgContainer">
-        <span class="mgt20 ft14 ft600 text2 centertext">Simulación Rueda a Rueda</span>
+            <img [src]="icon.inline" class="imgContainer">
+            <span class="mgt20 ft14 ft600 text2 centertext">Simulación Teórica </span>
+        </div>
 
-    </div>
+        <div class="optionContainer">
+            <img [src]="icon.ruedaRueda" class="imgContainer">
+            <span class="mgt20 ft14 ft600 text2 centertext">Simulación Rueda a Rueda</span>
 
-    <div class="optionContainer"  routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-pruebas-eficiencia">
+        </div>
 
-        <img  [src]="icon.pruebaEfic" class="imgContainer">
-        <span class="mgt20 ft14 ft600 text2 centertext">Prueba de Eficiencia</span>
-    </div>
+        <div class="optionContainer"
+            routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/lista-pruebas-eficiencia">
 
-    <div class="optionContainer" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/sim-campo">
+            <img [src]="icon.pruebaEfic" class="imgContainer">
+            <span class="mgt20 ft14 ft600 text2 centertext">Prueba de Eficiencia</span>
+        </div>
 
-        <img  [src]="icon.campo" class="imgContainer">
-        <span class="mgt20 ft14 ft600 text2 centertext">Comportamiento Real</span>
+        <div class="optionContainer" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/sim-campo">
+            <img [src]="icon.campo" class="imgContainer">
+            <span class="mgt20 ft14 ft600 text2 centertext">Comportamiento Real</span>
+        </div>
     </div>
 </div>
-</div>
-

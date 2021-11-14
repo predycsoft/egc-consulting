@@ -1,37 +1,41 @@
+<div fxLayout="row">
 
-<div fxLayout="row" fxLayoutGap="3rem">
-    <div class="w200px">
-        <span>Sección</span>
-        <mat-select [(ngModel)]="seccionActual">
-            <mat-option [value]="'1'" class="optionItem"> Sección 1 </mat-option>
-            <mat-option [value]="'2'" class="optionItem"> Sección 2</mat-option>
-        </mat-select>
-    
-        <span>Mapa default</span>
-        <mat-select [(ngModel)]="seccionActual">
-            <mat-option [value]="'1'" class="optionItem"> Sección 1 </mat-option>
-            <mat-option [value]="'2'" class="optionItem"> Sección 2</mat-option>
-        </mat-select>
-    
+    <div fxLayout="column" class="leftContainer">
 
-        <hr>
-    
-        <div class="checkboxContainer">
-            <mat-checkbox> 
-                <span (dblclick)="configurarMapa()">Teórico</span>  
-            </mat-checkbox>
-            <mat-checkbox> FAT </mat-checkbox>
-            <mat-checkbox> SAT mejor condición </mat-checkbox>
-            <mat-checkbox> SAT actual </mat-checkbox>
+        <div>
+            <p class="ft14 text3 ft500 pdb05 border-b mgb10">Sección</p>
         </div>
-        <div class="mgt10">
-            <button class="standard">Agregar</button>
+        <!-- <div class="mgt05">
+            <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()">
+                <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}}
+                </mat-option>
+            </mat-select>
+        </div> -->
+
+        <div class="mgt20 border radius4 pd05 shadow8">
+            <div fxLayoutAlign="space-between center" class="border-b pdb05 mgb10">
+                <span class="ft14 text3 ft500">Mapas</span>
+                <mat-icon class="iconButton ft16">add</mat-icon>
+            </div>
+
+            <!-- <div fxLayout="row" fxLayoutAlign=" center" *ngFor="let impulsor of filteredImpulsoresEq" class="pd03">
+                <span class="text2 ft13" (dblclick)="openDialogPolinomios(0,impulsor.nombre)">
+                    {{impulsor.nombre}}
+                </span>
+                <span *ngIf="impulsor.default == true" class="mgl05 ft500 ft12"> (Default)</span>
+            </div> -->
+            <!-- <button class="standard fw" (click)="agregando = true">agregar</button> -->
+            <!-- <label *ngIf="agregando" for="">Introduzca el nombre del impulsor</label> -->
+            <!-- <input *ngIf="agregando" [(ngModel)]="nombre"> -->
+            <!-- <button  *ngIf="agregando" class="standard fw" (click)="agregando = false; agregarImpulsorEquivalente(nombre)">agregar</button> -->
         </div>
+
+
     </div>
-    
-    <div class="neutralFill1 fw" fxLayoutalign="center center">
-        <li>Opcion 1: Se muestran las curvas utilizando los valores del dataSet</li>
-        <li>Opcion 2: Se muestran las curvas utilizando los generados a partir de los coeficientes</li>
+
+
+    <div fxLayout="column" class="rightContainer">
+
     </div>
-    
+
 </div>
