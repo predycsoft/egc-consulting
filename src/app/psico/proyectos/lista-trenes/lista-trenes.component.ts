@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataServiceService, tren } from 'src/app/services/data-service.service';
+import { DataServiceService, Proyecto, tren } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { DialogNuevoTrenComponent } from '../dialog-nuevo-tren/dialog-nuevo-tren.component';
 import { IconServiceService } from 'src/app/services/icon-service.service';
@@ -17,6 +17,10 @@ export class ListaTrenesComponent implements OnInit {
 
   constructor(public dialogService: DialogService,private route: ActivatedRoute, private data: DataServiceService, private dialog: MatDialog, public icon: IconServiceService,) { }
 
+
+  tabSelected: string = 'Trenes';
+  proyecto: Proyecto;
+  proyectoId: string = "";
   select = 0
   id: string = "";
   trenes: tren[] = [];
@@ -24,6 +28,11 @@ export class ListaTrenesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.route.parent.params.subscribe(params => {
+      this.proyectoId = params.id
+      this.data.obtenerProyecto(this.proyectoId).subscribe((proyecto) => {
+        this.proyecto = proyecto
+      })})
     this.route.parent.params.subscribe(params => {
       console.log(params.id)
       this.id = params.id

@@ -1,3 +1,23 @@
+<div fxLayout="row">
+    <div class="centertext" fxLayoutAlign=" center">
+        <span class="mgl10 ft16 ft500 text2">{{proyecto.titulo}}</span>
+    </div>
+
+
+    <div class="mgl30 menuToolbar">
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'Trenes'}"
+            (click)="tabSelected='Trenes'">Trenes</span>
+        <!-- <span class="textButton" [ngClass]="{'selected2': tabSelected === 'datosTecnicos'}"
+        (click)="tabSelect('datosTecnicos')">Puntos Datasheet</span> -->
+        <span class="textButton" [ngClass]="{'selected2': tabSelected === 'curvas'}"
+        (click)="tabSelected='Trenes'">Datos de instalación</span>
+    </div>
+
+</div>
+
+
+
+<!-- 
 <div class="pdt20 pdl20 pdr20 menuToolbar" fxLayoutAlign="space-between">
     <span class="ft22">Trenes</span>
     <div fxLayoutAlign="space-between">
@@ -20,7 +40,7 @@
     <li class="menuItem">Configuración del proyecto</li>
     <li class="menuItem">Datos instalación</li>
     <li class="menuItem">Opc 2</li>
-</mat-menu>
+</mat-menu> -->
 
 
 <div class="fh fw pd20" fxLayout="column" fxLayoutAlign="space-between center">
