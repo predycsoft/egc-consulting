@@ -22,7 +22,8 @@ export class simSeccion {
   numSeccion: number = 0;
   numCompresor: number = 0;
   seccion: number = 0;
-  FLUJO: number = 0;
+  FLUJOSUC: number = 0;
+  FLUJODES: number = 0;
   PSUC: number = 0;
   PDES: number = 0;
   TSUC: number = 0;
@@ -62,13 +63,14 @@ export interface mezcla {
   cromatografiaNormalizada: cromatografia,
 }
 
-export class inputs {
+export class inputsCampo {
+  FLUJOSUC: number = 0
+  FLUJODES: number = 0;
+  RPM: number = 0
   TSUC: number = 0;
   TDES: number = 0;
   PSUC: number = 0;
   PDES: number = 0;
-  RPM: number = 0;
-  FLUJO: number = 0;
   Mezcla: mezcla = {
     id: "",
     nombre: "",
@@ -85,7 +87,7 @@ export class inputsTeorica {
   TSUC: number = 0;
   PSUC: number = 0;
   RPM: number = 0;
-  FLUJO: number = 0;
+  FLUJOSUC: number = 0;
   RELVEL: number = 1;
   QEXT: number = 0;
   CAIPRES: number = 0;
@@ -101,53 +103,56 @@ export class inputsTeorica {
   DDIM: string = "";
 }
 
-export class outputAdim {
-  EFIC: number = 0
-  coefWorkInput: number = 0
-  CFHEAD: number = 0
-  workPoli: number = 0
-  HP: number = 0
-  flujoMasico: number = 0
-  relacion_de_compresion: number = 0
-  relacion_de_volumen: number = 0
-  tIsent: number = 0
-  pIsent: number = 0
-  densSuc: number = 0
-  densDes: number = 0
-  densIsen: number = 0
-  volSuc: number = 0
-  volDes: number = 0
-  volIsent: number = 0
-  hSuc: number = 0
-  hDes: number = 0
-  hIsnet: number = 0
-  sSuc: number = 0
-  sDes: number = 0
-  sIsent: number = 0
-  compSuc: number = 0
-  compDes: number = 0
-  compIsent: number = 0
-  ymw: number = 0
-  qn: number = 0
-}
-
-export class outputTeorico {
-  PSUC: number = 0
-  PDES: number = 0
-  TSUC: number = 0
-  TDES: number = 0
-  DG: number = 0
-  HG: number = 0
-  SURGE: number = 0
-  QN: number = 0
-  STONEW: number = 0
-  CFHEAD: number = 0
-  HEAD: number = 0
-  EFIC: number = 0
-  HP: number = 0
-  POLLY: number = 0
-  FLUJO: number = 0
-  RPM: number = 0
+export class output {
+  FLUJOSUC: number = 0;
+  FLUJODES: number = 0;
+  FLUJOISEN: number = 0;
+  FLUJOMAS: number = 0;
+  RPM: number = 0;
+  TSUC: number = 0;
+  TDES: number = 0;
+  TISEN: number = 0;
+  PSUC: number = 0;
+  PDES: number = 0;
+  PISEN: number = 0
+  VOLSUC: number = 0
+  VOLDES: number = 0
+  VOLISEN: number = 0;
+  DENSUC: number = 0;
+  DENDES: number = 0;
+  DENISEN: number = 0;
+  KSUC: number = 0;
+  KDES: number = 0;
+  KISEN: number = 0;
+  ZSUC: number = 0;
+  ZDES: number = 0;
+  ZISEN: number = 0;
+  HSUC: number = 0;
+  HDES: number = 0;
+  HISEN: number = 0;
+  SSUC: number = 0;
+  SDES: number = 0;
+  SISEN: number = 0;
+  RELCOMP: number = 0;
+  RELVOL: number = 0;
+  HEADPOLI: number = 0;
+  HEADISEN: number = 0;
+  HPGAS: number = 0;
+  HPFRENO: number = 0;
+  CFHEADPOLI: number = 0;
+  CFHEADISEN: number = 0;
+  EFICPOLI: number = 0;
+  EFICISEN: number = 0;
+  CFWORKPOLI: number = 0;
+  CFWORKISEN: number = 0;
+  WORKPOLI: number = 0;
+  WORKISEN: number = 0;
+  QN: number = 0;
+  PHI: number = 0;
+  YWM: number = 0;
+  EXPPOLI: number = 0;
+  SURGE: number = 0;
+  STONEW: number = 0;
 }
 
 export class simulacionPE {
@@ -158,9 +163,9 @@ export class simulacionPE {
   seccion: number = 0;
   curvas: curva[] = [];
   curva: curva;
-  inputs: inputs = new inputs()
-  outputTeorico: outputTeorico = new outputTeorico()
-  outputAdim: outputAdim = new outputAdim()
+  inputs: inputsCampo = new inputsCampo()
+  outputTeorico: output = new output()
+  outputAdim: output = new output()
 }
 
 export class simulacionTeorica {
@@ -171,7 +176,7 @@ export class simulacionTeorica {
   curvas: curva[] = [];
   curva: curva;
   inputs: inputsTeorica = new inputsTeorica()
-  outputTeorico: outputTeorico = new outputTeorico()
+  outputTeorico: output = new output()
   mapas: puntoMapa[] = []
 }
 
@@ -254,12 +259,12 @@ export class puntoMapa {
   QN: number = 0;
   TDES: number = 0;
   PDES: number = 0;
-  HP: number = 0;
-  FLUJO: number = 0;
-  EFIC: number = 0;
-  CFHEAD: number = 0;
-  CFWORKIN: number = 0;
-  HEAD: number = 0;
+  HPGAS: number = 0;
+  FLUJODES: number = 0;
+  EFICPOLI: number = 0;
+  CFHEADPOLI: number = 0;
+  CFWORKPOLI: number = 0;
+  HEADPOLI: number = 0;
 }
 
 

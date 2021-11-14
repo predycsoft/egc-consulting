@@ -68,7 +68,7 @@
                 <tr>
                     <th> Flujo {{seccion.inputs.QDIM}} * </th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.inputs.FLUJO" placeholder="-" class="inputNumber">
+                        <input type="number" [(ngModel)]="seccion.inputs.FLUJOSUC" placeholder="-" class="inputNumber">
                     </td>
                 </tr>
                 <tr>
@@ -212,7 +212,7 @@
                 <tr>
                     <th> Flujo [MMSCFD] </th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.FLUJO" placeholder="-"
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.FLUJODES" placeholder="-"
                             class="inputNumber">
                     </td>
                 </tr>
@@ -233,18 +233,18 @@
                 <tr>
                     <th> Hp Gas </th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.HP" placeholder="-" class="inputNumber">
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.HPGAS" placeholder="-" class="inputNumber">
                     </td>
                 </tr>
                 <tr>
                     <th> Entalpia[btu/lbmol] </th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.HG" placeholder="-" class="inputNumber">
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.HDES" placeholder="-" class="inputNumber">
                     </td>
                 </tr>.<tr>
                     <th> Densidad [lbm/ft3] </th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.DG" placeholder="-" class="inputNumber">
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.DENDES" placeholder="-" class="inputNumber">
                     </td>
                 </tr>
                 <tr>
@@ -270,21 +270,21 @@
                 <tr>
                     <th>Coef. Head </th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.CFHEAD" placeholder="-"
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.CFHEADPOLI" placeholder="-"
                             class="inputNumber">
                     </td>
                 </tr>
                 <tr>
                     <th>Eficiencia Politrópica</th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.EFIC" placeholder="-"
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.EFICPOLI" placeholder="-"
                             class="inputNumber">
                     </td>
                 </tr>
                 <tr>
                     <th>Exp. polit</th>
                     <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.POLLY" placeholder="-"
+                        <input type="number" [(ngModel)]="seccion.outputTeorico.EXPPOLI" placeholder="-"
                             class="inputNumber">
                     </td>
                 </tr>

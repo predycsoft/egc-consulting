@@ -94,45 +94,45 @@ export class SimulacionTeoricaComponent implements OnInit {
           for (let j = 0; j < modified[key].length; j++) {
             const values: puntoMapa = modified[key][j];
             if (j == 0)
-              mapas[index].push([+values.FLUJO, +values.PDES,,,,,])
+              mapas[index].push([+values.FLUJODES, +values.PDES,,,,,])
             if (j == 1)
-              mapas[index].push([+values.FLUJO, , +values.PDES,,,,])
+              mapas[index].push([+values.FLUJODES, , +values.PDES,,,,])
             if (j == 2)
-              mapas[index].push([+values.FLUJO, , , +values.PDES,,,])
+              mapas[index].push([+values.FLUJODES, , , +values.PDES,,,])
             if (j == 3)
-              mapas[index].push([+values.FLUJO, , , , +values.PDES,,])
+              mapas[index].push([+values.FLUJODES, , , , +values.PDES,,])
             if (j == 4)
-              mapas[index].push([+values.FLUJO, , , , , +values.PDES,])
+              mapas[index].push([+values.FLUJODES, , , , , +values.PDES,])
           }
         }
         if (tipo == "potencia"){
           for (let j = 0; j < modified[key].length; j++) {
             const values: puntoMapa = modified[key][j];
             if (j == 0)
-              mapas[index].push([+values.FLUJO, +values.HP,,,,,])
+              mapas[index].push([+values.FLUJODES, +values.HPGAS,,,,,])
             if (j == 1)
-              mapas[index].push([+values.FLUJO, , +values.HP,,,,])
+              mapas[index].push([+values.FLUJODES, , +values.HPGAS,,,,])
             if (j == 2)
-              mapas[index].push([+values.FLUJO, , , +values.HP,,,])
+              mapas[index].push([+values.FLUJODES, , , +values.HPGAS,,,])
             if (j == 3)
-              mapas[index].push([+values.FLUJO, , , , +values.HP,,])
+              mapas[index].push([+values.FLUJODES, , , , +values.HPGAS,,])
             if (j == 4)
-              mapas[index].push([+values.FLUJO, , , , , +values.HP,])
+              mapas[index].push([+values.FLUJODES, , , , , +values.HPGAS,])
           }
         }
         if(tipo == "eficiencia"){
           for (let j = 0; j < modified[key].length; j++) {
             const values: puntoMapa = modified[key][j];
             if (j == 0)
-              mapas[index].push([+values.FLUJO, +values.EFIC,,,,,])
+              mapas[index].push([+values.FLUJODES, +values.EFICPOLI,,,,,])
             if (j == 1)
-              mapas[index].push([+values.FLUJO, , +values.EFIC,,,,])
+              mapas[index].push([+values.FLUJODES, , +values.EFICPOLI,,,,])
             if (j == 2)
-              mapas[index].push([+values.FLUJO, , , +values.EFIC,,,])
+              mapas[index].push([+values.FLUJODES, , , +values.EFICPOLI,,,])
             if (j == 3)
-              mapas[index].push([+values.FLUJO, , , , +values.EFIC,,])
+              mapas[index].push([+values.FLUJODES, , , , +values.EFICPOLI,,])
             if (j == 4)
-              mapas[index].push([+values.FLUJO, , , , , +values.EFIC,])
+              mapas[index].push([+values.FLUJODES, , , , , +values.EFICPOLI,])
           }
         }
       }
@@ -178,7 +178,7 @@ export class SimulacionTeoricaComponent implements OnInit {
     for (let index = 0; index < this.simulaciones.length; index++) {
       const sim = this.simulaciones[index];
       envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJO, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]", sim.inputs.CAIPRES])
+      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJOSUC, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]", sim.inputs.CAIPRES])
     }
     this.http.post("http://127.0.0.1:5000/simulacionTeorica/", JSON.stringify(envio)).subscribe((respuesta) => {
       if (respuesta) {
@@ -192,18 +192,18 @@ export class SimulacionTeoricaComponent implements OnInit {
               this.simulaciones[j].outputTeorico.TSUC = OUTPUT[4][j + 1]
               this.simulaciones[j].outputTeorico.PSUC = OUTPUT[2][j + 1]
               this.simulaciones[j].outputTeorico.RPM = OUTPUT[17][j + 1]
-              this.simulaciones[j].outputTeorico.FLUJO = OUTPUT[16][j + 1]
+              this.simulaciones[j].outputTeorico.FLUJODES = OUTPUT[16][j + 1]
               this.simulaciones[j].outputTeorico.PDES = OUTPUT[3][j + 1]
               this.simulaciones[j].outputTeorico.TDES = OUTPUT[5][j + 1]
-              this.simulaciones[j].outputTeorico.HP = OUTPUT[14][j + 1]
-              this.simulaciones[j].outputTeorico.HG = OUTPUT[7][j + 1]
-              this.simulaciones[j].outputTeorico.DG = OUTPUT[6][j + 1]
+              this.simulaciones[j].outputTeorico.HPGAS = OUTPUT[14][j + 1]
+              this.simulaciones[j].outputTeorico.HDES = OUTPUT[7][j + 1]
+              this.simulaciones[j].outputTeorico.DENDES = OUTPUT[6][j + 1]
               this.simulaciones[j].outputTeorico.SURGE = OUTPUT[8][j + 1]
               this.simulaciones[j].outputTeorico.QN = OUTPUT[9][j + 1]
               this.simulaciones[j].outputTeorico.STONEW = OUTPUT[10][j + 1]
-              this.simulaciones[j].outputTeorico.CFHEAD = OUTPUT[11][j + 1]
-              this.simulaciones[j].outputTeorico.EFIC = OUTPUT[13][j + 1]
-              this.simulaciones[j].outputTeorico.POLLY = OUTPUT[15][j + 1]
+              this.simulaciones[j].outputTeorico.CFHEADPOLI = OUTPUT[11][j + 1]
+              this.simulaciones[j].outputTeorico.EFICPOLI = OUTPUT[13][j + 1]
+              this.simulaciones[j].outputTeorico.EXPPOLI = OUTPUT[15][j + 1]
             }
           }
         }
@@ -243,12 +243,12 @@ export class SimulacionTeoricaComponent implements OnInit {
               QN: OUTPUT[1][index],
               TDES: OUTPUT[2][index],
               PDES: OUTPUT[3][index],
-              HP: OUTPUT[4][index],
-              FLUJO: OUTPUT[5][index],
-              EFIC: OUTPUT[6][index],
-              CFHEAD: OUTPUT[7][index],
-              CFWORKIN: OUTPUT[8][index],
-              HEAD: OUTPUT[9][index],
+              HPGAS: OUTPUT[4][index],
+              FLUJODES: OUTPUT[5][index],
+              EFICPOLI: OUTPUT[6][index],
+              CFHEADPOLI: OUTPUT[7][index],
+              CFWORKPOLI: OUTPUT[8][index],
+              HEADPOLI: OUTPUT[9][index],
             }
             puntos.push(obj)
           }
