@@ -22,7 +22,7 @@
             </div>
 
             <div fxLayout="row" fxLayoutAlign=" center" *ngFor="let impulsor of filteredImpulsoresEq" class="pd03">
-                <span class="text2 ft13" (dblclick)="openDialogPolinomios(0,impulsor.nombre)">
+                <span class="text2 ft13" (click)="verCurva(true,impulsor.nombre,impulsor.numImpulsor)">
                     {{impulsor.nombre}}
                 </span>
                 <span *ngIf="impulsor.default == true" class="mgl05 ft500 ft12"> (Default)</span>
@@ -41,9 +41,10 @@
                 <mat-icon class="iconButton ft16" (click)="agregarImpulsor()">add</mat-icon>
             </div>
 
-            <div *ngFor="let item of filteredImpulsores; let i = index" fxLayout="row" fxLayoutAlign=" center" class="pd03">
-                <span (click)="seleccionarImpulsor(i)" (dblclick)="openDialogPolinomios(item.numImpulsor,'')"
-                    class="impulsor" [ngClass]="{'impSel': impSel == i}">
+            <div *ngFor="let item of filteredImpulsores; let i = index" fxLayout="row" fxLayoutAlign=" center"
+                class="pd03">
+                <span (click)="verCurva(false,item.nombre,item.numImpulsor)" class="impulsor"
+                    [ngClass]="{'impSel': impSel == i}">
                     Impulsor {{i + 1}}
                 </span>
             </div>
@@ -52,7 +53,229 @@
 
 
     <div fxLayout="column" class="rightContainer">
-aqui
-    </div>
+        <div *ngIf="curvaCargada" class="dataImpulsorContainer">
+            <!-- Son 3 paneles en row Left, Middle, Right -->
+            <div fxLayout="row">
 
-</div>
+                <!---------------------------------------------------------------------------------- leftContainer -->
+                <div class="pd10 border-r" fxLayout="column" fxLayoutAlign="space-between">
+
+                    <div class="border-b pdb03" fxLayoutAlign="space-between center">
+                        <span class="ft500">Parámetros de ajuste</span>
+                    </div>
+
+                    <div>
+                        <span>Nombre</span>
+                        <input type="text" [(ngModel)]="curva.nombre">
+                        <span>Comentario</span>
+                        <input type="text" [(ngModel)]="curva.comentario">
+                        <span>Vigencia</span>
+                        <mat-select [(ngModel)]="curva.vigencia" class="simpleSelect">
+                            <mat-option [value]="true" class="optionItem"> Vigente </mat-option>
+                            <mat-option [value]="false" class="optionItem"> No vigente</mat-option>
+                        </mat-select>
+                        <span>Default</span>
+                        <mat-select [(ngModel)]="curva.default" class="simpleSelect" *ngIf="curva.equivalente == true">
+                            <mat-option [value]="true" class="optionItem"> Si </mat-option>
+                            <mat-option value="false" class="optionItem"> No</mat-option>
+                        </mat-select>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt08">
+                        <div class="mgr20 ft12">Ajuste</div>
+                        <div>
+                            <mat-select [(ngModel)]="curva.tipoAjuste" class="simpleSelect">
+                                <mat-option value="Automatico" class="optionItem"> Automatico </mat-option>
+                                <mat-option value="Manual" class="optionItem"> Manual</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Exp</div>
+                        <div><input type="number" [(ngModel)]="curva.orden" placeholder="vacio"
+                                class="w100px centertext">
+                        </div>
+                    </div>
+
+                    <!-- Caracteristicas generales del impulsor -->
+                    <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                        <span class="ft500">Diámetro y limites</span>
+                    </div>
+
+                    <div fxLayoutAlign="space-between center" class="mgt08">
+                        <div class="mgr20 ft12">Diámedivo [pulg]</div>
+                        <div><input [(ngModel)]="curva.diametro" type="number" placeholder="vacio"
+                                class="w100px centertext"></div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Límite Q/N de surge</div>
+                        <div><input [(ngModel)]="curva.limSurge" type="number" placeholder="vacio"
+                                class="w100px centertext"></div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Límite Q/N de stw</div>
+                        <div><input [(ngModel)]="curva.limStw" type="number" placeholder="vacio"
+                                class="w100px centertext"></div>
+                    </div>
+
+                    <!-- Coeficientes calculados de Efic. Politropica -->
+                    <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                        <span class="ft500">Efic. Politrópica</span>
+                        <div fxLayoutAlign=" center">
+                            <span class="ft12 mgr05">Ref. </span>
+                            <mat-icon class="iconButton ft14 aText5">image</mat-icon>
+                        </div>
+                    </div>
+
+                    <div fxLayoutAlign="space-between center" class="mgt05">
+                        <div class="mgr20 ft12">Coef.A(0) coe.head</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.cp1" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Coef.A(1) coe.head</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.cp2" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Coef.A(2) coe.head</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.cp3" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Coef.A(3) coe.head</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.cp4" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Exponente</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.expocp" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Error</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.errcp" class="w100px centertext">
+                        </div>
+                    </div>
+
+                    <!-- Coeficientes calculados de Efic. Politropica -->
+                    <div class="mgt10 border-b pdb03" fxLayoutAlign="space-between center">
+                        <span class="ft500">Efic. Politrópica</span>
+                        <div fxLayoutAlign=" center">
+                            <span class="ft12 mgr05">Ref. </span>
+                            <mat-icon class="iconButton ft14 aText5">image</mat-icon>
+                        </div>
+                    </div>
+
+                    <div fxLayoutAlign="space-between center" class="mgt08">
+                        <div class="mgr20 ft12">Coef.A(0) efic.polit.</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.ce1" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Coef.A(1) efic.polit.</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.ce2" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Coef.A(2) efic.polit.</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.ce3" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Coef.A(3) efic.polit.</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.ce4" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Exponente</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.expoce" class="w100px centertext">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12">Error</div>
+                        <div><input type="number" placeholder="-" [(ngModel)]="curva.errce" class="w100px centertext">
+                        </div>
+                    </div>
+
+                    <div class="fw mgt10 border-t pdt10">
+                        <button class="accent fw" (click)="ajustarPolinomios()">Ajustar</button>
+                    </div>
+
+                    <span>Fecha de creación</span>
+                    <span>Ult: edicion</span>
+                    <span>Vigencia</span>
+                    <span>Comentarios</span>
+
+
+
+                </div>
+
+                <!---------------------------------------------------------------------------------- mid Container -->
+
+                <div class="pd10 border-r">
+
+
+                    <div class="border-b pdb03" fxLayoutAlign="space-between center">
+                        <div class="centertext ft500 w50px ft13">Punto</div>
+                        <div class="centertext ft500 w50px ft13">{{unidadFlujo}}</div>
+                        <div class="centertext ft500 w50px ft13">&mu;</div>
+                        <div class="centertext ft500 w50px ft13">Punto</div>
+                        <div class="centertext ft500 w50px ft13">{{unidadFlujo}}</div>
+                        <div class="centertext ft500 w50px ft13">&eta;</div>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign=" start" class="dataSetContainer">
+                        <table class="mgt05">
+                            <tr *ngFor="let item of curva.coefHeadDataSet; let i = index">
+                                <td class="nowrap text3 ft13">{{i + 1}}</td>
+                                <td class="nowrap text3 ft13">{{item.x}}</td>
+                                <td class="nowrap text3 ft13">{{item.y}}</td>
+                            </tr>
+                        </table>
+                        <table class="mgt05">
+                            <tr *ngFor="let item of curva.eficPoliDataSet; let i = index">
+                                <td class="nowrap text3 ft13">{{i + 1}}</td>
+                                <td class="nowrap text3 ft13">{{item.x}}</td>
+                                <td class="nowrap text3 ft13">{{item.y}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="fw mgt10 border-t pdt10" fxLayout="row" fxLayoutGap=".5rem">
+                        <mat-icon class="iconButton text3 border ft19 shadow8" matTooltip="Descargar formato de carga">
+                            table_chart</mat-icon>
+                        <mat-icon class="iconButton text3 border ft19 shadow8 redFill1 redText"
+                            matTooltip="Descargar formato de carga"> delete</mat-icon>
+                        <label class="textButton border shadow8">
+                            <mat-icon class="ft18">upload</mat-icon>
+                            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
+                                (change)="fileChangeListener($event)" class="displayNone" />
+                        </label>
+                        <button class="standard">Descargar</button>
+                    </div>
+                </div>
+
+                <!----------------------------------------------------------------------------------- Gráficos -->
+                <div fxLayout="column">
+                    <div class="pdt10 ft500 ft13 centertext fw ">Cabezal Politrópico</div>
+                    <div *ngIf="mostrarGraficaCP" class="pd10">
+                        <google-chart #chart [type]="type" [data]="yDataCp" [options]="optionsCp" [columns]="columnsCP">
+                        </google-chart>
+                    </div>
+                    <div class="pdt08 ft500 ft13 centertext fw border-t">Cabezal Politrópico</div>
+                    <div *ngIf="mostrarGraficaCE" class="pd10">
+                        <google-chart #chart [type]="type" [data]="yDataCe" [options]="optionsCe" [columns]="columnsCE">
+                        </google-chart>
+                    </div>
+                    <div class="fw mgt10 border-t pdt10" fxLayoutAlign=".5rem">
+                        <button class="standard fw" (click)="eliminarCurva()">Eliminar</button>
+                        <button class="accent fw" (click)="guardarCurva()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            No se ha elegido curva
+        </div>
+
+    </div>
