@@ -1,60 +1,95 @@
-<div class="border-l topBarContainer pd05" fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign=" center">
+<div class="menuContainer neutralFill1" fxLayout="row" fxLayoutAlign="space-between center" >
 
-    <span class="mgl10 ft500 ft16">Comportamiento real del tren (Historico)</span>
-    <div>
-        <input type="datetime-local">
-    </div>
-    <div>
-        <input type="datetime-local">
+    <div fxLayout="row" fxLayoutAlign=" center">
+        <span class="textButton">
+            <mat-icon>more_horiz</mat-icon>
+            <mat-icon class="ft20">keyboard_arrow_right</mat-icon>
+        </span>
+        <span class="mgl05 ft500 ft16">Comportamiento Real Histórico del tren {{trenTag}}</span>
+        <div fxLayout="row" fxLayoutGap=".5rem" class="mgl10 ">
+            <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
+            <mat-icon class="iconButton text3 ft18">settings</mat-icon>
+        </div>
     </div>
     <!-- <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'dashboard'}" (click)="vista='dashboard'"> bar_chart</mat-icon>
     <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'lista'}" (click)="vista='lista'"> format_list_numbered</mat-icon> -->
-    <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
-    <mat-icon class="iconButton text3 ft18">settings</mat-icon>
-    <button class="accent" (click)="nuevaSimCampo()"> Agregar set de datos</button>
-    <label class="textButton border shadow8">
-        <mat-icon class="ft18">upload</mat-icon>
-        <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
-            (change)="fileChangeListener($event)" class="displayNone" />
-    </label>
-    <button (click)="guardarIndice()">Guardar Indice</button>
+
+
+
+
+
+
+    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem">
+        <button class="standard ft12" (click)="nuevaSimCampo()">Agregar set de datos</button>
+        <label class="textButton border shadow8">
+            Carga masiva
+            <mat-icon class="ft18">upload</mat-icon>
+            <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" accept=".csv"
+                (change)="fileChangeListener($event)" class="displayNone" />
+        </label>
+        <mat-icon (click)="guardarIndice()" class="accentIconButton">save</mat-icon>
+    </div>
+
 </div>
 <div class="fw">
     <table class="fw">
         <tr>
-            <th [matMenuTriggerFor]="filter" *ngFor="let item of params; let i = index" class="centertext" (click)="clickParam(item.var, i)">
+            <th [matMenuTriggerFor]="filter" *ngFor="let item of params; let i = index" class="centertext"
+                (click)="clickParam(item.var, i)">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".5rem">
-                    <span class="text1 ft500 centertext cursorPointer" *ngIf="item.min == null && item.max == null ">{{item.nombre}}</span>
-                    <span class="aText5 ft500 centertext cursorPointer" *ngIf="item.min != null || item.max != null ">{{item.nombre}}</span>
+                    <span class="text1 ft500 centertext cursorPointer"
+                        *ngIf="item.min == null && item.max == null ">{{item.nombre}}</span>
+                    <span class="aText5 ft500 centertext cursorPointer"
+                        *ngIf="item.min != null || item.max != null ">{{item.nombre}}</span>
                     <mat-icon class="aText5 ft17 " *ngIf="item.min != null || item.max != null ">filter_list</mat-icon>
                 </div>
             </th>
         </tr>
-        <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId, item.simTimestamp)" class="cursorPointer">
+        <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId, item.simTimestamp)"
+            class="cursorPointer">
             <!-- <td class="centertext"><mat-checkbox></mat-checkbox></td> -->
-            <td class="centertext">{{item.simDate | date: 'dd/MM/yyyy HH:mm'  }}</td>
+            <td class="centertext">{{item.simDate | date: 'dd/MM/yyyy HH:mm' }}</td>
             <td class="centertext">
                 <span class="border sqChip greenFill1">{{item.simTipo }}
                     <span *ngIf="item.simId">*</span>
                 </span>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones; let i = index">C: {{sec.numCompresor}} S: {{sec.numSeccion}}</div>
+                <div *ngFor="let sec of item.simSecciones; let i = index">C: {{sec.numCompresor}} S: {{sec.numSeccion}}
+                </div>
             </td>
             <td class="centertext">
                 <div *ngFor="let sec of item.simSecciones">{{sec.FLUJODES}}</div>
             </td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.RPM}}</div></td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.PSUC}}</div></td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.PDES}}</div></td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.TSUC}}</div></td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.TDES}}</div> </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.RPM}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.PSUC}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.PDES}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.TSUC}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.TDES}}</div>
+            </td>
             <!-- Out -->
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.HP}}</div> </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.HP}}</div>
+            </td>
             <td class="centertext">{{item.totHP}}</td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.QN}}</div> </td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.CFHEAD}}</div> </td>
-            <td class="centertext"><div *ngFor="let sec of item.simSecciones">{{sec.EFIC}}</div></td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.QN}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.CFHEAD}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.EFIC}}</div>
+            </td>
         </tr>
     </table>
 

@@ -1,100 +1,269 @@
-<div fxLayout="column" class="border-l pd20 dialogContainer">
-    <span class="ft24 ft500">Prueba de eficiencia del TREN {{tren.tag}}</span>
-    <span class="mgt10 ft16"> Fecha de creación: *fecha*</span>
-    <div fxLayout="column" class="border-t pdt20 ft500 ft16 mgt10 mgb10">
-        <span>Tren: {{tren.tag}}</span>
-        <span>Num de compresores: {{this.equipos.length}}</span>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="pd03 neutralFill1 border-b">
+    <div fxLayout="row" fxLayoutAlign=" center">
+        <span class="mgl05 ft500 ft18 mgr05">Punto 832 &nbsp; - </span>
+        <input type="datetime-local" [(ngModel)]="simInfo.simDate" class="fechaHoraInput">
     </div>
-    <hr>
+    <div class="mgl10" fxLayoutGap=".5rem" fxLayout="row">
+        <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag" >delete</mat-icon>
+        <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag">print</mat-icon>
+        <mat-icon class="accentIconButton pdl10 pdr10" (click)="simFlag=true">play_arrow</mat-icon>
+        <div class="border-r mgr20"></div>
+        <mat-icon class="iconButton ">close</mat-icon>
+    </div>
+</div>
 
-    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let secciones of this.simulacion; let j = index"
-            class="pd10 border radius4 shadow8 whiteFill w300px">
-            <div>
-                <!-- <div *ngIf="j == 0 || (j > 0 && this.simulacion[j].equipoTag !=  this.simulacion[j -1].equipoTag)"> -->
-                <div class="ft500 ft14">{{secciones.equipoFamilia}} {{secciones.equipoTag}}</div>
-                <div class="ft13 text3">{{secciones.equipoTipologia}}</div>
-                <div class="ft12 text3">Perdidas de caja</div>
-                <div class="ft12 text3">Perdidas mecanicas</div>
-            </div>
-            <div class="mgt10 ft13">Curva de sección {{secciones.seccion}}</div>
-            <mat-select value="" [(ngModel)]="secciones.curva">
-                <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
-                    {{item.nombre}}
-                </mat-option>
-            </mat-select>
-        </div>
-    </div>
+<div fxLayout="row" *ngIf="!simFlag">
 
-    <div fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
-        <span class="ft500 ft20">Datos recolectados de campo</span>
-    </div>
-    <div>
-        <input type="datetime-local" [(ngModel)]="simInfo.simDate">
-    </div>
+    <!-- containerinput -->
+    <div class="w250px pd10 border-r" *ngFor="let secciones of this.simulacion; let j = index">
 
-    <button (click)="simularAdim()"> Simulación adimensional</button>
-    <button *ngIf="simInfo.simTipo=='R' || simInfo.simTipo=='R+T'" (click)="simularPE()">Simulacion Prueba de
-        eficiencia</button>
-    <button (click)="guardarPunto()">Guardar Punto</button>
-    <div *ngFor="let seccion of simulacion; let j = index" class="mgt10 pd10 border radius4  whiteFill shadow8">
-        <div>
-            <!-- <div *ngIf="j == 0 || (j > 0 && this.simulacion[j].equipoTag !=  this.simulacion[j -1].equipoTag)"> -->
-            <div class="ft16 ft500">{{seccion.equipoFamilia}} {{seccion.equipoTag}}</div>
-        </div>
-        <div class="ft14">Seccion {{seccion.seccion}}</div>
-        <table class="mgt10">
-            <tr>
-                <th> Temp. succ. {{this.simulacion[j].inputs.TDIM}}</th>
-                <td class="">
+        <!-- Seccion -->
+        <div class="ft500 ft18 centertext">{{secciones.equipoTag}}</div>
+        <div class="mgt03 ft500 ft16 centertext">Seccion 1</div>
+
+        <div class="mgt20 ft13">Curva </div>
+        <mat-select value="" [(ngModel)]="secciones.curva">
+            <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
+                {{item.nombre}}
+            </mat-option>
+        </mat-select>
+
+        <!-- inputs -->
+        <div class="mgt10">
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Tsuc {{this.simulacion[j].inputs.TDIM}}</div>
+                <div class="">
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.TSUC" placeholder="-"
                         class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Pres. succ. {{this.simulacion[j].inputs.PDIM}}</th>
-                <td>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Psuc {{this.simulacion[j].inputs.PDIM}}</div>
+                <div>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.PSUC" placeholder="-"
                         class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Temp. desc.{{this.simulacion[j].inputs.TDIM}}</th>
-                <td>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Tdes {{this.simulacion[j].inputs.TDIM}}</div>
+                <div>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.TDES" placeholder="-"
                         class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> PRes. desc. {{this.simulacion[j].inputs.PDIM}} </th>
-                <td>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Pdes {{this.simulacion[j].inputs.PDIM}} </div>
+                <div>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.PDES" placeholder="-"
                         class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> RPM </th>
-                <td>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> RPM </div>
+                <div>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.RPM" placeholder="-"
                         class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Flujo {{this.simulacion[j].inputs.QDIM}} </th>
-                <td>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Q {{this.simulacion[j].inputs.QDIM}} </div>
+                <div>
                     <input type="number" [(ngModel)]="this.simulacion[j].inputs.FLUJOSUC" placeholder="-"
                         class="inputNumber">
-                </td>
-            </tr>
-            <tr>
-                <th> Mezcla </th>
-                <td>
-                    <a class="ft12" (click)="openCromatografia(j)">
-                        <div>Mezcla</div>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Mezcla </div>
+                <div >
+                    <a class="ft12 centertext " (click)="openCromatografia(j)">
+                        <div>Agregar</div>
                         <div>{{this.simulacion[j].inputs.Mezcla.nombre}}</div>
                     </a>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+
+        </div>
     </div>
+</div>
+
+
+
+
+
+<div fxLayout="column" class="border-l dialogContainer" *ngIf="simFlag">
+
+    <div fxLayout="column" fxLayoutGap="1rem" class="fw">
+
+
+        <div *ngFor="let secciones of this.simulacion; let j = index" class="whiteFill" fxLayout="row">
+
+            <!------------------------------------------------------------------------ Container Izquierdo -->
+            <div class="w250px pd10 border-r">
+                <!-- Seccion -->
+
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".5rem" class="mgt10">
+                    <mat-icon class="ftxxl iconButton">keyboard_arrow_left</mat-icon>
+                    <div>
+                        <div class="ft500 ft18 centertext">{{secciones.equipoTag}}</div>
+                        <div class="mgt03 ft500 ft16 centertext">Seccion 1</div>
+                    </div>
+                    <mat-icon class="ftxxl iconButton">keyboard_arrow_right</mat-icon>
+                </div>
+
+
+                <div class="mgt20 ft13">Curva </div>
+                <mat-select value="" [(ngModel)]="secciones.curva">
+                    <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
+                        {{item.nombre}}
+                    </mat-option>
+                </mat-select>
+
+                <!-- inputs -->
+                <div class="mgt10">
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> Tsuc {{this.simulacion[j].inputs.TDIM}}</div>
+                        <div class="">
+                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.TSUC" placeholder="-"
+                                class="inputNumber">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> Psuc {{this.simulacion[j].inputs.PDIM}}</div>
+                        <div>
+                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.PSUC" placeholder="-"
+                                class="inputNumber">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> Tdes {{this.simulacion[j].inputs.TDIM}}</div>
+                        <div>
+                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.TDES" placeholder="-"
+                                class="inputNumber">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> Pdes {{this.simulacion[j].inputs.PDIM}} </div>
+                        <div>
+                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.PDES" placeholder="-"
+                                class="inputNumber">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> RPM </div>
+                        <div>
+                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.RPM" placeholder="-"
+                                class="inputNumber">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> Q {{this.simulacion[j].inputs.QDIM}} </div>
+                        <div>
+                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.FLUJOSUC" placeholder="-"
+                                class="inputNumber">
+                        </div>
+                    </div>
+                    <div fxLayoutAlign="space-between center" class="mgt03">
+                        <div class="mgr20 ft12"> Mezcla </div>
+                        <div>
+                            <a class="ft12" (click)="openCromatografia(j)">
+                                <div>Mezcla</div>
+                                <div>{{this.simulacion[j].inputs.Mezcla.nombre}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!------------------------------------------------------------------------ Container Medio -->
+            <div fxLayout="column" class="w400px fh border-r">
+
+                <!-- Data set container con scroll down -->
+                <div class="dataSetContainer">
+                    <div fxLayout="column">
+                        <div fxLayout="row" class="centertext ">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span class="ft13">Potencia</span>
+                                <span class="mgt03 ft22 ft500"> 5500 Hp </span>
+                                <span class="mgt03 ft500 ft13 redText">-6 %</span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Efic. Poli.</span>
+                                <span class="mgt03 ft22 ft500"> .86 </span>
+                                <span class="mgt03 ft500 ft13 redText">-11 %</span>
+                            </div>
+                        </div>
+                        <div fxLayout="row" class="centertext">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Coef. Cab.</span>
+                                <span class="mgt03 ft22 ft500"> 0.6 </span>
+                                <span class="mgt03 ft500 ft13 redText">-4 %</span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Q/N</span>
+                                <span class="mgt03 ft22 ft500"> 1.5 </span>
+                                <span class="mgt03 ft500 ft13 redText">-6 %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t">
+                        <table class="fw">
+                            <tr>
+                                <th>Parametro</th>
+                                <th>Succión</th>
+                                <th>Descarga</th>
+                                <th>Isentrópico</th>
+                            </tr>
+                            <tr *ngFor="let item of [1,2,3,4,454,3,5,3,5,3,34,534,53,2,4,4,3]">
+                                <td class="ft12">Nombre de param</td>
+                                <td>
+                                    <span class="ft12">.82</span>
+                                    <span class="mgl05 redText ft12">-5%</span>
+                                </td>
+                                <td>
+                                    <span class="ft12">.82</span>
+                                    <span class="mgl05 redText ft12">-5%</span>
+                                </td>
+                                <td>
+                                    <span class="ft12">.82</span>
+                                    <span class="mgl05 redText ft12">-5%</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pd10" fxLayout="row" fxLayoutAlign=" center">
+                    <mat-select value="" [(ngModel)]="tipoComparacion">
+                        <mat-option value="porcentual" class="optionItem">Variación porcentual (%) </mat-option>
+                        <mat-option value="absoluta" class="optionItem">Variación abolsuta (%) </mat-option>
+                        <mat-option value="real" class="optionItem">Valor teórico real </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+
+            <!------------------------------------------------------------------------ Container derecho -->
+
+            <div class="w500px fh" fxLayout="column" fxLayoutAlign="space-between">
+                <div fxLayoutAlign="center center" class="h600px">
+                    Grafico mapa aqui
+                </div>
+                <div class="pd10" fxLayout="row" fxLayoutAlign=" center">
+                    <mat-select value="" [(ngModel)]="tipoComparacion">
+                        <mat-option value="porcentual" class="optionItem">Potencia </mat-option>
+                        <mat-option value="absoluta" class="optionItem">Presión de descarga </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
 </div>

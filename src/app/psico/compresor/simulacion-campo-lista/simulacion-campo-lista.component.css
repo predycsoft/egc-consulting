@@ -1,3 +1,7 @@
+.menuContainer{
+    height: 40px;
+}
+
 .firstRow{
     background: var(--neutral1) !important;
     padding: 9px;
@@ -46,3 +50,7 @@ input{
 
 /*  */
 
+label{
+    /* padding-top: 4px !important; */
+    margin-top: 4px !important;
+}
