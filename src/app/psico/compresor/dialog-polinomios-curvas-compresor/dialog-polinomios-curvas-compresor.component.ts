@@ -60,6 +60,7 @@ export class DialogPolinomiosCurvasCompresorComponent implements OnInit {
   height = 290;
 
   curva = new curva
+  
 
   ngOnInit(): void {
     if (this.dataEnviada.impulsor) {
