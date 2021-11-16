@@ -28,6 +28,8 @@ export class SimulacionCampoInputComponent implements OnInit {
   simulacion: Array<simulacionPE> = [];
   simId: string = "";
   simInfo: simInfo = new simInfo;
+  dataValidaAdim: boolean = false
+  dataValidaTeorica: boolean = false
 
 
   constructor(
@@ -156,21 +158,21 @@ export class SimulacionCampoInputComponent implements OnInit {
             simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
             simulacion.curva = simulacion.curvas.find(x => x.default == true)
             let cromatografiaOriginal: cromatografia = {
-              metano: this.resumen.simSecciones[iSec].metano,
-              etano: this.resumen.simSecciones[iSec].etano,
-              propano: this.resumen.simSecciones[iSec].propano,
-              iButano: this.resumen.simSecciones[iSec].iButano,
-              nButano: this.resumen.simSecciones[iSec].nButano,
-              iPentano: this.resumen.simSecciones[iSec].iPentano,
-              nPentano: this.resumen.simSecciones[iSec].nPentano,
-              hexano: this.resumen.simSecciones[iSec].hexano,
-              heptano: this.resumen.simSecciones[iSec].heptano,
-              octano: this.resumen.simSecciones[iSec].octano,
-              nonano: this.resumen.simSecciones[iSec].nonano,
-              decano: this.resumen.simSecciones[iSec].decano,
-              nitrogeno: this.resumen.simSecciones[iSec].nitrogeno,
-              dioxCarbono: this.resumen.simSecciones[iSec].dioxCarbono,
-              sulfHidrogeno: this.resumen.simSecciones[iSec].sulfHidrogeno,
+              metano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.metano,
+              etano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.etano,
+              propano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.propano,
+              iButano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.iButano,
+              nButano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.nButano,
+              iPentano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.iPentano,
+              nPentano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.nPentano,
+              hexano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.hexano,
+              heptano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.heptano,
+              octano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.octano,
+              nonano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.nonano,
+              decano: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.decano,
+              nitrogeno: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.nitrogeno,
+              dioxCarbono: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.dioxCarbono,
+              sulfHidrogeno: this.resumen.simSecciones[iSec].mezcla.cromatografiaOriginal.sulfHidrogeno,
               fraccMolar: 0,
             }
             let cromatografiaNormalizada: cromatografia = this.normalizarCromatografia(cromatografiaOriginal)
@@ -225,93 +227,124 @@ export class SimulacionCampoInputComponent implements OnInit {
   }
 
   simularAdim() {
-    let envio = []
-    envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
-      "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
-    for (let j = 0; j < this.simulacion.length; j++) {
-      const sim = this.simulacion[j]
-      envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJOSUC, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
-    }
-    this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(envio)).subscribe(async (res) => {
-      let OUTPUT: Array<Array<any>> = []
-      if (res) {
-        OUTPUT = res as []
-        console.log("Respuesta de adimensional")
-        console.log(res)
-        for (let index = 0; index < this.simulacion.length; index++) {
-          this.simulacion[index].outputAdim.EFICPOLI = OUTPUT[0][index + 1]
-          this.simulacion[index].outputAdim.CFWORKPOLI = OUTPUT[1][index + 1]
-          this.simulacion[index].outputAdim.CFHEADPOLI = OUTPUT[2][index + 1]
-          this.simulacion[index].outputAdim.WORKPOLI = OUTPUT[3][index + 1]
-          this.simulacion[index].outputAdim.HPGAS = OUTPUT[4][index + 1]
-          this.simulacion[index].outputAdim.FLUJOMAS = OUTPUT[5][index + 1]
-          this.simulacion[index].outputAdim.RELCOMP = OUTPUT[6][index + 1]
-          this.simulacion[index].outputAdim.RELVOL = OUTPUT[7][index + 1]
-          this.simulacion[index].outputAdim.TISEN = OUTPUT[8][index + 1]
-          this.simulacion[index].outputAdim.PISEN = OUTPUT[9][index + 1]
-          this.simulacion[index].outputAdim.DENSUC = OUTPUT[10][index + 1]
-          this.simulacion[index].outputAdim.DENDES = OUTPUT[11][index + 1]
-          this.simulacion[index].outputAdim.DENISEN = OUTPUT[12][index + 1]
-          this.simulacion[index].outputAdim.VOLSUC = OUTPUT[13][index + 1]
-          this.simulacion[index].outputAdim.VOLDES = OUTPUT[14][index + 1]
-          this.simulacion[index].outputAdim.VOLISEN = OUTPUT[15][index + 1]
-          this.simulacion[index].outputAdim.HSUC = OUTPUT[16][index + 1]
-          this.simulacion[index].outputAdim.HDES = OUTPUT[17][index + 1]
-          this.simulacion[index].outputAdim.HISEN = OUTPUT[18][index + 1]
-          this.simulacion[index].outputAdim.SSUC = OUTPUT[19][index + 1]
-          this.simulacion[index].outputAdim.SDES = OUTPUT[20][index + 1]
-          this.simulacion[index].outputAdim.SISEN = OUTPUT[21][index + 1]
-          this.simulacion[index].outputAdim.ZSUC = OUTPUT[22][index + 1]
-          this.simulacion[index].outputAdim.ZDES = OUTPUT[23][index + 1]
-          this.simulacion[index].outputAdim.ZISEN = OUTPUT[24][index + 1]
-          this.simulacion[index].outputAdim.YWM = OUTPUT[25][index + 1]
-          this.simulacion[index].outputAdim.QN = OUTPUT[26][index + 1]
-        }
+
+    // Chequeo de variables para adim
+    let seccionesValidas = 0
+    for (let index = 0; index < this.simulacion.length; index++) {
+      this.simulacion[index] = this.checkValidoAdim(this.simulacion[index]);
+      if(this.simulacion[index].dataValidaAdim == true){
+        seccionesValidas++
       }
-    })
-    this.simInfo.simTipo = "R"
+    }
+    if (seccionesValidas == this.simulacion.length) {
+      // Rutina una vez que se ha validado
+      // Armado de la data de envio
+      let envio = []
+      envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+        "Diametro", "TSUC", "PSUC", "TDES", "PDES", "FLUJO", "RPM", "DDIM", "TDIM", "PDIM", "QDIM"])
+      for (let j = 0; j < this.simulacion.length; j++) {
+        const sim = this.simulacion[j]
+        envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
+        sim.curva.diametro, sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.TDES, sim.inputs.PDES, sim.inputs.FLUJOSUC, sim.inputs.RPM, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM])
+      }
+      // Llamado a la rutina de adimensional en el servidor de python
+      this.http.post("http://127.0.0.1:5000/adimensional/", JSON.stringify(envio)).subscribe(async (res) => {
+        let OUTPUT: Array<Array<any>> = []
+        if (res) {
+          OUTPUT = res as []
+          console.log("Respuesta de adimensional")
+          console.log(res)
+          // Actualizacion de las variables de Output
+          for (let index = 0; index < this.simulacion.length; index++) {
+            this.simulacion[index].outputAdim.EFICPOLI = OUTPUT[0][index + 1]
+            this.simulacion[index].outputAdim.CFWORKPOLI = OUTPUT[1][index + 1]
+            this.simulacion[index].outputAdim.CFHEADPOLI = OUTPUT[2][index + 1]
+            this.simulacion[index].outputAdim.WORKPOLI = OUTPUT[3][index + 1]
+            this.simulacion[index].outputAdim.HPGAS = OUTPUT[4][index + 1]
+            this.simulacion[index].outputAdim.FLUJOMAS = OUTPUT[5][index + 1]
+            this.simulacion[index].outputAdim.RELCOMP = OUTPUT[6][index + 1]
+            this.simulacion[index].outputAdim.RELVOL = OUTPUT[7][index + 1]
+            this.simulacion[index].outputAdim.TISEN = OUTPUT[8][index + 1]
+            this.simulacion[index].outputAdim.PISEN = OUTPUT[9][index + 1]
+            this.simulacion[index].outputAdim.DENSUC = OUTPUT[10][index + 1]
+            this.simulacion[index].outputAdim.DENDES = OUTPUT[11][index + 1]
+            this.simulacion[index].outputAdim.DENISEN = OUTPUT[12][index + 1]
+            this.simulacion[index].outputAdim.VOLSUC = OUTPUT[13][index + 1]
+            this.simulacion[index].outputAdim.VOLDES = OUTPUT[14][index + 1]
+            this.simulacion[index].outputAdim.VOLISEN = OUTPUT[15][index + 1]
+            this.simulacion[index].outputAdim.HSUC = OUTPUT[16][index + 1]
+            this.simulacion[index].outputAdim.HDES = OUTPUT[17][index + 1]
+            this.simulacion[index].outputAdim.HISEN = OUTPUT[18][index + 1]
+            this.simulacion[index].outputAdim.SSUC = OUTPUT[19][index + 1]
+            this.simulacion[index].outputAdim.SDES = OUTPUT[20][index + 1]
+            this.simulacion[index].outputAdim.SISEN = OUTPUT[21][index + 1]
+            this.simulacion[index].outputAdim.ZSUC = OUTPUT[22][index + 1]
+            this.simulacion[index].outputAdim.ZDES = OUTPUT[23][index + 1]
+            this.simulacion[index].outputAdim.ZISEN = OUTPUT[24][index + 1]
+            this.simulacion[index].outputAdim.YWM = OUTPUT[25][index + 1]
+            this.simulacion[index].outputAdim.QN = OUTPUT[26][index + 1]
+            this.simulacion[index].simulacionAdim = true
+          }
+        }
+      })
+      this.simInfo.simTipo = "R"
+    } else {
+      alert("No se pudo simular porque la data no es valida")
+    }
   }
 
   simularPE() {
-    let envioPrueba = []
-    envioPrueba.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
-      "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
-    for (let j = 0; j < this.simulacion.length; j++) {
-      const sim = this.simulacion[j]
-      envioPrueba.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJOSUC, sim.curva.diametro, sim.inputs.RPM, sim.curva.cp1, sim.curva.cp2, sim.curva.cp3, sim.curva.cp4, sim.curva.expocp, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.ce4, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
-    }
-    console.log("hice el llamado a prueba de eficiencia")
-    this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((respuesta) => {
-      let OUTPUT: Array<Array<any>> = []
-      if (respuesta) {
-        OUTPUT = respuesta as []
-        console.log("Respuesta Teorica")
-        for (let index = 0; index < this.simulacion.length; index++) {
-          this.simulacion[index].outputTeorico.PSUC = OUTPUT[2][index + 1]
-          this.simulacion[index].outputTeorico.PDES = OUTPUT[3][index + 1]
-          this.simulacion[index].outputTeorico.TSUC = OUTPUT[4][index + 1]
-          this.simulacion[index].outputTeorico.TDES = OUTPUT[5][index + 1]
-          this.simulacion[index].outputTeorico.DENDES = OUTPUT[6][index + 1]
-          this.simulacion[index].outputTeorico.HDES = OUTPUT[7][index + 1]
-          this.simulacion[index].outputTeorico.SURGE = OUTPUT[8][index + 1]
-          this.simulacion[index].outputTeorico.QN = OUTPUT[9][index + 1]
-          this.simulacion[index].outputTeorico.STONEW = OUTPUT[10][index + 1]
-          this.simulacion[index].outputTeorico.CFHEADPOLI = OUTPUT[11][index + 1]
-          this.simulacion[index].outputTeorico.HEADPOLI = OUTPUT[12][index + 1]
-          this.simulacion[index].outputTeorico.EFICPOLI = OUTPUT[13][index + 1]
-          this.simulacion[index].outputTeorico.HPGAS = OUTPUT[14][index + 1]
-          this.simulacion[index].outputTeorico.EXPPOLI = OUTPUT[15][index + 1]
-          this.simulacion[index].outputTeorico.FLUJODES = OUTPUT[16][index + 1]
-          this.simulacion[index].outputTeorico.RPM = OUTPUT[17][index + 1]
-        }
-        console.log(respuesta)
-      } else {
-        console.log("no hubo respuesta")
+    // Chequeo de variables para adim
+    let seccionesValidas = 0
+    for (let index = 0; index < this.simulacion.length; index++) {
+      this.simulacion[index] = this.checkValidoTeorico(this.simulacion[index]);
+      if(this.simulacion[index].dataValidaAdim == true){
+        seccionesValidas++
       }
-    })
-    this.simInfo.simTipo = "R+T"
+    }
+    if(seccionesValidas == this.simulacion.length){
+      let envioPrueba = []
+      envioPrueba.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+        "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "PDESCAMPO"])
+      for (let j = 0; j < this.simulacion.length; j++) {
+        const sim = this.simulacion[j]
+        envioPrueba.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
+        sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJOSUC, sim.curva.diametro, sim.inputs.RPM, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, sim.inputs.DDIM, sim.inputs.TDIM, sim.inputs.PDIM, sim.inputs.QDIM, sim.inputs.PDES])
+      }
+      console.log("hice el llamado a prueba de eficiencia")
+      this.http.post("http://127.0.0.1:5000/pruebaEficiencia/", JSON.stringify(envioPrueba)).subscribe((respuesta) => {
+        let OUTPUT: Array<Array<any>> = []
+        if (respuesta) {
+          OUTPUT = respuesta as []
+          console.log("Respuesta Teorica")
+          for (let index = 0; index < this.simulacion.length; index++) {
+            this.simulacion[index].outputTeorico.PSUC = OUTPUT[2][index + 1]
+            this.simulacion[index].outputTeorico.PDES = OUTPUT[3][index + 1]
+            this.simulacion[index].outputTeorico.TSUC = OUTPUT[4][index + 1]
+            this.simulacion[index].outputTeorico.TDES = OUTPUT[5][index + 1]
+            this.simulacion[index].outputTeorico.DENDES = OUTPUT[6][index + 1]
+            this.simulacion[index].outputTeorico.HDES = OUTPUT[7][index + 1]
+            this.simulacion[index].outputTeorico.SURGE = OUTPUT[8][index + 1]
+            this.simulacion[index].outputTeorico.QN = OUTPUT[9][index + 1]
+            this.simulacion[index].outputTeorico.STONEW = OUTPUT[10][index + 1]
+            this.simulacion[index].outputTeorico.CFHEADPOLI = OUTPUT[11][index + 1]
+            this.simulacion[index].outputTeorico.HEADPOLI = OUTPUT[12][index + 1]
+            this.simulacion[index].outputTeorico.EFICPOLI = OUTPUT[13][index + 1]
+            this.simulacion[index].outputTeorico.HPGAS = OUTPUT[14][index + 1]
+            this.simulacion[index].outputTeorico.EXPPOLI = OUTPUT[15][index + 1]
+            this.simulacion[index].outputTeorico.FLUJODES = OUTPUT[16][index + 1]
+            this.simulacion[index].outputTeorico.RPM = OUTPUT[17][index + 1]
+            this.simulacion[index].dataValidaTeorica = true
+          }
+          console.log(respuesta)
+        } else {
+          console.log("no hubo respuesta")
+        }
+      })
+      this.simInfo.simTipo = "R+T"
+    } else {
+      alert("No se pudo simular porque la data no es valida")
+    }
   }
 
   guardarPunto() {
@@ -328,7 +361,7 @@ export class SimulacionCampoInputComponent implements OnInit {
           simTipo: this.simInfo.simTipo
         })
     } else {
-      this.simInfo.simTimestamp = +this.simInfo.simDate*1000
+      this.simInfo.simTimestamp = +this.simInfo.simDate * 1000
       const docRef = this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
         .collection("trenes").doc(this.dataEnviada.trenTag)
         .collection("simulaciones-campo").doc(`${this.simInfo.simTimestamp}`)
@@ -368,21 +401,7 @@ export class SimulacionCampoInputComponent implements OnInit {
         QN: element.outputAdim.QN,
         CFHEAD: element.outputAdim.CFHEADPOLI,
         EFIC: element.outputAdim.EFICPOLI,
-        metano: element.inputs.Mezcla.cromatografiaNormalizada.metano,
-        etano: element.inputs.Mezcla.cromatografiaNormalizada.etano,
-        propano: element.inputs.Mezcla.cromatografiaNormalizada.propano,
-        iButano: element.inputs.Mezcla.cromatografiaNormalizada.iButano,
-        nButano: element.inputs.Mezcla.cromatografiaNormalizada.nButano,
-        iPentano: element.inputs.Mezcla.cromatografiaNormalizada.iPentano,
-        nPentano: element.inputs.Mezcla.cromatografiaNormalizada.nPentano,
-        hexano: element.inputs.Mezcla.cromatografiaNormalizada.hexano,
-        heptano: element.inputs.Mezcla.cromatografiaNormalizada.heptano,
-        octano: element.inputs.Mezcla.cromatografiaNormalizada.octano,
-        nonano: element.inputs.Mezcla.cromatografiaNormalizada.nonano,
-        decano: element.inputs.Mezcla.cromatografiaNormalizada.decano,
-        nitrogeno: element.inputs.Mezcla.cromatografiaNormalizada.nitrogeno,
-        dioxCarbono: element.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono,
-        sulfHidrogeno: element.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
+        mezcla: element.inputs.Mezcla,
       }
       simSecciones.push(sim)
     }
@@ -398,44 +417,120 @@ export class SimulacionCampoInputComponent implements OnInit {
     return index;
   }
 
-  normalizarCromatografia(original: cromatografia){
+  normalizarCromatografia(original: cromatografia) {
     let sum =
-    +original.metano
-    +original.etano
-    +original.propano
-    +original.iButano
-    +original.nButano
-    +original.iPentano
-    +original.nPentano
-    +original.hexano
-    +original.heptano
-    +original.octano
-    +original.nonano
-    +original.decano
-    +original.nitrogeno
-    +original.dioxCarbono
-    +original.sulfHidrogeno
+      +original.metano
+      + original.etano
+      + original.propano
+      + original.iButano
+      + original.nButano
+      + original.iPentano
+      + original.nPentano
+      + original.hexano
+      + original.heptano
+      + original.octano
+      + original.nonano
+      + original.decano
+      + original.nitrogeno
+      + original.dioxCarbono
+      + original.sulfHidrogeno
 
     let normalizada: cromatografia = {
-      metano: original.metano/sum,
-      etano: original.etano/sum,
-      propano: original.propano/sum,
-      iButano: original.iButano/sum,
-      nButano: original.nButano/sum,
-      iPentano: original.iPentano/sum,
-      nPentano: original.nPentano/sum,
-      hexano: original.hexano/sum,
-      heptano: original.heptano/sum,
-      octano: original.octano/sum,
-      nonano: original.nonano/sum,
-      decano: original.decano/sum,
-      nitrogeno: original.nitrogeno/sum,
-      dioxCarbono: original.dioxCarbono/sum,
-      sulfHidrogeno: original.sulfHidrogeno/sum,
+      metano: original.metano / sum,
+      etano: original.etano / sum,
+      propano: original.propano / sum,
+      iButano: original.iButano / sum,
+      nButano: original.nButano / sum,
+      iPentano: original.iPentano / sum,
+      nPentano: original.nPentano / sum,
+      hexano: original.hexano / sum,
+      heptano: original.heptano / sum,
+      octano: original.octano / sum,
+      nonano: original.nonano / sum,
+      decano: original.decano / sum,
+      nitrogeno: original.nitrogeno / sum,
+      dioxCarbono: original.dioxCarbono / sum,
+      sulfHidrogeno: original.sulfHidrogeno / sum,
       fraccMolar: 0
     }
 
     return normalizada
   }
 
+  checkValidoAdim(simulacion: simulacionPE) {
+    let sum = 0
+    const cromatografia = Object.values(simulacion.inputs.Mezcla.cromatografiaNormalizada)
+    for (let index = 0; index < cromatografia.length; index++) {
+      sum += cromatografia[index];
+    }
+    if (sum != 1) {
+      alert("cromatografia vacía o no normalizada")
+      simulacion.dataValidaAdim = false
+      return simulacion
+    } else {
+      if (
+        simulacion.curva.diametro == 0 ||
+        simulacion.inputs.TSUC == 0 ||
+        simulacion.inputs.PSUC == 0 ||
+        simulacion.inputs.TDES == 0 ||
+        simulacion.inputs.PDES == 0 ||
+        simulacion.inputs.FLUJOSUC == 0 ||
+        simulacion.inputs.RPM == 0 ||
+        simulacion.inputs.DDIM == "" ||
+        simulacion.inputs.TDIM == "" ||
+        simulacion.inputs.PDIM == "" ||
+        simulacion.inputs.QDIM == ""
+      ) {
+        alert("faltan datos de simulación")
+        simulacion.dataValidaAdim = false
+        return simulacion
+      } else {
+        simulacion.dataValidaAdim = true
+        return simulacion
+      }
+    }
+  }
+
+  checkValidoTeorico(simulacion: simulacionPE) {
+    if (simulacion.simulacionAdim == false) {
+      alert("No se ha realizado la prueba adimensional")
+      simulacion.dataValidaTeorica = false
+      return simulacion
+    } else {
+      let sum = 0
+      const cromatografia = Object.values(simulacion.inputs.Mezcla.cromatografiaNormalizada)
+      for (let index = 0; index < cromatografia.length; index++) {
+        sum += cromatografia[index];
+      }
+      if (sum != 1) {
+        alert("cromatografia vacía o no normalizada")
+        simulacion.dataValidaTeorica = false
+        return simulacion
+      } else {
+        if (
+          simulacion.curva.diametro == 0 ||
+          simulacion.inputs.TSUC == 0 ||
+          simulacion.inputs.PSUC == 0 ||
+          simulacion.inputs.PDES == 0 ||
+          simulacion.inputs.FLUJOSUC == 0 ||
+          simulacion.inputs.RPM == 0 ||
+          simulacion.inputs.DDIM == "" ||
+          simulacion.inputs.TDIM == "" ||
+          simulacion.inputs.PDIM == "" ||
+          simulacion.inputs.QDIM == "" ||
+          simulacion.curva.expocc == 0 ||
+          simulacion.curva.expoce == 0 ||
+          simulacion.curva.limStw == 0 ||
+          simulacion.curva.limSurge == 0
+        ) {
+          alert("faltan datos de simulación")
+          simulacion.dataValidaTeorica = false
+          return simulacion
+        } else {
+          simulacion.dataValidaTeorica = true
+          return simulacion
+        }
+      }
+    }
+  }
 }

@@ -7,7 +7,7 @@ import { ChartType } from 'angular-google-charts';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { curva, DataServiceService, equipo, Proyecto } from 'src/app/services/data-service.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { DialogPolinomiosCurvasCompresorComponent } from '../dialog-polinomios-curvas-compresor/dialog-polinomios-curvas-compresor.component';
+// import { DialogPolinomiosCurvasCompresorComponent } from '../dialog-polinomios-curvas-compresor/dialog-polinomios-curvas-compresor.component';
 
 
 
@@ -70,7 +70,7 @@ export class CurvasCompresorComponent implements OnInit {
   optionsCe;
   width = 390;
   height = 290;
-  // 
+  //
   curva: curva = new curva
 
   tipoAjuste: string = 'Automatico';
@@ -105,7 +105,7 @@ export class CurvasCompresorComponent implements OnInit {
     }
     console.log(this.curva)
     this.curvaCargada = true
-    if (this.curva.expocp != 0) {
+    if (this.curva.expocc != 0) {
       this.verGraficaCP()
       this.verGraficaEfi()
     }
@@ -352,16 +352,16 @@ export class CurvasCompresorComponent implements OnInit {
       data = res as Array<Array<any>>
       console.log(this.data)
       if (res) {
-        this.curva.cp1 = data[0][0]
-        this.curva.cp2 = data[1][0]
-        this.curva.cp3 = data[2][0]
-        this.curva.cp4 = data[3][0]
-        this.curva.expocp = data[4][0]
-        this.curva.errcp = data[5][0]
-        this.curva.ce1 = data[0][1]
+        this.curva.cc3 = data[0][0]
+        this.curva.cc2 = data[1][0]
+        this.curva.cc1 = data[2][0]
+        this.curva.cc0 = data[3][0]
+        this.curva.expocc= data[4][0]
+        this.curva.errcc = data[5][0]
+        this.curva.ce3 = data[0][1]
         this.curva.ce2 = data[1][1]
-        this.curva.ce3 = data[2][1]
-        this.curva.ce4 = data[3][1]
+        this.curva.ce1 = data[2][1]
+        this.curva.ce0 = data[3][1]
         this.curva.expoce = data[4][1]
         this.curva.errce = data[5][1]
         this.verGraficaEfi()
@@ -382,7 +382,7 @@ export class CurvasCompresorComponent implements OnInit {
     maxx = +maxx.toFixed(1) + 0.05
     const nPuntos = (+this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1].x - +this.curva.coefHeadDataSet[0].x) / 100
     for (let index = +this.curva.coefHeadDataSet[0].x; index <= this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1].x; index = index + nPuntos) {
-      const punto = this.curva.cp4 + this.curva.cp3 * index + this.curva.cp2 * (index ** 2) + this.curva.cp1 * (index ** this.curva.expocp)
+      const punto = this.curva.cc0 + this.curva.cc1 * index + this.curva.cc2 * (index ** 2) + this.curva.cc3 * (index ** this.curva.expocc)
       let row: Array<number> = [+index, , punto]
       if (this.curva.coefHeadDataSet.find(x => x.x == index)) {
         const value = +this.curva.coefHeadDataSet.find(x => x.x == index).y
@@ -396,7 +396,7 @@ export class CurvasCompresorComponent implements OnInit {
       this.yDataCp = [...this.yDataCp, row]
     }
     const ultimoPunto = this.curva.coefHeadDataSet[this.curva.coefHeadDataSet.length - 1]
-    const ultimoPuntoValue = this.curva.cp4 + this.curva.cp3 * +ultimoPunto.x + this.curva.cp2 * (+ultimoPunto.x) ** 2 + this.curva.cp1 * (+ultimoPunto.x) ** this.curva.expocp
+    const ultimoPuntoValue = this.curva.cc0 + this.curva.cc1 * +ultimoPunto.x + this.curva.cc2 * (+ultimoPunto.x) ** 2 + this.curva.cc3 * (+ultimoPunto.x) ** this.curva.expocc
     this.yDataCp = [...this.yDataCp, [+ultimoPunto.x, +ultimoPunto.y, +ultimoPuntoValue]]
     this.yDataCp.sort((a, b) => a[0] - b[0])
     this.optionsCp = {
@@ -437,7 +437,7 @@ export class CurvasCompresorComponent implements OnInit {
     maxx = +maxx.toFixed(1) + 0.05
     const step = (+this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1].x - +this.curva.eficPoliDataSet[0].x) / 100
     for (let index = +this.curva.eficPoliDataSet[0].x; index <= this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1].x; index = index + step) {
-      const punto = this.curva.ce4 + this.curva.ce3 * index + this.curva.ce2 * (index ** 2) + this.curva.ce1 * (index ** this.curva.expoce)
+      const punto = this.curva.ce0 + this.curva.ce1 * index + this.curva.ce2 * (index ** 2) + this.curva.ce3 * (index ** this.curva.expoce)
       let row: Array<number> = [+index, , punto]
       if (this.curva.eficPoliDataSet.find(x => x.x == index)) {
         const value = +this.curva.eficPoliDataSet.find(x => x.x == index).y
@@ -452,7 +452,7 @@ export class CurvasCompresorComponent implements OnInit {
       this.yDataCe = [...this.yDataCe, row]
     }
     const ultimoPunto = this.curva.eficPoliDataSet[this.curva.eficPoliDataSet.length - 1]
-    const ultimoPuntoValue = this.curva.ce4 + this.curva.ce3 * +ultimoPunto.x + this.curva.ce2 * (+ultimoPunto.x) ** 2 + this.curva.ce1 * (+ultimoPunto.x) ** this.curva.expoce
+    const ultimoPuntoValue = this.curva.ce0 + this.curva.ce1 * +ultimoPunto.x + this.curva.ce2 * (+ultimoPunto.x) ** 2 + this.curva.ce3 * (+ultimoPunto.x) ** this.curva.expoce
     this.yDataCe = [...this.yDataCe, [+ultimoPunto.x, +ultimoPunto.y, ultimoPuntoValue]]
     this.yDataCe.sort((a, b) => a[0] - b[0])
     console.log(this.yDataCe)

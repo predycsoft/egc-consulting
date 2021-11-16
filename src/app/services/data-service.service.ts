@@ -17,6 +17,14 @@ export class pruebaCampo {
   simId: string = '';
 }
 
+export class simulacionTren{
+  simId: string = "";
+  simDate: Date = new Date;
+  simTipo: string = "";
+  simTimestamp: number = 0
+  simulaciones: simulacionPE[]
+}
+
 export class simSeccion {
   equipoTag: string = '';
   numSeccion: number = 0;
@@ -33,21 +41,12 @@ export class simSeccion {
   QN: number = 0;
   CFHEAD: number = 0;
   EFIC: number = 0;
-  metano: number = 0;
-  etano: number = 0;
-  propano: number = 0;
-  iButano: number = 0;
-  nButano: number = 0;
-  iPentano: number = 0;
-  nPentano: number = 0;
-  hexano: number = 0;
-  heptano: number = 0;
-  octano: number = 0;
-  nonano: number = 0;
-  decano: number = 0;
-  nitrogeno: number = 0;
-  dioxCarbono: number = 0;
-  sulfHidrogeno: number = 0;
+  mezcla: mezcla = {
+    id: "",
+    nombre: "",
+    cromatografiaOriginal:  new cromatografia,
+    cromatografiaNormalizada:  new cromatografia,
+  }
 }
 
 export interface curvaEquipo {
@@ -104,6 +103,7 @@ export class inputsTeorica {
 }
 
 export class output {
+  FLUJOMMSCFD: number = 0;
   FLUJOSUC: number = 0;
   FLUJODES: number = 0;
   FLUJOISEN: number = 0;
@@ -156,7 +156,10 @@ export class output {
 }
 
 export class simulacionPE {
-  dataValida: false
+  dataValidaAdim: boolean = false
+  simulacionAdim: boolean = false
+  dataValidaTeorica: boolean = false
+  simulacionTeorica: boolean = false
   equipoTag: string = "";
   equipoFamilia: string = "";
   equipoTipologia: string = "";
@@ -169,6 +172,7 @@ export class simulacionPE {
 }
 
 export class simulacionTeorica {
+  dataValidaTeorica: boolean = false
   equipoTag: string = "";
   equipoFamilia: string = "";
   equipoTipologia: string = "";
@@ -298,20 +302,20 @@ export class curva {
 
   // Coeficiente de Head
   coefHeadDataSet: dataSet[] = []; //es una matriz que contiene Num de punto, Q/N y u (miu = head)
-  cp1: number = 0; //termino independiente a0*x^0
-  cp2: number = 0; //a1*X^1
-  cp3: number = 0; //a2*X^2
-  cp4: number = 0; //a3*X^3
-  expocp: number = 0;
-  errcp: number = 0;
+  cc0: number = 0; //termino independiente a0*x^0
+  cc1: number = 0; //a1*X^1
+  cc2: number = 0; //a2*X^2
+  cc3: number = 0; //a3*X^3
+  expocc: number = 0;
+  errcc: number = 0;
   headImg: string = ''; //Es una imagen que se carga de referencia
 
   // Eficiencia politropica
   eficPoliDataSet: dataSet[] = [];  //es una matriz que contiene Num de punto, Q/N y n (eta = eficiencia)
-  ce1: number = 0; //termino independiente a0*x^0
-  ce2: number = 0; //a1*X^1
-  ce3: number = 0; //a2*X^2
-  ce4: number = 0; //a3*X^3
+  ce0: number = 0; //termino independiente a0*x^0
+  ce1: number = 0; //a1*X^1
+  ce2: number = 0; //a2*X^2
+  ce3: number = 0; //a3*X^3
   expoce: number = 0;
   errce: number = 0;
   eficImg: string = ''; //Es una imagen que se carga de referencia
