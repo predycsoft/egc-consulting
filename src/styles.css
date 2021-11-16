@@ -1623,7 +1623,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 0px !important;
     height: 28px !important;
     background-color: var(--neutral1) !important;
-    border: 2px solid var(--stroke1);
+    /* border: 2px solid var(--stroke1); */
     border-radius: var(--defaultBorderRadius);
     min-width: 128px;
     padding: 2px 7px 6px 12px !important;

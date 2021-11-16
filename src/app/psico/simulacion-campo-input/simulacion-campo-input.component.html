@@ -74,11 +74,9 @@
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr20 ft12"> Mezcla </div>
-                <div >
-                    <a class="ft12 centertext " (click)="openCromatografia(j)">
-                        <div>Agregar</div>
-                        <div>{{this.simulacion[j].inputs.Mezcla.nombre}}</div>
-                    </a>
+                <div>
+                    <!-- <span class="cromatografiaButton redFill5" (click)="openCromatografia(j)">Agregar</span> -->
+                    <span class="cromatografiaButton accentFill5" (click)="openCromatografia(j)">Editar</span>
                 </div>
             </div>
 
@@ -166,8 +164,7 @@
                         <div class="mgr20 ft12"> Mezcla </div>
                         <div>
                             <a class="ft12" (click)="openCromatografia(j)">
-                                <div>Mezcla</div>
-                                <div>{{this.simulacion[j].inputs.Mezcla.nombre}}</div>
+                                <span class="cromatografiaButton accentFill5" (click)="openCromatografia(j)">Editar</span>
                             </a>
                         </div>
                     </div>
