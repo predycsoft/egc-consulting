@@ -1,4 +1,112 @@
 .dialogContainer{
-    height: 80vh !important;
-    overflow-y:scroll !important;
+    height: 680px !important;
+    width: 70vw !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: var(--neutral1) !important;
+}
+
+.inputNumber{
+    border: 1px solid transparent;
+    border-radius: 0px;
+    font-size: 12px !important;
+    height: 20px;
+    background-color: var(--neutral1) !important;
+    min-width: 70px !important;
+    width: 70px !important;
+}
+
+.inputNumber:focus{
+    border: 2px solid var(--accent5);
+    background: var(--control1) !important;
+    border-radius: 4px;
+}
+
+.fechaHoraInput{
+    border: 2px solid var(--stroke1);
+    font-size: 16px !important;
+    font-weight: 500;
+    /* background-color: transparent !important; */
+    width: 230px;
+}
+
+.cromatografiaButton{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* background-color: var(--accent5); */
+    border-radius: 4px;
+    color: var(--oaText1) !important;
+    font-size: 12px !important;
+    min-width: 70px !important;
+    width: 70px !important;
+    height: 20px;
+    box-shadow: var(--shadow8);
+    
+}
+
+
+/* Table */
+tr{
+    padding: 8px !important;
+    height: 30px;
+}
+
+tr:hover{
+    background-color: var(--neutral1);
+}
+
+th{
+    min-width: 50px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: var(--text2);
+}
+
+td{
+    font-size: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: var(--text3);
+    border-bottom: .5px solid var(--stroke1);
+}
+
+
+/* Dataset Container */
+
+.dataSetContainer{
+    height: 608px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+    border-radius: 50%;
+    transition: .1 ease;
+    width: 8px;
+}
+
+::-webkit-scrollbar-track  {
+    background: var(--neutral2);
+}
+  
+::-webkit-scrollbar-track  {
+    background: var(--neutral3);
+}
+  
+::-webkit-scrollbar-thumb  {
+    background: var(--neutral4);
+    border-radius: 4px;
+    transition: .3s !important;
+}
+
+.dataSetContainer:hover::-webkit-scrollbar-thumb  {
+    background: var(--stroke2);
+    transition: .3s !important;
 }

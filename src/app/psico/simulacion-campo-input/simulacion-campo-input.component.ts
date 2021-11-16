@@ -25,6 +25,9 @@ export class SimulacionCampoInputComponent implements OnInit {
   curvas: curvaEquipo[]
   resumen: pruebaCampo = new pruebaCampo
 
+  tipoComparacion: string = 'porcentual'
+  simFlag: boolean = false;
+
   simulacion: Array<simulacionPE> = [];
   simId: string = "";
   simInfo: simInfo = new simInfo;

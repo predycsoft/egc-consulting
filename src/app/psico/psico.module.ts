@@ -38,7 +38,6 @@ import { DialogMapaCompresorComponent } from './compresor/dialog-mapa-compresor/
 import { ChartsModule } from 'ng2-charts';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { SimulacionCampoInputComponent } from './simulacion-campo-input/simulacion-campo-input.component';
-import { SimulacionCampoComponent } from './compresor/simulacion-campo/simulacion-campo.component';
 import { SimulacionCampoListaComponent } from './compresor/simulacion-campo-lista/simulacion-campo-lista.component';
 import { SimulacionCampoDashboardComponent } from './compresor/simulacion-campo-dashboard/simulacion-campo-dashboard.component';
 import { SimulacionCampoDialogResultadosComponent } from './compresor/simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
@@ -86,7 +85,6 @@ import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.compo
     DialogLibreriaEquiposComponent,
     DialogMapaCompresorComponent,
     SimulacionCampoInputComponent,
-    SimulacionCampoComponent,
     SimulacionCampoListaComponent,
     SimulacionCampoDashboardComponent,
     SimulacionCampoDialogResultadosComponent,
