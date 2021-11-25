@@ -1,8 +1,4 @@
 <div fxLayout="column" fxLayoutAlign="center center">
-
-
-
-
     <div class="w900px mgt40">
 
         <div fxLayout="row" class="border-b">
@@ -70,26 +66,26 @@
         <div fxLayout="row" fxLayoutGap="1rem" fxLayoutGap="1rem" class="mgt10 fw">
             <div class="centertext radius4 pd05 fw border">
                 <span class="ft500 ft12">Potencia</span>
-                <div class="mgt05 ft500 ft20">6500 Hp</div>
-                <div class="mgt05 ft500 ft12 redText">-11 %</div>
+                <div class="mgt05 ft500 ft20">{{this.punto.outputTren.outputAdim.HPGAS | number:'1.2-2'}} Hp</div>
+                <div class="mgt05 ft500 ft12 redText">{{(punto.outputTren.outputAdim.HPGAS - punto.outputTren.outputTeorico.HPGAS)*100/punto.outputTren.outputTeorico.HPGAS | number:'1.2-2'}}%</div>
             </div>
 
             <div class="centertext radius4 pd05 fw border">
-                <span class="ft500 ft12">Efic. Poli</span>
-                <div class="mgt05 ft500 ft20">75 %</div>
-                <div class="mgt05 ft500 ft12 redText">-6 %</div>
+                <span class="ft500 ft12">Cabezal Politrópico</span>
+                <div class="mgt05 ft500 ft20">{{this.punto.outputTren.outputAdim.HEADPOLI | number:'1.2-2'}}  </div>
+                <div class="mgt05 ft500 ft12 redText">{{(punto.outputTren.outputAdim.HEADPOLI - punto.outputTren.outputTeorico.HEADPOLI)*100/punto.outputTren.outputTeorico.HEADPOLI | number:'1.2-2'}}%</div>
             </div>
 
             <div class="centertext radius4 pd05 fw border">
-                <span class="ft500 ft12">Potencia</span>
-                <div class="mgt05 ft500 ft20">6500 Hp</div>
-                <div class="mgt05 ft500 ft12 redText">-11 %</div>
+                <span class="ft500 ft12">Presión de descarga</span>
+                <div class="mgt05 ft500 ft20">{{this.punto.outputTren.outputAdim.PDES | number:'1.2-2'}} [°F]</div>
+                <div class="mgt05 ft500 ft12 redText">{{(punto.outputTren.outputAdim.PDES - punto.outputTren.outputTeorico.PDES)*100/punto.outputTren.outputTeorico.PDES | number:'1.2-2'}}%</div>
             </div>
 
             <div class="centertext radius4 pd05 fw border">
-                <span class="ft500 ft12">Efic. Poli</span>
-                <div class="mgt05 ft500 ft20">75 %</div>
-                <div class="mgt05 ft500 ft12 redText">-6 %</div>
+                <span class="ft500 ft12">Flujo</span>
+                <div class="mgt05 ft500 ft20"> {{this.punto.outputTren.outputAdim.FLUJOMMSCFD | number:'1.2-2'}} [MMSCFD]</div>
+                <div class="mgt05 ft500 ft12 redText">{{(punto.outputTren.outputAdim.FLUJOMMSCFD - punto.outputTren.outputTeorico.FLUJOMMSCFD)*100/punto.outputTren.outputTeorico.FLUJOMMSCFD | number:'1.2-2'}}%</div>
             </div>
 
         </div>
@@ -121,28 +117,24 @@
                 <th>Pot.</th>
                 <th>ΣPot.</th>
             </tr>
-            <tr *ngFor="let item of [1,2,3]; let i = index">
+            <tr *ngFor="let seccion of punto.simulacion; let i = index">
                 <td>{{i}}</td>
-                <td *ngIf="nCompresores>=1">Compresor</td>
-                <td *ngIf="nCompresoresMultiSeccion>=1">{{i}}</td>
-                <td>{{i}}</td>
-                <td>{{i}}</td>
-                <td>123</td>
-                <td>6700
-                    <span class="mgl05 ft10 redText">(-7.6%)</span>
-                </td>
-                <td>.76</td>
-                <!-- Succión -->
-                <td>67</td>
-                <td>87</td>
-                <!-- Succión -->
-                <td>67</td>
-                <td>98</td>
-                <!-- Potencia -->
-                <td>6700</td>
-                <td>7500</td>
-                <!-- Eficiencia -->
-                <td>.86</td>
+                <td >Compresor: {{seccion.equipoTag}} Seccion: {{seccion.seccion}}</td>
+                <td></td>
+                <td>{{seccion.outputAdim.FLUJOMMSCFD | number:'1.2-2'}}</td>
+                <td>{{seccion.outputAdim.RPM | number:'1.2-2'}}</td>
+                <td>{{seccion.outputAdim.TSUC | number:'1.2-2'}}</td>
+                <td>{{seccion.outputAdim.PSUC | number:'1.2-2'}}</td>
+                <!-- Descarga -->
+                <td>{{seccion.outputAdim.TDES | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(seccion.outputAdim.TDES - seccion.outputTeorico.TDES)*100/seccion.outputTeorico.TDES | number:'1.2-2'}}%</span></td>
+                <td>{{seccion.outputAdim.PDES | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(seccion.outputAdim.PDES - seccion.outputTeorico.PDES)*100/seccion.outputTeorico.PDES | number:'1.2-2'}}%</span></td>
+                <!-- Adimensionales -->
+                <td>{{seccion.outputAdim.QN | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(seccion.outputAdim.QN - seccion.outputTeorico.QN)*100/seccion.outputTeorico.QN | number:'1.2-2'}}%</span></td>
+                <td>{{seccion.outputAdim.CFHEADPOLI | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(seccion.outputAdim.CFHEADPOLI - seccion.outputTeorico.CFHEADPOLI)*100/seccion.outputTeorico.CFHEADPOLI | number:'1.2-2'}}%</span></td>
+                <td>{{seccion.outputAdim.EFICPOLI | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(seccion.outputAdim.EFICPOLI - seccion.outputTeorico.EFICPOLI)*100/seccion.outputTeorico.EFICPOLI | number:'1.2-2'}}%</span></td>
+                 <!-- Potencia -->
+                <td>{{seccion.outputAdim.HPGAS | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(seccion.outputAdim.HPGAS - seccion.outputTeorico.HPGAS)*100/seccion.outputTeorico.HPGAS | number:'1.2-2'}}%</span></td>
+                <td>{{punto.outputTren.outputAdim.HPGAS | number:'1.2-2'}}<span class="mgl05 ft10 redText">{{(punto.outputTren.outputAdim.HPGAS - punto.outputTren.outputTeorico.HPGAS)*100/punto.outputTren.outputTeorico.HPGAS | number:'1.2-2'}}%</span></td>
             </tr>
         </table>
 
@@ -171,7 +163,6 @@
                         <td>{{.9876}}</td>
                         <td>{{.9876}}</td>
                         <td>{{.9876}}</td>
-                        
                     </tr>
                 </table>
             </div>

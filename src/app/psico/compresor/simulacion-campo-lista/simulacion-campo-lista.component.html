@@ -21,8 +21,12 @@
     <button (click)="guardarIndice()">Guardar Indice</button>
     <button (click)="simularMasivamenteAdim()">Simular Adim</button>
     <button (click)="simularMasivamenteTeorica()">Simular Teorica</button>
+    <button (click)="borrarPuntos()">Borrar puntos</button>
 </div>
 <div class="fw">
+    <button (click)="marcarTodos()">Marcar Todos</button>
+    <button (click)="marcarTodosNoSim()">Marcar Todos No Simulados</button>
+    <button (click)="desmarcarTodos()">Desmarcar Todos</button>
     <table class="fw">
         <tr>
             <th [matMenuTriggerFor]="filter" *ngFor="let item of params; let i = index" class="centertext"
@@ -37,52 +41,50 @@
             </th>
         </tr>
         <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId, item.simTimestamp)" class="cursorPointer">
-            <td class="centertext" ><mat-checkbox (change)="incluir($event, item.simTimestamp)"></mat-checkbox></td>
-            <td class="centertext">{{item.simDate | date: 'dd/MM/yyyy HH:mm'  }}</td>
+            <td class="centertext" ><mat-checkbox [(ngModel)]="item.checked" (change)="incluir($event, item.simTimestamp)"></mat-checkbox></td>
+            <td class="centertext">{{item.simTimestamp/10000 | date: 'dd/MM/yyyy HH:mm'  }}</td>
             <td class="centertext">
-                <span class="border sqChip greenFill1">{{item.simTipo }}
-                    <span *ngIf="item.simId">*</span>
-                </span>
+                <span class="border sqChip greenFill1">{{item.simTipo }}</span>
             </td>
             <td class="centertext">
                 <div *ngFor="let sec of item.simSecciones; let i = index">C: {{sec.numCompresor}} S: {{sec.numSeccion}}
                 </div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.FLUJODES}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.FLUJODES  | number: '1.2-2'}}</div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.RPM}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.RPM  | number: '1.2-2'}}</div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.PSUC}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.PSUC  | number: '1.2-2'}}</div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.PDES}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.PDES  | number: '1.2-2'}}</div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.TSUC}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.TSUC  | number: '1.2-2'}}</div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.TDES}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.TDES  | number: '1.2-2'}}</div>
             </td>
             <!-- Out -->
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.HP}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.HPGAS | number: '1.2-2'}}</div>
             </td>
-            <td class="centertext">{{item.totHP}}</td>
+            <td class="centertext">{{item.totHP | number: '1.2-2'}}</td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.QN}}</div>
-            </td>
-            <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.CFHEAD}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.QN | number: '1.2-2'}}</div>
             </td>
             <td class="centertext">
-                <div *ngFor="let sec of item.simSecciones">{{sec.EFIC}}</div>
+                <div *ngFor="let sec of item.simSecciones">{{sec.CFHEAD | number: '1.3-3'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simSecciones">{{sec.EFIC | number: '1.3-3'}}</div>
             </td>
         </tr>
     </table>
-    {{listaSimulaciones | json}}
+    <!-- {{listaSimulaciones | json}} -->
 
     <mat-menu #filter="matMenu" class="contextMenu">
         <div class="pdt05 pdl08 pdr08 pdb05" (click)="$event.stopPropagation();">

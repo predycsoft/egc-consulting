@@ -1,4 +1,50 @@
-<div fxLayout="row" class="fw pd10" fxLayoutGap="1rem" *ngFor="let item of params; let i = index" (click)="clickParam(item.var, i)">
+<!-- Encabezado -->
+<div>
+    <mat-select value="" [(ngModel)]="tipoY">
+        <mat-option value="PDES" (click)="graficarSecciones(tipoY)" class="optionItem">
+            'Presion' de descarga</mat-option>
+        <mat-option value="HEADPOLI" (click)="graficarSecciones(tipoY)" class="optionItem">Head
+            Politrópico</mat-option>
+        <mat-option value="HEADISEN" (click)="graficarSecciones(tipoY)" class="optionItem">Head
+            Isentrópico</mat-option>
+        <mat-option value="RELCOMP" (click)="graficarSecciones(tipoY)" class="optionItem">Relación
+            de compresión</mat-option>
+        <mat-option value="HPGAS" (click)="graficarSecciones(tipoY)" class="optionItem">
+            Potencia</mat-option>
+        <mat-option value="TDES" (click)="graficarSecciones(tipoY)" class="optionItem">Temperatura de
+            descarga</mat-option>
+    </mat-select>
+</div>
+<!-- Container de Graficas -->
+<div>
+    <!-- Grafica de Tren -->
+    <div *ngIf="mostrarGraficaTren">
+        <div>
+            Tren: {{tren.tag}}
+        </div>
+        <div fxLayout="row">
+            <google-chart #chart [type]="type" [data]="dataTren" [options]="opcionesTren" [columns]="columnasTren">
+            </google-chart>
+            <google-chart #chart [type]="typeHistogram" [data]="dataHistogramaTren" [options]="opcionesHistogramaTren" [columns]="columnasHistogramaTren">
+            </google-chart>
+        </div>
+    </div>
+    <!-- Grafica de Secciones -->
+    <div *ngFor="let item of this.simulaciones[0].simSecciones; let sec = index">
+
+        <div>
+            Equipo: {{this.equipos[item.numCompresor-1].tag}}
+            Seccion: {{item.numSeccion}}
+        </div>
+        <div fxLayout="row">
+            <google-chart #chart [type]="type" [data]="data[sec]" [options]="opciones[sec]" [columns]="columnas[sec]">
+            </google-chart>
+            <google-chart #chart [type]="typeHistogram" [data]="dataHistograma[sec]" [options]="opcionesHistograma[sec]" [columns]="columnasHistograma[sec]">
+            </google-chart>
+        </div>
+    </div>
+</div>
+<!-- <div fxLayout="row" class="fw pd10" fxLayoutGap="1rem" *ngFor="let item of params; let i = index" (click)="clickParam(item.var, i)">
 
     <div class="border radius4 h300px whiteFill" fxFlex="60%" >
         <div fxLayout="column" fxLayoutAlign="space-between" class="fh">
@@ -26,12 +72,14 @@
         <google-chart #chart [type]="type" [data]="data" [options]="options" [columns]="columnNames">
         </google-chart>
     </div>
-</div>
+</div> -->
 
-<div class="pd20 border radius4 fw text3 ft14 mg10 hover centertext cursorPointer whiteFill shadow8" (click)="agregarDataBlock()">Agregar</div>
+<!-- <div class="pd20 border radius4 fw text3 ft14 mg10 hover centertext cursorPointer whiteFill shadow8" (click)="agregarDataBlock()">Agregar</div>
 
 <mat-menu #filter="matMenu" class="contextMenu">
     <div class="pdt05 pdl08 pdr08 pdb05" (click)="$event.stopPropagation();">
+        <div class="pdt05 pdl08 pdr08 pdb05" (click)="$event.stopPropagation();">
+
         <div fxLayoutAlign="space-between center">
             <span class="ft500 ft14">Aplicar filtro</span>
             <mat-icon class="ft18 text3 textButton">close</mat-icon>
@@ -54,4 +102,4 @@
             </div>
         </div>
     </div>
-</mat-menu>
+</mat-menu> -->

@@ -21,18 +21,20 @@ export class DimensionesService {
   entalpia = ["[BTU/lbm]", "[BTU/lbmol]", "[KJ/kg]", "[Cal/g]"];
   entropia = ["[BTU/lbm°F]", "[BTU/lbmol°R]", "[KJ/kg°K]", "[Cal/g°C]"];
   pesoMolecular = ["[lbm/lbmol]"];
-  flujo = ["[MMSCFD]", "[ACFM]", "[lbm/min]", "[lbmol/dia]", "[m3/min]", "[m3/sec]"];
+  flujo = ["[MMSCFD]", "[ACFM]", "[lbm/min]", "[lbmol/dia]", "[m3/min]", "[m3/sec]"]; 
 
 
-  transformarTemperatura(valor: number, a: string, b: string): number {
+  transformarTemperatura(valor: number, original: string, nueva: string): number {
+    console.log(nueva)
     let c = 0;
-    const kelvin = this.tempToKelvin(valor, a)
-    switch (b) {
+    const kelvin = this.tempToKelvin(valor, original)
+    switch (nueva) {
       case "[°F]": {
         c = (kelvin - 273.15) * 9 / 5 + 32
         return c
       }
       case "[°C]": {
+        console.log("entre a C")
         c = kelvin - 273.15
         return c
       }
@@ -45,6 +47,7 @@ export class DimensionesService {
         return c
       }
       default: {
+        alert("dimensión de temperatura no se encuentra en la lista")
         return c
       }
     }

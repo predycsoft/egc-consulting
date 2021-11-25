@@ -7,23 +7,7 @@ import { DimensionesService } from 'src/app/services/dimensiones.service';
 import { IconServiceService } from 'src/app/services/icon-service.service';
 
 class datosCompresor{
-  familia: string = '';
-  tipologia: string = '';
-  secciones: number = 1;
-  fabricante: string = '';
-  modelo: string = '';
-  numSerial: string = '';
-  tag: string = '';
-  nombre: string = '';
-  cliente: string = '';
-  servicio: string = '';
-  sitio: string = '';
-  instalacion: string = '';
-  numImpulsores: string = '';
-  diametroEq: string = '';
-  rpmDiseno: number = 0;
-  rpmRated: number = 0;
-  tipoDriver: string = '';
+  
 }
 
 @Component({
@@ -34,7 +18,6 @@ class datosCompresor{
 export class InfoGeneralCompresor implements OnInit {
 
   // Datos generales del equipo asociado al proyecto
-  compresor = new datosCompresor
   proyecto: Proyecto;
   equipo: equipo;
   tren: tren = new tren()
@@ -53,7 +36,24 @@ export class InfoGeneralCompresor implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.compresor.tipologia = "Inline"
+    this.route.parent.params.subscribe(params => {
+      this.data.obtenerProyecto(params.id).subscribe(proyecto => {
+        this.proyecto = proyecto
+        this.route.params.subscribe(params => {
+          this.data.getTren(this.proyecto.id, params.trenTag).subscribe(tren => {
+            this.tren = tren
+          })
+          this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc<equipo>(params.equipoTag).valueChanges().subscribe(equipo => {
+            this.equipo = equipo
+            console.log(this.equipo)
+          })
+        })
+      })
+    })
+  }
+
+  guardar(){
+    this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipo.tag).set(this.equipo)
   }
 
 }

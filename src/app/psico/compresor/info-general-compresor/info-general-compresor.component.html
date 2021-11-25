@@ -9,8 +9,8 @@
             <div fxLayout="column" fxLayoutAlign="center center" class="fw relative">
 
                 <span class="tagText">GB-5200A</span>
-                <img *ngIf="compresor.tipologia ==='Inline'" [src]="icon.inline" class="equipoContainer">
-                <img *ngIf="compresor.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoContainer">
+                <img *ngIf="equipo.tipologia ==='Inline'" [src]="icon.inline" class="equipoContainer">
+                <img *ngIf="equipo.tipologia ==='Back to Back'" [src]="icon.b2b" class="equipoContainer">
             </div>
 
             <div class="mgt20">
@@ -19,87 +19,87 @@
 
             <div fxLayoutAlign="space-between center" class="mgt08">
                 <div class="mgr10 ft12 text2 nowrap">Tag</div>
-                <div><input type="text" [(ngModel)]="compresor.tag" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.tag" placeholder="vacio" class="inputText"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap">Nombre</div>
-                <div><input type="text" [(ngModel)]="compresor.nombre" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.nombre" placeholder="vacio" class="inputText"></div>
             </div>
 
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap ">Familia</div>
-                <div><input type="text" [(ngModel)]="compresor.familia" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.familia" placeholder="vacio" class="inputText"></div>
             </div>
 
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap ">Tipología</div>
-                <div><input type="text" [(ngModel)]="compresor.familia" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.familia" placeholder="vacio" class="inputText"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap ">Secciones</div>
-                <div><input type="number" [(ngModel)]="compresor.secciones" placeholder="vacio" class="inputText">
+                <div><input type="number" [(ngModel)]="equipo.nSecciones" placeholder="vacio" class="inputText">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap ">Fabricante</div>
-                <div><input type="text" [(ngModel)]="compresor.fabricante" placeholder="vacio" class="inputText">
+                <div><input type="text" [(ngModel)]="equipo.fabricante" placeholder="vacio" class="inputText">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap ">Modelo</div>
-                <div><input type="text" [(ngModel)]="compresor.modelo" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.modelo" placeholder="vacio" class="inputText"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap">Serial</div>
-                <div><input type="text" [(ngModel)]="compresor.modelo" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.modelo" placeholder="vacio" class="inputText"></div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr10 ft12 text2 nowrap">Servicio</div>
-                <div><input type="text" [(ngModel)]="compresor.servicio" placeholder="vacio" class="inputText"></div>
+                <div><input type="text" [(ngModel)]="equipo.servicio" placeholder="vacio" class="inputText"></div>
             </div>
           
         </div>
 
         <div>
-            <div *ngFor="let item of [1,2]; let i = index" class="mgb10">
+            <div *ngFor="let item of equipo.nImpulsores; let i = index" class="mgb10">
                 <div>
                     <span class="ft500">Datos de diseño - </span>
-                    <span class="ft500">Sección {{i}}</span>
+                    <span class="ft500">Sección {{i+1}}</span>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt08">
                     <div class="mgr20 ft12 text2 nowrap">Num Impulsores</div>
-                    <div><input type="number" [(ngModel)]="compresor.numImpulsores" placeholder="vacio"
+                    <div><input type="number" [(ngModel)]="this.equipo.nImpulsores[i]" placeholder="vacio"
                             class="inputNumber"></div>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt03">
                     <div class="mgr20 ft12 text2 nowrap">Diametro Eq.</div>
-                    <div><input type="number" [(ngModel)]="compresor.diametroEq" placeholder="vacio"
+                    <div><input type="number" [(ngModel)]="equipo.diametroEq" placeholder="vacio"
                             class="inputNumber">
                     </div>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt03">
                     <div class="mgr20 ft12 text2 nowrap">RPM Diseño</div>
-                    <div><input type="number" [(ngModel)]="compresor.rpmDiseno" placeholder="vacio" class="inputNumber">
+                    <div><input type="number" [(ngModel)]="equipo.rpmDiseno[i]" placeholder="vacio" class="inputNumber">
                     </div>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt03">
                     <div class="mgr20 ft12 text2 nowrap">RPM Rated</div>
-                    <div><input type="number" [(ngModel)]="compresor.rpmRated" placeholder="vacio" class="inputNumber">
+                    <div><input type="number" [(ngModel)]="equipo.rpmRated[i]" placeholder="vacio" class="inputNumber">
                     </div>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt03">
                     <div class="mgr20 ft12 text2 nowrap">Tipo driver</div>
-                    <div><input type="text" [(ngModel)]="compresor.tipoDriver" placeholder="vacio" class="inputNumber">
+                    <div><input type="text" [(ngModel)]="equipo.tipoDriver" placeholder="vacio" class="inputNumber">
                     </div>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt03">
                     <div class="mgr20 ft12 text2 nowrap">Perdidas mecánicas</div>
-                    <div><input type="text" [(ngModel)]="compresor.tipoDriver" placeholder="vacio" class="inputNumber">
+                    <div><input type="text" [(ngModel)]="equipo.tipoDriver" placeholder="vacio" class="inputNumber">
                     </div>
                 </div>
                 <div fxLayoutAlign="space-between center" class="mgt03">
                     <div class="mgr20 ft12 text2 nowrap">Perdidas de caja</div>
-                    <div><input type="text" [(ngModel)]="compresor.tipoDriver" placeholder="vacio" class="inputNumber">
+                    <div><input type="text" [(ngModel)]="equipo.tipoDriver" placeholder="vacio" class="inputNumber">
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@
     <div fxLayoutAlign="end" class="mgt05 fw">
         <div fxLayout="row" fxLayoutGap=".5rem">
             <button class="standard">Eliminar</button>
-            <button class="accent">Guardar</button>
+            <button class="accent" (click)="guardar()">Guardar</button>
         </div>
     </div>
     </div>

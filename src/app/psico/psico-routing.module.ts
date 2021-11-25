@@ -55,8 +55,8 @@ const routes: Routes = [
 
     {path: 'tren/:trenTag/reporte-sumario-seccion', component: ReporteSumarioSeccionComponent},
     {path: 'tren/:trenTag/reporte-sumario-inputs', component: ReporteSumarioInputsComponent},
-    {path: 'tren/:trenTag/reporte-punto', component: ReportePuntoComponent},
-    {path: 'tren/:trenTag/reporte-punto-sumario', component: ReportePuntoSumarioComponent},
+    {path: 'tren/:trenTag/reporte-punto/:puntoId/:seccion', component: ReportePuntoComponent},
+    {path: 'tren/:trenTag/reporte-punto-sumario/:puntoId', component: ReportePuntoSumarioComponent},
  ]}
 ];
 

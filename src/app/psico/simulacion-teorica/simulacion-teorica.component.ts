@@ -4,7 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ChartType } from 'angular-google-charts';
-import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, Proyecto, puntoMapa, simulacionTeorica, tren } from 'src/app/services/data-service.service';
+import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, Proyecto, puntoMapa, simulacionTeorica, simulacionTrenTeorica, tren } from 'src/app/services/data-service.service';
+import { DimensionesService } from 'src/app/services/dimensiones.service';
+import { SimulacionService } from 'src/app/services/simulacion.service';
 import { CromatografiaComponent } from '../inputs/cromatografia/cromatografia.component';
 
 @Component({
@@ -14,13 +16,14 @@ import { CromatografiaComponent } from '../inputs/cromatografia/cromatografia.co
 })
 export class SimulacionTeoricaComponent implements OnInit {
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, public data: DataServiceService, private afs: AngularFirestore, public dialog: MatDialog) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, public data: DataServiceService, private afs: AngularFirestore, public dialog: MatDialog, private ss: SimulacionService, private dim: DimensionesService) { }
 
   proyecto: Proyecto;
   tren: tren = new tren();
   equipos: equipo[];
   curvas: curvaEquipo[]
-  simulaciones: Array<simulacionTeorica> = []
+  punto: simulacionTrenTeorica;
+
 
   F: number = 0
   C: number = 0
@@ -58,10 +61,6 @@ export class SimulacionTeoricaComponent implements OnInit {
               this.equipos = []
               this.equipos = equipos.filter(x => tag.includes(x.tag))
               await this.cargarSimulacion()
-              console.log(this.proyecto)
-              console.log(this.tren)
-              console.log(this.equipos)
-              console.log(this.simulaciones)
             })
           })
         })
@@ -73,12 +72,12 @@ export class SimulacionTeoricaComponent implements OnInit {
     let mapas = []
     let columnas = []
     let opciones = []
-    for (let index = 0; index < this.simulaciones.length; index++) {
+    for (let index = 0; index < this.punto.simulacion.length; index++) {
       console.log("entre")
       mapas.push([])
       columnas.push([])
       columnas[index].push()
-      const input = this.simulaciones[index].mapas
+      const input = this.punto.simulacion[index].mapas
       const modified = input.reduce((res, curr) => {
         if (res[curr.RPM])
           res[curr.RPM].push(curr)
@@ -89,7 +88,7 @@ export class SimulacionTeoricaComponent implements OnInit {
       console.log(modified)
       columnas[index] = ["Q"]
       for (let key in modified) {
-        columnas[index].push([`RPM: ${key}`])
+        columnas[index].push(`RPM: ${(+key).toFixed(0)}`)
         if (tipo == "presion"){
           for (let j = 0; j < modified[key].length; j++) {
             const values: puntoMapa = modified[key][j];
@@ -155,13 +154,13 @@ export class SimulacionTeoricaComponent implements OnInit {
         },
         legend: { position: 'bottom', alignment: 'center' },
       };
-      if(tipo = "presion"){
+      if(tipo == "presion"){
         opciones[index].vAxis.title = "Presion de Descarga [psig]"
       }
-      if(tipo = "eficiencia"){
+      if(tipo == "eficiencia"){
         opciones[index].vAxis.title = "Eficiencia"
       }
-      if(tipo = "potencia"){
+      if(tipo == "potencia"){
         opciones[index].vAxis.title = "Potencia (HP)"
       }
     }
@@ -171,46 +170,10 @@ export class SimulacionTeoricaComponent implements OnInit {
     this.mostrarGrafica = true
   }
 
-  simular() {
-    let envio = []
-    envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
-      "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CP1", "CP2", "CP3", "CP4", "EXPOCP", "CE1", "CE2", "CE3", "CE4", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM", "CAIPRES"])
-    for (let index = 0; index < this.simulaciones.length; index++) {
-      const sim = this.simulaciones[index];
-      envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.inputs.TSUC, sim.inputs.PSUC, sim.inputs.FLUJOSUC, sim.curva.diametro, sim.inputs.RPM, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]", sim.inputs.CAIPRES])
-    }
-    this.http.post("http://127.0.0.1:5000/simulacionTeorica/", JSON.stringify(envio)).subscribe((respuesta) => {
-      if (respuesta) {
-        let OUTPUT = []
-        OUTPUT = respuesta as Array<Array<any>>
-        console.log("Respuesta Teorica")
-        console.log(respuesta)
-        if (OUTPUT.length > 0) {
-          for (let j = 0; j < OUTPUT[0].length; j++) {
-            for (let i = 0; i < OUTPUT.length; i++) {
-              this.simulaciones[j].outputTeorico.TSUC = OUTPUT[4][j + 1]
-              this.simulaciones[j].outputTeorico.PSUC = OUTPUT[2][j + 1]
-              this.simulaciones[j].outputTeorico.RPM = OUTPUT[17][j + 1]
-              this.simulaciones[j].outputTeorico.FLUJODES = OUTPUT[16][j + 1]
-              this.simulaciones[j].outputTeorico.PDES = OUTPUT[3][j + 1]
-              this.simulaciones[j].outputTeorico.TDES = OUTPUT[5][j + 1]
-              this.simulaciones[j].outputTeorico.HPGAS = OUTPUT[14][j + 1]
-              this.simulaciones[j].outputTeorico.HDES = OUTPUT[7][j + 1]
-              this.simulaciones[j].outputTeorico.DENDES = OUTPUT[6][j + 1]
-              this.simulaciones[j].outputTeorico.SURGE = OUTPUT[8][j + 1]
-              this.simulaciones[j].outputTeorico.QN = OUTPUT[9][j + 1]
-              this.simulaciones[j].outputTeorico.STONEW = OUTPUT[10][j + 1]
-              this.simulaciones[j].outputTeorico.CFHEADPOLI = OUTPUT[11][j + 1]
-              this.simulaciones[j].outputTeorico.EFICPOLI = OUTPUT[13][j + 1]
-              this.simulaciones[j].outputTeorico.EXPPOLI = OUTPUT[15][j + 1]
-            }
-          }
-        }
-      } else {
-        console.log("no hubo respuesta")
-      }
-    })
+  async simular() {
+    console.log(this.punto)
+    this.punto = await this.ss.simularTeorica(this.punto)
+    this.armarGrafica("potencia")
   }
 
   generarMapas() {
@@ -218,10 +181,16 @@ export class SimulacionTeoricaComponent implements OnInit {
     let envio = []
     envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
       "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CC0", "CC1", "CC2", "CC3", "EXPOCP", "CE0", "CE1", "CE2", "CE3", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM"])
-    for (let index = 0; index < this.simulaciones.length; index++) {
-      const sim = this.simulaciones[index];
+    for (let index = 0; index < this.punto.simulacion.length; index++) {
+      const sim = this.punto.simulacion[index];
+      let TSUC = +sim.outputTeorico.TSUC
+      let PSUC = +sim.outputTeorico.PSUC
+      let rpmDiseno = this.equipos[sim.equipo-1].rpmDiseno[sim.seccion-1]
+      if (rpmDiseno == 0){
+        alert("no se ha configurado una RPM de diseno")
+      }
       envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-      sim.outputTeorico.TSUC, sim.outputTeorico.PSUC, 0, sim.curva.diametro, sim.inputs.RPM, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]"])
+      TSUC, PSUC, 0, sim.curva.diametro, rpmDiseno, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]"])
     }
     this.http.post("http://127.0.0.1:5000/generarMapaTeorico/", JSON.stringify(envio)).subscribe((respuesta) => {
       console.log(respuesta)
@@ -233,7 +202,7 @@ export class SimulacionTeoricaComponent implements OnInit {
         for (let index = 0; index < OUTPUT[0].length; index++) {
           if (OUTPUT[0][index] == "RPM") {
             if (sec >= 0) {
-              this.simulaciones[sec].mapas = puntos
+              this.punto.simulacion[sec].mapas = puntos
               puntos = []
             }
             sec++
@@ -249,11 +218,15 @@ export class SimulacionTeoricaComponent implements OnInit {
               CFHEADPOLI: OUTPUT[7][index],
               CFWORKPOLI: OUTPUT[8][index],
               HEADPOLI: OUTPUT[9][index],
+              PSUC: OUTPUT[10][index],
+              HEADISEN: OUTPUT[11][index],
+              FLUJOMMSCFD: OUTPUT[12][index],
+              FLUJOMAS: OUTPUT[13][index]
             }
             puntos.push(obj)
           }
           if (index == OUTPUT[0].length - 1) {
-            this.simulaciones[sec].mapas = puntos
+            this.punto.simulacion[sec].mapas = puntos
           }
         }
       }
@@ -264,7 +237,10 @@ export class SimulacionTeoricaComponent implements OnInit {
   async guardarSimulacion() {
     await this.afs.collection("proyectos").doc(this.proyecto.id).collection("trenes").doc(this.tren.tag)
       .collection("simulaciones-teoricas").doc(this.pruebaId).update({
-        simulaciones: JSON.parse(JSON.stringify(this.simulaciones))
+        nombre: this.punto.nombre,
+        id: this.punto.nombre,
+        simTimestamp: this.punto.simTimestamp,
+        simulacion: JSON.parse(JSON.stringify(this.punto.simulacion))
       })
   }
 
@@ -276,20 +252,29 @@ export class SimulacionTeoricaComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((result => {
       if (result) {
-        this.simulaciones[i].inputs.Mezcla = result
+        this.punto.simulacion[i].inputs.Mezcla = result
       }
     }))
   }
 
   async cargarSimulacion() {
     const sims = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("trenes").doc(this.tren.tag).collection("simulaciones-teoricas").doc(this.pruebaId).ref.get()
-    this.simulaciones = []
-    this.simulaciones = sims.data().simulaciones
-    if (this.simulaciones.length == 0) {
-      this.armarSecciones()
+    this.punto = sims.data() as simulacionTrenTeorica
+    if (this.punto.simulacion.length == 0) {
+      this.punto = await this.ss.armarNuevaSimTeorica(this.punto,this.equipos,this.proyecto.id,this.tren)
     } else {
       this.actualizarCurvas()
       this.actualizarRPMS()
+      let mapas = 0
+      for (let index = 0; index < this.punto.simulacion.length; index++) {
+        const element = this.punto.simulacion[index];
+        if (element.mapas.length > 0){
+          mapas++
+        }
+      }
+      if(mapas == this.punto.simulacion.length){
+        this.armarGrafica("potencia")
+      }
     }
   }
 
@@ -304,56 +289,21 @@ export class SimulacionTeoricaComponent implements OnInit {
         }
       }
       for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
-        this.simulaciones[sec].curvas = curvas.filter(x => x.numSeccion == sec)
+        this.punto.simulacion[sec].curvas = curvas.filter(x => x.numSeccion == sec)
       }
       curvas = []
     }
   }
 
-  async armarSecciones() {
-    try {
-      let simulaciones: simulacionTeorica[] = []
-      this.simulaciones = []
-      for (let i = 0; i < this.equipos.length; i++) {
-        let curvas: curva[] = []
-        const curvasDocs = await this.afs.collection("proyectos").doc(this.proyecto.id).collection("equipos").doc(this.equipos[i].tag).collection("curvas").ref.get();
-        for (let j = 0; j < curvasDocs.docs.length; j++) {
-          const curva = curvasDocs.docs[j].data() as curva;
-          if (curva.equivalente == true) {
-            curvas.push(curva)
-          }
-        }
-        for (let sec = 1; sec < this.equipos[i].nSecciones + 1; sec++) {
-          const simulacion = new simulacionTeorica()
-          simulacion.equipoTag = this.equipos[i].tag
-          simulacion.equipoFamilia = this.equipos[i].familia
-          simulacion.seccion = sec
-          simulacion.curvas = curvas.filter(x => x.numSeccion == sec)
-          simulacion.curva = simulacion.curvas.find(x => x.default == true)
-          simulacion.inputs.DDIM = this.tren.dimensiones.diametro
-          simulacion.inputs.PDIM = this.tren.dimensiones.presion
-          simulacion.inputs.QDIM = this.tren.dimensiones.flujo
-          simulacion.inputs.TDIM = this.tren.dimensiones.temperatura
-          simulaciones.push(simulacion)
-        }
-        curvas = []
-      }
-      this.simulaciones = simulaciones
-      simulaciones = []
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   cambioCurva(i: number, curva: curva) {
     console.log("entre")
-    this.simulaciones[i].curva = curva
+    this.punto.simulacion[i].curva = curva
   }
 
   actualizarRPMS() {
-    for (let index = 0; index < this.simulaciones.length; index++) {
+    for (let index = 0; index < this.punto.simulacion.length; index++) {
       if (index > 0) {
-        this.simulaciones[index].inputs.RPM = this.simulaciones[0].inputs.RPM * this.simulaciones[index].inputs.RELVEL
+        this.punto.simulacion[index].inputs.RPM = this.punto.simulacion[0].inputs.RPM * this.punto.simulacion[index].inputs.RELVEL
       }
     }
   }

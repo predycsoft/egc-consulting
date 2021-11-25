@@ -14,7 +14,7 @@
 
 
     <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let seccion of this.simulaciones; let j = index"
+        <div *ngFor="let seccion of this.punto.simulacion; let j = index"
             class="pd10 border radius4 shadow8 whiteFill w300px">
             <div>
                 <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -182,7 +182,7 @@
     </div>
 
     <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let seccion of this.simulaciones; let j = index"
+        <div *ngFor="let seccion of this.punto.simulacion; let j = index"
             class="pd10 border radius4 shadow8 whiteFill w300px">
             <div>
                 <div class="ft500 ft14"> Resultado </div>
@@ -301,7 +301,7 @@
             Mapas:
         </div>
         <div *ngIf="mostrarGrafica" fxLayout="row" class="pd10">
-            <div *ngFor="let seccion of simulaciones; let i = index">
+            <div *ngFor="let seccion of punto.simulacion; let i = index">
                 <google-chart #chart [type]="type" [data]="mapas[i]" [options]="opciones[i]" [columns]="columnas[i]">
                 </google-chart>
             </div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
@@ -7,22 +7,67 @@ import { switchMap, map } from 'rxjs/operators';
 /// Clases de Simulacion 
 
 export class pruebaCampo {
+  checked: boolean = false
   simDate: Date = new Date;
   simTimestamp: number = 0
   simTipo: string = '';
   simCurvas: string = '';
   dataValida: false
   simSecciones: simSeccion[] = []
+  simTren: outputTrenAdim
   totHP: number = 0;
   simId: string = '';
 }
 
-export class simulacionTren{
+export class simulacionTren {
   simId: string = "";
   simDate: Date = new Date;
   simTipo: string = "";
   simTimestamp: number = 0
-  simulaciones: simulacionPE[]
+  simulacion: simulacionPE[]
+  outputTren: outputTren;
+  mapaTrenReal: outputTrenAdim[];
+  mapaTrenTeorico: outputTrenTeorico[];
+}
+
+export class simulacionTrenTeorica {
+  simId: string = "";
+  simTimestamp: number = 0;
+  nombre: string = "";
+  simulacion: simulacionTeorica[] = []
+}
+
+export class outputTren {
+  outputAdim: outputTrenAdim = new outputTrenAdim
+  outputTeorico: outputTrenTeorico = new outputTrenTeorico
+}
+
+export class outputTrenAdim {
+  HEADPOLI: number = 0; // suma acumulativa
+  HEADISEN: number = 0; // suma acumulativa
+  PSUC: number = 0 // primera seccion
+  PDES: number = 0; // ultima seccion
+  HPGAS: number = 0; // suma acumlativa
+  FLUJOSUC: number = 0; // primera seccion en ACFM
+  FLUJOMMSCFD: number = 0; // primera seccion en MMSCFD
+  FLUJOMAS: number = 0
+  RPM: number = 0;
+  RELCOMP: number = 0;
+  QN: number = 0;
+}
+
+export class outputTrenTeorico {
+  HEADPOLI: number = 0; // suma acumulativa
+  HEADISEN: number = 0;
+  PSUC: number = 0 // primera seccion
+  PDES: number = 0; // ultima seccion
+  HPGAS: number = 0; // suma acumlativa
+  FLUJOSUC: number = 0; // primera seccion en ACFM
+  FLUJOMMSCFD: number = 0; // primera seccion en MMSCFD
+  FLUJOMAS: number = 0
+  RPM: number = 0;
+  RELCOMP: number = 0;
+  QN: number = 0;
 }
 
 export class simSeccion {
@@ -37,15 +82,17 @@ export class simSeccion {
   TSUC: number = 0;
   TDES: number = 0;
   RPM: number = 0;
-  HP: number = 0;
+  HPGAS: number = 0;
   QN: number = 0;
   CFHEAD: number = 0;
   EFIC: number = 0;
+  HEADPOLI: number = 0;
+  HEADISEN: number = 0
   mezcla: mezcla = {
     id: "",
     nombre: "",
-    cromatografiaOriginal:  new cromatografia,
-    cromatografiaNormalizada:  new cromatografia,
+    cromatografiaOriginal: new cromatografia,
+    cromatografiaNormalizada: new cromatografia,
   }
 }
 
@@ -121,9 +168,6 @@ export class output {
   DENSUC: number = 0;
   DENDES: number = 0;
   DENISEN: number = 0;
-  KSUC: number = 0;
-  KDES: number = 0;
-  KISEN: number = 0;
   ZSUC: number = 0;
   ZDES: number = 0;
   ZISEN: number = 0;
@@ -163,12 +207,15 @@ export class simulacionPE {
   equipoTag: string = "";
   equipoFamilia: string = "";
   equipoTipologia: string = "";
+  equipo: number = 0
   seccion: number = 0;
   curvas: curva[] = [];
   curva: curva;
   inputs: inputsCampo = new inputsCampo()
   outputTeorico: output = new output()
   outputAdim: output = new output()
+  mapas: puntoMapa[] = []
+  mapaPunto: puntoMapa[] = []
 }
 
 export class simulacionTeorica {
@@ -176,6 +223,7 @@ export class simulacionTeorica {
   equipoTag: string = "";
   equipoFamilia: string = "";
   equipoTipologia: string = "";
+  equipo: number = 0;
   seccion: number = 0;
   curvas: curva[] = [];
   curva: curva;
@@ -234,6 +282,17 @@ export class equipo {
   documentos: file[] = [];
   nImpulsores: number[] = []
   nSecciones: number = 1
+  numSerial: string = '';
+  nombre: string = '';
+  cliente: string = '';
+  servicio: string = '';
+  sitio: string = '';
+  instalacion: string = '';
+  numImpulsores: string = '';
+  diametroEq: string = '';
+  rpmDiseno: number[] = [];
+  rpmRated: number[] = [];
+  tipoDriver: string = '';
 }
 
 export class file {
@@ -269,6 +328,10 @@ export class puntoMapa {
   CFHEADPOLI: number = 0;
   CFWORKPOLI: number = 0;
   HEADPOLI: number = 0;
+  PSUC: number = 0;
+  HEADISEN: number = 0;
+  FLUJOMMSCFD: number = 0;
+  FLUJOMAS: number = 0;
 }
 
 

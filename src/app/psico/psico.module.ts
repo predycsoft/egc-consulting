@@ -107,7 +107,6 @@ import { ConfigProyectoComponent } from './config-proyecto/config-proyecto.compo
     FormsModule,
     NgxChartsModule,
     SharedModule,
-    HttpClientModule,
     GoogleChartsModule.forRoot(),
   ]
 })

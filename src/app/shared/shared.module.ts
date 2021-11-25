@@ -43,6 +43,7 @@ import {MatTreeModule} from '@angular/material/tree';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const components = [
   MenuComponent,
@@ -99,7 +100,7 @@ const modules = [
   MatTreeModule,
   CdkTreeModule,
   NgbModule,
-
+  HttpClientModule
 ];
 
 @NgModule({

@@ -1,12 +1,12 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" class="pd03 neutralFill1 border-b">
     <div fxLayout="row" fxLayoutAlign=" center">
-        <span class="mgl05 ft500 ft18 mgr05">Punto 832 &nbsp; - </span>
-        <input type="datetime-local" [(ngModel)]="simInfo.simDate" class="fechaHoraInput">
+        <span class="mgl05 ft500 ft18 mgr05">Punto {{nPunto}} &nbsp; - </span>
+        <input type="datetime-local" [(ngModel)]="punto.simDate" class="fechaHoraInput">
     </div>
     <div class="mgl10" fxLayoutGap=".5rem" fxLayout="row">
-        <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag" >delete</mat-icon>
+        <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag" (click)="borrarPunto()">delete</mat-icon>
         <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag">print</mat-icon>
-        <mat-icon class="accentIconButton pdl10 pdr10" (click)="simFlag=true">play_arrow</mat-icon>
+        <mat-icon class="accentIconButton pdl10 pdr10" (click)="simular()">play_arrow</mat-icon>
         <div class="border-r mgr20"></div>
         <mat-icon class="iconButton ">close</mat-icon>
     </div>
@@ -15,15 +15,15 @@
 <div fxLayout="row" *ngIf="!simFlag">
 
     <!-- containerinput -->
-    <div class="w250px pd10 border-r" *ngFor="let secciones of this.simulacion; let j = index">
+    <div class="w250px pd10 border-r" *ngFor="let secciones of this.punto.simulacion; let j = index">
 
         <!-- Seccion -->
         <div class="ft500 ft18 centertext">{{secciones.equipoTag}}</div>
-        <div class="mgt03 ft500 ft16 centertext">Seccion 1</div>
+        <div class="mgt03 ft500 ft16 centertext">Seccion {{secciones.seccion}}</div>
 
         <div class="mgt20 ft13">Curva </div>
-        <mat-select value="" [(ngModel)]="secciones.curva">
-            <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
+        <mat-select value="" [(ngModel)]="this.punto.simulacion[j].curva">
+            <mat-option *ngFor="let item of this.punto.simulacion[j].curvas" [value]="item" class="optionItem">
                 {{item.nombre}}
             </mat-option>
         </mat-select>
@@ -31,44 +31,44 @@
         <!-- inputs -->
         <div class="mgt10">
             <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="mgr20 ft12"> Tsuc {{this.simulacion[j].inputs.TDIM}}</div>
+                <div class="mgr20 ft12"> Tsuc {{this.punto.simulacion[j].inputs.TDIM}}</div>
                 <div class="">
-                    <input type="number" [(ngModel)]="this.simulacion[j].inputs.TSUC" placeholder="-"
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.TSUC" placeholder="-"
                         class="inputNumber">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="mgr20 ft12"> Psuc {{this.simulacion[j].inputs.PDIM}}</div>
+                <div class="mgr20 ft12"> Psuc {{this.punto.simulacion[j].inputs.PDIM}}</div>
                 <div>
-                    <input type="number" [(ngModel)]="this.simulacion[j].inputs.PSUC" placeholder="-"
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.PSUC" placeholder="-"
                         class="inputNumber">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="mgr20 ft12"> Tdes {{this.simulacion[j].inputs.TDIM}}</div>
+                <div class="mgr20 ft12"> Tdes {{this.punto.simulacion[j].inputs.TDIM}}</div>
                 <div>
-                    <input type="number" [(ngModel)]="this.simulacion[j].inputs.TDES" placeholder="-"
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.TDES" placeholder="-"
                         class="inputNumber">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="mgr20 ft12"> Pdes {{this.simulacion[j].inputs.PDIM}} </div>
+                <div class="mgr20 ft12"> Pdes {{this.punto.simulacion[j].inputs.PDIM}} </div>
                 <div>
-                    <input type="number" [(ngModel)]="this.simulacion[j].inputs.PDES" placeholder="-"
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.PDES" placeholder="-"
                         class="inputNumber">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
                 <div class="mgr20 ft12"> RPM </div>
                 <div>
-                    <input type="number" [(ngModel)]="this.simulacion[j].inputs.RPM" placeholder="-"
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.RPM" placeholder="-"
                         class="inputNumber">
                 </div>
             </div>
             <div fxLayoutAlign="space-between center" class="mgt03">
-                <div class="mgr20 ft12"> Q {{this.simulacion[j].inputs.QDIM}} </div>
+                <div class="mgr20 ft12"> Q {{this.punto.simulacion[j].inputs.QDIM}} </div>
                 <div>
-                    <input type="number" [(ngModel)]="this.simulacion[j].inputs.FLUJOSUC" placeholder="-"
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.FLUJOSUC" placeholder="-"
                         class="inputNumber">
                 </div>
             </div>
@@ -93,114 +93,149 @@
     <div fxLayout="column" fxLayoutGap="1rem" class="fw">
 
 
-        <div *ngFor="let secciones of this.simulacion; let j = index" class="whiteFill" fxLayout="row">
+        <div class="whiteFill" fxLayout="row">
 
             <!------------------------------------------------------------------------ Container Izquierdo -->
             <div class="w250px pd10 border-r">
                 <!-- Seccion -->
 
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".5rem" class="mgt10">
-                    <mat-icon class="ftxxl iconButton">keyboard_arrow_left</mat-icon>
-                    <div>
-                        <div class="ft500 ft18 centertext">{{secciones.equipoTag}}</div>
-                        <div class="mgt03 ft500 ft16 centertext">Seccion 1</div>
+                    <div *ngIf="seccionActual != -1">
+                        <mat-icon class="ftxxl iconButton" (click)="disminuirSeccion()">keyboard_arrow_left</mat-icon>
                     </div>
-                    <mat-icon class="ftxxl iconButton">keyboard_arrow_right</mat-icon>
-                </div>
-
-
-                <div class="mgt20 ft13">Curva </div>
-                <mat-select value="" [(ngModel)]="secciones.curva">
-                    <mat-option *ngFor="let item of secciones.curvas" [value]="item" class="optionItem">
-                        {{item.nombre}}
-                    </mat-option>
-                </mat-select>
-
-                <!-- inputs -->
-                <div class="mgt10">
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> Tsuc {{this.simulacion[j].inputs.TDIM}}</div>
-                        <div class="">
-                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.TSUC" placeholder="-"
-                                class="inputNumber">
-                        </div>
+                    <div *ngIf="seccionActual != -1">
+                        <div class="ft500 ft18 centertext">{{this.punto.simulacion[this.seccionActual].equipoTag}}</div>
+                        <div class="mgt03 ft500 ft16 centertext">Secccion
+                            {{this.punto.simulacion[this.seccionActual].seccion}}</div>
                     </div>
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> Psuc {{this.simulacion[j].inputs.PDIM}}</div>
-                        <div>
-                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.PSUC" placeholder="-"
-                                class="inputNumber">
-                        </div>
+                    <div *ngIf="seccionActual == -1">
+                        <div class="ft500 ft18 centertext">Tren: {{this.tren.tag}}</div>
                     </div>
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> Tdes {{this.simulacion[j].inputs.TDIM}}</div>
-                        <div>
-                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.TDES" placeholder="-"
-                                class="inputNumber">
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> Pdes {{this.simulacion[j].inputs.PDIM}} </div>
-                        <div>
-                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.PDES" placeholder="-"
-                                class="inputNumber">
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> RPM </div>
-                        <div>
-                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.RPM" placeholder="-"
-                                class="inputNumber">
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> Q {{this.simulacion[j].inputs.QDIM}} </div>
-                        <div>
-                            <input type="number" [(ngModel)]="this.simulacion[j].inputs.FLUJOSUC" placeholder="-"
-                                class="inputNumber">
-                        </div>
-                    </div>
-                    <div fxLayoutAlign="space-between center" class="mgt03">
-                        <div class="mgr20 ft12"> Mezcla </div>
-                        <div>
-                            <a class="ft12" (click)="openCromatografia(j)">
-                                <span class="cromatografiaButton accentFill5" (click)="openCromatografia(j)">Editar</span>
-                            </a>
-                        </div>
+                    <div *ngIf="seccionActual != nSecciones-1">
+                        <mat-icon class="ftxxl iconButton" (click)="aumentarSeccion()">keyboard_arrow_right</mat-icon>
                     </div>
                 </div>
 
+                <div *ngIf="seccionActual!=-1">
+                    <div class="mgt20 ft13">Curva </div>
+                    <mat-select value="" [(ngModel)]="this.punto.simulacion[this.seccionActual].curva">
+                        <mat-option *ngFor="let item of this.punto.simulacion[this.seccionActual].curvas" [value]="item"
+                            class="optionItem">
+                            {{item.nombre}}
+                        </mat-option>
+                    </mat-select>
+
+                    <!-- inputs -->
+                    <div class="mgt10">
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Tsuc {{this.punto.simulacion[this.seccionActual].inputs.TDIM}}
+                            </div>
+                            <div class="">
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.TSUC"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Psuc {{this.punto.simulacion[this.seccionActual].inputs.PDIM}}
+                            </div>
+                            <div>
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.PSUC"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Tdes {{this.punto.simulacion[this.seccionActual].inputs.TDIM}}
+                            </div>
+                            <div>
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.TDES"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Pdes {{this.punto.simulacion[this.seccionActual].inputs.PDIM}}
+                            </div>
+                            <div>
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.PDES"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> RPM </div>
+                            <div>
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.RPM"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Q {{this.punto.simulacion[this.seccionActual].inputs.QDIM}} </div>
+                            <div>
+                                <input type="number"
+                                    [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.FLUJOSUC"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Mezcla </div>
+                            <div>
+                                <a class="ft12" (click)="openCromatografia(this.seccionActual)">
+                                    <span class="cromatografiaButton accentFill5"
+                                        (click)="openCromatografia(this.seccionActual)">Editar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
-
             <!------------------------------------------------------------------------ Container Medio -->
-            <div fxLayout="column" class="w400px fh border-r">
+            <!-- Data del tren -->
+            <div *ngIf="seccionActual == -1" fxLayout="column" class="w400px fh border-r">
 
                 <!-- Data set container con scroll down -->
                 <div class="dataSetContainer">
                     <div fxLayout="column">
                         <div fxLayout="row" class="centertext ">
                             <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
-                                <span class="ft13">Potencia</span>
-                                <span class="mgt03 ft22 ft500"> 5500 Hp </span>
-                                <span class="mgt03 ft500 ft13 redText">-6 %</span>
+                                <span class="ft13">Potencia hp</span>
+                                <span class="mgt03 ft22 ft500">{{+this.punto.outputTren.outputAdim.HPGAS
+                                    | number:
+                                    '1.0-0'}} Hp</span>
+                                <span class="mgt03 ft500 ft13 redText">{{+this.punto.outputTren.outputAdim.HPGAS
+                                    / this.punto.outputTren.outputTeorico.HPGAS | number:
+                                    '1.0-0'}} %</span>
                             </div>
                             <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
-                                <span>Efic. Poli.</span>
-                                <span class="mgt03 ft22 ft500"> .86 </span>
-                                <span class="mgt03 ft500 ft13 redText">-11 %</span>
+                                <span>Presión de descarga [psig]</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{+this.punto.outputTren.outputAdim.PDES | number:
+                                    '1.3-3'}}</span>
+                                <span
+                                    class="mgt03 ft500 ft13 redText">{{+this.punto.outputTren.outputAdim.PDES/this.punto.outputTren.outputTeorico.PDES
+                                    | number:
+                                    '1.3-3'}} %</span>
                             </div>
                         </div>
                         <div fxLayout="row" class="centertext">
                             <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
-                                <span>Coef. Cab.</span>
-                                <span class="mgt03 ft22 ft500"> 0.6 </span>
-                                <span class="mgt03 ft500 ft13 redText">-4 %</span>
+                                <span>Cabezal Politrópico</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{this.punto.outputTren.outputAdim.HEADPOLI |
+                                    number: '1.3-3'}}</span>
+                                <span
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.outputTren.outputAdim.HEADPOLI/this.punto.outputTren.outputTeorico.HEADPOLI
+                                    |
+                                    number: '1.3-3'}} %</span>
                             </div>
                             <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
-                                <span>Q/N</span>
-                                <span class="mgt03 ft22 ft500"> 1.5 </span>
-                                <span class="mgt03 ft500 ft13 redText">-6 %</span>
+                                <span>Flujo Actual [ACFM]</span>
+                                <span class="mgt03 ft22 ft500">{{this.punto.outputTren.outputAdim.FLUJOSUC
+                                    | number:
+                                    '1.1-1'}}</span>
+                                <span
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.outputTren.outputAdim.FLUJOSUC/this.punto.outputTren.outputTeorico.FLUJOSUC
+                                    | number:
+                                    '1.1-1'}} %</span>
                             </div>
                         </div>
                     </div>
@@ -213,19 +248,220 @@
                                 <th>Descarga</th>
                                 <th>Isentrópico</th>
                             </tr>
-                            <tr *ngFor="let item of [1,2,3,4,454,3,5,3,5,3,34,534,53,2,4,4,3]">
-                                <td class="ft12">Nombre de param</td>
-                                <td>
-                                    <span class="ft12">.82</span>
-                                    <span class="mgl05 redText ft12">-5%</span>
+                            <tr *ngFor="let item of this.array; let i = index">
+                                <td class="ft12">{{this.array[i][0]}}</td>
+                                <td *ngIf="item.length==2" colspan="3">
+                                    <span class="ft12">{{item[1]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][0] | number: '1.1-1'
+                                        }}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][1] | number: '1.1-1'
+                                        }}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][2] | number: '1.1-1'
+                                        }}</span>
                                 </td>
-                                <td>
-                                    <span class="ft12">.82</span>
-                                    <span class="mgl05 redText ft12">-5%</span>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[1]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][0] | number:
+                                        '1.1-1'}}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][3] | number:
+                                        '1.1-1'}}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][6] | number:
+                                        '1.1-1'}}</span>
                                 </td>
-                                <td>
-                                    <span class="ft12">.82</span>
-                                    <span class="mgl05 redText ft12">-5%</span>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[2]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][1] | number:
+                                        '1.1-1'}}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][4] | number:
+                                        '1.1-1'}}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][7] | number:
+                                        '1.1-1'}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[3]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][2] | number:
+                                        '1.1-1'}}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][5] | number:
+                                        '1.1-1'}}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][8] | number:
+                                        '1.1-1'}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Data de Secciones -->
+            {{seccionActual}}
+            <div *ngIf="seccionActual != -1" fxLayout="column" class="w400px fh border-r">
+
+                <!-- Data set container con scroll down -->
+                <div class="dataSetContainer">
+                    <div fxLayout="column">
+                        <div fxLayout="row" class="centertext ">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span class="ft13">Potencia</span>
+                                <span
+                                    class="mgt03 ft22 ft500">{{this.punto.simulacion[this.seccionActual].outputAdim.HPGAS
+                                    | number:
+                                    '1.0-0'}} Hp</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputAdim.HPGAS
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputAdim.HPGAS
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS | number:
+                                    '1.0-0'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS
+                                    | number:
+                                    '1.0-0'}}
+                                </span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Efic. Poli.</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{this.punto.simulacion[this.seccionActual].outputAdim.EFICPOLI | number:
+                                    '1.3-3'}}</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputAdim.EFICPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputAdim.EFICPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI | number:
+                                    '1.3-3'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI
+                                    | number:
+                                    '1.3-3'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div fxLayout="row" class="centertext">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Coef. Cab.</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{this.punto.simulacion[this.seccionActual].outputAdim.CFHEADPOLI |
+                                    number: '1.3-3'}}</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputAdim.CFHEADPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputAdim.CFHEADPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI | number:
+                                    '1.3-3'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI
+                                    | number:
+                                    '1.3-3'}}
+                                </span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Q/N</span>
+                                <span class="mgt03 ft22 ft500">{{this.punto.simulacion[this.seccionActual].outputAdim.QN
+                                    | number:
+                                    '1.1-1'}}</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputAdim.QN
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.QN)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.QN | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputAdim.QN
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.QN | number:
+                                    '1.3-3'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.QN
+                                    | number:
+                                    '1.3-3'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t">
+                        <table class="fw">
+                            <tr>
+                                <th>Parametro</th>
+                                <th>Succión</th>
+                                <th>Descarga</th>
+                                <th>Isentrópico</th>
+                            </tr>
+                            <tr *ngFor="let item of this.array; let i = index">
+                                <td class="ft12">{{this.array[i][0]}}</td>
+                                <td *ngIf="item.length==2" colspan="3">
+                                    <span class="ft12">{{item[1]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][0] | number: '1.1-1'
+                                        }}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][1] | number: '1.1-1'
+                                        }}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][2] | number: '1.1-1'
+                                        }}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[1]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][0] | number:
+                                        '1.1-1'}}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][3] | number:
+                                        '1.1-1'}}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][6] | number:
+                                        '1.1-1'}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[2]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][1] | number:
+                                        '1.1-1'}}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][4] | number:
+                                        '1.1-1'}}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][7] | number:
+                                        '1.1-1'}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[3]}}</span>
+                                    <span *ngIf="tipoComparacion == 'porcentual'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][2] | number:
+                                        '1.1-1'}}%</span>
+                                    <span *ngIf="tipoComparacion == 'diferencia'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][5] | number:
+                                        '1.1-1'}}</span>
+                                    <span *ngIf="tipoComparacion == 'absoluta'"
+                                        class="mgl05 redText ft12">{{this.arrayComparacion[i][8] | number:
+                                        '1.1-1'}}</span>
                                 </td>
                             </tr>
                         </table>
@@ -235,8 +471,8 @@
                 <div class="pd10" fxLayout="row" fxLayoutAlign=" center">
                     <mat-select value="" [(ngModel)]="tipoComparacion">
                         <mat-option value="porcentual" class="optionItem">Variación porcentual (%) </mat-option>
-                        <mat-option value="absoluta" class="optionItem">Variación abolsuta (%) </mat-option>
-                        <mat-option value="real" class="optionItem">Valor teórico real </mat-option>
+                        <mat-option value="diferencia" class="optionItem">Variación abolsuta </mat-option>
+                        <mat-option value="absoluta" class="optionItem">Valor teórico real </mat-option>
                     </mat-select>
                 </div>
             </div>
@@ -246,17 +482,57 @@
 
             <div class="w500px fh" fxLayout="column" fxLayoutAlign="space-between">
                 <div fxLayoutAlign="center center" class="h600px">
-                    Grafico mapa aqui
+                    <div *ngIf="mostrarGraficaConjuntaTren" fxLayout="column" class="pd10">
+                        <div *ngIf="seccionActual==-1">
+                            <google-chart #chart [type]="type" [data]="mapasConjuntoTren"
+                                [options]="opcionesConjuntaTren"
+                                [columns]="columnasConjuntasTren">
+                            </google-chart>
+                        </div>
+                    </div>
+                    <div *ngIf="mostrarGraficaConjunta" fxLayout="column" class="pd10">
+                        <div *ngIf="seccionActual!=-1">
+
+                            <google-chart #chart [type]="type" [data]="mapasConjunto[this.seccionActual]"
+                                [options]="opcionesConjunta[this.seccionActual]"
+                                [columns]="columnasConjuntas[this.seccionActual]">
+                            </google-chart>
+                        </div>
+                        <!-- <div *ngIf="seccionActual!=-1">
+                            <google-chart #chart [type]="type" [data]="mapas[this.seccionActual]" [options]="opciones[this.seccionActual]" [columns]="columnas[this.seccionActual]">
+                            </google-chart>
+                        </div>
+                        <div *ngIf="seccionActual!=-1">
+                            <google-chart #chart [type]="type" [data]="mapasReal[this.seccionActual]" [options]="opcionesReal[this.seccionActual]" [columns]="columnasReal[this.seccionActual]">
+                            </google-chart>
+                        </div> -->
+                    </div>
                 </div>
                 <div class="pd10" fxLayout="row" fxLayoutAlign=" center">
-                    <mat-select value="" [(ngModel)]="tipoComparacion">
-                        <mat-option value="porcentual" class="optionItem">Potencia </mat-option>
-                        <mat-option value="absoluta" class="optionItem">Presión de descarga </mat-option>
+                    <mat-select value="" [(ngModel)]="tipoGrafica">
+                        <mat-option value="presion" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">
+                            'Presion' de descarga</mat-option>
+                        <mat-option value="head" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">Head
+                            Politrópico</mat-option>
+                        <mat-option value="head" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">Head
+                            Isentrópico</mat-option>
+                        <mat-option value="relcomp" (click)="graficaConjunta(tipoGrafica,tipoEjeX)" class="optionItem">Relación
+                            de compresión</mat-option>
+                        <mat-option value="potencia" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">
+                            Potencia</mat-option>
+                        <mat-option *ngIf="seccionActual != -1" value="TDES" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">Temperatura de
+                            descarga</mat-option>
+                    </mat-select>
+                    <mat-select value="" [(ngModel)]="tipoEjeX">
+                        <mat-option value="FLUJOMMSCFD" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">
+                            Flujo Estándar [MMSCFD]</mat-option>
+                        <mat-option value="FLUJODES" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">Head
+                            Flujo Real [ACFM]</mat-option>
+                        <mat-option value="FLUJOMAS" (click)="graficaConjunta(tipoGrafica, tipoEjeX)" class="optionItem">Head
+                            Flujo Másico [lbm/min]</mat-option>
                     </mat-select>
                 </div>
             </div>
-
-
 
         </div>
     </div>

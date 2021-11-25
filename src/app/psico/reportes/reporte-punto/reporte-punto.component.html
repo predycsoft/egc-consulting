@@ -99,14 +99,18 @@
                     <th rowspan="3">Flujo</th>
                     <th rowspan="2">Volumétrico</th>
                     <th class="dimension">MMscfd</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <td>{{(seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD)*100/seccion.outputTeorico.FLUJOMMSCFD}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -114,14 +118,18 @@
                 </tr>
                 <tr>
                     <th class="dimension">Acfm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.FLUJOSUC | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJODES | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOISEN | number:'1.2-2'}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.FLUJOSUC | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJODES | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOISEN | number:'1.2-2'}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.FLUJOSUC  - seccion.outputTeorico.FLUJOSUC }}</td>
+                    <td>{{(seccion.outputAdim.FLUJOSUC  - seccion.outputTeorico.FLUJOSUC )*100/seccion.outputTeorico.FLUJOSUC | number:'1.2-2'}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -130,14 +138,18 @@
                 <tr>
                     <th>Másico</th>
                     <th class="dimension">lbm/min</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.FLUJOMAS}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMAS}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMAS}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.FLUJOMAS}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMAS}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMAS}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.FLUJOMAS - seccion.outputTeorico.FLUJOMAS}}</td>
+                    <td>{{(seccion.outputAdim.FLUJOMAS - seccion.outputTeorico.FLUJOMAS)*100/seccion.outputTeorico.FLUJOMAS}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -146,14 +158,18 @@
                 <tr>
                     <th colspan="2">Velocidad de giro</th>
                     <th class="dimension">rpm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.RPM}}</td>
+                    <td>{{seccion.outputAdim.RPM}}</td>
+                    <td>{{seccion.outputAdim.RPM}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.RPM}}</td>
+                    <td>{{seccion.outputTeorico.RPM}}</td>
+                    <td>{{seccion.outputTeorico.RPM}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.RPM - seccion.outputTeorico.RPM}}</td>
+                    <td>{{(seccion.outputAdim.RPM - seccion.outputTeorico.RPM)*100/seccion.outputTeorico.RPM}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -162,14 +178,18 @@
                 <tr>
                     <th colspan="2">Presión</th>
                     <th class="dimension">psig</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.PSUC}}</td>
+                    <td>{{seccion.outputAdim.PDES}}</td>
+                    <td>{{seccion.outputAdim.PISEN}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.PSUC}}</td>
+                    <td>{{seccion.outputTeorico.PDES}}</td>
+                    <td>{{seccion.outputTeorico.PISEN}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.PDES - seccion.outputTeorico.PDES}}</td>
+                    <td>{{(seccion.outputAdim.PDES - seccion.outputTeorico.PDES)*100/seccion.outputTeorico.PDES}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -178,14 +198,18 @@
                 <tr>
                     <th colspan="2">Temperatúra</th>
                     <th class="dimension">psig</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.TSUC}}</td>
+                    <td>{{seccion.outputAdim.TDES}}</td>
+                    <td>{{seccion.outputAdim.TISEN}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.TSUC}}</td>
+                    <td>{{seccion.outputTeorico.TDES}}</td>
+                    <td>{{seccion.outputTeorico.TISEN}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.TDES - seccion.outputTeorico.TDES}}</td>
+                    <td>{{(seccion.outputAdim.TDES - seccion.outputTeorico.TDES)*100/seccion.outputTeorico.TDES}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -194,14 +218,18 @@
                 <tr>
                     <th colspan="2">Volúmen específico</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.VOLSUC}}</td>
+                    <td>{{seccion.outputAdim.VOLDES}}</td>
+                    <td>{{seccion.outputAdim.VOLISEN}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.VOLSUC}}</td>
+                    <td>{{seccion.outputTeorico.VOLDES}}</td>
+                    <td>{{seccion.outputTeorico.VOLISEN}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.VOLDES - seccion.outputTeorico.VOLDES}}</td>
+                    <td>{{(seccion.outputAdim.VOLDES - seccion.outputTeorico.VOLDES)*100/seccion.outputTeorico.VOLDES}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -210,30 +238,18 @@
                 <tr>
                     <th colspan="2">Densidad</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <th colspan="2">Calor específico</th>
-                    <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.DENSUC}}</td>
+                    <td>{{seccion.outputAdim.DENDES}}</td>
+                    <td>{{seccion.outputAdim.DENISEN}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.DENSUC}}</td>
+                    <td>{{seccion.outputTeorico.DENDES}}</td>
+                    <td>{{seccion.outputTeorico.DENISEN}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.DENDES - seccion.outputTeorico.DENDES}}</td>
+                    <td>{{(seccion.outputAdim.DENDES - seccion.outputTeorico.DENDES)*100/seccion.outputTeorico.DENDES}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -242,14 +258,18 @@
                 <tr>
                     <th colspan="2">Factor de compresibilidad</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD}}</td>
+                    <td>{{(seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD)*100/seccion.outputTeorico.FLUJOMMSCFD}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -258,14 +278,18 @@
                 <tr>
                     <th colspan="2">Entalpía</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.HSUC}}</td>
+                    <td>{{seccion.outputAdim.HDES}}</td>
+                    <td>{{seccion.outputAdim.HISEN}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.HSUC}}</td>
+                    <td>{{seccion.outputTeorico.HDES}}</td>
+                    <td>{{seccion.outputTeorico.HISEN}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.HDES - seccion.outputTeorico.HDES}}</td>
+                    <td>{{(seccion.outputAdim.HDES - seccion.outputTeorico.HDES)*100/seccion.outputTeorico.HDES}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -274,14 +298,18 @@
                 <tr>
                     <th colspan="2">Entropía</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td>{{seccion.outputAdim.SSUC}}</td>
+                    <td>{{seccion.outputAdim.SDES}}</td>
+                    <td>{{seccion.outputAdim.SISEN}}</td>
+                    <!-- Comportamiento Teórico -->
+                    <td>{{seccion.outputTeorico.SSUC}}</td>
+                    <td>{{seccion.outputTeorico.SDES}}</td>
+                    <td>{{seccion.outputTeorico.SISEN}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.SDES - seccion.outputTeorico.SDES}}</td>
+                    <td>{{(seccion.outputAdim.SDES - seccion.outputTeorico.SDES)*100/seccion.outputTeorico.SDES}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -290,14 +318,14 @@
                 <tr>
                     <th colspan="2">Relación de compresión</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td colspan="3">{{seccion.outputAdim.RELCOMP}}</td>
+                    <!-- Comportamiento Teorico -->
+                    <td colspan="3">{{seccion.outputTeorico.RELCOMP}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.RELCOMP - seccion.outputTeorico.RELCOMP}}</td>
+                    <td>{{(seccion.outputAdim.RELCOMP - seccion.outputTeorico.RELCOMP)*100/seccion.outputTeorico.RELCOMP}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -306,14 +334,14 @@
                 <tr>
                     <th colspan="2">Relación de volumenes</th>
                     <th class="dimension">pie3/lbm</th>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <!-- Comportamiento Real -->
+                    <td colspan="3">{{seccion.outputAdim.RELVOL}}</td>
+                    <!-- Comportamiento Teorico -->
+                    <td colspan="3">{{seccion.outputTeorico.RELVOL}}</td>
+                    <!-- Diferencia -->
+                    <td>{{seccion.outputAdim.RELVOL - seccion.outputTeorico.RELVOL}}</td>
+                    <td>{{(seccion.outputAdim.RELVOL - seccion.outputTeorico.RELVOL)*100/seccion.outputTeorico.RELVOL}}%</td>
+                    <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -323,10 +351,10 @@
                     <th rowspan="2">Cabezal</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADPOLI}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADPOLI}}</td>
+                    <td>{{seccion.outputAdim.HEADPOLI - seccion.outputTeorico.HEADPOLI}}</td>
+                    <td>{{(seccion.outputAdim.HEADPOLI - seccion.outputTeorico.HEADPOLI)*100/seccion.outputTeorico.HEADPOLI}}%</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -336,10 +364,10 @@
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
+                    <td>{{seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN}}</td>
+                    <td>{{(seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN)*100/seccion.outputTeorico.HEADISEN}}%</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -348,44 +376,48 @@
                 <!--  -->
                 <tr>
                     <th rowspan="2">Potencia</th>
-                    <th>Politrópico</th>
+                    <th>Al Gas</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPGAS}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPGAS}}</td>
+                    <td>{{seccion.outputAdim.HPGAS - seccion.outputTeorico.HPGAS}}</td>
+                    <td>{{(seccion.outputAdim.HPGAS - seccion.outputTeorico.HPGAS)*100/seccion.outputTeorico.HPGAS}}%</td>
                     <td>-</td>
                     <td>-</td>
-                    <td rowspan="10" colspan="4">-</td>
+                    <td>-</td>
+                    <td>-</td>
+
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
-                    <th>Isentrópico</th>
+                    <th>Al freno</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
-
+                    <td colspan="3">{{seccion.outputTeorico.HPFRENO}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPFRENO}}</td>
+                    <td>{{seccion.outputAdim.HPFRENO - seccion.outputTeorico.HPFRENO}}</td>
+                    <td>{{(seccion.outputAdim.HPFRENO - seccion.outputTeorico.HPFRENO)*100/seccion.outputTeorico.HPFRENO}}%</td>
+                    <td rowspan="9" colspan="4">-</td>
                 </tr>
                 <!--  -->
                 <tr>
                     <th rowspan="2">Coeficiente de cabezal</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADPOLI}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADPOLI}}</td>
+                    <td>{{seccion.outputAdim.CFHEADPOLI - seccion.outputTeorico.CFHEADPOLI}}</td>
+                    <td>{{(seccion.outputAdim.CFHEADPOLI - seccion.outputTeorico.CFHEADPOLI)*100/seccion.outputTeorico.CFHEADPOLI}}%</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
+                    <td>{{seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN}}</td>
+                    <td>{{(seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN)*100/seccion.outputTeorico.HEADISEN}}%</td>
 
                 </tr>
                 <!--  -->
@@ -394,20 +426,20 @@
                     <th rowspan="2">Eficiencia</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICPOLI}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICPOLI}}</td>
+                    <td>{{seccion.outputAdim.EFICPOLI - seccion.outputTeorico.EFICPOLI}}</td>
+                    <td>{{(seccion.outputAdim.EFICPOLI - seccion.outputTeorico.EFICPOLI)*100/seccion.outputTeorico.EFICPOLI}}%</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICISEN}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICISEN}}</td>
+                    <td>{{seccion.outputAdim.EFICISEN - seccion.outputTeorico.EFICISEN}}</td>
+                    <td>{{(seccion.outputAdim.EFICISEN - seccion.outputTeorico.EFICISEN)*100/seccion.outputTeorico.EFICISEN}}%</td>
 
                 </tr>
                 <!--  -->
@@ -416,42 +448,42 @@
                     <th rowspan="2">Coeficiente entrada de trabajo</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFWORKPOLI}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFWORKPOLI}}</td>
+                    <td>{{seccion.outputAdim.CFWORKPOLI - seccion.outputTeorico.CFWORKPOLI}}</td>
+                    <td>{{(seccion.outputAdim.CFWORKPOLI - seccion.outputTeorico.CFWORKPOLI)*100/seccion.outputTeorico.CFWORKPOLI}}%</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADISEN}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADISEN}}</td>
+                    <td>{{seccion.outputAdim.CFHEADISEN - seccion.outputTeorico.CFHEADISEN}}</td>
+                    <td>{{(seccion.outputAdim.CFHEADISEN - seccion.outputTeorico.CFHEADISEN)*100/seccion.outputTeorico.CFHEADISEN}}%</td>
 
                 </tr>
                 <!--  -->
                 <!--  -->
                 <tr>
                     <th rowspan="2">Coeficiente de flujo (referido a succión)</th>
-                    <th>Politrópico</th>
+                    <th>Q/N</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.QN}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.QN}}</td>
+                    <td>{{seccion.outputAdim.QN - seccion.outputTeorico.QN}}</td>
+                    <td>{{(seccion.outputAdim.QN - seccion.outputTeorico.QN)*100/seccion.outputTeorico.QN}}%</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
-                    <th>Isentrópico</th>
+                    <th>Φ</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">-</td>
-                    <td colspan="3">-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.PHI}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.PHI}}</td>
+                    <td>{{seccion.outputAdim.PHI - seccion.outputTeorico.PHI}}</td>
+                    <td>{{(seccion.outputAdim.PHI - seccion.outputTeorico.PHI)*100/seccion.outputTeorico.PHI}}%</td>
 
                 </tr>
                 <!--  -->
