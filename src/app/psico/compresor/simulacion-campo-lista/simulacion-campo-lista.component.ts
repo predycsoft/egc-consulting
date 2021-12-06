@@ -6,18 +6,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { find, timestamp } from 'rxjs/operators';
-import { cromatografia, curva, equipo, mezcla, outputTren, pruebaCampo, simSeccion, simulacionPE, simulacionTren, tren } from 'src/app/services/data-service.service';
+import { cromatografia, curva, equipo, mezcla, outputTren, outputTrenAdim, pruebaCampo, simSeccion, simulacionPE, simulacionTren, tren } from 'src/app/services/data-service.service';
 import { SimulacionCampoInputComponent } from '../../simulacion-campo-input/simulacion-campo-input.component';
 import { DialogSimCampoComponent } from '../dialog-sim-campo/dialog-sim-campo.component';
 import { SimulacionCampoDialogResultadosComponent } from '../simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
 import * as firebase from 'firebase/app';
 import { SimulacionService } from 'src/app/services/simulacion.service';
+import { DialogService } from 'src/app/services/dialog.service';
 
 interface param {
   nombre: string;
   var: string;
-  max: number;
-  min: number;
+  filter: filter[];
+  filtered: boolean
+}
+
+interface filter {
+  min: number,
+  max: number,
 }
 
 @Component({
@@ -33,6 +39,7 @@ export class SimulacionCampoListaComponent implements OnInit {
   trenTag: string;
   indice;
   simulaciones: pruebaCampo[] = []
+  filteredSimulaciones: pruebaCampo[] = []
   tren: tren
   equipos: equipo[]
   listaSimulaciones: string[] = []
@@ -40,6 +47,7 @@ export class SimulacionCampoListaComponent implements OnInit {
   constructor(
     private ngxCsvParser: NgxCsvParser,
     public dialog: MatDialog,
+    public dialogService: DialogService,
     private route: ActivatedRoute,
     private afs: AngularFirestore,
     private ss: SimulacionService,
@@ -47,7 +55,10 @@ export class SimulacionCampoListaComponent implements OnInit {
   // Variables para descarga de CSV
   csvRecords: any[] = [];
   header = false;
+  fechaMin = null;
+  fechaMax = null;
   file;
+  range = []
 
   ngOnInit(): void {
     this.route.parent.params.subscribe(params => {
@@ -56,24 +67,6 @@ export class SimulacionCampoListaComponent implements OnInit {
         this.trenTag = params.trenTag
         const docTren = await this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).ref.get()
         this.tren = docTren.data() as tren
-        this.params = [
-          { nombre: "", var: "", min: null, max: null },
-          { nombre: 'Fecha y hora.', var: 'fecha', min: null, max: null },
-          { nombre: 'Simulacion', var: 'fecha', min: null, max: null },
-          { nombre: 'Compresor/Seccion', var: 'fecha', min: null, max: null },
-          { nombre: `Flujo ${this.tren.dimensiones.flujo}`, var: 'q', min: null, max: null },
-          { nombre: 'RPM', var: 'rpm', min: null, max: null },
-          { nombre: `Psucc. ${this.tren.dimensiones.presion}`, var: 'psuc', min: null, max: null },
-          { nombre: `Pdesc. ${this.tren.dimensiones.presion}`, var: 'pdesc', min: null, max: null },
-          { nombre: `Tsucc. ${this.tren.dimensiones.temperatura}`, var: 'tsuc', min: null, max: null },
-          { nombre: `Tdesc. ${this.tren.dimensiones.temperatura}`, var: 'tdesc', min: null, max: null },
-          { nombre: 'Pot.', var: 'pot', min: null, max: null },
-          { nombre: 'ΣPot.', var: 'potSum', min: null, max: null },
-          // Coeficientes adimensionales
-          { nombre: 'Q/N', var: 'cabP', min: null, max: null },
-          { nombre: 'Coef. Cab. Poli', var: 'cabP', min: null, max: null },
-          { nombre: 'Efic. Poli', var: 'efiP', min: null, max: null },
-        ]
         let tags = []
         for (let index = 0; index < this.tren.equipos.length; index++) {
           const element = this.tren.equipos[index];
@@ -84,44 +77,145 @@ export class SimulacionCampoListaComponent implements OnInit {
           .collection<equipo>("equipos").valueChanges().subscribe(async equipos => {
             this.equipos = []
             this.equipos = equipos.filter(x => tags.includes(x.tag))
+            let secciones = 0
+            for (let eq = 0; eq < this.equipos.length; eq++) {
+              secciones += this.equipos[eq].nSecciones;
+            }
+            let filter = []
+            this.range = []
+            console.log(secciones)
+            for (let index = 0; index < secciones; index++) {
+              filter.push({
+                min: null,
+                max: null,
+              })
+              this.range.push({
+                min: null,
+                max: null,
+              })
+
+            }
+            this.params = [
+              { nombre: "", var: "", filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'Fecha y hora.', var: 'fecha', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'Simulacion', var: 'simulacion', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'Compresor/Seccion', var: 'compresor', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: `Flujo ${this.tren.dimensiones.flujo}`, var: 'q', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'RPM', var: 'rpm', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: `Psucc. ${this.tren.dimensiones.presion}`, var: 'psuc', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: `Pdesc. ${this.tren.dimensiones.presion}`, var: 'pdes', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: `Tsucc. ${this.tren.dimensiones.temperatura}`, var: 'tsuc', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: `Tdesc. ${this.tren.dimensiones.temperatura}`, var: 'tdes', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'Pot.', var: 'hpgas', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'ΣPot.', var: 'hpgastot', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              // Coeficientes adimensionales
+              { nombre: 'Q/N', var: 'qn', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'Coef. Cab. Poli', var: 'cabP', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+              { nombre: 'Efic. Poli', var: 'efiP', filter: JSON.parse(JSON.stringify(filter)), filtered: false },
+            ]
           })
         this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).collection("indices-campo").doc("indice-campo").valueChanges().subscribe(indice => {
           this.indice = indice
           this.simulaciones = Object.values(this.indice)
           this.simulaciones.sort((a, b) => +a.simTimestamp - +b.simTimestamp)
-          this.totalizarHp()
+          this.filteredSimulaciones = this.simulaciones
           console.log(this.simulaciones)
         })
       })
     })
   }
-
-  actualMin;
-  actualMax;
   selectedParam;
   iParam;
 
   clickParam(param, i) {
     this.selectedParam = param
     this.iParam = i
-    this.actualMin = this.params[this.iParam].min
-    this.actualMax = this.params[this.iParam].max
+    this.range = this.params[this.iParam].filter
   }
 
-  aplicarFiltro($event: any) {
+  aplicarFiltro($event: any, i) {
     $event.stopPropagation();
     //Another instructions
-    this.params[this.iParam].min = this.actualMin;
-    this.params[this.iParam].max = this.actualMax;
+    if(this.selectedParam == "fecha"){
+      if(this.fechaMin) this.range[0].min = +new Date(this.fechaMin)*10000; else this.range[0].min = null
+      if(this.fechaMax) this.range[0].max = +new Date(this.fechaMax)*10000; else this.range[0].max = null
+      console.log(this.range)
+      console.log(this.simulaciones[0].simTimestamp)
+    }
+    this.params[this.iParam].filter[i].min = this.range[i].min;
+    this.params[this.iParam].filter[i].max = this.range[i].max;
+    this.filtrar()
   }
 
-  borrarFiltro($event: any) {
+  borrarFiltro($event: any, i) {
     $event.stopPropagation();
     //Another instructions
-    this.params[this.iParam].min = null;
-    this.params[this.iParam].max = null;
-    this.actualMin = null;
-    this.actualMax = null;
+    this.params[this.iParam].filter[i].min = null;
+    this.params[this.iParam].filter[i].max = null;
+    this.filtrar()
+  }
+
+  filtrar() {
+    this.filteredSimulaciones = this.simulaciones
+    for (let index = 0; index < this.params.length; index++) {
+      for (let i = 0; i < this.simulaciones[0].simSecciones.length; i++) {
+        let min = 0
+        let max = 0
+        if ( this.params[index].filter.findIndex(x => x.min != null) == -1 && this.params[index].filter.findIndex(x => x.max != null) == -1){
+          this.params[index].filtered = false
+        }
+        if(this.params[index].filter[i].min == null){
+          min = -1000000000000000000000000000
+        } else {
+          min = this.params[index].filter[i].min
+          this.params[index].filtered = true
+        }
+        if(this.params[index].filter[i].max == null){
+          max = 10000000000000000000000000000
+        } else {
+          max = this.params[index].filter[i].max
+          this.params[index].filtered = true
+        }
+        const param = this.params[index].var;
+        if (param == "fecha") {
+          if(i == 0) this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simTimestamp >= min && x.simTimestamp <= max)
+        }
+        if (param == "q") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].FLUJOSUC >= min && x.simSecciones[i].FLUJOSUC <= max)
+        }
+        if (param == "rpm") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].RPM >= min && x.simSecciones[i].RPM <= max)
+        }
+        if (param == "psuc") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].PSUC >= min && x.simSecciones[i].PSUC <= max)
+        }
+        if (param == "pdes") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].PDES >= min && x.simSecciones[i].PDES <= max)
+        }
+        if (param == "tsuc") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].TSUC >= min && x.simSecciones[i].TSUC <= max)
+        }
+        if (param == "tdes") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].TDES >= min && x.simSecciones[i].TDES <= max)
+        }
+        if (param == "hpgas") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].HPGAS >= min && x.simSecciones[i].HPGAS <= max)
+        }
+        if (param == "hpgastot") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simTren.HPGAS >= min && x.simTren.HPGAS <= max)
+        }
+        if (param == "qn") {
+          if(i == 0) this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].QN >= min && x.simSecciones[i].QN <= max)
+        }
+        if (param == "cabP") {
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].HEADPOLI >= min && x.simSecciones[i].HEADPOLI <= max)
+        }
+        if (param == "efiP") {
+          console.log(min, max)
+          this.filteredSimulaciones = this.filteredSimulaciones.filter(x => x.simSecciones[i].EFIC >= min && x.simSecciones[i].EFIC <= max)
+        }
+      }
+    }
   }
 
   openDialogResultados() {
@@ -180,7 +274,7 @@ export class SimulacionCampoListaComponent implements OnInit {
     }
   }
 
-  armarData() {
+  async armarData() {
     let timestamps = []
     for (let index = 0; index < this.simulaciones.length; index++) {
       const element = this.simulaciones[index];
@@ -194,6 +288,7 @@ export class SimulacionCampoListaComponent implements OnInit {
         sim.simId = ""
         sim.simDate = new Date((+punto[0] - 25569) * 86400 * 1000)
         sim.simTimestamp = (+punto[0] - 25569) * 86400 * 1000 * 10000
+        sim.simTren = new outputTrenAdim
         // i es el conteo de cada seccion que forma parte del tren
         let i = 0
         for (let comp = 1; comp < this.tren.equipos.length + 1; comp++) {
@@ -247,7 +342,7 @@ export class SimulacionCampoListaComponent implements OnInit {
             }
             let mezcla: mezcla = {
               cromatografiaOriginal: cromatografiaOriginal,
-              cromatografiaNormalizada: this.ss.normalizarCromatografia(cromatografiaOriginal),
+              cromatografiaNormalizada:  this.ss.normalizarCromatografia(cromatografiaOriginal),
               id: "",
               nombre: "",
             }
@@ -283,17 +378,17 @@ export class SimulacionCampoListaComponent implements OnInit {
         // sim.simTipo =
         // sim.simCurvas
       }
-
     }
     this.simulaciones = simulaciones
     this.totalizarHp()
-    console.log(this.simulaciones)
+    await this.guardarIndice()
+    this.dialogService.dialogExito()
   }
 
-  guardarIndice() {
+  async guardarIndice() {
     let indice = this.simulaciones.reduce((a, v) => ({ ...a, [v.simTimestamp]: JSON.parse(JSON.stringify(v)) }), {})
     console.log(indice)
-    this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).collection("indices-campo").doc("indice-campo").set({
+    await this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).collection("indices-campo").doc("indice-campo").set({
       ...indice
     })
   }
@@ -377,12 +472,13 @@ export class SimulacionCampoListaComponent implements OnInit {
       await this.borrarPunto(element)
     }
     this.listaSimulaciones = []
+    this.dialogService.dialogExito()
   }
 
   async borrarPunto(timestamp: string) {
     let punto = this.simulaciones.find(x => +x.simTimestamp == +timestamp)
     console.log(punto)
-    this.ss.borrarPunto(this.proyectoId, this.tren.tag, timestamp, punto)
+    await this.ss.borrarPunto(this.proyectoId, this.tren.tag, timestamp, punto)
   }
 
   async marcarTodos() {
@@ -409,5 +505,13 @@ export class SimulacionCampoListaComponent implements OnInit {
     this.listaSimulaciones = []
     this.simulaciones.forEach(x => x.checked = false)
     console.log(this.listaSimulaciones)
+  }
+
+  trackByIdx(index: number, obj: any): any {
+    return index;
+  }
+
+  matpickerToTimestamp(){
+
   }
 }

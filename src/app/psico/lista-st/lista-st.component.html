@@ -29,13 +29,44 @@
         </tr>
         <tr *ngFor="let item of simulaciones">
             <td>
-                <a routerLink='/psico/proyecto/{{proyectoId}}/tren/{{trenTag}}/simulacion-teorica/{{item.id}}'>
+                <a (click)="openSimulacion(item.id)">
                     {{item.nombre}}
                 </a>
             </td>
-            <td>{{item.fechaCreacion }}</td>
+            <td>{{item.simTimestamp | date}}</td>
+            <td>
+                mezcla
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.FLUJOMMSCFD  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.RPM  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.PSUC  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.PDES  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.TSUC  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.TDES  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.CFHEADPOLI  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.EFICPOLI  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.HPGAS  | number: '1.2-2'}}</div>
+            </td>
+            <td class="centertext">
+                <div *ngFor="let sec of item.simulacion">{{sec.outputTeorico.HPGAS  | number: '1.2-2'}}</div>
+            </td>
         </tr>
     </table>
-
-
 </div>

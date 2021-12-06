@@ -21,7 +21,7 @@ export class pruebaCampo {
 
 export class simulacionTren {
   simId: string = "";
-  simDate: Date = new Date;
+  simDate: any = new Date;
   simTipo: string = "";
   simTimestamp: number = 0
   simulacion: simulacionPE[]
@@ -33,8 +33,11 @@ export class simulacionTren {
 export class simulacionTrenTeorica {
   simId: string = "";
   simTimestamp: number = 0;
+  simDate: any = new Date()
   nombre: string = "";
   simulacion: simulacionTeorica[] = []
+  outputTren: outputTrenTeorico;
+  mapaTren: outputTrenTeorico[]
 }
 
 export class outputTren {
@@ -332,6 +335,7 @@ export class puntoMapa {
   HEADISEN: number = 0;
   FLUJOMMSCFD: number = 0;
   FLUJOMAS: number = 0;
+  seccion: number = 0;
 }
 
 

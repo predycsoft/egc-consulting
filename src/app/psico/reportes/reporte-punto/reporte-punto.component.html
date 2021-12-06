@@ -68,7 +68,6 @@
                     <th rowspan="3" class="centertext">Unidad</th>
                     <th colspan="3" class="centertext">Comportamiento real</th>
                     <th colspan="3" class="centertext">Comportamiento teórico</th>
-                    <th colspan="2" class="centertext">Diferencia</th>
                     <th colspan="4" class="centertext">Cromatografía, base seca</th>
                 </tr>
                 <tr>
@@ -78,8 +77,6 @@
                     <th class="centertext">Succión</th>
                     <th class="centertext">Descarga</th>
                     <th class="centertext">Isentrópico</th>
-                    <th class="centertext">Abs</th>
-                    <th class="centertext">Rel</th>
                     <th rowspan="2">Componente</th>
                     <th rowspan="2">Fórmula</th>
                     <th rowspan="2">Peso Mol. lb/lbmol</th>
@@ -92,24 +89,19 @@
                     <th class="centertext">1</th>
                     <th class="centertext">2</th>
                     <th class="centertext">3</th>
-                    <th class="centertext">[1]</th>
-                    <th class="centertext">[2]</th>
                 </tr>
                 <tr>
                     <th rowspan="3">Flujo</th>
                     <th rowspan="2">Volumétrico</th>
                     <th class="dimension">MMscfd</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <td>{{(seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD)*100/seccion.outputTeorico.FLUJOMMSCFD}}%</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD  | number:'1.2-2'}}</td>
                     <!-- Cromatografía -->
                     <td>-</td>
                     <td>-</td>
@@ -126,266 +118,224 @@
                     <td>{{seccion.outputTeorico.FLUJOSUC | number:'1.2-2'}}</td>
                     <td>{{seccion.outputTeorico.FLUJODES | number:'1.2-2'}}</td>
                     <td>{{seccion.outputTeorico.FLUJOISEN | number:'1.2-2'}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.FLUJOSUC  - seccion.outputTeorico.FLUJOSUC }}</td>
-                    <td>{{(seccion.outputAdim.FLUJOSUC  - seccion.outputTeorico.FLUJOSUC )*100/seccion.outputTeorico.FLUJOSUC | number:'1.2-2'}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                                        <!-- Cromatografía -->
+                    <td>Metano</td>
+                    <td>(CH4)</td>
+                    <td>16.043</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.metano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th>Másico</th>
                     <th class="dimension">lbm/min</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.FLUJOMAS}}</td>
-                    <td>{{seccion.outputAdim.FLUJOMAS}}</td>
-                    <td>{{seccion.outputAdim.FLUJOMAS}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMAS  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMAS  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMAS  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.FLUJOMAS}}</td>
-                    <td>{{seccion.outputTeorico.FLUJOMAS}}</td>
-                    <td>{{seccion.outputTeorico.FLUJOMAS}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.FLUJOMAS - seccion.outputTeorico.FLUJOMAS}}</td>
-                    <td>{{(seccion.outputAdim.FLUJOMAS - seccion.outputTeorico.FLUJOMAS)*100/seccion.outputTeorico.FLUJOMAS}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.FLUJOMAS  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMAS  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMAS  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Etano </td>
+                    <td>(C2H6)</td>
+                    <td>30.07</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.etano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Velocidad de giro</th>
                     <th class="dimension">rpm</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.RPM}}</td>
-                    <td>{{seccion.outputAdim.RPM}}</td>
-                    <td>{{seccion.outputAdim.RPM}}</td>
+                    <td>{{seccion.outputAdim.RPM  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.RPM  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.RPM  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.RPM}}</td>
-                    <td>{{seccion.outputTeorico.RPM}}</td>
-                    <td>{{seccion.outputTeorico.RPM}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.RPM - seccion.outputTeorico.RPM}}</td>
-                    <td>{{(seccion.outputAdim.RPM - seccion.outputTeorico.RPM)*100/seccion.outputTeorico.RPM}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.RPM  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.RPM  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.RPM  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Propano</td>
+                    <td>(C3H8)</td>
+                    <td>44.097</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.propano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Presión</th>
                     <th class="dimension">psig</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.PSUC}}</td>
-                    <td>{{seccion.outputAdim.PDES}}</td>
-                    <td>{{seccion.outputAdim.PISEN}}</td>
+                    <td>{{seccion.outputAdim.PSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.PDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.PISEN  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.PSUC}}</td>
-                    <td>{{seccion.outputTeorico.PDES}}</td>
-                    <td>{{seccion.outputTeorico.PISEN}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.PDES - seccion.outputTeorico.PDES}}</td>
-                    <td>{{(seccion.outputAdim.PDES - seccion.outputTeorico.PDES)*100/seccion.outputTeorico.PDES}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.PSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.PDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.PISEN  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>iso-Butano</td>
+                    <td>(C4H10)</td>
+                    <td>58.124</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.iButano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Temperatúra</th>
                     <th class="dimension">psig</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.TSUC}}</td>
-                    <td>{{seccion.outputAdim.TDES}}</td>
-                    <td>{{seccion.outputAdim.TISEN}}</td>
+                    <td>{{seccion.outputAdim.TSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.TDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.TISEN  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.TSUC}}</td>
-                    <td>{{seccion.outputTeorico.TDES}}</td>
-                    <td>{{seccion.outputTeorico.TISEN}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.TDES - seccion.outputTeorico.TDES}}</td>
-                    <td>{{(seccion.outputAdim.TDES - seccion.outputTeorico.TDES)*100/seccion.outputTeorico.TDES}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.TSUC | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.TDES | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.TISEN | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>n-Butano</td>
+                    <td>(C4H10)</td>
+                    <td>58.124</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.nButano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Volúmen específico</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.VOLSUC}}</td>
-                    <td>{{seccion.outputAdim.VOLDES}}</td>
-                    <td>{{seccion.outputAdim.VOLISEN}}</td>
+                    <td>{{seccion.outputAdim.VOLSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.VOLDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.VOLISEN  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.VOLSUC}}</td>
-                    <td>{{seccion.outputTeorico.VOLDES}}</td>
-                    <td>{{seccion.outputTeorico.VOLISEN}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.VOLDES - seccion.outputTeorico.VOLDES}}</td>
-                    <td>{{(seccion.outputAdim.VOLDES - seccion.outputTeorico.VOLDES)*100/seccion.outputTeorico.VOLDES}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.VOLSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.VOLDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.VOLISEN  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>iso-Pentano</td>
+                    <td>(C5H12)</td>
+                    <td>72.151</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.iPentano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Densidad</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.DENSUC}}</td>
-                    <td>{{seccion.outputAdim.DENDES}}</td>
-                    <td>{{seccion.outputAdim.DENISEN}}</td>
+                    <td>{{seccion.outputAdim.DENSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.DENDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.DENISEN  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.DENSUC}}</td>
-                    <td>{{seccion.outputTeorico.DENDES}}</td>
-                    <td>{{seccion.outputTeorico.DENISEN}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.DENDES - seccion.outputTeorico.DENDES}}</td>
-                    <td>{{(seccion.outputAdim.DENDES - seccion.outputTeorico.DENDES)*100/seccion.outputTeorico.DENDES}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.DENSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.DENDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.DENISEN  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>n-Pentano</td>
+                    <td>(C5H12)</td>
+                    <td>72.151</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.nPentano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Factor de compresibilidad</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.FLUJOMMSCFD  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <td>{{seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD}}</td>
-                    <td>{{(seccion.outputAdim.FLUJOMMSCFD - seccion.outputTeorico.FLUJOMMSCFD)*100/seccion.outputTeorico.FLUJOMMSCFD}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.FLUJOMMSCFD  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Hexanos</td>
+                    <td>(C6H14)</td>
+                    <td>86.178</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.hexano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Entalpía</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.HSUC}}</td>
-                    <td>{{seccion.outputAdim.HDES}}</td>
-                    <td>{{seccion.outputAdim.HISEN}}</td>
+                    <td>{{seccion.outputAdim.HSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.HDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.HISEN  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.HSUC}}</td>
-                    <td>{{seccion.outputTeorico.HDES}}</td>
-                    <td>{{seccion.outputTeorico.HISEN}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.HDES - seccion.outputTeorico.HDES}}</td>
-                    <td>{{(seccion.outputAdim.HDES - seccion.outputTeorico.HDES)*100/seccion.outputTeorico.HDES}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.HSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.HDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.HISEN  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Heptanos</td>
+                    <td>(C7H16)</td>
+                    <td>100.205</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.heptano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Entropía</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td>{{seccion.outputAdim.SSUC}}</td>
-                    <td>{{seccion.outputAdim.SDES}}</td>
-                    <td>{{seccion.outputAdim.SISEN}}</td>
+                    <td>{{seccion.outputAdim.SSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.SDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputAdim.SISEN  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teórico -->
-                    <td>{{seccion.outputTeorico.SSUC}}</td>
-                    <td>{{seccion.outputTeorico.SDES}}</td>
-                    <td>{{seccion.outputTeorico.SISEN}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.SDES - seccion.outputTeorico.SDES}}</td>
-                    <td>{{(seccion.outputAdim.SDES - seccion.outputTeorico.SDES)*100/seccion.outputTeorico.SDES}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>{{seccion.outputTeorico.SSUC  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.SDES  | number:'1.2-2'}}</td>
+                    <td>{{seccion.outputTeorico.SISEN  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Octanos</td>
+                    <td>(C8H18)</td>
+                    <td>114.232</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.octano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Relación de compresión</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td colspan="3">{{seccion.outputAdim.RELCOMP}}</td>
+                    <td colspan="3">{{seccion.outputAdim.RELCOMP  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teorico -->
-                    <td colspan="3">{{seccion.outputTeorico.RELCOMP}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.RELCOMP - seccion.outputTeorico.RELCOMP}}</td>
-                    <td>{{(seccion.outputAdim.RELCOMP - seccion.outputTeorico.RELCOMP)*100/seccion.outputTeorico.RELCOMP}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.RELCOMP  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Nonanos</td>
+                    <td>(C9H20)</td>
+                    <td>128.259</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.nonano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th colspan="2">Relación de volumenes</th>
                     <th class="dimension">pie3/lbm</th>
                     <!-- Comportamiento Real -->
-                    <td colspan="3">{{seccion.outputAdim.RELVOL}}</td>
+                    <td colspan="3">{{seccion.outputAdim.RELVOL  | number:'1.2-2'}}</td>
                     <!-- Comportamiento Teorico -->
-                    <td colspan="3">{{seccion.outputTeorico.RELVOL}}</td>
-                    <!-- Diferencia -->
-                    <td>{{seccion.outputAdim.RELVOL - seccion.outputTeorico.RELVOL}}</td>
-                    <td>{{(seccion.outputAdim.RELVOL - seccion.outputTeorico.RELVOL)*100/seccion.outputTeorico.RELVOL}}%</td>
-                    <!-- Cromatografía -->
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.RELVOL  | number:'1.2-2'}}</td>
+                                        <!-- Cromatografía -->
+                    <td>Decanos</td>
+                    <td>(C10H22)</td>
+                    <td>142.286</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.decano*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <th rowspan="2">Cabezal</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.HEADPOLI}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.HEADPOLI}}</td>
-                    <td>{{seccion.outputAdim.HEADPOLI - seccion.outputTeorico.HEADPOLI}}</td>
-                    <td>{{(seccion.outputAdim.HEADPOLI - seccion.outputTeorico.HEADPOLI)*100/seccion.outputTeorico.HEADPOLI}}%</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADPOLI | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADPOLI | number:'1.2-2'}}</td>
+                    <td>Diox. Carbono</td>
+                    <td>(CO2)</td>
+                    <td>44.01</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
-                    <td>{{seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN}}</td>
-                    <td>{{(seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN)*100/seccion.outputTeorico.HEADISEN}}%</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN | number:'1.2-2'}}</td>
+                    <td>Nitrógeno</td>
+                    <td>(N2)</td>
+                    <td>28.013</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.nitrogeno*100 | number:'1.2-2'}}%</td>
                 </tr>
                 <!--  -->
                 <tr>
                     <th rowspan="2">Potencia</th>
                     <th>Al Gas</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.HPGAS}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.HPGAS}}</td>
-                    <td>{{seccion.outputAdim.HPGAS - seccion.outputTeorico.HPGAS}}</td>
-                    <td>{{(seccion.outputAdim.HPGAS - seccion.outputTeorico.HPGAS)*100/seccion.outputTeorico.HPGAS}}%</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPGAS | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPGAS | number:'1.2-2'}}</td>
+                    <td>Sulf. Hidrógeno</td>
+                    <td>(H2S)</td>
+                    <td>34.076</td>
+                    <td>{{seccion.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno*100 | number:'1.2-2'}}%</td>
 
 
                 </tr>
@@ -393,10 +343,8 @@
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Al freno</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.HPFRENO}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.HPFRENO}}</td>
-                    <td>{{seccion.outputAdim.HPFRENO - seccion.outputTeorico.HPFRENO}}</td>
-                    <td>{{(seccion.outputAdim.HPFRENO - seccion.outputTeorico.HPFRENO)*100/seccion.outputTeorico.HPFRENO}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPFRENO | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HPFRENO | number:'1.2-2'}}</td>
                     <td rowspan="9" colspan="4">-</td>
                 </tr>
                 <!--  -->
@@ -404,20 +352,16 @@
                     <th rowspan="2">Coeficiente de cabezal</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.CFHEADPOLI}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.CFHEADPOLI}}</td>
-                    <td>{{seccion.outputAdim.CFHEADPOLI - seccion.outputTeorico.CFHEADPOLI}}</td>
-                    <td>{{(seccion.outputAdim.CFHEADPOLI - seccion.outputTeorico.CFHEADPOLI)*100/seccion.outputTeorico.CFHEADPOLI}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADPOLI | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADPOLI | number:'1.2-2'}}</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.HEADISEN}}</td>
-                    <td>{{seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN}}</td>
-                    <td>{{(seccion.outputAdim.HEADISEN - seccion.outputTeorico.HEADISEN)*100/seccion.outputTeorico.HEADISEN}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.HEADISEN | number:'1.2-2'}}</td>
 
                 </tr>
                 <!--  -->
@@ -426,20 +370,16 @@
                     <th rowspan="2">Eficiencia</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.EFICPOLI}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.EFICPOLI}}</td>
-                    <td>{{seccion.outputAdim.EFICPOLI - seccion.outputTeorico.EFICPOLI}}</td>
-                    <td>{{(seccion.outputAdim.EFICPOLI - seccion.outputTeorico.EFICPOLI)*100/seccion.outputTeorico.EFICPOLI}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICPOLI | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICPOLI | number:'1.2-2'}}</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.EFICISEN}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.EFICISEN}}</td>
-                    <td>{{seccion.outputAdim.EFICISEN - seccion.outputTeorico.EFICISEN}}</td>
-                    <td>{{(seccion.outputAdim.EFICISEN - seccion.outputTeorico.EFICISEN)*100/seccion.outputTeorico.EFICISEN}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICISEN | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.EFICISEN | number:'1.2-2'}}</td>
 
                 </tr>
                 <!--  -->
@@ -448,20 +388,15 @@
                     <th rowspan="2">Coeficiente entrada de trabajo</th>
                     <th>Politrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.CFWORKPOLI}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.CFWORKPOLI}}</td>
-                    <td>{{seccion.outputAdim.CFWORKPOLI - seccion.outputTeorico.CFWORKPOLI}}</td>
-                    <td>{{(seccion.outputAdim.CFWORKPOLI - seccion.outputTeorico.CFWORKPOLI)*100/seccion.outputTeorico.CFWORKPOLI}}%</td>
-
+                    <td colspan="3">{{seccion.outputTeorico.CFWORKPOLI | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFWORKPOLI | number:'1.2-2'}}</td>
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Isentrópico</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.CFHEADISEN}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.CFHEADISEN}}</td>
-                    <td>{{seccion.outputAdim.CFHEADISEN - seccion.outputTeorico.CFHEADISEN}}</td>
-                    <td>{{(seccion.outputAdim.CFHEADISEN - seccion.outputTeorico.CFHEADISEN)*100/seccion.outputTeorico.CFHEADISEN}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADISEN | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.CFHEADISEN | number:'1.2-2'}}</td>
 
                 </tr>
                 <!--  -->
@@ -470,21 +405,16 @@
                     <th rowspan="2">Coeficiente de flujo (referido a succión)</th>
                     <th>Q/N</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.QN}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.QN}}</td>
-                    <td>{{seccion.outputAdim.QN - seccion.outputTeorico.QN}}</td>
-                    <td>{{(seccion.outputAdim.QN - seccion.outputTeorico.QN)*100/seccion.outputTeorico.QN}}%</td>
+                    <td colspan="3">{{seccion.outputTeorico.QN | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.QN | number:'1.2-2'}}</td>
 
                 </tr>
                 <tr>
                     <!-- <th rowspan="2">Cabezal</th> -->
                     <th>Φ</th>
                     <th class="dimension">dim</th>
-                    <td colspan="3">{{seccion.outputTeorico.PHI}}</td>
-                    <td colspan="3">{{seccion.outputTeorico.PHI}}</td>
-                    <td>{{seccion.outputAdim.PHI - seccion.outputTeorico.PHI}}</td>
-                    <td>{{(seccion.outputAdim.PHI - seccion.outputTeorico.PHI)*100/seccion.outputTeorico.PHI}}%</td>
-
+                    <td colspan="3">{{seccion.outputTeorico.PHI | number:'1.2-2'}}</td>
+                    <td colspan="3">{{seccion.outputTeorico.PHI | number:'1.2-2'}}</td>
                 </tr>
                 <!--  -->
 

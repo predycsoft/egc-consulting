@@ -27,20 +27,20 @@
     <button (click)="marcarTodos()">Marcar Todos</button>
     <button (click)="marcarTodosNoSim()">Marcar Todos No Simulados</button>
     <button (click)="desmarcarTodos()">Desmarcar Todos</button>
-    <table class="fw">
+    <table *ngIf="simulaciones.length != 0" class="fw">
         <tr>
             <th [matMenuTriggerFor]="filter" *ngFor="let item of params; let i = index" class="centertext"
                 (click)="clickParam(item.var, i)">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".5rem">
                     <span class="text1 ft500 centertext cursorPointer"
-                        *ngIf="item.min == null && item.max == null ">{{item.nombre}}</span>
-                    <span class="aText5 ft500 centertext cursorPointer"
-                        *ngIf="item.min != null || item.max != null ">{{item.nombre}}</span>
-                    <mat-icon class="aText5 ft17 " *ngIf="item.min != null || item.max != null ">filter_list</mat-icon>
+                        *ngIf="item.filtered == false">{{item.nombre}}</span>
+                    <span class="aText5 ft500 centertext cursorPointer" 
+                        *ngIf="item.filtered == true">{{item.nombre}}</span>
+                    <mat-icon class="aText5 ft17 " *ngIf="item.filtered == true">filter_list</mat-icon>
                 </div>
             </th>
         </tr>
-        <tr *ngFor="let item of simulaciones" (dblclick)="openSimCampo(item.simId, item.simTimestamp)" class="cursorPointer">
+        <tr *ngFor="let item of filteredSimulaciones" (dblclick)="openSimCampo(item.simId, item.simTimestamp)" class="cursorPointer">
             <td class="centertext" ><mat-checkbox [(ngModel)]="item.checked" (change)="incluir($event, item.simTimestamp)"></mat-checkbox></td>
             <td class="centertext">{{item.simTimestamp/10000 | date: 'dd/MM/yyyy HH:mm'  }}</td>
             <td class="centertext">
@@ -72,7 +72,7 @@
             <td class="centertext">
                 <div *ngFor="let sec of item.simSecciones">{{sec.HPGAS | number: '1.2-2'}}</div>
             </td>
-            <td class="centertext">{{item.totHP | number: '1.2-2'}}</td>
+            <td class="centertext">{{item.simTren.HPGAS| number: '1.2-2'}}</td>
             <td class="centertext">
                 <div *ngFor="let sec of item.simSecciones">{{sec.QN | number: '1.2-2'}}</div>
             </td>
@@ -84,31 +84,79 @@
             </td>
         </tr>
     </table>
+    <div *ngIf="simulaciones.length == 0">
+        <span class="center center"> Inserte data de simulación</span>
+    </div>
     <!-- {{listaSimulaciones | json}} -->
 
     <mat-menu #filter="matMenu" class="contextMenu">
-        <div class="pdt05 pdl08 pdr08 pdb05" (click)="$event.stopPropagation();">
+        <div *ngIf="simulaciones.length != 0" class="pdt05 pdl08 pdr08 pdb05" (click)="$event.stopPropagation();">
             <div fxLayoutAlign="space-between center">
                 <span class="ft500 ft14">Aplicar filtro</span>
                 <mat-icon class="ft18 text3 textButton">close</mat-icon>
             </div>
-            <div fxLayout="row" fxLayoutAlign="center end" fxLayoutGap=".5rem" class="mgt10">
-                <div fxLayout="column" fxLayoutAlign="center center" class="">
-                    <div class="ft12">Max.</div>
-                    <input type="number" placeholder="vacio" class=" centertext" [(ngModel)]="actualMin">
-                </div>
-                <div fxLayout="column" fxLayoutAlign="center center">
-                    <div class="ft12">Min.</div>
-                    <input type="number" placeholder="vacio" class=" centertext" [(ngModel)]="actualMax">
-                </div>
-                <div>
-                    <mat-icon class="iconButton white border whiteFill text3 shadow8" (click)="borrarFiltro($event)">
-                        delete_outline</mat-icon>
-                </div>
-                <div>
-                    <mat-icon class="accentIconButton" (click)="aplicarFiltro($event)">check</mat-icon>
+            <div *ngIf="this.selectedParam != 'hpgastot' && this.selectedParam != 'fecha'">
+                <div *ngFor="let sec of simulaciones[0].simSecciones; let i= index; trackBy:trackByIdx">
+                    <div fxLayout="row" fxLayoutAlign="center end" fxLayoutGap=".5rem" class="mgt10">
+                        <span>C: {{sec.numCompresor}} S: {{sec.numSeccion}}</span>
+                        <div fxLayout="column" fxLayoutAlign="center center" class="">
+                            <div class="ft12">Min.</div>
+                            <input type="number" placeholder="vacio" class=" centertext" [(ngModel)]="this.range[i].min">
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="center center">
+                            <div class="ft12">Max.</div>
+                            <input type="number" placeholder="vacio" class=" centertext" [(ngModel)]="this.range[i].max">
+                        </div>
+                        <div>
+                            <mat-icon class="iconButton white border whiteFill text3 shadow8" (click)="borrarFiltro($event, i)">
+                                delete_outline</mat-icon>
+                        </div>
+                        <div>
+                            <mat-icon class="accentIconButton" (click)="aplicarFiltro($event, i)">check</mat-icon>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div *ngIf="this.selectedParam == 'hpgastot'">
+                    <div fxLayout="row" fxLayoutAlign="center end" fxLayoutGap=".5rem" class="mgt10">
+                        <div fxLayout="column" fxLayoutAlign="center center" class="">
+                            <div class="ft12">Min.</div>
+                            <input type="number" placeholder="vacio" class=" centertext" [(ngModel)]="this.range[0].min">
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="center center">
+                            <div class="ft12">Max.</div>
+                            <input type="number" placeholder="vacio" class=" centertext" [(ngModel)]="this.range[0].max">
+                        </div>
+                        <div>
+                            <mat-icon class="iconButton white border whiteFill text3 shadow8" (click)="borrarFiltro($event, 0)">
+                                delete_outline</mat-icon>
+                        </div>
+                        <div>
+                            <mat-icon class="accentIconButton" (click)="aplicarFiltro($event, 0)">check</mat-icon>
+                        </div>
+                    </div>
+            </div>
+            <div *ngIf="this.selectedParam == 'fecha'">
+                <div fxLayout="row" fxLayoutAlign="center end" fxLayoutGap=".5rem" class="mgt10">
+                    <div fxLayout="column" fxLayoutAlign="center center" class="">
+                        <div class="ft12">Min.</div>
+                        {{fechaMin | json}}
+                        <input type="datetime-local" placeholder="vacio" class=" centertext" [(ngModel)]="fechaMin">
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <div class="ft12">Max.</div>
+                        {{fechaMax | json}}
+                        <input type="datetime-local" placeholder="vacio" class=" centertext" [(ngModel)]="fechaMax">
+                    </div>
+                    <div>
+                        <mat-icon class="iconButton white border whiteFill text3 shadow8" (click)="borrarFiltro($event, 0)">
+                            delete_outline</mat-icon>
+                    </div>
+                    <div>
+                        <mat-icon class="accentIconButton" (click)="aplicarFiltro($event, 0)">check</mat-icon>
+                    </div>
+                </div>
+        </div>
         </div>
     </mat-menu>
 

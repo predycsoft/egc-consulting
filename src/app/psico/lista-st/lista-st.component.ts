@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { DataServiceService } from 'src/app/services/data-service.service';
+import { DataServiceService, outputTrenTeorico, simulacionTeorica, simulacionTrenTeorica } from 'src/app/services/data-service.service';
+import { SimulacionTeoricaComponent } from '../simulacion-teorica/simulacion-teorica.component';
 
 
 @Component({
@@ -15,8 +17,9 @@ export class ListaStComponent implements OnInit {
     private route: ActivatedRoute, 
     private afs: AngularFirestore,
     public data: DataServiceService,
+    public dialog: MatDialog
     ) { }
-    
+
   proyectoId: string;
   trenTag: string;
   simulaciones;
@@ -41,10 +44,29 @@ export class ListaStComponent implements OnInit {
   }
 
   async anadirPrueba(nombre: string){
-    this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).collection("simulaciones-teoricas").doc(nombre).set({
+    let punto: simulacionTrenTeorica = new simulacionTrenTeorica
+    let timestamp = +new Date
+    punto = {
+      simId: timestamp.toString(),
+      simTimestamp: timestamp,
+      simDate: new Date(timestamp),
       nombre: nombre,
-      fechaCreacion: new Date,
-      simulaciones: []
+      outputTren: new outputTrenTeorico,
+      mapaTren: [],
+      simulacion: [],
+    }
+    this.afs.collection("proyectos").doc(this.proyectoId).collection("trenes").doc(this.trenTag).collection("simulaciones-teoricas").doc(punto.simId).set({
+      ...JSON.parse(JSON.stringify(punto))
+    })
+  }
+
+  openSimulacion(simId){
+    const dialogRef = this.dialog.open(SimulacionTeoricaComponent, {
+      data: {
+        simId: simId,
+        proyectoId: this.proyectoId,
+        trenTag: this.trenTag,
+      }
     })
   }
 }

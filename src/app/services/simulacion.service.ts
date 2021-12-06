@@ -5,13 +5,14 @@ import { cromatografia, curva, equipo, mezcla, outputTrenAdim, outputTrenTeorico
 import * as firebase from 'firebase/app';
 import { take } from 'rxjs/operators';
 import { DimensionesService } from './dimensiones.service';
+import { DialogService } from './dialog.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SimulacionService {
 
-  constructor(private http: HttpClient, private afs: AngularFirestore, private dim: DimensionesService) { }
+  constructor(private http: HttpClient, private afs: AngularFirestore, private dim: DimensionesService, public dialog: DialogService) { }
 
   /////////////////////////////////////////////////// ADIMENSIONAL ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,10 +108,10 @@ export class SimulacionService {
               trenHPGAS += simulacion[index].outputAdim.HPGAS
             }
             simulacionTren.outputTren.outputAdim = {
-              PDES: +simulacion[len-1].outputAdim.PDES,
+              PDES: +simulacion[len - 1].outputAdim.PDES,
               HEADPOLI: +trenHEADPOLI,
               HEADISEN: +trenHEADISEN,
-              RELCOMP: +simulacion[len-1].outputAdim.PDES / +simulacion[0].outputAdim.PSUC,
+              RELCOMP: +simulacion[len - 1].outputAdim.PDES / +simulacion[0].outputAdim.PSUC,
               HPGAS: +trenHPGAS,
               PSUC: +simulacion[0].outputAdim.PSUC,
               FLUJOSUC: +simulacion[0].outputAdim.FLUJOSUC,
@@ -126,13 +127,13 @@ export class SimulacionService {
             await this.guardarPunto(proyectoId, trenTag, simulacionTren)
             resolve(simulacionTren)
           } else {
-            alert("No se recibió respuesta del servidor")
+            this.dialog.dialogComentario("No se recibió respuesta del servidor")
             resolve(simulacionTren)
           }
         })
       })
     } else {
-      alert("No se pudo simular porque la data no es valida")
+      this.dialog.dialogComentario("No se pudo simular porque la data no es valida")
       return simulacionTren
     }
   }
@@ -144,7 +145,7 @@ export class SimulacionService {
       sum += cromatografia[index];
     }
     if (+sum.toFixed(1) != 1) {
-      alert("cromatografia vacía o no normalizada")
+      this.dialog.dialogComentario(`cromatografia vacía o no normalizada en Compresor ${simulacion.equipoTag}, Sección ${simulacion.seccion}`)
       simulacion.dataValidaAdim = false
       return simulacion
     } else {
@@ -161,7 +162,7 @@ export class SimulacionService {
         simulacion.inputs.PDIM == "" ||
         simulacion.inputs.QDIM == ""
       ) {
-        alert("faltan datos de simulación")
+        this.dialog.dialogComentario(`faltan datos de simulación para simulación de campo en Compresor ${simulacion.equipoTag}, Sección ${simulacion.seccion}`)
         simulacion.dataValidaAdim = false
         return simulacion
       } else {
@@ -265,10 +266,10 @@ export class SimulacionService {
               trenHPGAS += simulacion[index].outputTeorico.HPGAS
             }
             simulacionTren.outputTren.outputTeorico = {
-              PDES: +simulacion[len-1].outputTeorico.PDES,
+              PDES: +simulacion[len - 1].outputTeorico.PDES,
               HEADPOLI: +trenHEADPOLI,
               HEADISEN: +trenHEADISEN,
-              RELCOMP: +simulacion[len-1].outputTeorico.PDES / +simulacion[0].outputTeorico.PSUC,
+              RELCOMP: +simulacion[len - 1].outputTeorico.PDES / +simulacion[0].outputTeorico.PSUC,
               HPGAS: +trenHPGAS,
               PSUC: +simulacion[0].outputTeorico.PSUC,
               FLUJOSUC: +simulacion[0].outputTeorico.FLUJOSUC,
@@ -290,7 +291,7 @@ export class SimulacionService {
         })
       })
     } else {
-      alert("No se pudo simular porque la data no es valida")
+      this.dialog.dialogComentario("No se pudo simular porque la data no es valida")
       return simulacionTren
     }
   }
@@ -307,7 +308,7 @@ export class SimulacionService {
         sum += +cromatografia[index];
       }
       if (+sum.toFixed(1) != 1) {
-        alert("cromatografia vacía o no normalizada")
+        this.dialog.dialogComentario(`cromatografia vacía o no normalizada en Compresor ${simulacion.equipoTag}, Sección ${simulacion.seccion}`)
         simulacion.dataValidaTeorica = false
         return simulacion
       } else {
@@ -327,7 +328,7 @@ export class SimulacionService {
           simulacion.curva.limStw == 0 ||
           simulacion.curva.limSurge == 0
         ) {
-          alert("faltan datos de simulación")
+          this.dialog.dialogComentario(`faltan datos de simulación para simulación teórica en Compresor ${simulacion.equipoTag}, Sección ${simulacion.seccion}`)
           simulacion.dataValidaTeorica = false
           return simulacion
         } else {
@@ -367,24 +368,74 @@ export class SimulacionService {
             OUTPUT = respuesta as Array<Array<any>>
             console.log("Respuesta Teorica")
             console.log(respuesta)
+            let  trenHEADISEN = 0
+            let  trenHEADPOLI = 0
+            let  trenHPGAS = 0
+
             for (let j = 0; j < simulaciones.length; j++) {
               for (let i = 0; i < OUTPUT.length; i++) {
-                simulaciones[j].outputTeorico.TSUC = OUTPUT[4][j + 1]
-                simulaciones[j].outputTeorico.PSUC = OUTPUT[2][j + 1]
-                simulaciones[j].outputTeorico.RPM = OUTPUT[17][j + 1]
-                simulaciones[j].outputTeorico.FLUJODES = OUTPUT[16][j + 1]
-                simulaciones[j].outputTeorico.PDES = OUTPUT[3][j + 1]
-                simulaciones[j].outputTeorico.TDES = OUTPUT[5][j + 1]
-                simulaciones[j].outputTeorico.HPGAS = OUTPUT[14][j + 1]
-                simulaciones[j].outputTeorico.HDES = OUTPUT[7][j + 1]
-                simulaciones[j].outputTeorico.DENDES = OUTPUT[6][j + 1]
-                simulaciones[j].outputTeorico.SURGE = OUTPUT[8][j + 1]
-                simulaciones[j].outputTeorico.QN = OUTPUT[9][j + 1]
-                simulaciones[j].outputTeorico.STONEW = OUTPUT[10][j + 1]
-                simulaciones[j].outputTeorico.CFHEADPOLI = OUTPUT[11][j + 1]
-                simulaciones[j].outputTeorico.EFICPOLI = OUTPUT[13][j + 1]
-                simulaciones[j].outputTeorico.EXPPOLI = OUTPUT[15][j + 1]
+                simulaciones[j].outputTeorico.EFICPOLI = +OUTPUT[0][j + 1]
+                simulaciones[j].outputTeorico.CFWORKPOLI = +OUTPUT[1][j + 1]
+                simulaciones[j].outputTeorico.CFHEADPOLI = +OUTPUT[2][j + 1]
+                simulaciones[j].outputTeorico.WORKPOLI = +OUTPUT[3][j + 1]
+                simulaciones[j].outputTeorico.HPGAS = +OUTPUT[4][j + 1]
+                simulaciones[j].outputTeorico.FLUJOMMSCFD = +OUTPUT[5][j + 1]
+                simulaciones[j].outputTeorico.FLUJOSUC = +OUTPUT[6][j + 1]
+                simulaciones[j].outputTeorico.FLUJODES = +OUTPUT[7][j + 1]
+                simulaciones[j].outputTeorico.FLUJOISEN = +OUTPUT[8][j + 1]
+                simulaciones[j].outputTeorico.FLUJOMAS = +OUTPUT[9][j + 1]
+                simulaciones[j].outputTeorico.RPM = +OUTPUT[10][j + 1]
+                simulaciones[j].outputTeorico.TSUC = +OUTPUT[11][j + 1]
+                simulaciones[j].outputTeorico.TDES = +OUTPUT[12][j + 1]
+                simulaciones[j].outputTeorico.TISEN = +OUTPUT[13][j + 1]
+                simulaciones[j].outputTeorico.PSUC = +OUTPUT[14][j + 1]
+                simulaciones[j].outputTeorico.PDES = +OUTPUT[15][j + 1]
+                simulaciones[j].outputTeorico.PISEN = +OUTPUT[16][j + 1]
+                simulaciones[j].outputTeorico.VOLSUC = +OUTPUT[17][j + 1]
+                simulaciones[j].outputTeorico.VOLDES = +OUTPUT[18][j + 1]
+                simulaciones[j].outputTeorico.VOLISEN = +OUTPUT[19][j + 1]
+                simulaciones[j].outputTeorico.DENSUC = +OUTPUT[20][j + 1]
+                simulaciones[j].outputTeorico.DENDES = +OUTPUT[21][j + 1]
+                simulaciones[j].outputTeorico.DENISEN = +OUTPUT[22][j + 1]
+                simulaciones[j].outputTeorico.ZSUC = +OUTPUT[23][j + 1]
+                simulaciones[j].outputTeorico.ZDES = +OUTPUT[24][j + 1]
+                simulaciones[j].outputTeorico.ZISEN = +OUTPUT[25][j + 1]
+                simulaciones[j].outputTeorico.HSUC = +OUTPUT[26][j + 1]
+                simulaciones[j].outputTeorico.HDES = +OUTPUT[27][j + 1]
+                simulaciones[j].outputTeorico.HISEN = +OUTPUT[28][j + 1]
+                simulaciones[j].outputTeorico.SSUC = +OUTPUT[29][j + 1]
+                simulaciones[j].outputTeorico.SDES = +OUTPUT[30][j + 1]
+                simulaciones[j].outputTeorico.SISEN = +OUTPUT[31][j + 1]
+                simulaciones[j].outputTeorico.RELCOMP = +OUTPUT[32][j + 1]
+                simulaciones[j].outputTeorico.RELVOL = +OUTPUT[33][j + 1]
+                simulaciones[j].outputTeorico.HEADPOLI = +OUTPUT[34][j + 1]
+                simulaciones[j].outputTeorico.HEADISEN = +OUTPUT[35][j + 1]
+                simulaciones[j].outputTeorico.HPFRENO = +OUTPUT[36][j + 1]
+                simulaciones[j].outputTeorico.CFHEADPOLI = +OUTPUT[37][j + 1]
+                simulaciones[j].outputTeorico.CFHEADISEN = +OUTPUT[38][j + 1]
+                simulaciones[j].outputTeorico.EFICISEN = +OUTPUT[39][j + 1]
+                simulaciones[j].outputTeorico.CFWORKISEN = +OUTPUT[40][j + 1]
+                simulaciones[j].outputTeorico.WORKISEN = +OUTPUT[41][j + 1]
+                simulaciones[j].outputTeorico.QN = +OUTPUT[42][j + 1]
+                simulaciones[j].outputTeorico.PHI = +OUTPUT[43][j + 1]
+                simulaciones[j].outputTeorico.YWM = +OUTPUT[44][j + 1]
+                simulaciones[j].outputTeorico.EXPPOLI = +OUTPUT[45][j + 1]
+                simulaciones[j].outputTeorico.SURGE = +OUTPUT[46][j + 1]
+                simulaciones[j].outputTeorico.STONEW = +OUTPUT[47][j + 1]
               }
+            }
+            punto.outputTren = {
+              HEADPOLI: trenHEADPOLI,
+              HEADISEN: trenHEADISEN,
+              PSUC: simulaciones[0].outputTeorico.PSUC,
+              PDES: simulaciones[simulaciones.length -1].outputTeorico.PDES,
+              HPGAS: trenHPGAS,
+              FLUJOSUC: simulaciones[0].outputTeorico.FLUJOSUC,
+              FLUJOMMSCFD: simulaciones[0].outputTeorico.FLUJOMMSCFD,
+              FLUJOMAS: simulaciones[0].outputTeorico.FLUJOMAS,
+              RPM: simulaciones[0].outputTeorico.HPGAS,
+              RELCOMP: simulaciones[simulaciones.length -1].outputTeorico.PDES/ simulaciones[0].outputTeorico.PSUC,
+              QN: simulaciones[0].outputTeorico.QN,
             }
             punto.simulacion = simulaciones
             resolve(punto)
@@ -404,7 +455,7 @@ export class SimulacionService {
     let sum = 0
     const cromatografia = simulacion.inputs.Mezcla.cromatografiaNormalizada.fraccMolar
     if (+cromatografia.toFixed(1) != 1) {
-      alert("cromatografia vacía o no normalizada")
+      this.dialog.dialogComentario("cromatografia vacía o no normalizada")
       simulacion.dataValidaTeorica = false
       return simulacion
     } else {
@@ -424,7 +475,7 @@ export class SimulacionService {
           simulacion.curva.limStw == 0 ||
           simulacion.curva.limSurge == 0
         ) {
-          alert("faltan datos de simulación")
+          this.dialog.dialogComentario("faltan datos de simulación")
           simulacion.dataValidaTeorica = false
           return simulacion
         } else {
@@ -446,7 +497,7 @@ export class SimulacionService {
           simulacion.curva.limStw == 0 ||
           simulacion.curva.limSurge == 0
         ) {
-          alert("faltan datos de simulación")
+          this.dialog.dialogComentario(`faltan datos de simulación para simulación teórica en Compresor ${simulacion.equipoTag}, Sección ${simulacion.seccion}`)
           simulacion.dataValidaTeorica = false
           return simulacion
         } else {
@@ -476,7 +527,7 @@ export class SimulacionService {
           simTimestamp: punto.simTimestamp,
           outputTren: JSON.parse(JSON.stringify(punto.outputTren)),
           mapaTrenReal: punto.mapaTrenReal,
-          mapaTrenTeorico : punto.mapaTrenTeorico
+          mapaTrenTeorico: punto.mapaTrenTeorico
         })
     } else {
       punto.simTimestamp = +punto.simDate * 1000
@@ -491,7 +542,7 @@ export class SimulacionService {
         simTimestamp: punto.simTimestamp,
         outputTren: JSON.parse(JSON.stringify(punto.outputTren)),
         mapaTrenReal: punto.mapaTrenReal,
-        mapaTrenTeorico : punto.mapaTrenTeorico
+        mapaTrenTeorico: punto.mapaTrenTeorico
       })
     }
     // Guardado en el indice:
@@ -675,6 +726,7 @@ export class SimulacionService {
         }
         for (let sec = 1; sec < equipos[i].nSecciones + 1; sec++) {
           const simulacion = new simulacionTeorica()
+          simulacion.equipo = i + 1
           simulacion.equipoTag = equipos[i].tag
           simulacion.equipoFamilia = equipos[i].familia
           simulacion.seccion = sec
@@ -753,7 +805,7 @@ export class SimulacionService {
         alert("no se ha configurado una RPM de diseno")
       }
       envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
-        TSUC, PSUC, sim.outputAdim.FLUJOMMSCFD, sim.curva.diametro, rpmDiseno, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]"])
+        TSUC, PSUC, sim.outputAdim.FLUJOMMSCFD, sim .curva.diametro, rpmDiseno, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]"])
     }
     return new Promise<simulacionTren>(resolve => {
       this.http.post("http://127.0.0.1:5000/generarMapaTeorico/", JSON.stringify(envio)).pipe(take(1)).subscribe(async (respuesta) => {
@@ -785,7 +837,8 @@ export class SimulacionService {
                 PSUC: +OUTPUT[10][index],
                 HEADISEN: +OUTPUT[11][index],
                 FLUJOMMSCFD: +OUTPUT[12][index],
-                FLUJOMAS: +OUTPUT[13][index]
+                FLUJOMAS: +OUTPUT[13][index],
+                seccion: +OUTPUT[14][index]
               }
               puntos.push(obj)
             }
@@ -812,10 +865,10 @@ export class SimulacionService {
                   HPGAS: HPGAS,
                   FLUJOSUC: punto.simulacion[0].mapas[pto].FLUJODES,
                   FLUJOMMSCFD: punto.simulacion[0].mapas[pto].FLUJOMMSCFD,
-                  FLUJOMAS:punto.simulacion[0].mapas[pto].FLUJOMAS,
+                  FLUJOMAS: punto.simulacion[0].mapas[pto].FLUJOMAS,
                   RPM: punto.simulacion[0].mapas[pto].RPM,
-                  RELCOMP: punto.simulacion[sec].mapas[pto].PDES/punto.simulacion[sec].mapas[pto].PSUC,
-                  QN:punto.simulacion[0].mapas[pto].QN,
+                  RELCOMP: punto.simulacion[sec].mapas[pto].PDES / punto.simulacion[sec].mapas[pto].PSUC,
+                  QN: punto.simulacion[0].mapas[pto].QN,
                 }
                 mapaTrenTeorico.push(obj)
               }
@@ -860,7 +913,6 @@ export class SimulacionService {
           OUTPUT = respuesta as Array<Array<any>>
           let sec = -1 // Inicializacion de la seccion
           let puntos: puntoMapa[] = []
-          let mapaPuntoReal = []
           for (let index = 0; index < OUTPUT[0].length; index++) {
             if (OUTPUT[0][index] == "RPM") {
               if (sec >= 0) {
@@ -884,6 +936,7 @@ export class SimulacionService {
                 HEADISEN: +OUTPUT[11][index],
                 FLUJOMMSCFD: +OUTPUT[12][index],
                 FLUJOMAS: +OUTPUT[13][index],
+                seccion: +OUTPUT[14][index]
               }
               puntos.push(obj)
             }
@@ -910,10 +963,10 @@ export class SimulacionService {
                   HPGAS: HPGAS,
                   FLUJOSUC: punto.simulacion[0].mapaPunto[pto].FLUJODES,
                   FLUJOMMSCFD: punto.simulacion[0].mapaPunto[pto].FLUJOMMSCFD,
-                  FLUJOMAS:punto.simulacion[0].mapaPunto[pto].FLUJOMAS,
+                  FLUJOMAS: punto.simulacion[0].mapaPunto[pto].FLUJOMAS,
                   RPM: punto.simulacion[0].mapaPunto[pto].RPM,
-                  RELCOMP: punto.simulacion[sec].mapaPunto[pto].PDES/punto.simulacion[sec].mapaPunto[pto].PSUC,
-                  QN:punto.simulacion[0].mapaPunto[pto].QN,
+                  RELCOMP: punto.simulacion[sec].mapaPunto[pto].PDES / punto.simulacion[sec].mapaPunto[pto].PSUC,
+                  QN: punto.simulacion[0].mapaPunto[pto].QN,
                 }
                 mapaTrenReal.push(obj)
               }
@@ -930,5 +983,68 @@ export class SimulacionService {
     })
   }
 
+  generarMapaTeorico(punto: simulacionTrenTeorica, equipos: equipo[]) {
+    console.log("simulando mapa")
+    let envio = []
+    envio.push(["Metano", "Etano", "Propano", "I-Butano", "N-Butano", "I-Pentano", " N-Pentano", "Hexano", "Heptano", "Octano", "Nonano", "Decano", "Nitrógeno", "Diox. Carbono", "Sulf. Hidrógeno",
+      "TSUC", "PSUC", "FLUJO", "diametro", "RPM", "CC0", "CC1", "CC2", "CC3", "EXPOCP", "CE0", "CE1", "CE2", "CE3", "EXPOCE", "SURGE", "STONEW", "DDIM", "TDIM", "PDIM", "QDIM"])
+    for (let index = 0; index < punto.simulacion.length; index++) {
+      const sim = punto.simulacion[index];
+      let TSUC = +sim.outputTeorico.TSUC
+      let PSUC = +sim.outputTeorico.PSUC
+      let rpmDiseno = equipos[sim.equipo - 1].rpmDiseno[sim.seccion - 1]
+      if (rpmDiseno == 0) {
+        alert("no se ha configurado una RPM de diseno")
+      }
+      envio.push([+sim.inputs.Mezcla.cromatografiaNormalizada.metano, +sim.inputs.Mezcla.cromatografiaNormalizada.etano, +sim.inputs.Mezcla.cromatografiaNormalizada.propano, sim.inputs.Mezcla.cromatografiaNormalizada.iButano, sim.inputs.Mezcla.cromatografiaNormalizada.nButano, sim.inputs.Mezcla.cromatografiaNormalizada.iPentano, sim.inputs.Mezcla.cromatografiaNormalizada.nPentano, sim.inputs.Mezcla.cromatografiaNormalizada.hexano, sim.inputs.Mezcla.cromatografiaNormalizada.heptano, sim.inputs.Mezcla.cromatografiaNormalizada.octano, sim.inputs.Mezcla.cromatografiaNormalizada.nonano, sim.inputs.Mezcla.cromatografiaNormalizada.decano, sim.inputs.Mezcla.cromatografiaNormalizada.nitrogeno, sim.inputs.Mezcla.cromatografiaNormalizada.dioxCarbono, sim.inputs.Mezcla.cromatografiaNormalizada.sulfHidrogeno,
+        TSUC, PSUC, 0, sim.curva.diametro, rpmDiseno, sim.curva.cc0, sim.curva.cc1, sim.curva.cc2, sim.curva.cc3, sim.curva.expocc, sim.curva.ce0, sim.curva.ce1, sim.curva.ce2, sim.curva.ce3, sim.curva.expoce, sim.curva.limSurge, sim.curva.limStw, "[pulg]", "[°F]", "[psig]", "[MMSCFD]"])
+    }
+    return new Promise<simulacionTrenTeorica>(resolve => {
+      this.http.post("http://127.0.0.1:5000/generarMapaTeorico/", JSON.stringify(envio)).subscribe((respuesta) => {
+        console.log(respuesta)
+        let OUTPUT: Array<Array<any>> = []
+        if (respuesta) {
+          OUTPUT = respuesta as Array<Array<any>>
+          let sec = -1 // Inicializacion de la seccion
+          let puntos = []
+          let puntosTren = []
+          for (let index = 0; index < OUTPUT[0].length; index++) {
+            if (OUTPUT[0][index] == "RPM") {
+              if (sec >= 0) {
+                punto.simulacion[sec].mapas = puntos
+                puntos = []
+              }
+              sec++
+            } else {
+              const obj: puntoMapa = {
+                RPM: OUTPUT[0][index],
+                QN: OUTPUT[1][index],
+                TDES: OUTPUT[2][index],
+                PDES: OUTPUT[3][index],
+                HPGAS: OUTPUT[4][index],
+                FLUJODES: OUTPUT[5][index],
+                EFICPOLI: OUTPUT[6][index],
+                CFHEADPOLI: OUTPUT[7][index],
+                CFWORKPOLI: OUTPUT[8][index],
+                HEADPOLI: OUTPUT[9][index],
+                PSUC: OUTPUT[10][index],
+                HEADISEN: OUTPUT[11][index],
+                FLUJOMMSCFD: OUTPUT[12][index],
+                FLUJOMAS: OUTPUT[13][index],
+                seccion: OUTPUT[14][index]
+              }
+              puntos.push(obj)
+            }
+          }
+          punto.simulacion[sec].mapas = puntos
+          punto.mapaTren = puntosTren
+          let puntoTren: outputTrenTeorico = new outputTrenTeorico
 
+          punto.mapaTren.push(puntoTren)
+          resolve(punto)
+        }
+      })
+    })
+  }
 }
+

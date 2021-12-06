@@ -1,311 +1,460 @@
-<!-- Prueba de eficiencia -->
-<!-- °F : <input type="number" [(ngModel)]="F" (click)="cambiando='F'" (ngModelChange)="cambiar()">
-°C: <input type="number"  [(ngModel)]="C" (click)="cambiando='C'" (ngModelChange)="cambiar()">
-°K: <input type="number"  [(ngModel)]="K" (click)="cambiando='K'" (ngModelChange)="cambiar()"> -->
-
-<div fxLayout="column" class="border-l pd20">
-    <span class="ft24 ft500">Simulacion Teorica del TREN {{tren.tag}} - Prueba: {{pruebaId}}</span>
-    <span class="mgt10 ft16"> Fecha de creación: *fecha*</span>
-    <div fxLayout="column" class="border-t pdt20 ft500 ft16 mgt10 mgb10">
-        <span>Tren: {{tren.tag}}</span>
-        <span>Num de compresores: {{this.equipos.length}}</span>
+<div fxLayout="row" fxLayoutAlign="space-between center" class="pd03 neutralFill1 border-b">
+    <div fxLayout="row" fxLayoutAlign=" center">
+        <span class="mgl05 ft500 ft18 mgr05">{{punto.nombre}} &nbsp; - </span>
+        <span>{{punto.simDate}}</span>
     </div>
-    <hr>
+    <div class="mgl10" fxLayoutGap=".5rem" fxLayout="row">
+        <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag" (click)="borrarPunto()">delete
+        </mat-icon>
+        <mat-icon class="iconButton border shadow8 whiteFill text2" *ngIf="simFlag">print</mat-icon>
+        <mat-icon class="accentIconButton pdl10 pdr10" (click)="simular()">play_arrow</mat-icon>
+        <div class="border-r mgr20"></div>
+        <mat-icon class="iconButton ">close</mat-icon>
+    </div>
+</div>
 
+<div fxLayout="row" *ngIf="!simFlag">
 
-    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let seccion of this.punto.simulacion; let j = index"
-            class="pd10 border radius4 shadow8 whiteFill w300px">
-            <div>
-                <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <span class="ft500 ft14">{{seccion.equipoFamilia}} {{seccion.equipoTag}}</span>
-                    <mat-icon class="iconButton ft16"
-                        routerLink="/psico/proyecto/{{proyecto.id}}/equipo/{{tren.tag}}/{{seccion.equipoTag}}">settings
-                    </mat-icon>
+    <!-- containerinput -->
+    <div class="w250px pd10 border-r" *ngFor="let secciones of this.punto.simulacion; let j = index">
+
+        <!-- Seccion -->
+        <div class="ft500 ft18 centertext">{{secciones.equipoTag}}</div>
+        <div class="mgt03 ft500 ft16 centertext">Seccion {{secciones.seccion}}</div>
+
+        <div class="mgt20 ft13">Curva </div>
+        <mat-select value="" [(ngModel)]="this.punto.simulacion[j].curva">
+            <mat-option *ngFor="let item of this.punto.simulacion[j].curvas" [value]="item" class="optionItem">
+                {{item.nombre}}
+            </mat-option>
+        </mat-select>
+
+        <!-- inputs -->
+        <div class="mgt10">
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Tsuc {{this.punto.simulacion[j].inputs.TDIM}}</div>
+                <div class="">
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.TSUC" placeholder="-"
+                        class="inputNumber">
                 </div>
-                <div class="ft13 text3">{{seccion.equipoTipologia}}</div>
-                <div class="ft12 text3">Perdidas de caja</div>
-                <div class="ft12 text3">Perdidas mecanicas</div>
             </div>
-            <div class="mgt10 ft13">Curva de sección {{seccion.seccion}} *</div>
-            <mat-select [(ngModel)]="seccion.curva.nombre">
-                <mat-option *ngFor="let item of seccion.curvas" [value]="item.nombre" class="optionItem"
-                    (click)="cambioCurva(j, item)">
-                    {{item.nombre}}
-                </mat-option>
-            </mat-select>
-            <table class="mgt10">
-                <tr>
-                    <th> Temp. succ. {{seccion.inputs.TDIM}} *</th>
-                    <td class="">
-                        <input type="number" [(ngModel)]="seccion.inputs.TSUC" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Pres. succ. {{seccion.inputs.PDIM}} <span *ngIf="j == 0">*</span></th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.inputs.PSUC" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> RPM *</th>
-                    <td>
-                        <input *ngIf="j==0" type="number" [(ngModel)]="seccion.inputs.RPM" placeholder="-"
-                            (ngModelChange)="actualizarRPMS()" class="inputNumber">
-                        <input *ngIf="j!=0" type="number" [(ngModel)]="seccion.inputs.RPM" placeholder="-"
-                            class="inputNumber" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Rel.de Velocidad c/r al tren * </th>
-                    <td>
-                        <input *ngIf="j==0" type="number" [(ngModel)]="seccion.inputs.RELVEL" placeholder="-"
-                            class="inputNumber" readonly>
-                        <input *ngIf="j!=0" type="number" [(ngModel)]="seccion.inputs.RELVEL" placeholder="-"
-                            (ngModelChange)="actualizarRPMS()" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Flujo {{seccion.inputs.QDIM}} * </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.inputs.FLUJOSUC" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Extracción de gas {{seccion.inputs.QDIM}} </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.inputs.QEXT" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Caida de presion {{seccion.inputs.PDIM}} </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.inputs.CAIPRES" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <!-- Descripcion de curva -->
-                <!-- <tr>
-                    <th> Diametro *</th>
-                    <td class="">
-                        <input type="number" [(ngModel)]="seccion.curva.diametro" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Limite Q/N de surge <span *ngIf="j == 0">*</span></th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.limSurge" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Limite Q/N de stw </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.limStw" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Exp. polin. coef. head </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.expocp" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(1) coef.head </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.cp1" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(2) coef.head  </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.cp2" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(3) coef.head </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.cp3" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(4) coef.head </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.cp4" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Exp. polin. efic. polit. </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.expoce" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(1) efic. polit </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.ce1" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(2) efic. polit  </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.ce2" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(3) efic. polit </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.ce3" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Coef. A(4) efic. polit </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.curva.ce4" placeholder="-" class="inputNumber">
-                    </td>
-                </tr> -->
-                <!-- Mezcla -->
-                <tr>
-                    <th> Mezcla *</th>
-                    <td>
-                        <a class="ft12" (click)="openCromatografia(j)">
-                            <div>Mezcla</div>
-                            <div>{{seccion.inputs.Mezcla.nombre}}</div>
-                        </a>
-                    </td>
-                </tr>
-            </table>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Psuc {{this.punto.simulacion[j].inputs.PDIM}}</div>
+                <div>
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.PSUC" placeholder="-"
+                        class="inputNumber">
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> RPM </div>
+                <div>
+                    <input *ngIf="j == 0" type="number" [(ngModel)]="this.punto.simulacion[j].inputs.RPM" (ngModelChange)="actualizarRPMS()" placeholder="-"
+                        class="inputNumber">
+                    <input *ngIf="j != 0" type="number" [(ngModel)]="this.punto.simulacion[j].inputs.RPM" (ngModelChange)="actualizarRPMS()" placeholder="-"
+                        class="inputNumber" readonly>
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Relacion de Velocidad </div>
+                <div>
+                    <input *ngIf="j == 0" type="number" [(ngModel)]="this.punto.simulacion[j].inputs.RELVEL" (ngModelChange)="actualizarRPMS()"
+                        placeholder="-" class="inputNumber" readonly>
+                    <input *ngIf="j != 0" type="number" [(ngModel)]="this.punto.simulacion[j].inputs.RELVEL" (ngModelChange)="actualizarRPMS()"
+                        placeholder="-" class="inputNumber">
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Q {{this.punto.simulacion[j].inputs.QDIM}} </div>
+                <div>
+                    <input type="number" [(ngModel)]="this.punto.simulacion[j].inputs.FLUJOSUC" placeholder="-"
+                        class="inputNumber">
+                </div>
+            </div>
+            <div fxLayoutAlign="space-between center" class="mgt03">
+                <div class="mgr20 ft12"> Mezcla </div>
+                <div>
+                    <!-- <span class="cromatografiaButton redFill5" (click)="openCromatografia(j)">Agregar</span> -->
+                    <span class="cromatografiaButton accentFill5" (click)="openCromatografia(j)">Editar</span>
+                </div>
+            </div>
+
         </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="fw border-t mgt30 pdt10 pdb10 ">
-        <button (click)="guardarSimulacion()">Guardar Simulación</button>
-        <button (click)="simular()">Simular</button>
-        <button (click)="generarMapas()">Generar Mapa</button>
+</div>
+
+
+
+
+
+<div fxLayout="column" class="border-l dialogContainer" *ngIf="simFlag">
+
+    <div fxLayout="column" fxLayoutGap="1rem" class="fw">
+
+
+        <div class="whiteFill" fxLayout="row">
+
+            <!------------------------------------------------------------------------ Container Izquierdo -->
+            <div class="w250px pd10 border-r">
+                <!-- Seccion -->
+
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap=".5rem" class="mgt10">
+                    <div *ngIf="seccionActual != -1">
+                        <mat-icon class="ftxxl iconButton" (click)="disminuirSeccion()">keyboard_arrow_left</mat-icon>
+                    </div>
+                    <div *ngIf="seccionActual != -1">
+                        <div class="ft500 ft18 centertext">{{this.punto.simulacion[this.seccionActual].equipoTag}}</div>
+                        <div class="mgt03 ft500 ft16 centertext">Secccion
+                            {{this.punto.simulacion[this.seccionActual].seccion}}</div>
+                    </div>
+                    <div *ngIf="seccionActual == -1">
+                        <div class="ft500 ft18 centertext">Tren: {{this.tren.tag}}</div>
+                    </div>
+                    <div *ngIf="seccionActual != nSecciones-1">
+                        <mat-icon class="ftxxl iconButton" (click)="aumentarSeccion()">keyboard_arrow_right</mat-icon>
+                    </div>
+                </div>
+
+                <div *ngIf="seccionActual!=-1">
+                    <div class="mgt20 ft13">Curva </div>
+                    <mat-select value="" [(ngModel)]="this.punto.simulacion[this.seccionActual].curva">
+                        <mat-option *ngFor="let item of this.punto.simulacion[this.seccionActual].curvas" [value]="item"
+                            class="optionItem">
+                            {{item.nombre}}
+                        </mat-option>
+                    </mat-select>
+
+                    <!-- inputs -->
+                    <div class="mgt10">
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Tsuc {{this.punto.simulacion[this.seccionActual].inputs.TDIM}}
+                            </div>
+                            <div class="">
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.TSUC"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Psuc {{this.punto.simulacion[this.seccionActual].inputs.PDIM}}
+                            </div>
+                            <div>
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.PSUC"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> RPM </div>
+                            <div>
+                                <input type="number" [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.RPM"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Q {{this.punto.simulacion[this.seccionActual].inputs.QDIM}} </div>
+                            <div>
+                                <input type="number"
+                                    [(ngModel)]="this.punto.simulacion[this.seccionActual].inputs.FLUJOSUC"
+                                    placeholder="-" class="inputNumber">
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="space-between center" class="mgt03">
+                            <div class="mgr20 ft12"> Mezcla </div>
+                            <div>
+                                <a class="ft12" (click)="openCromatografia(this.seccionActual)">
+                                    <span class="cromatografiaButton accentFill5"
+                                        (click)="openCromatografia(this.seccionActual)">Editar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!------------------------------------------------------------------------ Container Medio -->
+            <!-- Data del tren -->
+            <div *ngIf="seccionActual == -1" fxLayout="column" class="w400px fh border-r">
+
+                <!-- Data set container con scroll down -->
+                <div class="dataSetContainer">
+                    <div fxLayout="column">
+                        <div fxLayout="row" class="centertext ">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span class="ft13">Potencia hp</span>
+                                <span class="mgt03 ft22 ft500">{{+this.punto.outputTren.HPGAS
+                                    | number:
+                                    '1.0-0'}} Hp</span>
+                                <span class="mgt03 ft500 ft13 redText">{{+this.punto.outputTren.HPGAS
+                                    / this.punto.outputTren.HPGAS | number:
+                                    '1.0-0'}} %</span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Presión de descarga [psig]</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{+this.punto.outputTren.PDES | number:
+                                    '1.3-3'}}</span>
+                                <span
+                                    class="mgt03 ft500 ft13 redText">{{+this.punto.outputTren.PDES/this.punto.outputTren.PDES
+                                    | number:
+                                    '1.3-3'}} %</span>
+                            </div>
+                        </div>
+                        <div fxLayout="row" class="centertext">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Cabezal Politrópico</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{this.punto.outputTren.HEADPOLI |
+                                    number: '1.3-3'}}</span>
+                                <span
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.outputTren.HEADPOLI/this.punto.outputTren.HEADPOLI
+                                    |
+                                    number: '1.3-3'}} %</span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Flujo Actual [ACFM]</span>
+                                <span class="mgt03 ft22 ft500">{{this.punto.outputTren.FLUJOSUC
+                                    | number:
+                                    '1.1-1'}}</span>
+                                <span
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.outputTren.FLUJOSUC/this.punto.outputTren.FLUJOSUC
+                                    | number:
+                                    '1.1-1'}} %</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t">
+                        <table class="fw">
+                            <tr>
+                                <th>Parametro</th>
+                                <th>Succión</th>
+                                <th>Descarga</th>
+                                <th>Isentrópico</th>
+                            </tr>
+                            <tr *ngFor="let item of this.array; let i = index">
+                                <td class="ft12">{{this.array[i][0]}}</td>
+                                <td *ngIf="item.length==2" colspan="3">
+                                    <span class="ft12">{{item[1]}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[1]}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[2]}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[3]}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Data de Secciones -->
+            {{seccionActual}}
+            <div *ngIf="seccionActual != -1" fxLayout="column" class="w400px fh border-r">
+
+                <!-- Data set container con scroll down -->
+                <div class="dataSetContainer">
+                    <div fxLayout="column">
+                        <div fxLayout="row" class="centertext ">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span class="ft13">Potencia</span>
+                                <span
+                                    class="mgt03 ft22 ft500">{{this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS
+                                    | number:
+                                    '1.0-0'}} Hp</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS | number:
+                                    '1.0-0'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.HPGAS
+                                    | number:
+                                    '1.0-0'}}
+                                </span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Efic. Poli.</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI | number:
+                                    '1.3-3'}}</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI | number:
+                                    '1.3-3'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.EFICPOLI
+                                    | number:
+                                    '1.3-3'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div fxLayout="row" class="centertext">
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Coef. Cab.</span>
+                                <span class="mgt03 ft22 ft500">
+                                    {{this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI |
+                                    number: '1.3-3'}}</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI | number:
+                                    '1.3-3'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.CFHEADPOLI
+                                    | number:
+                                    '1.3-3'}}
+                                </span>
+                            </div>
+                            <div class="h100px fw" fxLayout="column" fxLayoutAlign="center center">
+                                <span>Q/N</span>
+                                <span
+                                    class="mgt03 ft22 ft500">{{this.punto.simulacion[this.seccionActual].outputTeorico.QN
+                                    | number:
+                                    '1.1-1'}}</span>
+                                <span *ngIf="tipoComparacion=='porcentual'"
+                                    class="mgt03 ft500 ft13 redText">{{(this.punto.simulacion[this.seccionActual].outputTeorico.QN
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.QN)*100
+                                    / this.punto.simulacion[this.seccionActual].outputTeorico.QN | number:
+                                    '1.0-0'}} %
+                                </span>
+                                <span *ngIf="tipoComparacion=='diferencia'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.QN
+                                    - this.punto.simulacion[this.seccionActual].outputTeorico.QN | number:
+                                    '1.3-3'}}
+                                </span>
+                                <span *ngIf="tipoComparacion=='absoluta'"
+                                    class="mgt03 ft500 ft13 redText">{{this.punto.simulacion[this.seccionActual].outputTeorico.QN
+                                    | number:
+                                    '1.3-3'}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t">
+                        <table class="fw">
+                            <tr>
+                                <th>Parametro</th>
+                                <th>Succión</th>
+                                <th>Descarga</th>
+                                <th>Isentrópico</th>
+                            </tr>
+                            <tr *ngFor="let item of this.array; let i = index">
+                                <td class="ft12">{{this.array[i][0]}}</td>
+                                <td *ngIf="item.length==2" colspan="3">
+                                    <span class="ft12">{{item[1]}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[1]}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[2]}}</span>
+                                </td>
+                                <td *ngIf="item.length==4">
+                                    <span class="ft12">{{item[3]}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pd10" fxLayout="row" fxLayoutAlign=" center">
+                    <mat-select value="" [(ngModel)]="tipoComparacion">
+                        <mat-option value="porcentual" class="optionItem">Variación porcentual (%) </mat-option>
+                        <mat-option value="diferencia" class="optionItem">Variación abolsuta </mat-option>
+                        <mat-option value="absoluta" class="optionItem">Valor teórico real </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+
+            <!------------------------------------------------------------------------ Container derecho -->
+
+            <div class="w500px fh" fxLayout="column" fxLayoutAlign="space-between">
+                <div fxLayoutAlign="center center" class="h600px">
+                    <div *ngIf="mostrarGraficaConjuntaTren" fxLayout="column" class="pd10">
+                        <div *ngIf="seccionActual==-1">
+                            <google-chart #chart [type]="type" [data]="mapasConjuntoTren"
+                                [options]="opcionesConjuntaTren" [columns]="columnasConjuntasTren">
+                            </google-chart>
+                        </div>
+                    </div>
+                    <div *ngIf="mostrarGraficaConjunta" fxLayout="column" class="pd10">
+                        <div *ngIf="seccionActual!=-1">
+
+                            <google-chart #chart [type]="type" [data]="mapasConjunto[this.seccionActual]"
+                                [options]="opcionesConjunta[this.seccionActual]"
+                                [columns]="columnasConjuntas[this.seccionActual]">
+                            </google-chart>
+                        </div>
+                        <!-- <div *ngIf="seccionActual!=-1">
+                            <google-chart #chart [type]="type" [data]="mapas[this.seccionActual]" [options]="opciones[this.seccionActual]" [columns]="columnas[this.seccionActual]">
+                            </google-chart>
+                        </div>
+                        <div *ngIf="seccionActual!=-1">
+                            <google-chart #chart [type]="type" [data]="mapasReal[this.seccionActual]" [options]="opcionesReal[this.seccionActual]" [columns]="columnasReal[this.seccionActual]">
+                            </google-chart>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="pd10" fxLayout="row" fxLayoutAlign=" center">
+                    <mat-select value="" [(ngModel)]="tipoGrafica">
+                        <mat-option value="presion" (click)="grafica(tipoGrafica, tipoEjeX)" class="optionItem">
+                            'Presion' de descarga</mat-option>
+                        <mat-option value="head" (click)="grafica(tipoGrafica, tipoEjeX)" class="optionItem">
+                            Head
+                            Politrópico</mat-option>
+                        <mat-option value="head" (click)="grafica(tipoGrafica, tipoEjeX)" class="optionItem">
+                            Head
+                            Isentrópico</mat-option>
+                        <mat-option value="relcomp" (click)="grafica(tipoGrafica,tipoEjeX)" class="optionItem">
+                            Relación
+                            de compresión</mat-option>
+                        <mat-option value="potencia" (click)="grafica(tipoGrafica, tipoEjeX)"
+                            class="optionItem">
+                            Potencia</mat-option>
+                        <mat-option *ngIf="seccionActual != -1" value="TDES"
+                            (click)="grafica(tipoGrafica, tipoEjeX)" class="optionItem">Temperatura de
+                            descarga</mat-option>
+                    </mat-select>
+                    <mat-select value="" [(ngModel)]="tipoEjeX">
+                        <mat-option value="FLUJOMMSCFD" (click)="grafica(tipoGrafica, tipoEjeX)"
+                            class="optionItem">
+                            Flujo Estándar [MMSCFD]</mat-option>
+                        <mat-option value="FLUJODES" (click)="grafica(tipoGrafica, tipoEjeX)"
+                            class="optionItem">Head
+                            Flujo Real [ACFM]</mat-option>
+                        <mat-option value="FLUJOMAS" (click)="grafica(tipoGrafica, tipoEjeX)"
+                            class="optionItem">Head
+                            Flujo Másico [lbm/min]</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap=".5rem" fxFlex="100%">
-        <div *ngFor="let seccion of this.punto.simulacion; let j = index"
-            class="pd10 border radius4 shadow8 whiteFill w300px">
-            <div>
-                <div class="ft500 ft14"> Resultado </div>
-            </div>
-            <table class="mgt10">
-                <tr>
-                    <th> Temp. succ. [°F]</th>
-                    <td class="">
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.TSUC" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Pres. succ. [psig]</th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.PSUC" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> RPM </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.RPM" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Flujo [MMSCFD] </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.FLUJODES" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Presion de descarga [psig] </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.PDES" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Temperatura de descarga [°F] </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.TDES" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Hp Gas </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.HPGAS" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Entalpia[btu/lbmol] </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.HDES" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>.<tr>
-                    <th> Densidad [lbm/ft3] </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.DENDES" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Q/N Surge: </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.SURGE" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Q/N: </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.QN" placeholder="-" class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Q/N stw </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.STONEW" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Coef. Head </th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.CFHEADPOLI" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Eficiencia Politrópica</th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.EFICPOLI" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Exp. polit</th>
-                    <td>
-                        <input type="number" [(ngModel)]="seccion.outputTeorico.EXPPOLI" placeholder="-"
-                            class="inputNumber">
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div fxLayout="row">
-        <button (click)="armarGrafica('presion')" class="accent">Graficar Presion</button>
-        <button (click)="armarGrafica('eficiencia')" class="accent">Graficar Eficiencia</button>
-        <button (click)="armarGrafica('potencia')" class="accent">Graficar Potencia</button>
-    </div>
-    <div>
-        <div>
-            Mapas:
-        </div>
-        <div *ngIf="mostrarGrafica" fxLayout="row" class="pd10">
-            <div *ngFor="let seccion of punto.simulacion; let i = index">
-                <google-chart #chart [type]="type" [data]="mapas[i]" [options]="opciones[i]" [columns]="columnas[i]">
-                </google-chart>
-            </div>
-        </div>
-    </div>
+
 
 </div>

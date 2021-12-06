@@ -145,6 +145,9 @@ export class SimulacionCampoInputComponent implements OnInit {
               .collection<simulacionTren>("simulaciones-campo").doc(this.dataEnviada.simId).ref
               .get()
             this.punto = docSim.data()
+            let utc = +new Date().getTimezoneOffset()*60*1000
+            console.log("utc", utc)
+            this.punto.simDate = new Date(this.punto.simTimestamp/10000 - utc).toISOString().slice(0,16)
             if (this.punto.simulacion[0].simulacionAdim == true) {
               this.simFlag = true
               this.armarArray()
