@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, mezcla, outputTren, outputTrenAdim, outputTrenTeorico, Proyecto, pruebaCampo, puntoMapa, simSeccion, simulacionPE, simulacionTren, tren } from 'src/app/services/data-service.service';
+import { cromatografia, curva, curvaEquipo, DataServiceService, equipo, mapa, mapas, mezcla, outputTren, outputTrenAdim, outputTrenTeorico, Proyecto, pruebaCampo, puntoMapa, simSeccion, simulacionPE, simulacionTren, tren } from 'src/app/services/data-service.service';
 import { ChartType } from 'angular-google-charts';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CromatografiaComponent } from '../inputs/cromatografia/cromatografia.component';
@@ -73,6 +73,7 @@ export class SimulacionCampoInputComponent implements OnInit {
   columnasConjuntasTren: Array<any> = []
   opcionesConjuntaTren
   mostrarGraficaConjuntaTren: boolean = false
+  listaMapas:mapa[] = []
 
 
   constructor(
@@ -91,6 +92,8 @@ export class SimulacionCampoInputComponent implements OnInit {
 
   async ngOnInit() {
     // Get Proyecto
+    this.listaMapas = this.dataEnviada.listaMapas
+    console.log(this.listaMapas)
     const docProyecto = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId).ref.get()
     this.proyecto = docProyecto.data() as Proyecto
     // Get Tren
@@ -138,6 +141,9 @@ export class SimulacionCampoInputComponent implements OnInit {
               mapaTrenTeorico: []
             }
             this.punto.simulacion = await this.ss.armarNuevaSimPE(this.proyecto.id, this.tren, this.resumen, this.equipos, "indice")
+            let utc = +new Date().getTimezoneOffset()*60*1000
+            console.log("utc", utc)
+            this.punto.simDate = new Date(this.punto.simTimestamp/10000 - utc).toISOString().slice(0,16)
             console.log(this.punto)
           } else {
             const docSim = await this.afs.collection("proyectos").doc(this.dataEnviada.proyectoId)
@@ -206,8 +212,10 @@ export class SimulacionCampoInputComponent implements OnInit {
       mapas.push([])
       columnas.push([])
       columnas[index].push()
-      const inputTeorico = this.punto.simulacion[index].mapas
-      const modifiedTeorico = inputTeorico.reduce((res, curr) => {
+      console.log(this.punto.simulacion[index].seccion)
+      const inputTeorico = this.listaMapas.find(x=> ((x.seccion == this.punto.simulacion[index].seccion) && (x.default == true) && (x.equipoTag == this.punto.simulacion[index].equipoTag)))
+      console.log(inputTeorico)
+      const modifiedTeorico = inputTeorico.puntos.reduce((res, curr) => {
         if (res[curr.RPM])
           res[curr.RPM].push(curr)
         else

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { cromatografia, DataServiceService } from 'src/app/services/data-service.service';
+import { cromatografia, DataServiceService, mezcla } from 'src/app/services/data-service.service';
 import { DialogLibreriaCromatografiasComponent } from '../dialog-libreria-cromatografias/dialog-libreria-cromatografias.component';
 
 class propiedadesCromatografia{
@@ -107,7 +107,7 @@ export class CromatografiaComponent implements OnInit {
     this.nombreCromatografia = this.nombreCromatografia.replace(",","-")
     this.nombreCromatografia = this.nombreCromatografia.replace(".","-")
     this.nombreCromatografia = this.nombreCromatografia.replace("@","-")
-    const obj = {
+    const obj: mezcla = {
       id: this.nombreCromatografia,
       nombre: this.nombreCromatografia,
       cromatografiaNormalizada: this.cromatografiaNormalizada,

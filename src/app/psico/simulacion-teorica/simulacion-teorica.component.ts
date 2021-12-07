@@ -42,7 +42,6 @@ export class SimulacionTeoricaComponent implements OnInit {
   pruebaId;
   seccionActual: number = -1
   nSecciones: number = 0
-  
   tipoComparacion: string = 'porcentual'
   simFlag: boolean = false;
 
@@ -80,7 +79,6 @@ export class SimulacionTeoricaComponent implements OnInit {
 
     this.data.obtenerProyecto(this.dataEnviada.proyectoId).subscribe(data => {
       this.proyecto = data;
-
       this.pruebaId = this.dataEnviada.simId
       this.data.getTren(this.proyecto.id, this.dataEnviada.trenTag).subscribe(tren => {
         this.tren = tren
@@ -160,6 +158,7 @@ export class SimulacionTeoricaComponent implements OnInit {
           mapas++
         }
       }
+      this.armarArray()
       if (mapas == this.punto.simulacion.length) {
         this.grafica("potencia","FLUJODES")
       }
@@ -280,15 +279,15 @@ export class SimulacionTeoricaComponent implements OnInit {
         if (tipoY == "headisen") { y = +values.HEADISEN }
         if (tipoY == "relcomp") { y = +values.PDES / +values.PSUC }
         if (j == 0)
-          mapas.push([x, y, , , , , , , , , ,])
+          mapas.push([x, y, , , , ,])
         if (j == 1)
-          mapas.push([x, , y, , , , , , , , ,])
+          mapas.push([x, , y, , , ,])
         if (j == 2)
-          mapas.push([x, , , y, , , , , , , ,])
+          mapas.push([x, , , y, , ,])
         if (j == 3)
-          mapas.push([x, , , , y, , , , , , ,])
+          mapas.push([x, , , , y, ,])
         if (j == 4)
-          mapas.push([x, , , , , y, , , , , ,])
+          mapas.push([x, , , , , y,])
       }
     }
 

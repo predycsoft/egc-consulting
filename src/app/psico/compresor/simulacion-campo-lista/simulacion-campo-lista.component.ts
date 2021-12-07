@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { find, timestamp } from 'rxjs/operators';
-import { cromatografia, curva, equipo, mezcla, outputTren, outputTrenAdim, pruebaCampo, simSeccion, simulacionPE, simulacionTren, tren } from 'src/app/services/data-service.service';
+import { cromatografia, curva, equipo, mapa, mapas, mezcla, outputTren, outputTrenAdim, pruebaCampo, simSeccion, simulacionPE, simulacionTren, tren } from 'src/app/services/data-service.service';
 import { SimulacionCampoInputComponent } from '../../simulacion-campo-input/simulacion-campo-input.component';
 import { DialogSimCampoComponent } from '../dialog-sim-campo/dialog-sim-campo.component';
 import { SimulacionCampoDialogResultadosComponent } from '../simulacion-campo-dialog-resultados/simulacion-campo-dialog-resultados.component';
@@ -43,6 +43,7 @@ export class SimulacionCampoListaComponent implements OnInit {
   tren: tren
   equipos: equipo[]
   listaSimulaciones: string[] = []
+  listaMapas: mapa[] = []
 
   constructor(
     private ngxCsvParser: NgxCsvParser,
@@ -77,6 +78,7 @@ export class SimulacionCampoListaComponent implements OnInit {
           .collection<equipo>("equipos").valueChanges().subscribe(async equipos => {
             this.equipos = []
             this.equipos = equipos.filter(x => tags.includes(x.tag))
+            await this.cargarMapas()
             let secciones = 0
             for (let eq = 0; eq < this.equipos.length; eq++) {
               secciones += this.equipos[eq].nSecciones;
@@ -131,6 +133,16 @@ export class SimulacionCampoListaComponent implements OnInit {
     this.selectedParam = param
     this.iParam = i
     this.range = this.params[this.iParam].filter
+  }
+
+  async cargarMapas(){
+    for (let index = 0; index < this.equipos.length; index++) {
+      const doc = await this.afs.collection("proyectos").doc(this.proyectoId).collection("equipos").doc(this.equipos[index].tag).collection("mapas").ref.get()
+      doc.docs.forEach(doc => {
+        const mapa = doc.data() as mapa
+        this.listaMapas = this.listaMapas.concat(mapa)
+      })
+    }
   }
 
   aplicarFiltro($event: any, i) {
@@ -228,6 +240,7 @@ export class SimulacionCampoListaComponent implements OnInit {
       data: {
         proyectoId: this.proyectoId,
         trenTag: this.trenTag,
+        listaMapas: this.listaMapas
       }
     })
   }
@@ -240,6 +253,7 @@ export class SimulacionCampoListaComponent implements OnInit {
       data: {
         proyectoId: this.proyectoId,
         trenTag: this.trenTag,
+        listaMapas: this.listaMapas,
         simId: simId,
         simTimestamp: simTimestamp,
         simulacionResumen: this.simulaciones.find(x => x.simTimestamp == simTimestamp)

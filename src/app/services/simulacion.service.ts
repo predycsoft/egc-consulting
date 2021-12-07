@@ -373,7 +373,6 @@ export class SimulacionService {
             let  trenHPGAS = 0
 
             for (let j = 0; j < simulaciones.length; j++) {
-              for (let i = 0; i < OUTPUT.length; i++) {
                 simulaciones[j].outputTeorico.EFICPOLI = +OUTPUT[0][j + 1]
                 simulaciones[j].outputTeorico.CFWORKPOLI = +OUTPUT[1][j + 1]
                 simulaciones[j].outputTeorico.CFHEADPOLI = +OUTPUT[2][j + 1]
@@ -422,7 +421,10 @@ export class SimulacionService {
                 simulaciones[j].outputTeorico.EXPPOLI = +OUTPUT[45][j + 1]
                 simulaciones[j].outputTeorico.SURGE = +OUTPUT[46][j + 1]
                 simulaciones[j].outputTeorico.STONEW = +OUTPUT[47][j + 1]
-              }
+
+                trenHEADISEN += simulaciones[j].outputTeorico.HEADISEN
+                trenHEADPOLI += simulaciones[j].outputTeorico.HEADPOLI
+                trenHPGAS += simulaciones[j].outputTeorico.HPGAS
             }
             punto.outputTren = {
               HEADPOLI: trenHEADPOLI,
@@ -1037,10 +1039,35 @@ export class SimulacionService {
             }
           }
           punto.simulacion[sec].mapas = puntos
-          punto.mapaTren = puntosTren
-          let puntoTren: outputTrenTeorico = new outputTrenTeorico
+          // Construcción del mapa para el tren
+          let mapaTren = []
+          for (let pto = 0; pto < punto.simulacion[sec].mapas.length; pto++) {
+            let HEADISEN = 0
+            let HEADPOLI = 0
+            let HPGAS = 0
 
-          punto.mapaTren.push(puntoTren)
+            for (let auxSec = 0; auxSec < punto.simulacion.length; auxSec++) {
+              HEADISEN += +punto.simulacion[auxSec].mapas[pto].HEADISEN
+              HEADPOLI += +punto.simulacion[auxSec].mapas[pto].HEADPOLI
+              HPGAS += +punto.simulacion[auxSec].mapas[pto].HPGAS
+            }
+            const obj: outputTrenAdim = {
+              HEADISEN: HEADISEN,
+              HEADPOLI: HEADPOLI,
+              PSUC: punto.simulacion[0].mapas[pto].PSUC,
+              PDES: punto.simulacion[sec].mapas[pto].HPGAS,
+              HPGAS: HPGAS,
+              FLUJOSUC: punto.simulacion[0].mapas[pto].FLUJODES,
+              FLUJOMMSCFD: punto.simulacion[0].mapas[pto].FLUJOMMSCFD,
+              FLUJOMAS: punto.simulacion[0].mapas[pto].FLUJOMAS,
+              RPM: punto.simulacion[0].mapas[pto].RPM,
+              RELCOMP: punto.simulacion[sec].mapas[pto].PDES / punto.simulacion[sec].mapas[pto].PSUC,
+              QN: punto.simulacion[0].mapas[pto].QN,
+            }
+            mapaTren.push(obj)
+          }
+          // Fin de construcción de mapa para el tren
+          punto.mapaTren = mapaTren
           resolve(punto)
         }
       })

@@ -1,5 +1,5 @@
 <div class="menuContainer neutralFill1 pd05 border-b" fxLayout="row" fxLayoutAlign="space-between center">
-
+  (V1 + V2)/2 = 2V1
     <div fxLayout="row" fxLayoutAlign=" center">
         <mat-icon class="iconButton">more_horiz</mat-icon>
         <span class="mgl05 ft500 ft16">Comportamiento Real Histórico del tren {{trenTag}}</span>
@@ -10,7 +10,7 @@
     </div>
     <!-- <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'dashboard'}" (click)="vista='dashboard'"> bar_chart</mat-icon>
     <mat-icon class="iconButton text3 ft20" [ngClass]="{'selected2': vista === 'lista'}" (click)="vista='lista'"> format_list_numbered</mat-icon> -->
-    <mat-icon class="iconButton text3 ft18">filter_list</mat-icon>
+    <mat-icon class="iconButton text3 ft18" routerLink="/psico/proyecto/{{proyectoId}}/tren/{{tren.tag}}/sim-campo-dashboard">filter_list</mat-icon>
     <mat-icon class="iconButton text3 ft18">settings</mat-icon>
     <button class="accent" (click)="nuevaSimCampo()"> Agregar set de datos</button>
     <label class="textButton border shadow8">

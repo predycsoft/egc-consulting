@@ -2,20 +2,28 @@
 
     <div fxLayout="column" class="leftContainer">
 
-        <div>
-            <p class="ft14 text3 ft500 pdb05 border-b mgb10">Sección</p>
+        <div class=" border2 radius4 pd05 shadow8 whiteFill">
+            <div>
+                <p class="ft14 text3 ft500 pdb05 border-b mgb10">Sección</p>
+            </div>
+            <div class="mgt05">
+                <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterMapas()">
+                    <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}}
+                    </mat-option>
+                </mat-select>
+            </div>
         </div>
-        <!-- <div class="mgt05">
-            <mat-select [(ngModel)]="seccionActual" (ngModelChange)="filterImpulsores()">
-                <mat-option *ngFor="let item of secciones" [value]="item" class="optionItem"> Sección {{item}}
-                </mat-option>
-            </mat-select>
-        </div> -->
 
         <div class="mgt20 border radius4 pd05 shadow8">
             <div fxLayoutAlign="space-between center" class="border-b pdb05 mgb10">
                 <span class="ft14 text3 ft500">Mapas</span>
-                <mat-icon class="iconButton ft16">add</mat-icon>
+                <mat-icon class="iconButton ft16" (click)="crearNuevoMapa()">add</mat-icon>
+            </div>
+            <div fxLayout="column">
+                <div *ngFor="let mapa of listaMapasFiltrados; let i = index">
+                    <span (click)="seleccionarMapa(i)">{{mapa.nombre}}</span>
+                    <span *ngIf="mapa.default">(Default)</span>
+                </div>
             </div>
 
             <!-- <div fxLayout="row" fxLayoutAlign=" center" *ngFor="let impulsor of filteredImpulsoresEq" class="pd03">
@@ -34,8 +42,94 @@
     </div>
 
 
-    <div fxLayout="column" class="rightContainer">
-
+    <div fxLayout="row" class="rightContainer">
+        <div *ngIf="verMapa" class=" border2 radius4 pd05 shadow8 whiteFill" fxLayout="column">
+            <div>
+                Datos de mapa
+            </div>
+            <div>
+                <label>Nombre</label>
+                <input type="text" [(ngModel)]="mapa.nombre">
+            </div>
+            <div>
+                <label>Vigente</label>
+                <select [(ngModel)]="mapa.vigencia">
+                    <option [ngValue]=true>Si</option>
+                    <option [ngValue]=false>No</option>
+                </select>
+            </div>
+            <div>
+                <label>Default</label>
+                <select [(ngModel)]="mapa.default">
+                    <option [ngValue]=true>Si</option>
+                    <option [ngValue]=false>No</option>
+                </select>
+            </div>
+            <div>
+                <label>Comentario</label>
+                <textarea [(ngModel)]="mapa.comentario"></textarea>
+            </div>
+            <div>
+                <label>Fecha de creacion: </label>
+                <span>{{mapa.timestamp | date:"medium"}}</span>
+            </div>
+            <div>
+                <label>RPM de diseño</label>
+                <input type="text" [(ngModel)]="mapa.rpmDiseno">
+            </div>
+            <div>
+                <label>RPM 1</label>
+                <input type="text" [(ngModel)]="mapa.rpms[0]">
+            </div>
+            <div>
+                <label>RPM 2</label>
+                <input type="text" [(ngModel)]="mapa.rpms[1]">
+            </div>
+            <div>
+                <label>RPM 3</label>
+                <input type="text" [(ngModel)]="mapa.rpms[2]">
+            </div>
+            <div>
+                <label>RPM 4</label>
+                <input type="text" [(ngModel)]="mapa.rpms[3]">
+            </div>
+            <div>
+                <label>RPM 5</label>
+                <input type="text" [(ngModel)]="mapa.rpms[4]">
+            </div>
+            <div>
+                Datos de simulacion
+            </div>
+            <mat-select value="" [(ngModel)]="this.mapa.curva">
+                <mat-option *ngFor="let item of filteredCurvas" [value]="item" class="optionItem">
+                    {{item.nombre}}
+                </mat-option>
+            </mat-select>
+            <div>
+                <label>TSUC {{tren.dimensiones.temperatura}}</label>
+                <input type="text" [(ngModel)]="mapa.inputs.TSUC">
+            </div>
+            <div>
+                <label>PSUC {{tren.dimensiones.presion}}</label>
+                <input type="text" [(ngModel)]="mapa.inputs.PSUC">
+            </div>
+            <div>
+                <label>FLUJO {{tren.dimensiones.flujo}}</label>
+                <input type="text" [(ngModel)]="mapa.inputs.FLUJO">
+            </div>
+            <div>
+                <label>Mezcla</label>
+                <span>{{mapa.inputs.Mezcla.nombre}}</span>
+                <span class="accent" (click)="openCromatografia()">Editar</span>
+            </div>
+            <button (click)="generarMapa()">Generar mapa</button>
+            <button (click)="guardarMapa()">Guardar</button>
+        </div>
+        <div>
+            <google-chart #chart [type]="type" [data]="dataGrafica"
+                [options]="opciones" [columns]="columnas">
+            </google-chart>
+        </div>
     </div>
 
 </div>

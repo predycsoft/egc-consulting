@@ -6,6 +6,35 @@ import { switchMap, map } from 'rxjs/operators';
 
 /// Clases de Simulacion 
 
+export class inputsMapa {
+  TSUC: number = 0
+  PSUC: number = 0
+  FLUJO: number = 0
+  Mezcla: mezcla = {
+    id: "",
+    nombre: "",
+    cromatografiaNormalizada: new cromatografia,
+    cromatografiaOriginal: new cromatografia,
+  }
+}
+
+export class mapa {
+  id: string = "";
+  equipoTag: string = ""
+  nombre: string = "";
+  puntos: puntoMapa[];
+  curva: curva = new curva
+  rpmDiseno: number = 0;
+  rpms: number[] = [0, 0, 0, 0, 0];
+  seccion: number = 0;
+  valido: boolean = false;
+  vigencia: boolean = false;
+  default: boolean = false;
+  comentario: string = "";
+  timestamp: number = +new Date;
+  inputs: inputsMapa = new inputsMapa
+}
+
 export class pruebaCampo {
   checked: boolean = false
   simDate: Date = new Date;
